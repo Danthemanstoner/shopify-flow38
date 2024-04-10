@@ -1,0 +1,54 @@
+{% schema %}
+{
+  "name": "Expandable Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "content",
+      "label": "Content",
+      "default": "Your expandable content goes here..."
+    }
+  ]
+}
+{% endschema %}
+
+<div class="expandable-content-section">
+    <button class="expandable-content-toggle">Read More</button>
+    <div class="expandable-content-full" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
+        <p>{{ section.settings.content }}</p>
+    </div>
+</div>
+
+<style>
+.expandable-content-section .expandable-content-full {
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    max-height: 0;
+}
+
+.expandable-content-section.expanded .expandable-content-full {
+    max-height: 1000px; /* Adjust as needed */
+}
+
+.expandable-content-section .expandable-content-toggle {
+    cursor: pointer;
+    background-color: #f1f1f1;
+    border: none;
+    padding: 10px;
+    text-align: center;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const section = document.querySelector('.expandable-content-section');
+    const toggleButton = section.querySelector('.expandable-content-toggle');
+    const contentFull = section.querySelector('.expandable-content-full');
+
+    toggleButton.addEventListener('click', () => {
+        const isExpanded = section.classList.toggle('expanded');
+        toggleButton.textContent = isExpanded ? 'Read Less' : 'Read More';
+        contentFull.style.maxHeight = isExpanded ? contentFull.scrollHeight + "px" : null;
+    });
+});
+</script>

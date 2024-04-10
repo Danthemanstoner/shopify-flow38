@@ -1,0 +1,20 @@
+/* Place any CSS overrides in this file. *//* Place any CSS overrides in this file. */
+.sale-badge {
+    font-size: 15px; /* Adjust the size as needed */
+    /* Other styles like background-color, color, padding, etc. */
+
+  .product-card__quick-buy .quick-buy-button {
+  background-color: #5ea9f4;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.product-card__quick-buy .quick-buy-button:disabled {
+  background-color: #ccc;
+
+}
+
+
