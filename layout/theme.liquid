@@ -255,12 +255,13 @@
 </style>
 
 <style>
-  /* General adjustments for all sizes */
-  [data-wetheme-section-id="template--22510964408635__animated_text_LNiTw8"] {
+  /* General adjustments for all sizes, targeting the specific section ID */
+  [data-wetheme-section-id="template--22517881897275__animated_text_LNiTw8"] {
     min-height: 0 !important;
     height: auto !important;
   }
 
+  /* Reducing padding and margin inside the section to control height */
   .animated-text--inner,
   .animated-text--content,
   .content-wrapper--text_static,
@@ -269,25 +270,27 @@
     margin: 0 !important;
   }
 
+  /* Tightening line-height to save vertical space */
   .dynamic-words, .text-wrap, .text-wrap > span {
     line-height: 1.2 !important;
   }
 
-  /* Specific adjustments for mobile */
+  /* Specific mobile adjustments for better spacing */
   @media only screen and (max-width: 768px) {
     .animated-text--inner,
     .animated-text--content {
-      padding: 10px !important; /* Add some padding on mobile for better spacing */
+      padding: 15px !important; /* Adjusted padding for better spacing on mobile */
     }
 
     .content-wrapper--text_static,
     .content-wrapper--text_dynamic {
-      margin: 10px 0 !important; /* Add vertical margin for better spacing */
+      margin: 15px 0 !important; /* Adjusted margin for better vertical spacing */
     }
 
     .dynamic-words, .text-wrap, .text-wrap > span {
-      line-height: 1.3 !important; /* Adjust line-height for better readability on mobile */
+      line-height: 1.3 !important; /* Slightly increased line-height for readability */
     }
   }
 </style>
+
 
