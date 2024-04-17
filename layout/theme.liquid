@@ -311,10 +311,22 @@
       overflow: hidden; /* Prevents any content from spilling outside */
     }
 
+    /* Targeting h5 specifically to ensure uniform hover effect */
+    .text-advert-section--header h5 {
+      transition: inherit; /* Inherit transitions from parent */
+      display: block; /* Ensures it takes the full width of its container */
+      margin: 0; /* No additional margin to affect layout */
+      color: inherit; /* Ensures color is consistent */
+      background-color: transparent; /* Prevents background discrepancies */
+    }
+
     /* Hover effects */
     .text-advert-section a:hover,
-    .text-advert-section--header:hover {
+    .text-advert-section--header:hover,
+    .text-advert-section a:hover *,
+    .text-advert-section--header:hover * { /* Include child elements in hover effect */
       background-color: #E6E6E6; /* Slightly darker shade on hover */
+      color: #333; /* Maintain text color on hover */
       transform: translateY(-2px); /* Slight lift for interaction feedback */
     }
 
