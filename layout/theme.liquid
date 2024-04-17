@@ -305,18 +305,10 @@
       color: #333; /* Darker text color for contrast */
       text-decoration: none;
       border-radius: 3px; /* Subtler rounded corners */
-      transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, transform 0.2s ease-in-out; /* Smooth transitions for background, color, and transform */
+      transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, transform 0.2s ease-in-out; /* Smooth transitions for all states */
       border: none; /* No borders */
       box-shadow: none; /* No shadow */
       overflow: hidden; /* Prevents any content from spilling outside */
-    }
-
-    /* Ensure child elements inherit the same hover effect */
-    .text-advert-section a *,
-    .text-advert-section--header * {
-      color: inherit; /* Ensure text color is consistent */
-      background-color: inherit; /* Ensure background color is consistent */
-      transition: inherit; /* Inherit the transition for smooth effects */
     }
 
     /* Hover effects */
@@ -327,6 +319,13 @@
       background-color: #E6E6E6; /* Slightly darker shade on hover */
       color: #333; /* Maintain text color on hover */
       transform: translateY(-2px); /* Slight lift for interaction feedback */
+    }
+
+    /* Explicitly reset styles on mouse leave */
+    .text-advert-section a:not(:hover),
+    .text-advert-section--header:not(:hover) {
+      background-color: #F8F8F8; /* Reset to original background color */
+      transform: translateY(0); /* Reset any transformations */
     }
 
     /* Focus and active states for accessibility */
