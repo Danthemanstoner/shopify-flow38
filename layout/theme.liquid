@@ -311,10 +311,11 @@
       overflow: hidden; /* Prevents any content from spilling outside */
     }
 
-    /* Targeting h5 specifically to ensure uniform hover effect */
-    .text-advert-section--header h5 {
+    /* Specific targeting for headers and sub-headers within the button to ensure uniform hover effect */
+    .text-advert-section--header h5,
+    .text-advert-section--sub-header {
       transition: inherit; /* Inherit transitions from parent */
-      display: block; /* Ensures it takes the full width of its container */
+      display: block; /* Ensures they take the full width of their container */
       margin: 0; /* No additional margin to affect layout */
       color: inherit; /* Ensures color is consistent */
       background-color: transparent; /* Prevents background discrepancies */
