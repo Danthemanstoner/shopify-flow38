@@ -298,17 +298,20 @@
   <style>
     /* Button styling for headers and links */
     .text-advert-section a,
-    .text-advert-section--header {
+    .text-advert-section--header,
+    .text-advert-section--header * { /* Ensuring all child elements also inherit the button style */
       display: inline-block;
       padding: 10px 20px;
-      margin: 5px;
+      margin: 0; /* Uniform margin for clean alignment */
       background-color: #F8F8F8; /* Off-white primary button color */
       color: #333; /* Darker text color for contrast */
       text-decoration: none;
       border-radius: 3px; /* Subtler rounded corners */
       transition: background-color 0.3s, transform 0.3s;
       border: none; /* Ensure no borders */
-      box-shadow: none; /* No shadow to simplify the button appearance */
+      box-shadow: none; /* No shadow for a clean appearance */
+      font-size: inherit; /* Inherit the font size from parent */
+      outline: none; /* Ensure no outlines */
     }
 
     /* Hover effect to give feedback on mouse over */
@@ -316,7 +319,6 @@
     .text-advert-section--header:hover {
       background-color: #E6E6E6; /* Slightly darker shade on hover */
       transform: translateY(-2px); /* Slight lift for interaction feedback */
-      box-shadow: none; /* Keeping it clean without shadow */
     }
 
     /* Focus and active states for accessibility */
@@ -324,7 +326,6 @@
     .text-advert-section a:active,
     .text-advert-section--header:focus,
     .text-advert-section--header:active {
-      outline: none; /* No outline on focus */
       background-color: #E6E6E6; /* Ensuring visibility when focused */
     }
 
@@ -333,7 +334,7 @@
       .text-advert-section a,
       .text-advert-section--header {
         padding: 8px 16px; /* Slightly smaller padding on small screens */
-        font-size: 14px; /* Smaller font size for small screens */
+        font-size: 14px; /* Adjusted font size for small screens */
       }
     }
   </style>
