@@ -6,12 +6,12 @@
     },
     "404": {
       "title": "404 Page not found",
-      "subtext_html": "The page you requested does not exist."
+      "subtext_html": "Hmmmmm, looks like there's no fruit here..."
     },
     "continue_shopping": "Continue shopping",
     "breadcrumbs": {
       "home": "Home",
-      "home_link_title": "Back to the frontpage"
+      "home_link_title": "Back to the Fruit"
     },
     "newsletter_form": {
       "newsletter_email": "email@example.com",
