@@ -16,42 +16,48 @@
   background-color: #ccc;
 
 }
-/* Button styling for headers and links */
-.text-advert-section a,
-.text-advert-section--header {
-    display: inline-block;
-    padding: 10px 20px;
-    margin: 5px;
-    background-color: #0073aa; /* Primary button color */
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s, transform 0.3s;
-}
+<head>
+  <!-- Other head content like title, meta tags, etc. should go here -->
 
-/* Hover effect to give feedback on mouse over */
-.text-advert-section a:hover,
-.text-advert-section--header:hover {
-    background-color: #005880; /* Darker shade on hover */
-    transform: translateY(-2px); /* Slight lift */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
-}
-
-/* Focus and active states for accessibility */
-.text-advert-section a:focus,
-.text-advert-section a:active,
-.text-advert-section--header:focus,
-.text-advert-section--header:active {
-    outline: none;
-    background-color: #005880; /* Ensuring visibility when focused */
-    box-shadow: 0 0 0 3px rgba(0, 115, 170, 0.5); /* Highlight for focus */
-}
-
-/* Responsive adjustments for smaller screens */
-@media (max-width: 768px) {
+  <style>
+    /* Button styling for headers and links */
     .text-advert-section a,
     .text-advert-section--header {
+      display: inline-block;
+      padding: 10px 20px;
+      margin: 5px;
+      background-color: #0073aa; /* Primary button color */
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    /* Hover effect to give feedback on mouse over */
+    .text-advert-section a:hover,
+    .text-advert-section--header:hover {
+      background-color: #005880; /* Darker shade on hover */
+      transform: translateY(-2px); /* Slight lift */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+    }
+
+    /* Focus and active states for accessibility */
+    .text-advert-section a:focus,
+    .text-advert-section a:active,
+    .text-advert-section--header:focus,
+    .text-advert-section--header:active {
+      outline: none;
+      background-color: #005880; /* Ensuring visibility when focused */
+      box-shadow: 0 0 0 3px rgba(0, 115, 170, 0.5); /* Highlight for focus */
+    }
+
+    /* Responsive adjustments for smaller screens */
+    @media (max-width: 768px) {
+      .text-advert-section a,
+      .text-advert-section--header {
         padding: 8px 16px; /* Slightly smaller padding on small screens */
         font-size: 14px; /* Smaller font size for small screens */
+      }
     }
-}
+  </style>
+</head>
