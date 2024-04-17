@@ -307,7 +307,7 @@
       text-decoration: none;
       border-radius: 3px; /* Subtler rounded corners */
       transition: background-color 0.3s, transform 0.3s;
-      border: 1px solid #ccc; /* Subtle border for definition */
+      border: none; /* No border for a cleaner look */
     }
 
     /* Hover effect to give feedback on mouse over */
@@ -323,9 +323,8 @@
     .text-advert-section a:active,
     .text-advert-section--header:focus,
     .text-advert-section--header:active {
-      outline: none;
+      outline: none; /* No outline on focus for a clean aesthetic */
       background-color: #E6E6E6; /* Ensuring visibility when focused */
-      box-shadow: 0 0 0 3px rgba(248, 248, 248, 0.5); /* Highlight for focus, adjusted to match hover color */
     }
 
     /* Responsive adjustments for smaller screens */
