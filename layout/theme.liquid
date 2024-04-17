@@ -302,17 +302,18 @@
       display: inline-block;
       padding: 10px 20px;
       margin: 5px;
-      background-color: #5F907B; /* New primary button color */
-      color: white;
+      background-color: #F8F8F8; /* Off-white primary button color */
+      color: #333; /* Darker text color for contrast */
       text-decoration: none;
-      border-radius: 5px;
+      border-radius: 3px; /* Subtler rounded corners */
       transition: background-color 0.3s, transform 0.3s;
+      border: 1px solid #ccc; /* Subtle border for definition */
     }
 
     /* Hover effect to give feedback on mouse over */
     .text-advert-section a:hover,
     .text-advert-section--header:hover {
-      background-color: #507568; /* Darker shade on hover */
+      background-color: #E6E6E6; /* Slightly darker shade on hover */
       transform: translateY(-2px); /* Slight lift */
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
     }
@@ -323,8 +324,8 @@
     .text-advert-section--header:focus,
     .text-advert-section--header:active {
       outline: none;
-      background-color: #507568; /* Ensuring visibility when focused */
-      box-shadow: 0 0 0 3px rgba(95, 144, 123, 0.5); /* Highlight for focus, adjust to match your hover color */
+      background-color: #E6E6E6; /* Ensuring visibility when focused */
+      box-shadow: 0 0 0 3px rgba(248, 248, 248, 0.5); /* Highlight for focus, adjusted to match hover color */
     }
 
     /* Responsive adjustments for smaller screens */
