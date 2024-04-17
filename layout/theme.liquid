@@ -307,15 +307,16 @@
       text-decoration: none;
       border-radius: 3px; /* Subtler rounded corners */
       transition: background-color 0.3s, transform 0.3s;
-      border: none; /* No border for a cleaner look */
+      border: none; /* Ensure no borders */
+      box-shadow: none; /* No shadow to simplify the button appearance */
     }
 
     /* Hover effect to give feedback on mouse over */
     .text-advert-section a:hover,
     .text-advert-section--header:hover {
       background-color: #E6E6E6; /* Slightly darker shade on hover */
-      transform: translateY(-2px); /* Slight lift */
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+      transform: translateY(-2px); /* Slight lift for interaction feedback */
+      box-shadow: none; /* Keeping it clean without shadow */
     }
 
     /* Focus and active states for accessibility */
@@ -323,7 +324,7 @@
     .text-advert-section a:active,
     .text-advert-section--header:focus,
     .text-advert-section--header:active {
-      outline: none; /* No outline on focus for a clean aesthetic */
+      outline: none; /* No outline on focus */
       background-color: #E6E6E6; /* Ensuring visibility when focused */
     }
 
