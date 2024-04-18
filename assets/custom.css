@@ -12,6 +12,7 @@
   margin-top: 10px;
 }
 
+/* This changes the gap on color swatches for desktop and mobile */
 .product-card__quick-buy .quick-buy-button:disabled {
   background-color: #ccc;
 
