@@ -68,15 +68,15 @@
         "text_x4d8iP": {
           "type": "text",
           "settings": {
-            "heading": "FREE SHIPPING",
-            "subheading": "Free Shipping Discount Code",
+            "heading": "get FREE SHIPPING",
+            "subheading": "When You Spend 1000THB",
             "link": "shopify:\/\/pages\/promotions"
           }
         },
         "text_xwxPCP": {
           "type": "text",
           "settings": {
-            "heading": "SIGN UP FOR 10% DISCOUNT",
+            "heading": "GET 10% DISCOUNT",
             "subheading": "Sign Up For A New Account Now",
             "link": "shopify:\/\/pages\/promotions"
           }
