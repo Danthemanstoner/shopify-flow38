@@ -1,1 +1,29 @@
-{"sections":{"main":{"type":"template--page","settings":{"page_title_enabled":true,"page_width":"narrow"}}},"order":["main"]}
+{
+  "sections": {
+    "main": {
+      "type": "template--page",
+      "settings": {
+        "page_title_enabled": true,
+        "page_width": "narrow"
+      }
+    },
+    "image_image_with_text_dKyWDn": {
+      "type": "image--image-with-text",
+      "settings": {
+        "text_overlapping_image": false,
+        "section-width": "full",
+        "layout": "left",
+        "text_alignment": "center",
+        "title": "NittayaPorn Chumkong & Dan Stoner",
+        "text": "<p>Business Partners<\/p>",
+        "button_label": "",
+        "button_link": "",
+        "colors": "light"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_image_with_text_dKyWDn"
+  ]
+}
