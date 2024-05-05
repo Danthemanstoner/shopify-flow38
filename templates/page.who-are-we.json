@@ -39,8 +39,9 @@
     "image_image_with_text_cmeTXp": {
       "type": "image--image-with-text",
       "settings": {
+        "image": "shopify:\/\/shop_images\/TheFruitBox_Meet_the_owners.jpg",
         "text_overlapping_image": false,
-        "section-width": "full",
+        "section-width": "content",
         "layout": "left",
         "text_alignment": "center",
         "title": "Meet the owners",
