@@ -35,10 +35,25 @@
         "text_alignment_mobile": "center",
         "colors": "white"
       }
+    },
+    "image_image_with_text_cmeTXp": {
+      "type": "image--image-with-text",
+      "settings": {
+        "text_overlapping_image": false,
+        "section-width": "full",
+        "layout": "left",
+        "text_alignment": "center",
+        "title": "Meet the owners",
+        "text": "<p>Nittayaporn Chumkong and Dan Stoner, the founders of The Fruit Box, are not only partners in business but also in life, sharing their journey with their 11-year-old son Ray, a spirited dog named Lambo, and three charming bunnies—PooPoo, Thaiger, and Chewy.<\/p>",
+        "button_label": "",
+        "button_link": "",
+        "colors": "light"
+      }
     }
   },
   "order": [
     "main",
-    "text_rich_text_J98Rgc"
+    "text_rich_text_J98Rgc",
+    "image_image_with_text_cmeTXp"
   ]
 }
