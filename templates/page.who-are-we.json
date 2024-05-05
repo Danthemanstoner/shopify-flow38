@@ -2,6 +2,7 @@
   "sections": {
     "main": {
       "type": "template--page",
+      "disabled": true,
       "settings": {
         "page_title_enabled": false,
         "page_width": "narrow"
@@ -30,7 +31,7 @@
       ],
       "settings": {
         "section_width": "narrow",
-        "text_alignment_desktop": "center",
+        "text_alignment_desktop": "left",
         "text_alignment_mobile": "center",
         "colors": "white"
       }
