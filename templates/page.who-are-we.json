@@ -1,0 +1,43 @@
+{
+  "sections": {
+    "main": {
+      "type": "template--page",
+      "settings": {
+        "page_title_enabled": false,
+        "page_width": "narrow"
+      }
+    },
+    "text_rich_text_J98Rgc": {
+      "type": "text--rich-text",
+      "blocks": {
+        "heading_bGFYHd": {
+          "type": "heading",
+          "settings": {
+            "heading": "Welcome to Our Offers and Promotions Page!"
+          }
+        },
+        "richtext_n77hzP": {
+          "type": "richtext",
+          "settings": {
+            "text": "<p>At TheFruitBox.co, we believe in celebrating the bounty of nature with our lovingly curated selection of fresh fruits and delightful produce. Our mission is to bring you the freshest, highest quality fruits directly to your doorstep, and what better way to do that than with exciting offers and promotions that make healthy living both affordable and fun!<br\/><br\/><strong>Exclusive Deals Just for You!<\/strong><br\/>Discover exclusive deals and special promotions tailored just for our valued customers. From seasonal discounts to limited-time offers, there’s always something new and exciting to look forward to. Whether you’re a fruit enthusiast or looking to add more nutritious choices to your diet, our offers are designed to give you the best value for premium quality fruits.<br\/><br\/><strong>What’s on Offer?<\/strong><br\/><strong>- Seasonal Specials<\/strong>: Take advantage of our seasonal specials, where we highlight the best of what’s in season and offer them at irresistible prices.<br\/><strong>- First-Time Buyer Discounts<\/strong>: New to TheFruitBox.co? Get a warm welcome with our first-time buyer discounts. Sign up and save on your first purchase.<br\/><strong>- Bundle Deals<\/strong>: Enjoy more and save more with our bundle deals. Purchase in bundles and get discounts that make your shopping spree even sweeter.<br\/><strong>- Referral Rewards<\/strong>: Share the love of fresh fruits with friends and family. Refer them to TheFruitBox.co and earn rewards for every successful referral.<br\/><br\/><strong>Stay Updated<\/strong><br\/>Don’t miss out on the chance to enjoy our fabulous fruits at fantastic prices. Sign up for our newsletter to stay updated on the latest promotions and exclusive offers. Be the first to know when new deals drop and ensure you get the best pick of the bunch!<br\/><br\/><strong>Your Satisfaction, Our Guarantee<\/strong><br\/>Your satisfaction is our top priority. We guarantee the freshness and quality of our produce, and our offers are designed to bring you the best at great prices. If you have any questions or need assistance, our customer service team is here to help.<br\/><br\/>Dive into a world of flavourful savings and make the most of our offers and promotions today! Freshness, quality, and great value – that’s our promise to you at TheFruitBox.co.<br\/><br\/><\/p>",
+            "text_size": 14
+          }
+        }
+      },
+      "block_order": [
+        "heading_bGFYHd",
+        "richtext_n77hzP"
+      ],
+      "settings": {
+        "section_width": "narrow",
+        "text_alignment_desktop": "center",
+        "text_alignment_mobile": "center",
+        "colors": "white"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "text_rich_text_J98Rgc"
+  ]
+}
