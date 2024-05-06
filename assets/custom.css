@@ -45,28 +45,3 @@
   justify-content: space-around; /* Adjust alignment as needed */
 }
 
-/* remove boarders */
-<div id="shopify-section-template--22517881897275__text_text_adverts_XTaGgp" class="shopify-section homepage-section--text-adverts-wrapper shown-on-scroll animated fadeInUp">
-  <link href="//thefruitbox.co/cdn/shop/t/8/assets/section-text-blocks.min.css?v=86379295954260848761712737655" rel="stylesheet" type="text/css" media="all">
-  <noscript><link href="//thefruitbox.co/cdn/shop/t/8/assets/section-text-blocks.min.css?v=86379295954260848761712737655" rel="stylesheet" type="text/css" media="all" /></noscript>
-  
-  <style>
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-    
-    .grid__item.large--one-third.medium--one-third {
-      animation: pulse 3s infinite ease-in-out;
-    }
-
-    /* Specific override for border on screens wider than 768px */
-    @media screen and (min-width: 768px) {
-      .homepage-sections-wrapper--white .text-advert-section .grid__item {
-        border-left: none !important; /* Removes left border */
-      }
-    }
-  </style>
-  
-  <!-- Existing HTML content -->
-</div>
