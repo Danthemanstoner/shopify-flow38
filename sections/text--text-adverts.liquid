@@ -11,20 +11,16 @@
     <noscript><link href="//thefruitbox.co/cdn/shop/t/8/assets/section-text-blocks.min.css?v=86379295954260848761712737655" rel="stylesheet" type="text/css" media="all" /></noscript>
   
     <style>
-      @keyframes wiggle {
-        0%, 100% {
-          transform: rotate(-0.2deg);
-        }
-        50% {
-          transform: rotate(0.2deg);
-        }
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
       }
-  
+      
       .grid__item.large--one-third.medium--one-third {
-        display: inline-block; /* Make sure divs can be transformed */
-        animation: wiggle 3s ease-in-out infinite;
+        animation: pulse 1s infinite ease-in-out;
       }
-    </style>
+      </style>
+      
   
     <!-- Existing HTML content -->
   </div>
