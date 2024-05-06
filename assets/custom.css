@@ -45,4 +45,16 @@
   justify-content: space-around; /* Adjust alignment as needed */
 }
 
-/
+/* remove boarders */
+<style>
+  .grid__item.large--one-third.medium--one-third {
+    border-right: none !important; /* Removes right borders if they exist */
+    border-left: none !important;  /* Removes left borders if they exist */
+  }
+
+  /* If pseudo-elements are used */
+  .grid__item.large--one-third.medium--one-third::after,
+  .grid__item.large--one-third.medium--one-third::before {
+    content: none !important; /* Removes content of pseudo-elements */
+  }
+</style>
