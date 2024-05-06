@@ -45,4 +45,20 @@
   justify-content: space-around; /* Adjust alignment as needed */
 }
 
+/*wiggle for promotions */
+<style>
+  @keyframes wiggle {
+    0%, 100% {
+      transform: rotate(-2deg);
+    }
+    50% {
+      transform: rotate(2deg);
+    }
+  }
+
+  .grid__item.large--one-third.medium--one-third {
+    display: inline-block; /* Make sure divs can be transformed */
+    animation: wiggle 1s ease-in-out infinite;
+  }
+</style>
 
