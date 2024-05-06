@@ -47,14 +47,11 @@
 
 /* remove boarders */
 <style>
-  .grid__item.large--one-third.medium--one-third {
-    border-right: none !important; /* Removes right borders if they exist */
-    border-left: none !important;  /* Removes left borders if they exist */
-  }
 
-  /* If pseudo-elements are used */
-  .grid__item.large--one-third.medium--one-third::after,
-  .grid__item.large--one-third.medium--one-third::before {
-    content: none !important; /* Removes content of pseudo-elements */
+  /* Specific override for border on screens wider than 768px */
+  @media screen and (min-width: 768px) {
+    .homepage-sections-wrapper--white .text-advert-section .grid__item {
+      border-left: none !important; /* Removes left border */
+    }
   }
 </style>
