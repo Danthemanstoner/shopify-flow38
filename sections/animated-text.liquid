@@ -17,6 +17,31 @@
   }
 </style>
 
+<style>
+  .animated-text.section--template--22517881897275__af3e824e-6ca9-4ac4-9510-a07cb14e4a66 a.homepage-section-btn {
+    color: #242424;
+    background-color: #ffffff;
+  }
+  
+  .using-keyboard .animated-text.section--template--22517881897275__af3e824e-6ca9-4ac4-9510-a07cb14e4a66 a.homepage-section-btn:focus {
+    outline: 2px solid #ffffff;
+  }
+
+  @keyframes wiggle {
+    0%, 100% {
+      transform: rotate(-3deg);
+    }
+    50% {
+      transform: rotate(3deg);
+    }
+  }
+
+  .homepage-section-btn-container .homepage-section-btn {
+    animation: wiggle 1s ease-in-out infinite;
+  }
+</style>
+
+
 {% liquid
   assign img_desktop = 'blank'
   if section.settings.image_desktop != blank
