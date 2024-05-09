@@ -1,40 +1,33 @@
-<div class="expandable-content-section">
-    <button class="expandable-content-toggle">Read More</button>
-    <div class="expandable-content-full">
-        <p>Your expandable content goes here...</p>
-    </div>
-</div>
 <style>
-    .expandable-content-section .expandable-content-full {
-        overflow: hidden;
-        transition: max-height 0.3s ease-out;
-        max-height: 20px; /* Adjust this value to show more or less content initially */
-    }
-    
-    .expandable-content-section.expanded .expandable-content-full {
-        max-height: 500px; /* Adjust based on maximum content height needed */
-    }
-    
-    .expandable-content-section .expandable-content-toggle {
+    .expandable-content-section #expandable-content-toggle {
         cursor: pointer;
         background-color: #f1f1f1;
         border: none;
-        padding: 10px;
+        padding: 5px;
+        display: block; /* Ensure the button is on a new line */
         text-align: center;
+        margin: 10px auto; /* Center the button horizontally */
+        width: fit-content; /* Make the button width as per its content */
+    }
+    
+    #description-text #remaining-text {
+        display: none; /* Ensures the additional text is hidden initially */
     }
     </style>
-    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const section = document.querySelector('.expandable-content-section');
-            const toggleButton = section.querySelector('.expandable-content-toggle');
-            const contentFull = section.querySelector('.expandable-content-full');
+            const toggleButton = document.getElementById('expandable-content-toggle');
+            const remainingText = document.getElementById('remaining-text');
         
             toggleButton.addEventListener('click', function() {
-                section.classList.toggle('expanded');
-                toggleButton.textContent = section.classList.contains('expanded') ? 'Read Less' : 'Read More';
+                if (remainingText.style.display === "none") {
+                    remainingText.style.display = "inline"; // Or "block" if you want it to take up the full width of a new line
+                    toggleButton.textContent = 'Read Less';
+                } else {
+                    remainingText.style.display = "none";
+                    toggleButton.textContent = 'Read More';
+                }
             });
         });
         </script>
-        
             
