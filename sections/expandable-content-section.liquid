@@ -1,5 +1,8 @@
+<!-- >this section does not work. Use Template-collection-header.liquid -->
+
+
 {% assign words = collection.description | split: ' ' %}
-{% assign summary_word_count = 20 %} <!-- Adjust this to change the initial visible word count -->
+{% assign summary_word_count = 30 %} <!-- Adjust this to change the initial visible word count -->
 {% assign first_part = words | slice: 0, summary_word_count | join: ' ' %}
 {% assign remaining_part = words | slice: summary_word_count, words.size | join: ' ' %}
 
