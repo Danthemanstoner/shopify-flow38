@@ -1,33 +1,46 @@
-<style>
-    .expandable-content-section #expandable-content-toggle {
-        cursor: pointer;
-        background-color: #f1f1f1;
-        border: none;
-        padding: 5px;
-        display: block; /* Ensure the button is on a new line */
-        text-align: center;
-        margin: 10px auto; /* Center the button horizontally */
-        width: fit-content; /* Make the button width as per its content */
-    }
+<div class="expandable-content-section">
+    <p id="description-text">
+        Introducing the PLUS+ Pure Press Collection, a celebration of vitality and purity in every bottle. This exclusive category is dedicated entirely to our signature PLUS+ cold press juices, each meticulously crafted to offer not just refreshment, but a rejuvenating boost of nutrition. From invigorating protein and fiber-rich blends to antioxidant-packed vitamin C and multi-vitamin concoctions, the PLUS+ Pure Press Collection is designed for the health-conscious individual who refuses to compromise on taste or quality.
+        <br><br>
+        <span id="remaining-text" style="display: none;">
+            Every PLUS+ juice in this collection is a testament to our commitment to excellence, made from the finest, freshest ingredients and cold-pressed to perfection to preserve the natural goodness of the fruits and vegetables. The result is a vibrant, nutrient-dense drink that energizes, detoxifies, and nourishes your body with every sip.
+            <br><br>
+            Packaged in our signature eco-friendly bottles and presented with minimalist elegance, the PLUS+ Pure Press Collection is more than just juice; it's a lifestyle choice for those who prioritize wellness and sustainability. Whether you're looking for a daily health boost, a natural detox solution, or a delicious way to get your vitamins, the PLUS+ Pure Press Collection offers a pure, potent, and pleasurable way to enhance your health and your life.
+        </span>
+    </p>
+    <button id="expandable-content-toggle">Read More</button>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleButton = document.getElementById('expandable-content-toggle');
+        const remainingText = document.getElementById('remaining-text');
     
-    #description-text #remaining-text {
-        display: none; /* Ensures the additional text is hidden initially */
-    }
-    </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const toggleButton = document.getElementById('expandable-content-toggle');
-            const remainingText = document.getElementById('remaining-text');
-        
-            toggleButton.addEventListener('click', function() {
-                if (remainingText.style.display === "none") {
-                    remainingText.style.display = "inline"; // Or "block" if you want it to take up the full width of a new line
-                    toggleButton.textContent = 'Read Less';
-                } else {
-                    remainingText.style.display = "none";
-                    toggleButton.textContent = 'Read More';
-                }
-            });
+        toggleButton.addEventListener('click', function() {
+            // Check if 'remaining-text' is currently hidden
+            if (remainingText.classList.contains('hide')) {
+                remainingText.classList.remove('hide'); // Show text
+                toggleButton.textContent = 'Read Less';
+            } else {
+                remainingText.classList.add('hide'); // Hide text
+                toggleButton.textContent = 'Read More';
+            }
         });
-        </script>
+    });
+    </script>
+    <style>
+        #remaining-text.hide {
+            display: none;
+        }
+        
+        .expandable-content-section #expandable-content-toggle {
+            cursor: pointer;
+            background-color: #f1f1f1;
+            border: none;
+            padding: 5px;
+            display: block; /* Ensure the button is on a new line */
+            text-align: center;
+            margin: 10px auto; /* Center the button horizontally */
+            width: fit-content; /* Make the button width as per its content */
+        }
+        </style>
             
