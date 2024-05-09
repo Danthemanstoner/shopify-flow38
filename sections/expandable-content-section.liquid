@@ -23,7 +23,7 @@
 .expandable-content-section .expandable-content-full {
     overflow: hidden;
     transition: max-height 0.3s ease;
-    max-height: 50;
+    max-height: 0;
 }
 
 .expandable-content-section.expanded .expandable-content-full {
@@ -40,15 +40,28 @@
 </style>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const section = document.querySelector('.expandable-content-section');
-    const toggleButton = section.querySelector('.expandable-content-toggle');
-    const contentFull = section.querySelector('.expandable-content-full');
-
-    toggleButton.addEventListener('click', () => {
-        const isExpanded = section.classList.toggle('expanded');
-        toggleButton.textContent = isExpanded ? 'Read Less' : 'Read More';
-        contentFull.style.maxHeight = isExpanded ? contentFull.scrollHeight + "px" : null;
+    document.addEventListener('DOMContentLoaded', function() {
+        const section = document.querySelector('.expandable-content-section');
+        const toggleButton = section.querySelector('.expandable-content-toggle');
+        const contentFull = section.querySelector('.expandable-content-full');
+    
+        // Define the small height for the collapsed state.
+        const smallHeight = "50px"; // Adjust this to how much text you want initially visible.
+    
+        // Set the initial max-height to the smallHeight value.
+        contentFull.style.maxHeight = smallHeight;
+    
+        toggleButton.addEventListener('click', () => {
+            const isExpanded = section.classList.toggle('expanded');
+            if (isExpanded) {
+                // When expanded, set max-height to the scrollHeight of the content.
+                contentFull.style.maxHeight = contentFull.scrollHeight + "px";
+            } else {
+                // When collapsed, revert to the small predefined height.
+                contentFull.style.maxHeight = smallHeight;
+            }
+            toggleButton.textContent = isExpanded ? 'Read Less' : 'Read More';
+        });
     });
-});
-</script>
+    </script>
+    
