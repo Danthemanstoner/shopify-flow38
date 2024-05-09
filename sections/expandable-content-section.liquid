@@ -1,57 +1,67 @@
-<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Expandable Section Example</title>
-        <style>
-            #shopify-section-template--22517881700667__collection-header-default .expandable-content-section .expandable-content-full {
-                overflow: hidden;
-                transition: max-height 0.3s ease;
-                max-height: 0;
-            }
-    
-            #shopify-section-template--22517881700667__collection-header-default .expandable-content-section.expanded .expandable-content-full {
-                max-height: 1000px; /* Adjust this value based on the typical maximum content size */
-            }
-    
-            #shopify-section-template--22517881700667__collection-header-default .expandable-content-section .expandable-content-toggle {
-                cursor: pointer;
-                background-color: #f1f1f1;
-                border: none;
-                padding: 10px;
-                text-align: center;
-                display: block;
-                margin: 10px auto;
-                width: fit-content;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="shopify-section-template--22517881700667__collection-header-default" class="shopify-section">
-            <div class="expandable-content-section">
-                <button class="expandable-content-toggle">Read More</button>
-                <div class="expandable-content-full" style="max-height: 50px; overflow: hidden; transition: max-height 0.3s ease;">
-                    <p>Your expandable content goes here...</p> <!-- Replace this with your dynamic content -->
-                </div>
-            </div>
-        </div>
-    
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const section = document.querySelector('#shopify-section-template--22517881700667__collection-header-default .expandable-content-section');
-            const toggleButton = section.querySelector('.expandable-content-toggle');
-            const contentFull = section.querySelector('.expandable-content-full');
-    
-            const smallHeight = "50px"; // Adjust this to how much text you want initially visible.
-    
-            toggleButton.addEventListener('click', () => {
-                const isExpanded = section.classList.toggle('expanded');
-                toggleButton.textContent = isExpanded ? 'Read Less' : 'Read More';
-                contentFull.style.maxHeight = isExpanded ? contentFull.scrollHeight + "px" : smallHeight;
-            });
-        });
-        </script>
-    </body>
-    </html>
-    
+{% schema %}
+{
+  "name": "Expandable Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "content",
+      "label": "Content",
+      "default": "Your expandable content goes here..."
+    }
+  ]
+}
+{% endschema %}
+
+<div class="expandable-content-section">
+    <button class="expandable-content-toggle">Read More</button>
+    <div class="expandable-content-full" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease;">
+        <p>{{ section.settings.content }}</p>
+    </div>
+</div>
+
+<style>
+.expandable-content-section .expandable-content-full {
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    max-height: 0;
+}
+
+.expandable-content-section.expanded .expandable-content-full {
+    max-height: 1000px; /* Adjust as needed */
+}
+
+.expandable-content-section .expandable-content-toggle {
+    cursor: pointer;
+    background-color: #f1f1f1;
+    border: none;
+    padding: 10px;
+    text-align: center;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const section = document.querySelector('.expandable-content-section');
+    const toggleButton = section.querySelector('.expandable-content-toggle');
+    const contentFull = section.querySelector('.expandable-content-full');
+
+    // Define the small height for the collapsed state.
+    const smallHeight = "50px"; // Adjust this to how much text you want initially visible.
+
+    // Set the initial max-height to the smallHeight value.
+    contentFull.style.maxHeight = smallHeight;
+
+    toggleButton.addEventListener('click', () => {
+        const isExpanded = section.classList.toggle('expanded');
+        if (isExpanded) {
+            // When expanded, set max-height to the scrollHeight of the content.
+            contentFull.style.maxHeight = contentFull.scrollHeight + "px";
+        } else {
+            // When collapsed, revert to the small predefined height.
+            contentFull.style.maxHeight = smallHeight;
+        }
+        toggleButton.textContent = isExpanded ? 'Read Less' : 'Read More';
+    });
+});
+</script>
+
