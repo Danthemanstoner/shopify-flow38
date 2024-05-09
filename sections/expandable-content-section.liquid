@@ -7,12 +7,12 @@
 <style>
     .expandable-content-section .expandable-content-full {
         overflow: hidden;
-        transition: max-height 0.3s ease;
-        max-height: 50px; /* Initial small height */
+        transition: max-height 0.3s ease-out;
+        max-height: 50px; /* Adjust this value to show more or less content initially */
     }
     
     .expandable-content-section.expanded .expandable-content-full {
-        max-height: 1000px; /* Large enough to show the entire content when expanded */
+        max-height: 500px; /* Adjust based on maximum content height needed */
     }
     
     .expandable-content-section .expandable-content-toggle {
@@ -23,26 +23,18 @@
         text-align: center;
     }
     </style>
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const section = document.querySelector('.expandable-content-section');
             const toggleButton = section.querySelector('.expandable-content-toggle');
             const contentFull = section.querySelector('.expandable-content-full');
         
-            toggleButton.addEventListener('click', () => {
-                const isExpanded = section.classList.toggle('expanded');
-                // Toggle text based on the expanded state.
-                toggleButton.textContent = isExpanded ? 'Read Less' : 'Read More';
-        
-                // Adjust max-height dynamically based on whether it's expanded.
-                if (isExpanded) {
-                    // Set max-height to an arbitrarily large value or scrollHeight of the content.
-                    contentFull.style.maxHeight = contentFull.scrollHeight + "px";
-                } else {
-                    // Set max-height back to the small initial height to hide most of the content.
-                    contentFull.style.maxHeight = "30px";
-                }
+            toggleButton.addEventListener('click', function() {
+                section.classList.toggle('expanded');
+                toggleButton.textContent = section.classList.contains('expanded') ? 'Read Less' : 'Read More';
             });
         });
         </script>
+        
             
