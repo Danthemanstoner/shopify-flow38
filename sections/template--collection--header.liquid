@@ -1,8 +1,8 @@
 {% assign image_block = section.blocks | where: "type", "collection_image" | first %}
 {% assign words = collection.description | split: ' ' %}
-{% assign half_index = words.size | divided_by: 2 %}
-{% assign first_half = words | slice: 0, half_index | join: ' ' %}
-{% assign second_half = words | slice: half_index, words.size | join: ' ' %}
+{% assign summary_word_count = 30 %} <!-- You can change this number as needed -->
+{% assign first_part = words | slice: 0, summary_word_count | join: ' ' %}
+{% assign remaining_part = words | slice: summary_word_count, words.size | join: ' ' %}
 
 <header class="section-header collection">
   {%- for block in section.blocks -%}
@@ -18,15 +18,13 @@
           <div class="rte rte--header collection-header__description wrapper-padded text-link-animated" {{ block.shopify_attributes }}>
             <div class="expandable-content-section">
               <p id="description-text">
-                {{ first_half }}
-                <span id="remaining-text" style="display: none;">{{ second_half }}</span>
+                {{ first_part }}
+                <span id="remaining-text" style="display: none;">{{ remaining_part }}</span>
               </p>
               <button id="expandable-content-toggle">Read More</button>
             </div>
           </div>
         {% endif %}
-      {%- when 'collection_image' -%}
-        ...
     {%- endcase -%}
   {%- endfor -%}
 </header>
@@ -44,7 +42,6 @@
 }
 </style>
 
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const toggleButton = document.getElementById('expandable-content-toggle');
@@ -61,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-
 
 
 
