@@ -1,3 +1,4 @@
+
 <div class="expandable-content-section">
     <p id="description-text">
         Introducing the PLUS+ Pure Press Collection, a celebration of vitality and purity in every bottle. This exclusive category is dedicated entirely to our signature PLUS+ cold press juices, each meticulously crafted to offer not just refreshment, but a rejuvenating boost of nutrition. From invigorating protein and fiber-rich blends to antioxidant-packed vitamin C and multi-vitamin concoctions, the PLUS+ Pure Press Collection is designed for the health-conscious individual who refuses to compromise on taste or quality.
@@ -11,6 +12,25 @@
     <button id="expandable-content-toggle">Read More</button>
 </div>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("DOM fully loaded and parsed");
+        const toggleButton = document.getElementById('expandable-content-toggle');
+        const remainingText = document.getElementById('remaining-text');
+    
+        console.log("Button and Text Elements:", toggleButton, remainingText);
+    
+        toggleButton.addEventListener('click', function() {
+            console.log("Button clicked");
+            if (remainingText.style.display === "none") {
+                remainingText.style.display = "inline"; // Or "block" if you want it to take up the full width of a new line
+                toggleButton.textContent = 'Read Less';
+            } else {
+                remainingText.style.display = "none";
+                toggleButton.textContent = 'Read More';
+            }
+        });
+    });
+    
     document.addEventListener('DOMContentLoaded', function() {
         const toggleButton = document.getElementById('expandable-content-toggle');
         const remainingText = document.getElementById('remaining-text');
