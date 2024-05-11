@@ -79,8 +79,8 @@
         "a379cb7a-ba34-48da-b0af-2b0379b8db62": {
           "type": "tab_content",
           "settings": {
-            "question": "Place your question or heading here",
-            "text": "<p>Here you can place an explanation or answer to the question.<\/p>"
+            "question": "Are your fruits Locally sourced or imported?",
+            "text": "<p>Actually it's a mixture of both. <br\/><br\/>We have excellent relationships with local suppliers and international suppliers alike. <\/p><p>We pride ourselves on offering only the highest quality fruit, veg and flowers worldwide.<br\/><\/p>"
           }
         }
       },
