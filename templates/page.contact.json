@@ -200,7 +200,7 @@
         "3ba6d5ff-4566-4d96-8d8b-52c42e2ca699": {
           "type": "button",
           "settings": {
-            "button_link": "shopify:\/\/collections\/all",
+            "button_link": "https:\/\/www.instagram.com\/thefruitboxbangkok\/",
             "button_text": "Follow us"
           }
         }
@@ -222,6 +222,7 @@
         "16292070946a646e48-2": {
           "type": "image",
           "settings": {
+            "image": "shopify:\/\/shop_images\/dantheman.stoner_product_photoshoot_style_light_grey_background_c3e1ae6b-c21f-4cc4-a497-5cf04e039cb7.png",
             "link": "shopify:\/\/collections\/all",
             "title": "Heading",
             "subheading": "Subheading",
@@ -236,6 +237,7 @@
         "16292070946a646e48-1": {
           "type": "image",
           "settings": {
+            "image": "shopify:\/\/shop_images\/beetit_7e36cd19-d24f-40af-a101-b81dc09b95c9.jpg",
             "link": "shopify:\/\/collections\/all",
             "title": "Heading",
             "subheading": "Subheading",
@@ -250,6 +252,7 @@
         "16292070946a646e48-0": {
           "type": "image",
           "settings": {
+            "image": "shopify:\/\/shop_images\/dantheman.stoner_recreate_this_image_but_change_the_box_colour__47ea39b3-5c25-4fa8-ab59-e65f79eff1e3.png",
             "link": "shopify:\/\/collections\/all",
             "title": "Heading",
             "subheading": "Subheading",
@@ -264,6 +267,7 @@
         "3a856712-4c09-43a7-8bd1-8e9d920e9093": {
           "type": "image",
           "settings": {
+            "image": "shopify:\/\/shop_images\/dantheman.stoner_product_photoshoot_style_light_grey_background_93abb831-bfff-4ed0-806b-f491a295047c.png",
             "link": "shopify:\/\/collections\/all",
             "title": "Heading",
             "subheading": "Subheading",
