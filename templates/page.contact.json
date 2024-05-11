@@ -103,13 +103,13 @@
         "6a2f6ce0-606a-4133-b01a-ee3926268a9e": {
           "type": "heading",
           "settings": {
-            "heading": "Still got Q's?"
+            "heading": "More Questions?"
           }
         },
         "9f90cfb3-0430-4b6c-90df-8309138e865a": {
           "type": "richtext",
           "settings": {
-            "text": "<p>Direct your customers towards an FAQs page or somewhere they can find out more information<\/p>",
+            "text": "<p>For further questions, please click the button below to speak with our customer service team.<\/p>",
             "text_size": 14
           }
         },
@@ -126,6 +126,7 @@
         "9f90cfb3-0430-4b6c-90df-8309138e865a",
         "c1f278da-fb1a-46ad-9d1f-1e169afa696c"
       ],
+      "disabled": true,
       "settings": {
         "section_width": "narrow",
         "text_alignment_desktop": "center",
