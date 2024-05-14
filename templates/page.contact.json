@@ -300,7 +300,7 @@
       "type": "newsletter--newsletter",
       "settings": {
         "newsletter_heading": "Join our Mailing List",
-        "newsletter_description": "<p>Get priority access to events and exclusive offers<\/p>",
+        "newsletter_description": "<p>Sign up now for 10% off your first order and exclusive offers.<\/p>",
         "colors": "light"
       }
     },
