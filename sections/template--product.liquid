@@ -2,6 +2,8 @@
   itemscope itemtype="http://schema.org/Product"
   data-wetheme-section-type="template--product" data-wetheme-section-id="{{ section.id }}"
 >
+<div class="subscriptions_app_embed_block"></div>
+
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
   {%- if product.featured_media.preview_image -%}
   <meta itemprop="image" content="{{ product.featured_media.preview_image | image_url: width: 600, height: 600 }}">
