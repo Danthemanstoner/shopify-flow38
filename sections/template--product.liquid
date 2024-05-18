@@ -47,8 +47,6 @@
     {% render 'product-media-templates', product: product, section_id: section.id, featured_media_id: featured_media.id, enable_video_loop: section.settings.enable_video_loop %}
   </div>
 
-  {% comment  %} Shopify Subscription Snippet {% endcomment %}%}
-  <div class="subscriptions_app_embed_block"></div>
 
   {% assign style = 'full_width' %}
   {% if section.settings.image-display == 'thumbnails' %}
@@ -112,6 +110,9 @@
           </div>
 
           <div class="grid__item product-form-wrapper {{ product_description_width }}{% if section.settings.enable_sticky %} product-sticky{% endif %}">
+
+            {% comment  %} Shopify Subscription Snippet {% endcomment %}
+  <div class="subscriptions_app_embed_block"></div>
 
             <div>
 
