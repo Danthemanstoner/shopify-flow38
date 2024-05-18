@@ -2,8 +2,6 @@
   itemscope itemtype="http://schema.org/Product"
   data-wetheme-section-type="template--product" data-wetheme-section-id="{{ section.id }}"
 >
-<div class="subscriptions_app_embed_block"></div>
-
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
   {%- if product.featured_media.preview_image -%}
   <meta itemprop="image" content="{{ product.featured_media.preview_image | image_url: width: 600, height: 600 }}">
@@ -48,6 +46,9 @@
     {% assign featured_media = current_variant.featured_media | default: product.featured_media %}
     {% render 'product-media-templates', product: product, section_id: section.id, featured_media_id: featured_media.id, enable_video_loop: section.settings.enable_video_loop %}
   </div>
+
+  {% comment  %} Shopify Subscription Snippet {% endcomment %}%}
+  <div class="subscriptions_app_embed_block"></div>
 
   {% assign style = 'full_width' %}
   {% if section.settings.image-display == 'thumbnails' %}
