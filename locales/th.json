@@ -542,6 +542,15 @@
             "saved_payment_methods_cvv_verification_disabled": "วิธีการชำระเงินที่เลือกต้องมีการตรวจสอบ CVV ซึ่งไม่ได้เปิดใช้งานสำหรับร้านค้านี้ เลือกวิธีการชำระเงินอื่น"
           }
         }
+      },
+      "order_summary": {
+        "deferred_balance_info": {
+          "title": "ยอดคงเหลือ {{amount_due}} ครบกำหนดชำระในวันที่ {{due_at}}",
+          "due_on_fulfillment_title": "ยอดคงเหลือ {{amount_due}} ครบกำหนดชำระเมื่อดำเนินการเสร็จสิ้น"
+        }
+      },
+      "payment_gateway": {
+        "order_deposit_due_on_fulfillment": "{{depositAmount}} ครบกำหนดชำระวันนี้ ยอดคงเหลือจะครบกำหนดเมื่อคำสั่งซื้อของคุณเสร็จสมบูรณ์"
       }
     }
   },
