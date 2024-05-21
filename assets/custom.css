@@ -45,3 +45,42 @@
   justify-content: space-around; /* Adjust alignment as needed */
 }
 }
+/* Ensuring no gaps between images and proper alignment */
+.mega-menu-promo-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0; /* Remove bottom margin */
+  padding: 0;
+}
+
+.mega-menu-promo-image {
+  margin-bottom: 0; /* Remove bottom margin */
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.mega-menu-promo-image img {
+  max-width: 60%;
+  height: auto;
+}
+
+.mega-menu-promo-card {
+  padding: 0;
+  margin-right: 0; /* Remove right margin */
+  display: inline-block; /* Ensure inline-block for proper alignment */
+}
+
+.inner.mega-menu--image-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0; /* Remove gap between items */
+  justify-content: center;
+  padding: 0;
+}
+
+.mega-menu-promo-text--wrapper {
+  width: 100%;
+  text-align: center;
+}

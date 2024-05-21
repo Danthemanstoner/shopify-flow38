@@ -14,6 +14,7 @@
 {%- endcomment -%}
 
 {% liquid
+
   assign promo_wrapper_classes = "mega-menu-promo-card " | append: promo_wrapper_classes | append: " block-id-" | append: promo_block_id
 
   assign promo_text = false
@@ -45,41 +46,6 @@
     assign img_stretch = true
   endif
 %}
-
-<style>
-  .mega-menu-promo-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 0; /* Remove bottom margin */
-    padding: 0;
-  }
-  .mega-menu-promo-image {
-    margin-bottom: 0; /* Remove bottom margin */
-    padding: 0;
-    display: flex;
-    justify-content: center;
-  }
-  .mega-menu-promo-image img {
-    max-width: 60%;
-    height: auto;
-  }
-  .mega-menu-promo-card {
-    padding: 0;
-    margin-right: 0; /* Remove right margin */
-    display: flex; /* Ensure flexbox for proper alignment */
-  }
-  .inner.mega-menu--image-wrapper {
-    display: flex;
-    gap: 0; /* Remove gap between items */
-    justify-content: center;
-    padding: 0;
-  }
-  .mega-menu-promo-text--wrapper {
-    width: 100%;
-    text-align: center;
-  }
-</style>
 
 <li class="{{ promo_wrapper_classes }}" {{ promo_wrapper_attr }}>
   <div class="inner mega-menu--image-wrapper">
