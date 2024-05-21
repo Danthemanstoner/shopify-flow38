@@ -27,9 +27,6 @@
     assign promo_layout_classes = " has-promo-text--below-img"
   endif
 
-  assign promo_img_style = "max-width: 60%; height: auto;" // Reducing the size by 40%
-  assign promo_img_props = "style='" | append: promo_img_style | append: "'"
-
   assign promo_img_alt = promo_img.alt | default: promo_text_heading | default: shop.name
   assign promo_img_alt = promo_img_alt | escape
 
@@ -40,7 +37,6 @@
     assign attr = "href='" | append: promo_link | append: "'"
     assign sr-announcement = promo_img.alt | append: " " | append: promo_text_heading | append: " " | append: promo_text_subheading
     assign accessibility_attr = " tabindex='0' aria-label='" | append: sr-announcement | append: "'"
-    assign promo_img_props = promo_img_props | append: " tabindex='-1' "
   endif
 
   assign img_crop = ""
@@ -58,7 +54,7 @@
       <{{ tag }} class="mega-menu-promo-wrapper{% if promo_link != blank %} nav-link-animated--custom{% endif %}"{{ attr }}{{ accessibility_attr }}>
 
         <div class="mega-menu-promo-image{{ img_crop }}">
-          {% render 'responsive-image' with promo_img, allow_stretch: img_stretch, alt: promo_img_alt, props: promo_img_props %}
+          <img src="{{ promo_img | img_url: '600x600' }}" alt="{{ promo_img_alt }}" style="max-width: 60%; height: auto;">
         </div>
 
         {% if promo_text != blank and promo_text_overlay %}
@@ -69,7 +65,6 @@
 
       {% if promo_text != blank and promo_text_overlay == false %}
         {% render 'mega-menu-promo-card--text-content' with promo_text_heading: promo_text_heading, promo_link: promo_link, promo_text_subheading: promo_text_subheading, promo_text_overlay: promo_text_overlay, attr: attr %}
-
       {% endif %}
     </div>
   </div>
