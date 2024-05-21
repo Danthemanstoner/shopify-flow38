@@ -45,3 +45,8 @@
   justify-content: space-around; /* Adjust alignment as needed */
 }
 }
+/* Add this CSS to your theme's stylesheet */
+.custom-reduced-size {
+  width: 60%;
+  height: auto;
+}
