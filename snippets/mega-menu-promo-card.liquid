@@ -4,7 +4,7 @@
     promo_block_id: {String} Shopify block id.
     promo_wrapper_attr: {String} Wrapper attributes.
     promo_img: {Obj} Shopify image obj.
-    promo_img_crop: {String} Image aspect-ratio value. Options are: "saquare", "tall", "wide" or "natural".
+    promo_img_crop: {String} Image aspect-ratio value. Options are: "square", "tall", "wide" or "natural".
     promo_text_overlay: {Bool} When true, promo text overlays img.
     promo_text_heading: {String} Heading text.
     promo_text_subheading:{String} Subheading text.
@@ -53,15 +53,18 @@
     flex-direction: column;
     align-items: center;
     margin-bottom: 10px; /* Reduce space between promo cards */
+    padding: 0; /* Remove any padding that might affect spacing */
   }
   .mega-menu-promo-image {
     margin-bottom: 5px; /* Reduce space between image and text */
-    width: 60%; /* Ensure the div wraps the image size */
+    width: auto; /* Adjust to fit content */
     display: flex;
     justify-content: center; /* Center the image inside the div */
+    padding: 0; /* Ensure no extra padding */
   }
   .mega-menu-promo-card {
     margin-right: 10px; /* Reduce space between images */
+    padding: 0; /* Ensure no extra padding */
   }
   .inner.mega-menu--image-wrapper {
     display: flex;
