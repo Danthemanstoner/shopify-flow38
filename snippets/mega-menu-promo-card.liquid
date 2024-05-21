@@ -47,6 +47,21 @@
   endif
 %}
 
+<style>
+  .mega-menu-promo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px; /* Reduce space between promo cards */
+  }
+  .mega-menu-promo-image {
+    margin-bottom: 5px; /* Reduce space between image and text */
+  }
+  .mega-menu-promo-card {
+    margin-right: 10px; /* Reduce space between images */
+  }
+</style>
+
 <li class="{{ promo_wrapper_classes }}" {{ promo_wrapper_attr }}>
   <div class="inner mega-menu--image-wrapper">
     <div class="mega-menu-promo{{ promo_layout_classes }}">
