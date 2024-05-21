@@ -74,7 +74,7 @@
 
 .inner.mega-menu--image-wrapper {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* Ensure no wrapping */
   gap: 0; /* Remove gap between items */
   justify-content: center;
   padding: 0;
