@@ -1,99 +1,110 @@
-{% liquid 
-  assign block = mega-menu
+{%- comment -%}
+  Renders a promo mega-menu card. Accepts: 
+    promo_wrapper_classes: {String} Wrapper classes.
+    promo_block_id: {String} Shopify block id.
+    promo_wrapper_attr: {String} Wrapper attributes.
+    promo_img: {Obj} Shopify image obj.
+    promo_img_crop: {String} Image aspect-ratio value. Options are: "square", "tall", "wide" or "natural".
+    promo_text_overlay: {Bool} When true, promo text overlays img.
+    promo_text_heading: {String} Heading text.
+    promo_text_subheading:{String} Subheading text.
+    promo_text_color: {String} Color picker hex value.
+    promo_link: {String} Link value.
+    promo_mobile_nav: {Bool} Whether the promo card is included on the mobile nav drawer or not.
+{%- endcomment -%}
 
-  assign block_grid_cols = '1fr'
-  assign links_grid_cols = 'repeat(5, 1fr)'
-  if link.links.size > 0 and block.settings.mega_image_1 != blank and block.settings.mega_image_2 != blank
-    assign block_grid_cols = '2fr 1fr 1fr'
-    assign links_grid_cols = 'repeat(3, 1fr)'
-  elsif link.links.size > 0 and block.settings.mega_image_1 != blank or block.settings.mega_image_2 != blank
-    assign block_grid_cols = '2fr 1fr'
-    assign links_grid_cols = 'repeat(4, 1fr)'
-  elsif link.links.size == 0 and block.settings.mega_image_1 != blank or block.settings.mega_image_2 != blank
-    assign block_grid_cols = 'repeat(5, 1fr)'
+{% liquid
+
+  assign promo_wrapper_classes = "mega-menu-promo-card " | append: promo_wrapper_classes | append: " block-id-" | append: promo_block_id
+
+  assign promo_text = false
+  if promo_text_heading != blank or promo_text_subheading != blank
+    assign promo_text = true
+  endif
+
+  assign promo_layout_classes = ""
+  if promo_text and promo_text_overlay == false
+    assign promo_layout_classes = " has-promo-text--below-img"
+  endif
+
+  assign promo_img_alt = promo_img.alt | default: promo_text_heading | default: shop.name
+  assign promo_img_alt = promo_img_alt | escape
+
+  assign tag = "div"
+  assign accessibility_attr = ""
+  if promo_link != blank
+    assign tag = "a"
+    assign attr = "href='" | append: promo_link | append: "'"
+    assign sr-announcement = promo_img.alt | append: " " | append: promo_text_heading | append: " " | append: promo_text_subheading
+    assign accessibility_attr = " tabindex='0' aria-label='" | append: sr-announcement | append: "'"
+  endif
+
+  assign img_crop = ""
+  assign img_stretch = false
+  if promo_img_crop != "natural"
+    assign img_crop = " mega-menu-aspect-ratio" | append: " aspect-ratio--" | append: promo_img_crop
+    assign img_stretch = true
   endif
 %}
 
-{% style %}
-  [data-mega-menu-block-id="{{ block.id }}"] {
-    grid-template-columns: {{ block_grid_cols }};
+<style>
+  .mega-menu-promo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 0;
   }
-
-  [data-mega-menu-block-id="{{ block.id }}"] .mega-menu--links {
-    grid-template-columns: {{ links_grid_cols }};
+  .mega-menu-promo-image {
+    margin-bottom: 5px;
+    width: auto;
+    padding: 0;
+    display: flex;
+    justify-content: center;
   }
-
-  .mega-menu-block .block-id-{{ block.id }} .overlay-text-on-image-promo-1,
-  .mega-menu-block .block-id-{{ block.id }} .overlay-text-on-image-promo-1 a:hover {
-    color: {{ block.settings.overlay_text_color_promo_1 }} !important;
+  .mega-menu-promo-image img {
+    max-width: 60%;
+    height: auto;
   }
-
-  .mega-menu-block .block-id-{{ block.id }} .overlay-text-on-image-promo-2,
-  .mega-menu-block .block-id-{{ block.id }} .overlay-text-on-image-promo-2 a:hover {
-    color: {{ block.settings.overlay_text_color_promo_2 }} !important;
+  .mega-menu-promo-card {
+    padding: 0;
+    margin-right: 10px;
+    display: inline-block;
   }
-{% endstyle %}
+  .inner.mega-menu--image-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    padding: 0;
+  }
+  .mega-menu-promo-text--wrapper {
+    width: 100%;
+    text-align: center;
+  }
+</style>
 
-<div class="mega-menu-block{% if link.links.size == 0 and block.settings.mega_image_1 == blank and block.settings.mega_image_2 == blank %} no--content{% endif %}" data-mega-menu-block-id="{{ block.id }}" {{ block.shopify_attributes }}>
-  {% if link.links.size == 0 %}
-    {% if block.settings.mega_image_1 == blank and block.settings.mega_image_2 == blank %}
-      <p class="mega-menu--empty" {% unless request.design_mode %}style="visibility:hidden;"{% endunless %}>
-        This megamenu doesn't currently have any content. Add content to the megamenu in the Shopify admin at: Online store > Menu.
-      </p>
-    {% endif %}
-  {% endif %}
+<li class="{{ promo_wrapper_classes }}" {{ promo_wrapper_attr }}>
+  <div class="inner mega-menu--image-wrapper">
+    <div class="mega-menu-promo{{ promo_layout_classes }}">
 
-  {% if link.links.size > 0 %}
-    <div class="mega-menu--links">
-      {% for sub_link in link.links %}
-        <li class="dropdown-submenu nav-link-animated--custom" aria-haspopup="true">
-          <div class="inner">
-            <p class="h4 mega-menu-link--title"><a class="animated-link--item" href="{{ sub_link.url }}">{{ sub_link.title | escape }}</a></p>
-            <ul class="menu-link">
-              {% for sub_sub_link in sub_link.links %}
-                <li>
-                  <a class="animated-link--item" href="{{ sub_sub_link.url }}">{{ sub_sub_link.title | escape }}</a>
-                </li>
-              {% endfor %}
-            </ul>
-          </div>
-        </li>
-      {% endfor %}
+      <{{ tag }} class="mega-menu-promo-wrapper{% if promo_link != blank %} nav-link-animated--custom{% endif %}"{{ attr }}{{ accessibility_attr }}>
+
+        <div class="mega-menu-promo-image{{ img_crop }}">
+          <img src="{{ promo_img | img_url: '600x600' }}" alt="{{ promo_img_alt }}">
+        </div>
+
+        {% if promo_text != blank and promo_text_overlay %}
+          {% render 'mega-menu-promo-card--text-content' with promo_text_heading: promo_text_heading, promo_link: promo_link, promo_text_subheading: promo_text_subheading, promo_text_overlay: promo_text_overlay, text_color: promo_text_color %}
+        {% endif %}
+    
+      </{{ tag }}>
+
+      {% if promo_text != blank and promo_text_overlay == false %}
+        <div class="mega-menu-promo-text--wrapper">
+          {% render 'mega-menu-promo-card--text-content' with promo_text_heading: promo_text_heading, promo_link: promo_link, promo_text_subheading: promo_text_subheading, promo_text_overlay: promo_text_overlay, attr: attr %}
+        </div>
+      {% endif %}
     </div>
-  {% endif %}
-
-  {% if block.settings.mega_image_1 %}
-    <div>
-      {% render 'mega-menu-promo-card' with 
-        promo_wrapper_classes: "dropdown-submenu",
-        promo_block_id: block.id,
-        promo_wrapper_attr: "aria-haspopup='true'",
-        promo_img: block.settings.mega_image_1,
-        promo_img_crop: block.settings.image_1_aspect_ratio,
-        promo_text_overlay: block.settings.overlay_text_on_image_promo_1,
-        promo_text_heading: block.settings.mega_image_header_1,
-        promo_text_subheading: block.settings.mega_image_subheader_1,
-        promo_text_color: block.settings.overlay_text_color_promo_1,
-        promo_link: block.settings.mega_image_link_1
-      %}
-    </div>
-  {% endif %}
-
-  {% if block.settings.mega_image_2 %}
-    <div>
-      {% render 'mega-menu-promo-card' with 
-        promo_wrapper_classes: "dropdown-submenu",
-        promo_block_id: block.id,
-        promo_wrapper_attr: "aria-haspopup='true'",
-        promo_img: block.settings.mega_image_2,
-        promo_img_crop: block.settings.image_2_aspect_ratio,
-        promo_text_overlay: block.settings.overlay_text_on_image_promo_2,
-        promo_text_heading: block.settings.mega_image_header_2,
-        promo_text_subheading: block.settings.mega_image_subheader_2,
-        promo_text_color: block.settings.overlay_text_color_promo_2,
-        promo_link: block.settings.mega_image_link_2
-      %}
-    </div>
-  {% endif %}
-
-</div>
+  </div>
+</li>
