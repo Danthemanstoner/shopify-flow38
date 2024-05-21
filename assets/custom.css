@@ -83,4 +83,6 @@
 .mega-menu-promo-text--wrapper {
   width: 100%;
   text-align: center;
+  margin: 0; /* Remove margin */
+  padding: 0; /* Remove padding */
 }
