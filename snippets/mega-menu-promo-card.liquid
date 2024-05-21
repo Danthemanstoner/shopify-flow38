@@ -57,19 +57,21 @@
   }
   .mega-menu-promo-image {
     margin-bottom: 5px; /* Reduce space between image and text */
-    width: auto; /* Adjust to fit content */
-    display: flex;
-    justify-content: center; /* Center the image inside the div */
+    width: auto; /* Ensure the div wraps the image size */
+    display: inline-block;
     padding: 0; /* Ensure no extra padding */
   }
   .mega-menu-promo-card {
     margin-right: 10px; /* Reduce space between images */
     padding: 0; /* Ensure no extra padding */
+    display: inline-block;
   }
   .inner.mega-menu--image-wrapper {
     display: flex;
     flex-wrap: wrap;
     gap: 10px; /* Adjust the gap between items */
+    justify-content: center; /* Center the items in the wrapper */
+    padding: 0; /* Ensure no extra padding */
   }
 </style>
 
