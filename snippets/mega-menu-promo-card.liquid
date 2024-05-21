@@ -53,12 +53,20 @@
     flex-direction: column;
     align-items: center;
     margin-bottom: 10px; /* Reduce space between promo cards */
+    padding: 0; /* Remove any padding that might affect spacing */
   }
   .mega-menu-promo-image {
     margin-bottom: 5px; /* Reduce space between image and text */
+    padding: 0; /* Ensure no extra padding */
   }
   .mega-menu-promo-card {
     margin-right: 10px; /* Reduce space between images */
+    padding: 0; /* Ensure no extra padding */
+  }
+  .inner.mega-menu--image-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Adjust the gap between items */
   }
 </style>
 
