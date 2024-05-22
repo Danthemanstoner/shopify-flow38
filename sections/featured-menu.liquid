@@ -1,25 +1,6 @@
 {{ 'section-featured-menu.min.css' | asset_url | stylesheet_tag: preload: true }}
 <noscript>{{ 'section-featured-menu.min.css' | asset_url | stylesheet_tag }}</noscript>
 
-<style>
-  /* overrides global font-sizes with section font-sizes */
-  [data-wetheme-section-id="{{ section.id }}"].featured-menu-wrapper * {
-    font-size: {{ section.settings.menu_item_size }}px !important;
-    line-height: normal;
-  }
-
-  {% if section.settings.menu_items_color != "rgba(0,0,0,0)" %}
-    .featured-menu-wrapper featured-menu .custom-cursor {
-      background-color: {{ section.settings.menu_items_color }};
-    }
-    
-    .featured-menu-wrapper .placeholder-noblocks,
-    .featured-menu-wrapper featured-menu {
-      color: {{ section.settings.menu_items_color }} !important;
-    }
-  {% endif %}
-</style>
-
 {% liquid
   assign section_height = 'featured-menu-section-height--' | append: section.settings.min_height
 
