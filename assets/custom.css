@@ -45,31 +45,37 @@
   justify-content: space-around; /* Adjust alignment as needed */
 }
 }
-.mega-menu--image-wrapper {
-  padding: 0 !important;
-}
-
-.mega-menu-promo-wrapper {
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
 .mega-menu-promo-image.aspect-ratio--square {
   position: relative;
-  width: 150px; /* Adjust the width to reduce the size */
-  height: 150px; /* Ensure the height matches the width for 1:1 aspect ratio */
-  overflow: hidden; /* Ensure the image fits within the box */
-  margin: 0 auto; /* Center the image */
+  width: 100%;
+  padding-top: 100%; /* This ensures the container is 1:1 ratio */
+  overflow: hidden;
 }
 
 .mega-menu-promo-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* Ensures the image covers the container */
 }
 
-.mega-menu-promo-card--text-content {
-  text-align: center;
-  margin-top: 0; /* Remove any top margin */
-  padding-top: 5px; /* Add a small padding for spacing */
+.mega-menu-promo-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
+
+.mega-menu-promo-card .mega-menu-promo-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.mega-menu-promo-card .mega-menu-promo-wrapper .promo-text {
+  margin-top: 10px; /* Adjust this value as needed */
+}
+
