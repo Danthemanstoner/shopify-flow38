@@ -48,13 +48,13 @@
 /* Define the size of the image container */
 .mega-menu-promo-image {
   position: relative;
-  width: 100px; /* Adjusted size */
-  height: 100px; /* Ensures 1:1 ratio */
+  width: 150px; /* Set width */
+  height: 150px; /* Set height for 1:1 ratio */
   overflow: hidden;
   margin: 0 auto;
 }
 
-/* Make sure the images fill the container and maintain aspect ratio */
+/* Ensure the images fill the container and maintain aspect ratio */
 .mega-menu-promo-image img {
   width: 100%;
   height: 100%;
