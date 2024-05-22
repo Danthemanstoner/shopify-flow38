@@ -56,8 +56,8 @@
 
 .mega-menu-promo-image.aspect-ratio--square {
   position: relative;
-  width: 50%; /* Reduce the size by 50% */
-  padding-top: 50%; /* Maintain 1:1 aspect ratio but at a reduced size */
+  width: 200px; /* Adjust the width to reduce the size */
+  padding-top: 200px; /* Maintain 1:1 aspect ratio */
 }
 
 .mega-menu-promo-image img {
