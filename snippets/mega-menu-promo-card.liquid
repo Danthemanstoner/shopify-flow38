@@ -4,7 +4,7 @@
     promo_block_id: {String} Shopify block id.
     promo_wrapper_attr: {String} Wrapper attributes.
     promo_img: {Obj} Shopify image obj.
-    promo_img_crop: {String} Image aspect-ratio value. Options are: "square", "tall", "wide" or "natural".
+    promo_img_crop: {String} Image aspect-ratio value. Options are: "saquare", "tall", "wide" or "natural".
     promo_text_overlay: {Bool} When true, promo text overlays img.
     promo_text_heading: {String} Heading text.
     promo_text_subheading:{String} Subheading text.
@@ -27,6 +27,8 @@
     assign promo_layout_classes = " has-promo-text--below-img"
   endif
 
+  assign promo_img_props = "style='max-width: '" | append: promo_img.width | append: 'px;'
+
   assign promo_img_alt = promo_img.alt | default: promo_text_heading | default: shop.name
   assign promo_img_alt = promo_img_alt | escape
 
@@ -37,6 +39,7 @@
     assign attr = "href='" | append: promo_link | append: "'"
     assign sr-announcement = promo_img.alt | append: " " | append: promo_text_heading | append: " " | append: promo_text_subheading
     assign accessibility_attr = " tabindex='0' aria-label='" | append: sr-announcement | append: "'"
+    assign promo_img_props = promo_img_props | append: " tabindex='-1' "
   endif
 
   assign img_crop = ""
@@ -47,49 +50,6 @@
   endif
 %}
 
-<style>
-  .mega-menu-promo-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 !important; /* Remove all margins */
-    padding: 0 !important;
-  }
-
-  .mega-menu-promo-image {
-    margin: 0 !important; /* Remove all margins */
-    padding: 0 !important; /* Remove all padding */
-    display: block; /* Use block to avoid flex issues */
-    text-align: center; /* Center the image within the block */
-  }
-
-  .mega-menu-promo-image img {
-    max-width: 60%;
-    height: auto;
-    display: inline-block; /* Ensure image is inline-block */
-  }
-
-  .mega-menu-promo-card {
-    padding: 0 !important;
-    margin: 0 !important; /* Remove all margins */
-    display: inline-block; /* Ensure inline-block for proper alignment */
-  }
-
-  .inner.mega-menu--image-wrapper {
-    display: flex;
-    flex-wrap: nowrap; /* Ensure no wrapping */
-    gap: 0 !important; /* Remove gap between items */
-    justify-content: space-between; /* Space items evenly */
-    padding: 0 !important;
-  }
-
-  .mega-menu-promo-text--wrapper {
-    width: 100%;
-    text-align: center;
-    margin: 0 !important; /* Remove margin */
-    padding: 0 !important; /* Remove padding */
-  }
-</style>
 
 <li class="{{ promo_wrapper_classes }}" {{ promo_wrapper_attr }}>
   <div class="inner mega-menu--image-wrapper">
@@ -98,7 +58,23 @@
       <{{ tag }} class="mega-menu-promo-wrapper{% if promo_link != blank %} nav-link-animated--custom{% endif %}"{{ attr }}{{ accessibility_attr }}>
 
         <div class="mega-menu-promo-image{{ img_crop }}">
-          <img src="{{ promo_img | img_url: '600x600' }}" alt="{{ promo_img_alt }}">
+          <style>
+            .mega-menu-promo-image {
+                position: relative;
+                width: 100%;
+                padding-top: 56.25%; /* 16:9 Aspect Ratio */
+                overflow: hidden;
+            }
+            .mega-menu-promo-image img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover; /* Maintain aspect ratio and cover the container */
+            }
+          </style>
+          {% render 'responsive-image' with promo_img, allow_stretch: img_stretch, alt: promo_img_alt, props: promo_img_props %}
         </div>
 
         {% if promo_text != blank and promo_text_overlay %}
@@ -108,9 +84,8 @@
       </{{ tag }}>
 
       {% if promo_text != blank and promo_text_overlay == false %}
-        <div class="mega-menu-promo-text--wrapper">
-          {% render 'mega-menu-promo-card--text-content' with promo_text_heading: promo_text_heading, promo_link: promo_link, promo_text_subheading: promo_text_subheading, promo_text_overlay: promo_text_overlay, attr: attr %}
-        </div>
+        {% render 'mega-menu-promo-card--text-content' with promo_text_heading: promo_text_heading, promo_link: promo_link, promo_text_subheading: promo_text_subheading, promo_text_overlay: promo_text_overlay, attr: attr %}
+
       {% endif %}
     </div>
   </div>
