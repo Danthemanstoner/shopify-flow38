@@ -14,7 +14,6 @@
 {%- endcomment -%}
 
 {% liquid
-
   assign promo_wrapper_classes = "mega-menu-promo-card " | append: promo_wrapper_classes | append: " block-id-" | append: promo_block_id
 
   assign promo_text = false
@@ -27,7 +26,7 @@
     assign promo_layout_classes = " has-promo-text--below-img"
   endif
 
-  assign promo_img_props = "style='max-width: 50%;'
+  assign promo_img_props = "style='max-width: '" | append: promo_img.width | append: 'px;'
 
   assign promo_img_alt = promo_img.alt | default: promo_text_heading | default: shop.name
   assign promo_img_alt = promo_img_alt | escape
@@ -42,18 +41,21 @@
     assign promo_img_props = promo_img_props | append: " tabindex='-1' "
   endif
 
-  assign img_crop = " aspect-ratio--square"
-  assign img_stretch = true
+  assign img_crop = ""
+  assign img_stretch = false
+  if promo_img_crop != "natural"
+    assign img_crop = " mega-menu-aspect-ratio" | append: " aspect-ratio--" | append: promo_img_crop
+    assign img_stretch = true
+  endif
 %}
 
-
 <li class="{{ promo_wrapper_classes }}" {{ promo_wrapper_attr }}>
-  <div class="inner mega-menu--image-wrapper" style="padding: 0;">
+  <div class="inner mega-menu--image-wrapper">
     <div class="mega-menu-promo{{ promo_layout_classes }}">
 
-      <{{ tag }} class="mega-menu-promo-wrapper{% if promo_link != blank %} nav-link-animated--custom{% endif %}"{{ attr }}{{ accessibility_attr }} style="margin: 0; padding: 0;">
+      <{{ tag }} class="mega-menu-promo-wrapper{% if promo_link != blank %} nav-link-animated--custom{% endif %}"{{ attr }}{{ accessibility_attr }}>
 
-        <div class="mega-menu-promo-image{{ img_crop }}">
+        <div class="mega-menu-promo-image aspect-ratio--square{{ img_crop }}">
           {% render 'responsive-image' with promo_img, allow_stretch: img_stretch, alt: promo_img_alt, props: promo_img_props %}
         </div>
 
@@ -65,7 +67,6 @@
 
       {% if promo_text != blank and promo_text_overlay == false %}
         {% render 'mega-menu-promo-card--text-content' with promo_text_heading: promo_text_heading, promo_link: promo_link, promo_text_subheading: promo_text_subheading, promo_text_overlay: promo_text_overlay, attr: attr %}
-
       {% endif %}
     </div>
   </div>
