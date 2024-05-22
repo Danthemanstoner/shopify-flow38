@@ -45,19 +45,16 @@
   justify-content: space-around; /* Adjust alignment as needed */
 }
 }
-/* Define the size of the image container */
 .mega-menu-promo-image {
-  position: relative;
-  width: 150px; /* Set width */
-  height: 150px; /* Set height for 1:1 ratio */
+  width: 150px;
+  height: 150px;
   overflow: hidden;
   margin: 0 auto;
 }
 
-/* Ensure the images fill the container and maintain aspect ratio */
 .mega-menu-promo-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 50%;
+  object-position: center;
 }
