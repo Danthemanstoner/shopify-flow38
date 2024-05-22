@@ -45,13 +45,7 @@
   justify-content: space-around; /* Adjust alignment as needed */
 }
 }
-/* Remove padding and margin from the parent container */
-.mega-menu-block {
-  padding: 0 !important; /* Remove any padding */
-  margin: 0 !important; /* Remove any margin */
-}
-
-/* Ensure no gaps between images and proper alignment */
+/* Ensuring no gaps between images and proper alignment */
 .mega-menu-promo-wrapper {
   display: flex;
   flex-direction: column;
