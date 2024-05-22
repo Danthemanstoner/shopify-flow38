@@ -32,23 +32,6 @@
   .mega-menu-block .block-id-{{ block.id }} .overlay-text-on-image-promo-2 a:hover {
     color: {{ block.settings.overlay_text_color_promo_2 }} !important;
   }
-
-  /* Custom CSS for adjusting image and text */
-  .mega-menu-promo-image img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-  }
-
-  .mega-menu-promo-image {
-    width: 150px;
-    height: 150px;
-    overflow: hidden;
-  }
-
-  .mega-menu-promo-text--wrapper {
-    text-align: center;
-  }
 {% endstyle %}
 
 <div class="mega-menu-block{% if link.links.size == 0 and block.settings.mega_image_1 == blank and block.settings.mega_image_2 == blank %} no--content{% endif %}" data-mega-menu-block-id="{{ block.id }}" {{ block.shopify_attributes }}>
