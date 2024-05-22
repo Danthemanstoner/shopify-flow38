@@ -45,12 +45,17 @@
   justify-content: space-around; /* Adjust alignment as needed */
 }
 }
+/* Ensure the container does not have padding or margin issues */
+.mega-menu-block {
+  padding: 40px 0 60px !important; /* Original padding to keep the menu spacing correct */
+}
+
 /* Ensuring no gaps between images and proper alignment */
 .mega-menu-promo-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 0 !important; /* Remove bottom margin */
+  margin: 0 !important; /* Remove all margins */
   padding: 0 !important;
 }
 
@@ -77,7 +82,7 @@
   display: flex;
   flex-wrap: nowrap; /* Ensure no wrapping */
   gap: 0 !important; /* Remove gap between items */
-  justify-content: center;
+  justify-content: space-between; /* Space items evenly */
   padding: 0 !important;
 }
 
