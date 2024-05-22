@@ -45,9 +45,23 @@
   justify-content: space-around; /* Adjust alignment as needed */
 }
 }
-/* Ensure the container does not have padding or margin issues */
+/* Ensure no padding or margin for the mega menu block */
 .mega-menu-block {
-  padding: 40px 0 60px !important; /* Original padding to keep the menu spacing correct */
+  padding: 40px 0 60px !important; /* Keep original padding to maintain menu spacing */
+}
+
+/* Ensure proper alignment and spacing of menu items */
+.mega-menu--links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.dropdown-submenu {
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 /* Ensuring no gaps between images and proper alignment */
@@ -82,7 +96,7 @@
   display: flex;
   flex-wrap: nowrap; /* Ensure no wrapping */
   gap: 0 !important; /* Remove gap between items */
-  justify-content: space-between; /* Space items evenly */
+  justify-content: space-evenly; /* Space items evenly */
   padding: 0 !important;
 }
 
