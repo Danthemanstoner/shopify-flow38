@@ -45,3 +45,44 @@
   justify-content: space-around; /* Adjust alignment as needed */
 }
 }
+/* Adjust the size of the images */
+.mega-menu-promo-image img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+/* Ensure the container around the images maintains a 1:1 aspect ratio */
+.mega-menu-promo-image {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Align text below the images */
+.mega-menu-promo-text--wrapper {
+  text-align: center;
+}
+
+/* Ensure the text and image containers are aligned properly */
+.mega-menu-promo-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+}
+
+/* Align items within the promo card */
+.mega-menu-promo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Reduce the overall spacing within the promo wrapper */
+.mega-menu-promo-wrapper {
+  padding: 10px;
+}
