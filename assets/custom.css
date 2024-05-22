@@ -45,18 +45,32 @@
   justify-content: space-around; /* Adjust alignment as needed */
 }
 }
-/* Remove padding and margin from the parent container */
+/* Ensure no padding or margin for the mega menu block */
 .mega-menu-block {
-  padding: 0 !important; /* Remove any padding */
-  margin: 0 !important; /* Remove any margin */
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
-/* Ensure no gaps between images and proper alignment */
+/* Ensure proper alignment and spacing of menu items */
+.mega-menu--links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.dropdown-submenu {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Ensuring no gaps between images and proper alignment */
 .mega-menu-promo-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 0 !important; /* Remove bottom margin */
+  margin: 0 !important; /* Remove bottom margin */
   padding: 0 !important;
 }
 
@@ -83,7 +97,7 @@
   display: flex;
   flex-wrap: nowrap; /* Ensure no wrapping */
   gap: 0 !important; /* Remove gap between items */
-  justify-content: center;
+  justify-content: space-between; /* Space items evenly */
   padding: 0 !important;
 }
 
