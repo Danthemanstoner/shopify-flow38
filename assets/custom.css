@@ -45,24 +45,27 @@
   justify-content: space-around; /* Adjust alignment as needed */
 }
 }
+/* Define the size of the image container */
 .mega-menu-promo-image {
   position: relative;
-  width: 150px; /* Desired size */
-  height: 150px; /* Desired size for 1:1 ratio */
+  width: 100px; /* Adjusted size */
+  height: 100px; /* Ensures 1:1 ratio */
   overflow: hidden;
   margin: 0 auto;
 }
 
+/* Make sure the images fill the container and maintain aspect ratio */
 .mega-menu-promo-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+/* Center-align the text and adjust the margin */
 .mega-menu-promo-card {
   text-align: center;
 }
 
 .mega-menu-promo-card .promo-text {
-  margin-top: 10px; /* Adjust as needed */
+  margin-top: 5px; /* Adjust as needed */
 }
