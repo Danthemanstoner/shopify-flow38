@@ -47,10 +47,10 @@
 }
 .mega-menu-promo-image {
   position: relative;
-  width: 150px; /* Adjust to the desired width */
-  height: 150px; /* Match the width for 1:1 ratio */
+  width: 150px; /* Desired size */
+  height: 150px; /* Desired size for 1:1 ratio */
   overflow: hidden;
-  margin: 0 auto; /* Center the image container */
+  margin: 0 auto;
 }
 
 .mega-menu-promo-image img {
