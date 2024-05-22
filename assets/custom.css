@@ -59,13 +59,5 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-/* Center-align the text and adjust the margin */
-.mega-menu-promo-card {
-  text-align: center;
-}
-
-.mega-menu-promo-card .promo-text {
-  margin-top: 5px; /* Adjust as needed */
+  object-position: 50% 50%;
 }
