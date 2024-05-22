@@ -27,7 +27,7 @@
     assign promo_layout_classes = " has-promo-text--below-img"
   endif
 
-  assign promo_img_props = "style='max-width: '" | append: promo_img.width | append: 'px;'
+  assign promo_img_props = "style='max-width: 200px; max-height: 200px;'"
 
   assign promo_img_alt = promo_img.alt | default: promo_text_heading | default: shop.name
   assign promo_img_alt = promo_img_alt | escape
@@ -61,8 +61,8 @@
           <style>
             .mega-menu-promo-image {
                 position: relative;
-                width: 100%;
-                padding-top: 100%; /* 1:1 Aspect Ratio */
+                width: 200px;
+                height: 200px; /* 1:1 Aspect Ratio */
                 overflow: hidden;
             }
             .mega-menu-promo-image img {
