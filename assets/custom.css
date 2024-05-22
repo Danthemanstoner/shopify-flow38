@@ -55,20 +55,21 @@
 }
 
 .mega-menu-promo-image {
-  margin-bottom: 0 !important; /* Remove bottom margin */
-  padding: 0 !important;
-  display: flex;
-  justify-content: center;
+  margin: 0 !important; /* Remove all margins */
+  padding: 0 !important; /* Remove all padding */
+  display: block; /* Use block to avoid flex issues */
+  text-align: center; /* Center the image within the block */
 }
 
 .mega-menu-promo-image img {
   max-width: 60%;
   height: auto;
+  display: inline-block; /* Ensure image is inline-block */
 }
 
 .mega-menu-promo-card {
   padding: 0 !important;
-  margin-right: 0 !important; /* Remove right margin */
+  margin: 0 !important; /* Remove all margins */
   display: inline-block; /* Ensure inline-block for proper alignment */
 }
 
