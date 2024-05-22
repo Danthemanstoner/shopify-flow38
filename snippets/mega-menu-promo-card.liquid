@@ -47,6 +47,50 @@
   endif
 %}
 
+<style>
+  .mega-menu-promo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 !important; /* Remove all margins */
+    padding: 0 !important;
+  }
+
+  .mega-menu-promo-image {
+    margin: 0 !important; /* Remove all margins */
+    padding: 0 !important; /* Remove all padding */
+    display: block; /* Use block to avoid flex issues */
+    text-align: center; /* Center the image within the block */
+  }
+
+  .mega-menu-promo-image img {
+    max-width: 60%;
+    height: auto;
+    display: inline-block; /* Ensure image is inline-block */
+  }
+
+  .mega-menu-promo-card {
+    padding: 0 !important;
+    margin: 0 !important; /* Remove all margins */
+    display: inline-block; /* Ensure inline-block for proper alignment */
+  }
+
+  .inner.mega-menu--image-wrapper {
+    display: flex;
+    flex-wrap: nowrap; /* Ensure no wrapping */
+    gap: 0 !important; /* Remove gap between items */
+    justify-content: space-between; /* Space items evenly */
+    padding: 0 !important;
+  }
+
+  .mega-menu-promo-text--wrapper {
+    width: 100%;
+    text-align: center;
+    margin: 0 !important; /* Remove margin */
+    padding: 0 !important; /* Remove padding */
+  }
+</style>
+
 <li class="{{ promo_wrapper_classes }}" {{ promo_wrapper_attr }}>
   <div class="inner mega-menu--image-wrapper">
     <div class="mega-menu-promo{{ promo_layout_classes }}">
