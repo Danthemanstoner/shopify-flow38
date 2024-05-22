@@ -70,5 +70,6 @@
 
 .mega-menu-promo-card--text-content {
   text-align: center;
-  margin-top: 10px; /* Adjust to reduce the space between image and text */
+  margin-top: 0; /* Remove any top margin */
+  padding-top: 5px; /* Add a small padding for spacing */
 }
