@@ -45,27 +45,21 @@
   justify-content: space-around; /* Adjust alignment as needed */
 }
 }
-.mega-menu-promo-image.aspect-ratio--square {
+.mega-menu-promo-image {
   position: relative;
-  width: 50%; /* Adjust this value to change the image size */
-  padding-top: 50%; /* 1:1 Aspect Ratio */
+  width: 150px; /* Adjust to the desired width */
+  height: 150px; /* Match the width for 1:1 ratio */
   overflow: hidden;
   margin: 0 auto; /* Center the image container */
 }
 
 .mega-menu-promo-image img {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
 .mega-menu-promo-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   text-align: center;
 }
 
