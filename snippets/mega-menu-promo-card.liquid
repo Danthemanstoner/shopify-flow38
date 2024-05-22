@@ -55,7 +55,7 @@
 
       <{{ tag }} class="mega-menu-promo-wrapper{% if promo_link != blank %} nav-link-animated--custom{% endif %}"{{ attr }}{{ accessibility_attr }}>
 
-        <div class="mega-menu-promo-image{{ img_crop }}">
+        <div class="mega-menu-promo-image aspect-ratio--square">
           {% render 'responsive-image' with promo_img, allow_stretch: img_stretch, alt: promo_img_alt, props: promo_img_props %}
         </div>
 

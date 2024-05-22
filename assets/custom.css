@@ -47,10 +47,10 @@
 }
 .mega-menu-promo-image.aspect-ratio--square {
   position: relative;
-  width: 50%; /* Adjust this to scale the image size */
-  padding-top: 50%; /* Ensures a 1:1 aspect ratio */
+  width: 50%; /* Adjust this value to change the image size */
+  padding-top: 50%; /* 1:1 Aspect Ratio */
   overflow: hidden;
-  margin: 0 auto; /* Centers the image */
+  margin: 0 auto; /* Center the image container */
 }
 
 .mega-menu-promo-image img {
@@ -70,5 +70,5 @@
 }
 
 .mega-menu-promo-card .promo-text {
-  margin-top: 10px; /* Adjust this value as needed */
+  margin-top: 10px; /* Adjust as needed */
 }
