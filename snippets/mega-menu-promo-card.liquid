@@ -50,30 +50,13 @@
   endif
 %}
 
-
 <li class="{{ promo_wrapper_classes }}" {{ promo_wrapper_attr }}>
   <div class="inner mega-menu--image-wrapper">
     <div class="mega-menu-promo{{ promo_layout_classes }}">
 
       <{{ tag }} class="mega-menu-promo-wrapper{% if promo_link != blank %} nav-link-animated--custom{% endif %}"{{ attr }}{{ accessibility_attr }}>
 
-        <div class="mega-menu-promo-image{{ img_crop }}">
-          <style>
-            .mega-menu-promo-image {
-                position: relative;
-                width: 200px;
-                height: 200px; /* 1:1 Aspect Ratio */
-                overflow: hidden;
-            }
-            .mega-menu-promo-image img {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                object-fit: cover; /* Maintain aspect ratio and cover the container */
-            }
-          </style>
+        <div class="mega-menu-promo-image{{ img_crop }}" style="position: relative; width: 200px; height: 200px; overflow: hidden;">
           {% render 'responsive-image' with promo_img, allow_stretch: img_stretch, alt: promo_img_alt, props: promo_img_props %}
         </div>
 
