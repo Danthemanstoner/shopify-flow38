@@ -48,8 +48,8 @@
 /* Custom styles for the mega menu images */
 .mega-menu-block .responsive-image-wrapper img {
   /* Reduce the size of the images */
-  max-width: 60% !important;
-  max-height: 60% !important;
+  max-width: 40% !important;
+  max-height: 40% !important;
 }
 
 /* Adjust the gap between the images */
