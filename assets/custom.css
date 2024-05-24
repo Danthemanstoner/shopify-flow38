@@ -44,3 +44,30 @@
   flex-wrap: wrap;
   justify-content: space-around; /* Adjust alignment as needed */
 }
+/* Reduce the gap between elements */
+@media (min-width: 768px) {
+  .mega-menu-wrapper .mega-menu-block:not(.no--content) {
+    gap: 10px;
+    padding-top: 40px;
+    padding-bottom: 60px;
+  }
+}
+
+/* Adjust the size of the images */
+.mega-menu-promo-image img {
+  width: 40%;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Ensure the container around the images maintains a 1:1 aspect ratio */
+.mega-menu-promo-image {
+  width: 40%;
+  height: auto;
+  overflow: hidden;
+}
+
+/* Align text below the images */
+.mega-menu-promo-text--wrapper {
+  text-align: center;
+}
