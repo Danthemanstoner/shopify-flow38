@@ -4,7 +4,7 @@
     promo_block_id: {String} Shopify block id.
     promo_wrapper_attr: {String} Wrapper attributes.
     promo_img: {Obj} Shopify image obj.
-    promo_img_crop: {String} Image aspect-ratio value. Options are: "square", "tall", "wide" or "natural".
+    promo_img_crop: {String} Image aspect-ratio value. Options are: "saquare", "tall", "wide" or "natural".
     promo_text_overlay: {Bool} When true, promo text overlays img.
     promo_text_heading: {String} Heading text.
     promo_text_subheading:{String} Subheading text.
@@ -27,7 +27,7 @@
     assign promo_layout_classes = " has-promo-text--below-img"
   endif
 
-  assign promo_img_props = "style='max-width: 40%; height: auto;'"
+  assign promo_img_props = "style='max-width: '" | append: promo_img.width | append: 'px;'
 
   assign promo_img_alt = promo_img.alt | default: promo_text_heading | default: shop.name
   assign promo_img_alt = promo_img_alt | escape
