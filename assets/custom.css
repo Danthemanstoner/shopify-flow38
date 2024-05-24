@@ -49,15 +49,15 @@
   /* General adjustments for mega menu */
   @media (min-width: 768px) {
     .mega-menu-wrapper .mega-menu-block:not(.no--content) {
-        gap: 10px; /* Reduced gap */
-        padding-top: 40px;
-        padding-bottom: 60px;
+      gap: 10px; /* Reduced gap */
+      padding-top: 40px;
+      padding-bottom: 60px;
     }
   }
 
   /* Ensure the container around the images maintains a 1:1 aspect ratio */
   .mega-menu-promo-image {
-    width: 60%; /* Reduce image size */
+    width: 60%; /* Reduce image size by 40% */
     height: auto;
     overflow: hidden;
     display: flex;
