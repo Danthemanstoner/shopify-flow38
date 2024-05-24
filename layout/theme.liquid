@@ -351,25 +351,25 @@
   </style>
 
 <style>
-  /* Keyframes for the wiggle animation */
-  @keyframes wiggle {
+  /* Keyframes for the subtle wiggle animation */
+  @keyframes subtle-wiggle {
     0%, 100% {
       transform: rotate(0deg);
     }
-    15% {
-      transform: rotate(5deg);
-    }
-    20% {
-      transform: rotate(-5deg);
-    }
     25% {
-      transform: rotate(5deg);
+      transform: rotate(2deg);
+    }
+    50% {
+      transform: rotate(-2deg);
+    }
+    75% {
+      transform: rotate(2deg);
     }
   }
 
   /* Apply the animation to the logo overlay */
   .logo_overlay {
-    animation: wiggle 0.3s infinite;
+    animation: subtle-wiggle 2s infinite;
   }
 </style>
 
