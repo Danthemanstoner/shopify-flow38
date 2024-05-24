@@ -45,14 +45,3 @@
   justify-content: space-around; /* Adjust alignment as needed */
 }
 
-.mega-menu--links {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px; /* Adjust the gap between links as needed */
-}
-
-.mega-menu--links .dropdown-submenu {
-  width: 100%;
-  text-align: center;
-}
