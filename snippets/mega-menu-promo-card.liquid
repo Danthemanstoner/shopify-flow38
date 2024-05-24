@@ -1,4 +1,4 @@
-{%- comment -%}
+{% comment %}
   Renders a promo mega-menu card. Accepts: 
     promo_wrapper_classes: {String} Wrapper classes.
     promo_block_id: {String} Shopify block id.
@@ -11,7 +11,7 @@
     promo_text_color: {String} Color picker hex value.
     promo_link: {String} Link value.
     promo_mobile_nav: {Bool} Whether the promo card is included on the mobile nav drawer or not.
-{%- endcomment -%}
+{% endcomment %}
 
 {% liquid
 
@@ -27,7 +27,7 @@
     assign promo_layout_classes = " has-promo-text--below-img"
   endif
 
-  assign promo_img_props = "style='max-width: 40%; height: auto;'"
+  assign promo_img_props = "style='width: 150px; height: 150px;'"
 
   assign promo_img_alt = promo_img.alt | default: promo_text_heading | default: shop.name
   assign promo_img_alt = promo_img_alt | escape
