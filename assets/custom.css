@@ -44,17 +44,3 @@
   flex-wrap: wrap;
   justify-content: space-around; /* Adjust alignment as needed */
 }
-
-/* Custom styles for the mega menu images */
-.mega-menu-block .responsive-image-wrapper img {
-  /* Reduce the size of the images */
-  max-width: 40% !important;
-  max-height: 40% !important;
-}
-
-/* Adjust the gap between the images */
-.mega-menu-block .mega-menu--image-wrapper {
-  display: flex;
-  gap: 10px; /* Adjust the gap as needed */
-  justify-content: center; /* Center align the images */
-}
