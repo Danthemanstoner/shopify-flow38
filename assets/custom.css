@@ -45,3 +45,14 @@
   justify-content: space-around; /* Adjust alignment as needed */
 }
 
+.mega-menu--links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align the links closer to the left side */
+  gap: 10px; /* Adjust the gap between links as needed */
+}
+
+.mega-menu--links .dropdown-submenu {
+  width: auto;
+  text-align: left;
+}
