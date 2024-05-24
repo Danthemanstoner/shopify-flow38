@@ -62,45 +62,38 @@
     </div>
   {% endif %}
 
-  <div class="mega-menu--image-wrapper">
-    {% if block.settings.mega_image_1 %}
-      <div class="mega-menu-promo-card">
-        <div class="mega-menu-promo">
-          <a class="mega-menu-promo-wrapper nav-link-animated--custom" href="{{ block.settings.mega_image_link_1 }}">
-            <div class="mega-menu-promo-image">
-              <img src="{{ block.settings.mega_image_1 | img_url: '600x600' }}" alt="{{ block.settings.mega_image_header_1 }}" style="width: 150px; height: auto; object-fit: cover;">
-            </div>
-          </a>
-          <div class="mega-menu-promo-text--wrapper">
-            <span class="mega-menu-promo-text-content">
-              <a class="h4 mega-menu-promo-title promo-text animated-link--item" href="{{ block.settings.mega_image_link_1 }}">{{ block.settings.mega_image_header_1 }}</a>
-            </span>
-            <span class="mega-menu-promo-text-content">
-              <a class="h5 mega-menu-promo-subtitle promo-text" href="{{ block.settings.mega_image_link_1 }}">{{ block.settings.mega_image_subheader_1 }}</a>
-            </span>
-          </div>
-        </div>
-      </div>
-    {% endif %}
+  {% if block.settings.mega_image_1 %}
+    <div>
+      {% render 'mega-menu-promo-card' with 
+        promo_wrapper_classes: "dropdown-submenu",
+        promo_block_id: block.id,
+        promo_wrapper_attr: "aria-haspopup='true'",
+        promo_img: block.settings.mega_image_1,
+        promo_img_crop: block.settings.image_1_aspect_ratio,
+        promo_text_overlay: block.settings.overlay_text_on_image_promo_1,
+        promo_text_heading: block.settings.mega_image_header_1,
+        promo_text_subheading: block.settings.mega_image_subheader_1,
+        promo_text_color: block.settings.overlay_text_color_promo_1,
+        promo_link: block.settings.mega_image_link_1
+      %}
+    </div>
+  {% endif %}
 
-    {% if block.settings.mega_image_2 %}
-      <div class="mega-menu-promo-card">
-        <div class="mega-menu-promo">
-          <a class="mega-menu-promo-wrapper nav-link-animated--custom" href="{{ block.settings.mega_image_link_2 }}">
-            <div class="mega-menu-promo-image">
-              <img src="{{ block.settings.mega_image_2 | img_url: '600x600' }}" alt="{{ block.settings.mega_image_header_2 }}" style="width: 150px; height: auto; object-fit: cover;">
-            </div>
-          </a>
-          <div class="mega-menu-promo-text--wrapper">
-            <span class="mega-menu-promo-text-content">
-              <a class="h4 mega-menu-promo-title promo-text animated-link--item" href="{{ block.settings.mega_image_link_2 }}">{{ block.settings.mega_image_header_2 }}</a>
-            </span>
-            <span class="mega-menu-promo-text-content">
-              <a class="h5 mega-menu-promo-subtitle promo-text" href="{{ block.settings.mega_image_link_2 }}">{{ block.settings.mega_image_subheader_2 }}</a>
-            </span>
-          </div>
-        </div>
-      </div>
-    {% endif %}
-  </div>
+  {% if block.settings.mega_image_2 %}
+    <div>
+      {% render 'mega-menu-promo-card' with 
+        promo_wrapper_classes: "dropdown-submenu",
+        promo_block_id: block.id,
+        promo_wrapper_attr: "aria-haspopup='true'",
+        promo_img: block.settings.mega_image_2,
+        promo_img_crop: block.settings.image_2_aspect_ratio,
+        promo_text_overlay: block.settings.overlay_text_on_image_promo_2,
+        promo_text_heading: block.settings.mega_image_header_2,
+        promo_text_subheading: block.settings.mega_image_subheader_2,
+        promo_text_color: block.settings.overlay_text_color_promo_2,
+        promo_link: block.settings.mega_image_link_2
+      %}
+    </div>
+  {% endif %}
+
 </div>
