@@ -55,15 +55,15 @@
 
 /* Adjust the size of the images */
 .mega-menu-promo-image img {
-  width: 150px;  /* Adjust to 40% or any other size you prefer */
-  height: 150px; /* Adjust to 40% or any other size you prefer */
+  width: 150px;  /* Adjust to the desired size */
+  height: auto;
   object-fit: cover;
 }
 
 /* Ensure the container around the images maintains a 1:1 aspect ratio */
 .mega-menu-promo-image {
-  width: 150px;  /* Adjust to 40% or any other size you prefer */
-  height: 150px; /* Adjust to 40% or any other size you prefer */
+  width: 150px;  /* Adjust to the desired size */
+  height: auto;
   overflow: hidden;
 }
 
