@@ -57,7 +57,7 @@
 
   /* Ensure the container around the images maintains a 1:1 aspect ratio */
   .mega-menu-promo-image {
-    width: 60%; /* Reduce image size by 40% */
+    width: 60%; /* Reduce image size */
     height: auto;
     overflow: hidden;
     display: flex;
