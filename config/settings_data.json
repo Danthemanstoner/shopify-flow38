@@ -112,6 +112,13 @@
           "supporting_text_title": "Subscription Options",
           "subscription_policy_url": ""
         }
+      },
+      "9b54a196-057d-4046-9a33-14b973c18618": {
+        "type": "shopify:\/\/apps\/boost-ai-search-discovery\/blocks\/boost-sd-ssr\/7fc998ae-a150-4367-bab8-505d8a4503f7",
+        "disabled": false,
+        "settings": {
+          "templateId": "RhFRSI-ytm"
+        }
       }
     }
   },
