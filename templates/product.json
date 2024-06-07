@@ -165,6 +165,7 @@
         },
         "4fdb087c-4728-4785-b270-a71a092b7898": {
           "type": "social_sharing",
+          "disabled": true,
           "settings": {
             "margin_bottom": 20
           }
