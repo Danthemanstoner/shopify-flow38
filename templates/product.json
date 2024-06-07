@@ -287,7 +287,7 @@
         "product_recommendations_heading": "You may also like",
         "product_recommendations_description": "",
         "layout_style": "slider",
-        "products_to_show": 8,
+        "products_to_show": 6,
         "grid-desktop": 4,
         "grid-mobile": "2",
         "colors": "white"
