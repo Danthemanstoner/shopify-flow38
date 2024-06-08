@@ -551,6 +551,14 @@
       },
       "payment_gateway": {
         "order_deposit_due_on_fulfillment": "{{depositAmount}} ครบกำหนดชำระวันนี้ ยอดคงเหลือจะครบกำหนดเมื่อคำสั่งซื้อของคุณเสร็จสมบูรณ์"
+      },
+      "wallets": {
+        "return_to_checkout": "กลับไปชำระเงิน",
+        "errors": {
+          "unavailable_terminal": {
+            "instructions": "ขณะนี้ {{walletName}} ไม่พร้อมใช้งานสำหรับการสั่งซื้อของคุณ หากต้องการดำเนินการซื้อต่อ ให้เลือกวิธีชำระเงินอื่น"
+          }
+        }
       }
     }
   },
@@ -559,7 +567,11 @@
       "order_status": {
         "buy_with_prime_logo_accessibility_label": "Amazon ซื้อพร้อมโลโก้ Prime"
       }
+    },
+    "B2B": {
+      "locations": {
+        "deposit_percentage": "เงินฝาก {{percentage}}"
+      }
     }
   }
-  
 }
