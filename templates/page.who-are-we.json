@@ -39,7 +39,7 @@
     "image_image_with_text_cmeTXp": {
       "type": "image--image-with-text",
       "settings": {
-        "image": "shopify:\/\/shop_images\/TheFruitBox_Meet_the_owners.jpg",
+        "image": "shopify:\/\/shop_images\/Meet_The_Owners_Image_-_About_Us.jpg",
         "text_overlapping_image": false,
         "section-width": "content",
         "layout": "left",
