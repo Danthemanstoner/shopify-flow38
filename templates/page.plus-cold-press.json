@@ -1,0 +1,60 @@
+{
+  "sections": {
+    "main": {
+      "type": "template--page",
+      "disabled": true,
+      "settings": {
+        "page_title_enabled": false,
+        "page_width": "narrow"
+      }
+    },
+    "text_rich_text_J98Rgc": {
+      "type": "text--rich-text",
+      "blocks": {
+        "heading_bGFYHd": {
+          "type": "heading",
+          "settings": {
+            "heading": "About Us: The Art and Science of Exceptional Fruit Gifting"
+          }
+        },
+        "richtext_n77hzP": {
+          "type": "richtext",
+          "settings": {
+            "text": "<p>Founded by visionaries Nittayaporn Chumkong and Dan Stoner, The Fruit Box is not just a fruit delivery service—it's a decade-long legacy of luxury, creativity, and commitment to excellence under the renowned Basketeer brand. Our roots in Thailand’s luxury market have allowed us to cultivate not only fruits but also enduring relationships with our clients through impeccable service and innovative offerings.<br\/><br\/><strong>What We Do<\/strong><\/p><p>At The Fruit Box, every fruit is selected for its taste, texture, and aesthetic appeal. We specialize in curating high-quality, local and imported fruits, artfully presented in custom-designed boxes that speak volumes of your sentiments. From lush floral accompaniments to our own brand of cold-pressed juice, Plus+, every element in our boxes is thoughtfully chosen to enhance the gifting experience.<br\/><br\/><strong>Why Choose Us<\/strong><\/p><p>With an industry-leading team of designers, florists, and fruit specialists, we have set benchmarks in the art of gifting. Our commitment to quality is unwavering, as is our dedication to honesty and transparency in every interaction. Our customer service is not just about solving problems but about making your experience delightful and seamless.<br\/><br\/><strong>Sustainability at Heart<\/strong><\/p><p>We are proud to operate with an environmentally friendly fleet of electric vehicles, ensuring fast and fresh delivery that respects the planet. This initiative is part of our broader commitment to sustainability, which permeates every aspect of our operations.<br\/><br\/><strong>Our Philosophy<\/strong><\/p><p>In the words of our favorite sayings: \"Knowledge is knowing a tomato is a fruit; wisdom is not putting it in a fruit salad.\" We apply this wisdom daily, ensuring that the fruits we select not only meet but exceed your expectations. We believe that the fruits of your labor should manifest as success, joy, and satisfaction—both in business and in personal celebrations.<br\/><br\/><strong>Engage with Us<\/strong><\/p><p>Join us in the journey of transforming everyday fruit gifting into an extraordinary experience. We’re driven by our passion for quality and our love for what we do. As we often say, \"A bad day eating fruit is better than a good day eating anything else.\" With The Fruit Box, every day is a good day filled with nature’s best and brightest.<br\/><br\/><strong>Thank You<\/strong><\/p><p>Your support fuels our passion and enables us to continue innovating and delivering the best fruits and gifts in Thailand. We are grateful for every customer, every order, and every opportunity to serve you.<\/p>",
+            "text_size": 14
+          }
+        }
+      },
+      "block_order": [
+        "heading_bGFYHd",
+        "richtext_n77hzP"
+      ],
+      "settings": {
+        "section_width": "narrow",
+        "text_alignment_desktop": "left",
+        "text_alignment_mobile": "center",
+        "colors": "white"
+      }
+    },
+    "image_image_with_text_cmeTXp": {
+      "type": "image--image-with-text",
+      "settings": {
+        "image": "shopify:\/\/shop_images\/Meet_The_Owners_Image_-_About_Us.jpg",
+        "text_overlapping_image": false,
+        "section-width": "content",
+        "layout": "left",
+        "text_alignment": "center",
+        "title": "Meet the owners",
+        "text": "<p>Nittayaporn Chumkong and Dan Stoner, the founders of The Fruit Box, are not only partners in business but also in life, sharing their journey with their 11-year-old son Ray, a spirited dog named Lambo, and three charming bunnies—PooPoo, Thaiger, and Chewy.<\/p>",
+        "button_label": "",
+        "button_link": "",
+        "colors": "light"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "text_rich_text_J98Rgc",
+    "image_image_with_text_cmeTXp"
+  ]
+}
