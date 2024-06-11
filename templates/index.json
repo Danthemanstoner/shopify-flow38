@@ -368,6 +368,58 @@
         "block_alignment": "center"
       }
     },
+    "shop_the_look_JpLfMN": {
+      "type": "shop-the-look",
+      "blocks": {
+        "look_KamfHW": {
+          "type": "look",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/product_feature_test.jpg",
+            "hotspot_color": "#ffffff",
+            "product_1": "plus-red",
+            "hotspot_horizontal_position_1": 31,
+            "hotspot_vertical_position_1": 31,
+            "product_2": "copy-of-copy-of-copy-of-copy-of-plus-green-eight",
+            "hotspot_horizontal_position_2": 50,
+            "hotspot_vertical_position_2": 41,
+            "product_3": "plus-orange",
+            "hotspot_horizontal_position_3": 70,
+            "hotspot_vertical_position_3": 34,
+            "product_4": "",
+            "hotspot_horizontal_position_4": 75,
+            "hotspot_vertical_position_4": 75
+          }
+        },
+        "look_WfWMad": {
+          "type": "look",
+          "settings": {
+            "hotspot_color": "#FFFFFF",
+            "product_1": "",
+            "hotspot_horizontal_position_1": 25,
+            "hotspot_vertical_position_1": 40,
+            "product_2": "",
+            "hotspot_horizontal_position_2": 60,
+            "hotspot_vertical_position_2": 30,
+            "product_3": "",
+            "hotspot_horizontal_position_3": 75,
+            "hotspot_vertical_position_3": 60,
+            "product_4": "",
+            "hotspot_horizontal_position_4": 75,
+            "hotspot_vertical_position_4": 75
+          }
+        }
+      },
+      "block_order": [
+        "look_KamfHW",
+        "look_WfWMad"
+      ],
+      "settings": {
+        "title": "Explore Our Boxes",
+        "description": "",
+        "image_aspect_ratio": "auto",
+        "colors": "white"
+      }
+    },
     "cf965c26-6ea8-499a-8a05-a4e350ede58a": {
       "type": "image--image-with-text",
       "settings": {
@@ -588,6 +640,7 @@
     "collection_featured_collection_deM6yg",
     "collection_featured_collection_hUzjep",
     "50b03afc-6c7a-4252-94c2-7579c9d3b3ee",
+    "shop_the_look_JpLfMN",
     "cf965c26-6ea8-499a-8a05-a4e350ede58a",
     "8e9e36da-191e-4c8c-ba3a-8a307b84bae9",
     "12a25ae5-a869-4fec-9751-deb411052883",
