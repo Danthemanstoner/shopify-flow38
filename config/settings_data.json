@@ -114,13 +114,19 @@
           "subscription_policy_url": ""
         }
       },
-      "15683396631634586217": {
-        "type": "shopify:\/\/apps\/inbox\/blocks\/chat\/841fc607-4181-4ad1-842d-e24d7f8bad6b",
+      "14019014016809704581": {
+        "type": "shopify:\/\/apps\/sendbird-ai-chatbot\/blocks\/sendbird_ai_chatbot\/b03eb8ba-9162-4761-90d8-4ea6e597ce98",
         "disabled": false,
         "settings": {
+        }
+      },
+      "15683396631634586217": {
+        "type": "shopify:\/\/apps\/inbox\/blocks\/chat\/841fc607-4181-4ad1-842d-e24d7f8bad6b",
+        "disabled": true,
+        "settings": {
           "button_color": "#18533a",
-          "secondary_color": "#FFFFFF",
-          "ternary_color": "#6A6A6A",
+          "secondary_color": "#ffffff",
+          "ternary_color": "#6a6a6a",
           "button_icon": "no_icon",
           "button_text": "live_chat",
           "button_horizontal_position": "bottom_right",
