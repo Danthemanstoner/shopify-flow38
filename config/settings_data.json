@@ -44,7 +44,7 @@
     "announcement_text_spacing": 0,
     "ajax_cart_method": "drawer",
     "cart_vendor_enable": false,
-    "cart_notes_enable": true,
+    "cart_notes_enable": false,
     "giftwrap_gift_note": true,
     "enable-additional-checkout-buttons": true,
     "giftwrap_product_selector": "gift-card",
