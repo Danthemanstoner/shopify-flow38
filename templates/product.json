@@ -84,7 +84,7 @@
             "border_thickness": 1,
             "border_radius": 10,
             "supporting_text_title": "Fruit On Subscription?",
-            "subscription_policy_url": "",
+            "subscription_policy_url": "https:\/\/thefruitbox.co\/pages\/fruit-box-subscriptions",
             "product": "{{product}}"
           }
         },
