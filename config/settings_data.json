@@ -128,15 +128,21 @@
           "greeting_message": ""
         }
       },
-      "8235103442733216709": {
-        "type": "shopify:\/\/apps\/gleen-ai-accurate-ai-support\/blocks\/app-embed\/e1e7fb97-cc5c-41df-8f53-c8609cae4409",
+      "14019014016809704581": {
+        "type": "shopify:\/\/apps\/sendbird-ai-chatbot\/blocks\/sendbird_ai_chatbot\/b03eb8ba-9162-4761-90d8-4ea6e597ce98",
         "disabled": false,
         "settings": {
         }
       },
-      "14019014016809704581": {
-        "type": "shopify:\/\/apps\/sendbird-ai-chatbot\/blocks\/sendbird_ai_chatbot\/b03eb8ba-9162-4761-90d8-4ea6e597ce98",
+      "8235103442733216709": {
+        "type": "shopify:\/\/apps\/gleen-ai-accurate-ai-support\/blocks\/app-embed\/e1e7fb97-cc5c-41df-8f53-c8609cae4409",
         "disabled": true,
+        "settings": {
+        }
+      },
+      "8208493610395315515": {
+        "type": "shopify:\/\/apps\/dondy-whatsapp-chat-marketing\/blocks\/app-block\/7f5a70cb-e171-4cc7-ac02-e2220203abd6",
+        "disabled": false,
         "settings": {
         }
       }
