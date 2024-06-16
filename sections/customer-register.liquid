@@ -26,6 +26,8 @@
             I want to receive updates and promotional offers and subscribe to the newsletter.
           </label>
 
+          <div class="g-recaptcha" data-sitekey="your-site-key"></div>
+
           <p>
             <button type="submit" class="btn btn--full account-section--btn">Create Account</button>
           </p>
@@ -45,6 +47,8 @@
 }
 {% endschema %}
 
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   const createCustomerForm = document.getElementById('createCustomerForm');
@@ -54,55 +58,61 @@ document.addEventListener('DOMContentLoaded', function () {
     event.preventDefault(); // Prevent the default form submission
     console.log('Form submission triggered'); // Debug log
 
-    const formData = new FormData(createCustomerForm);
+    grecaptcha.ready(function() {
+      grecaptcha.execute('your-site-key', {action: 'submit'}).then(function(token) {
+        // Add the token to the form data
+        const formData = new FormData(createCustomerForm);
+        formData.append('g-recaptcha-response', token);
 
-    fetch('/account', {
-      method: 'POST',
-      body: formData,
-      headers: {
-        'Accept': 'application/json',
-      }
-    }).then(response => {
-      console.log('Account creation response:', response); // Debug log
-      if (response.ok) {
-        console.log('Account created successfully'); // Debug log
-        // Check if the user wants to subscribe to the newsletter
-        if (subscribeMarketingCheckbox.checked) {
-          console.log('Subscribing to newsletter'); // Debug log
-          const email = document.getElementById('Email').value;
-          const newsletterData = new URLSearchParams();
-          newsletterData.append('form_type', 'customer');
-          newsletterData.append('contact[email]', email);
-          newsletterData.append('contact[tags]', 'newsletter');
+        fetch('/account', {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json',
+          }
+        }).then(response => {
+          console.log('Account creation response:', response); // Debug log
+          if (response.ok) {
+            console.log('Account created successfully'); // Debug log
+            // Check if the user wants to subscribe to the newsletter
+            if (subscribeMarketingCheckbox.checked) {
+              console.log('Subscribing to newsletter'); // Debug log
+              const email = document.getElementById('Email').value;
+              const newsletterData = new URLSearchParams();
+              newsletterData.append('form_type', 'customer');
+              newsletterData.append('contact[email]', email);
+              newsletterData.append('contact[tags]', 'newsletter');
 
-          return fetch('/contact', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: newsletterData
-          }).then(newsletterResponse => {
-            console.log('Newsletter subscription response:', newsletterResponse); // Debug log
-            // Redirect to the account page after subscribing to the newsletter
-            window.location.href = '/account';
-          }).catch(error => {
-            console.error('Newsletter subscription failed:', error);
-            // Still redirect to the account page even if the newsletter subscription fails
-            window.location.href = '/account';
-          });
-        } else {
-          // Redirect to the account page if no newsletter subscription is needed
-          window.location.href = '/account';
-        }
-      } else {
-        // Handle account creation errors here
-        return response.json().then(data => {
-          console.error('Account creation failed:', data);
-          alert('Account creation failed: ' + (data.errors ? data.errors.join(', ') : 'Unknown error'));
+              return fetch('/contact', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: newsletterData
+              }).then(newsletterResponse => {
+                console.log('Newsletter subscription response:', newsletterResponse); // Debug log
+                // Redirect to the account page after subscribing to the newsletter
+                window.location.href = '/account';
+              }).catch(error => {
+                console.error('Newsletter subscription failed:', error);
+                // Still redirect to the account page even if the newsletter subscription fails
+                window.location.href = '/account';
+              });
+            } else {
+              // Redirect to the account page if no newsletter subscription is needed
+              window.location.href = '/account';
+            }
+          } else {
+            // Handle account creation errors here
+            return response.json().then(data => {
+              console.error('Account creation failed:', data);
+              alert('Account creation failed: ' + (data.errors ? data.errors.join(', ') : 'Unknown error'));
+            });
+          }
+        }).catch(error => {
+          console.error('Error:', error);
         });
-      }
-    }).catch(error => {
-      console.error('Error:', error);
+      });
     });
   });
 });
