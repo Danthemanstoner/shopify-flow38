@@ -56,12 +56,19 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('showDiscount')) {
+    var discountCodeElement = document.getElementById('discount-code');
+    var discountCode = '';
+
+    if (urlParams.get('discount') === 'freeShipping') {
+      discountCode = 'Free2Door'; // Replace with your actual discount code for free shipping
       document.getElementById('discount-popup').style.display = 'block';
       history.pushState(null, null, window.location.pathname);
+    }
+
+    if (discountCode) {
+      discountCodeElement.innerText = discountCode;
 
       // Apply discount code to cart
-      var discountCode = 'Free2Door'; // Replace with your actual discount code
       var xhr = new XMLHttpRequest();
       xhr.open('POST', '/cart/update.js');
       xhr.setRequestHeader('Content-Type', 'application/json');
@@ -94,8 +101,6 @@
     alert('Discount code copied: ' + discountCodeElement.innerText);
   }
 </script>
-
-
 
 
   
