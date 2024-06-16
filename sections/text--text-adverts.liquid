@@ -1,10 +1,7 @@
 {{ 'section-text-blocks.min.css' | asset_url | stylesheet_tag: preload: true }}
 <noscript>{{ 'section-text-blocks.min.css' | asset_url | stylesheet_tag }}</noscript>
 
-<div
-  class="homepage-sections-wrapper text-advert-section homepage-sections-wrapper--{{ section.settings.colors }}"
-  data-wetheme-section-type="text--text-adverts" data-wetheme-section-id="{{ section.id }}"
->
+<div class="homepage-sections-wrapper text-advert-section homepage-sections-wrapper--{{ section.settings.colors }}" data-wetheme-section-type="text--text-adverts" data-wetheme-section-id="{{ section.id }}">
   <!-- wiggle for vouchers -->
   <div id="shopify-section-template--22517881897275__text_text_adverts_XTaGgp" class="shopify-section homepage-section--text-adverts-wrapper shown-on-scroll animated fadeInUp">
     <link href="//thefruitbox.co/cdn/shop/t/8/assets/section-text-blocks.min.css?v=86379295954260848761712737655" rel="stylesheet" type="text/css" media="all">
@@ -58,7 +55,6 @@
 
   <div class="wrapper-padded small--hide">
     <div class="grid text-advert-section {{ column_amount }}">
-
       {% for block in section.blocks %}
         {%- assign advert_has_link = false -%}
         {% if block.settings.link != blank %}
@@ -68,7 +64,13 @@
         <div class="grid__item {{ column_size }}" {{ block.shopify_attributes }}>
 
           {% if advert_has_link %}
-            <a href="https://thefruitbox.co/?showDiscount=true">
+            {% if block.settings.heading contains 'Free Shipping' %}
+              <a href="?discount=freeShipping">
+            {% elsif block.settings.heading contains '10% Discount' %}
+              <a href="?discount=tenPercent">
+            {% else %}
+              <a href="{{ block.settings.link }}">
+            {% endif %}
           {% endif %}
 
             {% if block.settings.heading != blank %}
@@ -99,7 +101,13 @@
 
           <div class="swiper-slide grid__item {{ column_size }}" {{ block.shopify_attributes }}>
             {% if advert_has_link %}
-              <a href="https://thefruitbox.co/?showDiscount=true">
+              {% if block.settings.heading contains 'Free Shipping' %}
+                <a href="?discount=freeShipping">
+              {% elsif block.settings.heading contains '10% Discount' %}
+                <a href="?discount=tenPercent">
+              {% else %}
+                <a href="{{ block.settings.link }}">
+              {% endif %}
             {% endif %}
 
               {% if block.settings.heading != blank %}
