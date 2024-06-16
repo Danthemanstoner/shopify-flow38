@@ -46,10 +46,10 @@
   {%- endunless -%}
 
 <!-- voucher pop up dicount code section Dan -->
-  <div id="discount-popup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); z-index: 1000;">
+<div id="discount-popup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); z-index: 1000; width: 80%; max-width: 500px; text-align: center;">
   <h2>Discount Code</h2>
   <p>Use the code <strong>Free2Door</strong> at checkout to get your discount!</p>
-  <button onclick="document.getElementById('discount-popup').style.display='none'" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; cursor: pointer;">Close</button>
+  <button onclick="document.getElementById('discount-popup').style.display='none'" style="padding: 10px 20px; background-color: #18533A; color: #fff; border: none; cursor: pointer;">Close</button>
 </div>
 
 <script>
@@ -57,9 +57,22 @@
     var urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('showDiscount')) {
       document.getElementById('discount-popup').style.display = 'block';
+      
+      // Apply discount code to cart
+      var discountCode = 'Free2Door'; // Replace with your actual discount code
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/cart/update.js');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          console.log('Discount code applied');
+        }
+      };
+      xhr.send(JSON.stringify({ note: discountCode }));
     }
   });
 </script>
+
 
   
   <!-- Title and description ================================================== -->
