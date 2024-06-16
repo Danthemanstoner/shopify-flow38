@@ -248,6 +248,35 @@
 </body>
 </html>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.location.href.includes('discount-confirmation')) {
+      var discountCode = 'Free2Door'; // Replace with your actual discount code
+      var popup = document.createElement('div');
+      popup.style.position = 'fixed';
+      popup.style.top = '50%';
+      popup.style.left = '50%';
+      popup.style.transform = 'translate(-50%, -50%)';
+      popup.style.backgroundColor = '#fff';
+      popup.style.padding = '20px';
+      popup.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+      popup.innerHTML = `
+        <div>
+          <h2>Discount Code</h2>
+          <p>Use the code <strong>${discountCode}</strong> at checkout to get your discount!</p>
+          <button id="close-popup" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; cursor: pointer;">Close</button>
+        </div>
+      `;
+      document.body.appendChild(popup);
+
+      document.getElementById('close-popup').addEventListener('click', function() {
+        popup.style.display = 'none';
+      });
+    }
+  });
+</script>
+
+
 <style>
   .overlay-header .cart-item-count-bubble {
     color: #000000 !important; /* Changes text color to black */
