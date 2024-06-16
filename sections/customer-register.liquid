@@ -37,6 +37,13 @@
           <span class="register-cancel--wrapper nav-link-animated--custom"><a class="animated-link--item" href="{{ shop.url }}">{{ 'customer.register.cancel' | t }}</a></span>
 
         {% endform %}
+
+        <form id="newsletterForm" method="post" action="/contact" accept-charset="UTF-8" class="contact-form" style="display: none;">
+          <input type="hidden" name="form_type" value="customer">
+          <input type="hidden" name="utf8" value="✓">
+          <input type="hidden" id="newsletterEmail" name="contact[email]">
+          <input type="hidden" name="contact[tags]" value="newsletter">
+        </form>
       </div>
 
     </div>
@@ -57,19 +64,14 @@
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.querySelector('form[action="/account"]');
   const checkbox = document.getElementById('SubscribeMarketing');
+  const newsletterForm = document.getElementById('newsletterForm');
+  const newsletterEmail = document.getElementById('newsletterEmail');
 
   form.addEventListener('submit', function (event) {
     if (checkbox.checked) {
       const email = document.getElementById('Email').value;
-      const formData = new FormData();
-      formData.append('form_type', 'customer');
-      formData.append('contact[email]', email);
-      formData.append('contact[tags]', 'newsletter');
-
-      fetch('/contact', {
-        method: 'POST',
-        body: formData
-      });
+      newsletterEmail.value = email;
+      newsletterForm.submit();
     }
   });
 });
