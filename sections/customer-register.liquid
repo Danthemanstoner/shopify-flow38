@@ -26,6 +26,11 @@
           <label for="CreatePassword" class="hidden-label">{{ 'customer.register.password' | t }}</label>
           <input type="password" name="customer[password]" id="CreatePassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}" placeholder="{{ 'customer.register.password' | t }}">
 
+          <label class="checkbox-label" for="SubscribeMarketing" style="display: block; margin-top: 15px; text-align: left; font-size: 14px;">
+            <input type="checkbox" name="subscribe_marketing" id="SubscribeMarketing" value="yes" style="margin-right: 10px;">
+            I want to receive updates and promotional offers.
+          </label>
+
           <p>
             <button type="submit" class="btn btn--full account-section--btn">{{ 'customer.register.submit' | t }}</button>
           </p>
@@ -33,15 +38,6 @@
 
         {% endform %}
       </div>
-<form action="/account" method="post">
-  <input type="email" name="email" placeholder="Email" required>
-  <input type="password" name="password" placeholder="Password" required>
-  <label>
-    <input type="checkbox" name="subscribe_marketing" value="yes">
-    I want to receive updates and promotional offers.
-  </label>
-  <button type="submit">Create Account</button>
-</form>
 
     </div>
 
