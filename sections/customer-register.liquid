@@ -32,7 +32,7 @@
           <p>
             <button type="submit" class="btn btn--full account-section--btn">Create Account</button>
           </p>
-          <span class="register-cancel--wrapper nav-link-animated--custom"><a class="animated-link--item" href="https://thefruitbox.co">Cancel</a></span>
+          <span class="register-cancel--wrapper nav-link-animated--custom"><a class="animated-link--item" href="/">Cancel</a></span>
         </form>
       </div>
 
@@ -59,11 +59,16 @@ document.addEventListener('DOMContentLoaded', function () {
     event.preventDefault(); // Prevent the default form submission
 
     const formData = new FormData(createCustomerForm);
+
     fetch('/account', {
       method: 'POST',
-      body: formData
+      body: formData,
+      headers: {
+        'Accept': 'application/json',
+      }
     }).then(response => {
       if (response.ok) {
+        // Check if the user wants to subscribe to the newsletter
         if (subscribeMarketingCheckbox.checked) {
           const email = document.getElementById('Email').value;
           const newsletterData = new URLSearchParams();
@@ -77,17 +82,27 @@ document.addEventListener('DOMContentLoaded', function () {
               'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: newsletterData
+          }).then(() => {
+            // Redirect to the account page after subscribing to the newsletter
+            window.location.href = '/account';
+          }).catch(error => {
+            console.error('Newsletter subscription failed:', error);
+            // Still redirect to the account page even if the newsletter subscription fails
+            window.location.href = '/account';
           });
+        } else {
+          // Redirect to the account page if no newsletter subscription is needed
+          window.location.href = '/account';
         }
       } else {
-        return Promise.reject('Account creation failed');
+        // Handle account creation errors here
+        return response.json().then(data => {
+          console.error('Account creation failed:', data);
+          alert('Account creation failed: ' + (data.errors ? data.errors.join(', ') : 'Unknown error'));
+        });
       }
-    }).then(() => {
-      // Redirect to a success page or refresh the page
-      window.location.href = '/account';
     }).catch(error => {
       console.error('Error:', error);
-      window.location.href = '/account';
     });
   });
 });
