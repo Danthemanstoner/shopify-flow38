@@ -10,7 +10,7 @@
       </div>
 
       <div class="form-vertical">
-        {% form 'create_customer' %}
+        {% form 'create_customer', id: 'createCustomerForm' %}
 
           {{ form.errors | default_errors }}
 
@@ -37,7 +37,7 @@
           <span class="register-cancel--wrapper nav-link-animated--custom"><a class="animated-link--item" href="{{ shop.url }}">{{ 'customer.register.cancel' | t }}</a></span>
 
         {% endform %}
-        
+
         <!-- Hidden Newsletter Form -->
         <form id="newsletterForm" method="post" action="/contact" accept-charset="UTF-8" class="contact-form" style="display: none;">
           <input type="hidden" name="form_type" value="customer">
@@ -63,34 +63,41 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  const form = document.querySelector('form[action="/account"]');
-  const checkbox = document.getElementById('SubscribeMarketing');
+  const createCustomerForm = document.getElementById('createCustomerForm');
+  const subscribeMarketingCheckbox = document.getElementById('SubscribeMarketing');
   const newsletterForm = document.getElementById('newsletterForm');
-  const newsletterEmail = document.getElementById('newsletterEmail');
+  const newsletterEmailInput = document.getElementById('newsletterEmail');
 
-  form.addEventListener('submit', function (event) {
-    if (checkbox.checked) {
+  createCustomerForm.addEventListener('submit', function (event) {
+    // Check if the email field is already taken and show error if it is
+    const email = document.getElementById('Email').value;
+    if (subscribeMarketingCheckbox.checked) {
       event.preventDefault(); // Prevent the default form submission
-      const email = document.getElementById('Email').value;
-      newsletterEmail.value = email;
 
-      // Submit the newsletter form
-      fetch(newsletterForm.action, {
+      // Simulate form submission to check for errors
+      fetch('/account', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: new URLSearchParams(new FormData(newsletterForm))
+        body: new FormData(createCustomerForm)
       }).then(response => {
         if (response.ok) {
-          form.submit();
+          // If no error, submit the newsletter form
+          newsletterEmailInput.value = email;
+          return fetch(newsletterForm.action, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams(new FormData(newsletterForm))
+          });
         } else {
-          console.error('Newsletter subscription failed:', response.statusText);
-          form.submit(); // Submit the original form even if the subscription fails
+          return Promise.reject('Email has already been taken.');
         }
+      }).then(() => {
+        // Finally, submit the original form
+        createCustomerForm.submit();
       }).catch(error => {
-        console.error('Error subscribing to newsletter:', error);
-        form.submit(); // Submit the original form even if the subscription fails
+        console.error('Error:', error);
+        createCustomerForm.submit(); // Submit the original form even if the subscription fails
       });
     }
   });
