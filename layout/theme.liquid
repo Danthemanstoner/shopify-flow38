@@ -45,6 +45,23 @@
     {% # theme-check-enable AssetPreload %}
   {%- endunless -%}
 
+<!-- voucher pop up dicount code section Dan -->
+  <div id="discount-popup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); z-index: 1000;">
+  <h2>Discount Code</h2>
+  <p>Use the code <strong>Free2Door</strong> at checkout to get your discount!</p>
+  <button onclick="document.getElementById('discount-popup').style.display='none'" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; cursor: pointer;">Close</button>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('showDiscount')) {
+      document.getElementById('discount-popup').style.display = 'block';
+    }
+  });
+</script>
+
+  
   <!-- Title and description ================================================== -->
   <title>
     {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
@@ -247,7 +264,7 @@
   {% if request.design_mode %}<script src="{{ 'theme-editor.js' | asset_url }}" defer="defer"></script>{% endif %}
 </body>
 </html>
-
+        
 <style>
   .overlay-header .cart-item-count-bubble {
     color: #000000 !important; /* Changes text color to black */
