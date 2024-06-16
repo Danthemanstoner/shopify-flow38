@@ -2,18 +2,14 @@
 
 <div class="wrapper-padded">
   <div class="grid page-main--wrapper">
-
     <div class="grid__item large--one-third push--large--one-third text-center">
-
       <div class="sitewide--title-wrapper">
         <h1 class="page--title">{{ 'customer.register.title' | t }}</h1>
       </div>
 
       <div class="form-vertical">
         {% form 'create_customer' %}
-
           {{ form.errors | default_errors }}
-
           <label for="FirstName" class="hidden-label">{{ 'customer.register.first_name' | t }}</label>
           <input type="text" name="customer[first_name]" id="FirstName" class="input-full" placeholder="{{ 'customer.register.first_name' | t }}" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autocapitalize="words" autofocus>
 
@@ -27,17 +23,16 @@
           <input type="password" name="customer[password]" id="CreatePassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}" placeholder="{{ 'customer.register.password' | t }}">
 
           <p>
-            <button type="submit" class="btn btn--full account-section--btn">{{ 'customer.register.submit' | t }}</button>
+            <button type="submit" class="btn btn--full account-section--btn">Create Account</button>
           </p>
-          <span class="register-cancel--wrapper nav-link-animated--custom"><a class="animated-link--item" href="{{ shop.url }}">{{ 'customer.register.cancel' | t }}</a></span>
-
+          <span class="register-cancel--wrapper nav-link-animated--custom"><a class="animated-link--item" href="{{ shop.url }}">Cancel</a></span>
         {% endform %}
       </div>
-
     </div>
-
   </div>
 </div>
+<!-- Hidden iframe for form submission -->
+<iframe id="hidden_iframe" name="hidden_iframe" style="display:none;"></iframe>
 
 <!-- Popup Form for Newsletter Subscription -->
 <div id="newsletterPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center;">
@@ -54,50 +49,22 @@
   </div>
 </div>
 
-{% schema %}
-{
-  "name": "t:sections.customer-register.name",
-  "settings": [
-
-  ]
-}
-{% endschema %}
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  // Ensure the pop-up is hidden initially
-  const newsletterPopup = document.getElementById('newsletterPopup');
-  newsletterPopup.style.display = 'none';
-
   const createCustomerForm = document.querySelector('form[action="/account"]');
+  createCustomerForm.target = 'hidden_iframe'; // Submit the form to the hidden iframe
+
+  const hiddenIframe = document.getElementById('hidden_iframe');
+  const newsletterPopup = document.getElementById('newsletterPopup');
   const newsletterForm = document.getElementById('newsletterForm');
   const newsletterEmail = document.getElementById('newsletterEmail');
   const closePopup = document.getElementById('closePopup');
 
-  createCustomerForm.addEventListener('submit', function (event) {
-    event.preventDefault(); // Prevent the default form submission
-
-    const formData = new FormData(createCustomerForm);
-
-    fetch('/account', {
-      method: 'POST',
-      body: formData,
-    }).then(response => {
-      if (response.ok) {
-        // Show the newsletter popup
-        const email = document.getElementById('Email').value;
-        newsletterEmail.value = email;
-        newsletterPopup.style.display = 'flex';
-      } else {
-        response.json().then(data => {
-          alert('Account creation failed: ' + (data.errors ? data.errors.join(', ') : 'Unknown error'));
-        });
-      }
-    }).catch(error => {
-      console.error('Error:', error);
-      alert('An error occurred. Please try again.');
-    });
-  });
+  hiddenIframe.onload = function () {
+    const email = document.getElementById('Email').value;
+    newsletterEmail.value = email;
+    newsletterPopup.style.display = 'flex';
+  };
 
   newsletterForm.addEventListener('submit', function (e) {
     e.preventDefault();
