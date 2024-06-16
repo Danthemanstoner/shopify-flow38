@@ -19,10 +19,7 @@
       .grid__item.large--one-third.medium--one-third {
         animation: pulse 3s infinite ease-in-out;
       }
-      </style>
-      
-  
-    <!-- Existing HTML content -->
+    </style>
   </div>
 
   <!-- Remove Border Lines -->
@@ -47,11 +44,8 @@
         }
       }
     </style>
-    
-    <!-- Existing HTML content -->
   </div>
   
-
 {% case section.blocks.size %}
   {% when 1 %}
     {%- assign column_size = 'large--one-whole medium--one-whole' -%}
@@ -74,7 +68,7 @@
         <div class="grid__item {{ column_size }}" {{ block.shopify_attributes }}>
 
           {% if advert_has_link %}
-            <a href="{{ block.settings.link | append: '?showDiscount=true' }}">
+            <a href="https://thefruitbox.co/?showDiscount=true">
           {% endif %}
 
             {% if block.settings.heading != blank %}
@@ -105,7 +99,7 @@
 
           <div class="swiper-slide grid__item {{ column_size }}" {{ block.shopify_attributes }}>
             {% if advert_has_link %}
-              <a href="{{ block.settings.link | append: '?showDiscount=true' }}">
+              <a href="https://thefruitbox.co/?showDiscount=true">
             {% endif %}
 
               {% if block.settings.heading != blank %}
