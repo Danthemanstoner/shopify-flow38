@@ -23,71 +23,132 @@
           <input type="password" name="customer[password]" id="CreatePassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}" placeholder="{{ 'customer.register.password' | t }}">
 
           <p>
-            <button type="submit" class="btn btn--full account-section--btn">Create Account</button>
+            <button type="submit" class="btn btn--full account-section--btn">{{ 'customer.register.submit' | t }}</button>
           </p>
-          <span class="register-cancel--wrapper nav-link-animated--custom"><a class="animated-link--item" href="{{ shop.url }}">Cancel</a></span>
+          <span class="register-cancel--wrapper nav-link-animated--custom"><a class="animated-link--item" href="{{ shop.url }}">{{ 'customer.register.cancel' | t }}</a></span>
         {% endform %}
       </div>
     </div>
   </div>
 </div>
-<!-- Hidden iframe for form submission -->
-<iframe id="hidden_iframe" name="hidden_iframe" style="display:none;"></iframe>
-
-<!-- Popup Form for Newsletter Subscription -->
-<div id="newsletterPopup" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center;">
-  <div style="background:#fff; padding:20px; border-radius:5px; width:300px; text-align:center; position:relative;">
-    <h2>Subscribe to our Newsletter</h2>
-    <form id="newsletterForm" method="post" action="/contact">
-      <input type="hidden" name="form_type" value="customer">
-      <input type="hidden" name="utf8" value="✓">
-      <input type="email" id="newsletterEmail" name="contact[email]" placeholder="Enter your email">
-      <input type="hidden" name="contact[tags]" value="newsletter">
-      <button type="submit">Subscribe</button>
-    </form>
-    <button id="closePopup" style="position:absolute; top:10px; right:10px; background:none; border:none; font-size:20px; cursor:pointer;">&times;</button>
-  </div>
-</div>
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   const createCustomerForm = document.querySelector('form[action="/account"]');
-  createCustomerForm.target = 'hidden_iframe'; // Submit the form to the hidden iframe
 
-  const hiddenIframe = document.getElementById('hidden_iframe');
-  const newsletterPopup = document.getElementById('newsletterPopup');
-  const newsletterForm = document.getElementById('newsletterForm');
-  const newsletterEmail = document.getElementById('newsletterEmail');
-  const closePopup = document.getElementById('closePopup');
+  createCustomerForm.addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent the default form submission
 
-  hiddenIframe.onload = function () {
-    const email = document.getElementById('Email').value;
-    newsletterEmail.value = email;
-    newsletterPopup.style.display = 'flex';
-  };
+    const formData = new FormData(createCustomerForm);
 
-  newsletterForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    const newsletterFormData = new FormData(newsletterForm);
-    fetch(newsletterForm.action, {
+    fetch('/account', {
       method: 'POST',
-      body: new URLSearchParams(newsletterFormData),
+      body: formData,
     }).then(response => {
-      if (response.ok) {
-        // Close the popup and redirect
-        newsletterPopup.style.display = 'none';
-        window.location.href = '/account';
+      if (response.redirected) {
+        // Dynamically create and show the newsletter popup
+        showNewsletterPopup();
       } else {
-        alert('Subscription failed. Please try again.');
+        response.json().then(data => {
+          alert('Account creation failed: ' + (data.errors ? data.errors.join(', ') : 'Unknown error'));
+        });
       }
     }).catch(error => {
-      console.error('Newsletter subscription failed:', error);
+      console.error('Error:', error);
       alert('An error occurred. Please try again.');
     });
   });
 
-  closePopup.addEventListener('click', function () {
-    newsletterPopup.style.display = 'none';
-  });
+  function showNewsletterPopup() {
+    // Create the popup elements
+    const popup = document.createElement('div');
+    popup.id = 'newsletterPopup';
+    popup.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center;';
+
+    const popupContent = document.createElement('div');
+    popupContent.style.cssText = 'background:#fff; padding:20px; border-radius:5px; width:300px; text-align:center; position:relative;';
+
+    const popupTitle = document.createElement('h2');
+    popupTitle.innerText = 'Subscribe to our Newsletter';
+
+    const newsletterForm = document.createElement('form');
+    newsletterForm.id = 'newsletterForm';
+    newsletterForm.method = 'post';
+    newsletterForm.action = '/contact';
+
+    const hiddenFormType = document.createElement('input');
+    hiddenFormType.type = 'hidden';
+    hiddenFormType.name = 'form_type';
+    hiddenFormType.value = 'customer';
+
+    const hiddenUtf8 = document.createElement('input');
+    hiddenUtf8.type = 'hidden';
+    hiddenUtf8.name = 'utf8';
+    hiddenUtf8.value = '✓';
+
+    const emailInput = document.createElement('input');
+    emailInput.type = 'email';
+    emailInput.id = 'newsletterEmail';
+    emailInput.name = 'contact[email]';
+    emailInput.placeholder = 'Enter your email';
+    emailInput.value = document.getElementById('Email').value;
+
+    const hiddenTag = document.createElement('input');
+    hiddenTag.type = 'hidden';
+    hiddenTag.name = 'contact[tags]';
+    hiddenTag.value = 'newsletter';
+
+    const subscribeButton = document.createElement('button');
+    subscribeButton.type = 'submit';
+    subscribeButton.innerText = 'Subscribe';
+
+    const closeButton = document.createElement('button');
+    closeButton.id = 'closePopup';
+    closeButton.style.cssText = 'position:absolute; top:10px; right:10px; background:none; border:none; font-size:20px; cursor:pointer;';
+    closeButton.innerHTML = '&times;';
+
+    // Append elements to the form
+    newsletterForm.appendChild(hiddenFormType);
+    newsletterForm.appendChild(hiddenUtf8);
+    newsletterForm.appendChild(emailInput);
+    newsletterForm.appendChild(hiddenTag);
+    newsletterForm.appendChild(subscribeButton);
+
+    // Append form and title to the content div
+    popupContent.appendChild(popupTitle);
+    popupContent.appendChild(newsletterForm);
+    popupContent.appendChild(closeButton);
+
+    // Append content div to the popup
+    popup.appendChild(popupContent);
+
+    // Append popup to the body
+    document.body.appendChild(popup);
+
+    // Handle popup form submission
+    newsletterForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const newsletterFormData = new FormData(newsletterForm);
+      fetch(newsletterForm.action, {
+        method: 'POST',
+        body: new URLSearchParams(newsletterFormData),
+      }).then(response => {
+        if (response.ok) {
+          // Close the popup and redirect
+          document.body.removeChild(popup);
+          window.location.href = '/account';
+        } else {
+          alert('Subscription failed. Please try again.');
+        }
+      }).catch(error => {
+        console.error('Newsletter subscription failed:', error);
+        alert('An error occurred. Please try again.');
+      });
+    });
+
+    // Handle popup close button
+    closeButton.addEventListener('click', function () {
+      document.body.removeChild(popup);
+    });
+  }
 });
 </script>
