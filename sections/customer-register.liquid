@@ -65,8 +65,11 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  const createCustomerForm = document.querySelector('form[action="/account"]');
+  // Ensure the pop-up is hidden initially
   const newsletterPopup = document.getElementById('newsletterPopup');
+  newsletterPopup.style.display = 'none';
+
+  const createCustomerForm = document.querySelector('form[action="/account"]');
   const newsletterForm = document.getElementById('newsletterForm');
   const newsletterEmail = document.getElementById('newsletterEmail');
   const closePopup = document.getElementById('closePopup');
