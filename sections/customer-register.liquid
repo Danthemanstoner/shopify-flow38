@@ -31,6 +31,8 @@
             I want to receive updates and promotional offers.
           </label>
 
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          
           <p>
             <button type="submit" class="btn btn--full account-section--btn">{{ 'customer.register.submit' | t }}</button>
           </p>
@@ -61,16 +63,14 @@ document.addEventListener('DOMContentLoaded', function () {
   form.addEventListener('submit', function (event) {
     if (checkbox.checked) {
       const email = document.getElementById('Email').value;
+      const formData = new FormData();
+      formData.append('form_type', 'customer');
+      formData.append('contact[email]', email);
+      formData.append('contact[tags]', 'newsletter');
+
       fetch('/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          'form_type': 'customer',
-          'contact[email]': email,
-          'contact[tags]': 'newsletter'
-        })
+        body: formData
       });
     }
   });
