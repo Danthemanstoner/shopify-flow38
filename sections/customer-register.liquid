@@ -8,45 +8,65 @@
       </div>
 
       <div class="form-vertical">
-        {% form 'create_customer' %}
+        <form id="createCustomerForm" method="post" action="/account">
           {{ form.errors | default_errors }}
           <label for="FirstName" class="hidden-label">{{ 'customer.register.first_name' | t }}</label>
-          <input type="text" name="customer[first_name]" id="FirstName" class="input-full" placeholder="{{ 'customer.register.first_name' | t }}" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autocapitalize="words" autofocus>
+          <input type="text" name="customer[first_name]" id="FirstName" class="input-full" placeholder="{{ 'customer.register.first_name' | t }}" autocapitalize="words" autofocus>
 
           <label for="LastName" class="hidden-label">{{ 'customer.register.last_name' | t }}</label>
-          <input type="text" name="customer[last_name]" id="LastName" class="input-full" placeholder="{{ 'customer.register.last_name' | t }}" {% if form.last_name %}value="{{ form.last_name }}"{% endif %} autocapitalize="words">
+          <input type="text" name="customer[last_name]" id="LastName" class="input-full" placeholder="{{ 'customer.register.last_name' | t }}" autocapitalize="words">
 
           <label for="Email" class="hidden-label">{{ 'customer.register.email' | t }}</label>
-          <input type="email" name="customer[email]" id="Email" class="input-full{% if form.errors contains 'email' %} error{% endif %}" placeholder="{{ 'customer.register.email' | t }}" {% if form.email %} value="{{ form.email }}"{% endif %} autocorrect="off" autocapitalize="off">
+          <input type="email" name="customer[email]" id="Email" class="input-full" placeholder="{{ 'customer.register.email' | t }}" autocorrect="off" autocapitalize="off">
 
           <label for="CreatePassword" class="hidden-label">{{ 'customer.register.password' | t }}</label>
-          <input type="password" name="customer[password]" id="CreatePassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}" placeholder="{{ 'customer.register.password' | t }}">
+          <input type="password" name="customer[password]" id="CreatePassword" class="input-full" placeholder="{{ 'customer.register.password' | t }}">
+
+          <label class="checkbox-label" for="SubscribeNewsletter">
+            <input type="checkbox" name="subscribe_newsletter" id="SubscribeNewsletter" value="yes">
+            {{ 'I want to receive updates and promotional offers and subscribe to the newsletter.' }}
+          </label>
 
           <p>
             <button type="submit" class="btn btn--full account-section--btn">{{ 'customer.register.submit' | t }}</button>
           </p>
           <span class="register-cancel--wrapper nav-link-animated--custom"><a class="animated-link--item" href="{{ shop.url }}">{{ 'customer.register.cancel' | t }}</a></span>
-        {% endform %}
+        </form>
       </div>
     </div>
   </div>
 </div>
+
+{% schema %}
+{
+  "name": "t:sections.customer-register.name",
+  "settings": [
+
+  ]
+}
+{% endschema %}
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  const createCustomerForm = document.querySelector('form[action="/account"]');
+  const createCustomerForm = document.getElementById('createCustomerForm');
 
   createCustomerForm.addEventListener('submit', function (event) {
     event.preventDefault(); // Prevent the default form submission
 
     const formData = new FormData(createCustomerForm);
 
+    // Submit the account creation form
     fetch('/account', {
       method: 'POST',
       body: formData,
     }).then(response => {
       if (response.redirected) {
-        // Dynamically create and show the newsletter popup
-        showNewsletterPopup();
+        // Check if the user wants to subscribe to the newsletter
+        if (document.getElementById('SubscribeNewsletter').checked) {
+          subscribeToNewsletter();
+        } else {
+          window.location.href = response.url;
+        }
       } else {
         response.json().then(data => {
           alert('Account creation failed: ' + (data.errors ? data.errors.join(', ') : 'Unknown error'));
@@ -58,96 +78,31 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  function showNewsletterPopup() {
-    // Create the popup elements
-    const popup = document.createElement('div');
-    popup.id = 'newsletterPopup';
-    popup.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center;';
+  function subscribeToNewsletter() {
+    const email = document.getElementById('Email').value;
+    const newsletterData = new URLSearchParams();
+    newsletterData.append('form_type', 'customer');
+    newsletterData.append('utf8', '✓');
+    newsletterData.append('contact[email]', email);
+    newsletterData.append('contact[tags]', 'newsletter');
 
-    const popupContent = document.createElement('div');
-    popupContent.style.cssText = 'background:#fff; padding:20px; border-radius:5px; width:300px; text-align:center; position:relative;';
-
-    const popupTitle = document.createElement('h2');
-    popupTitle.innerText = 'Subscribe to our Newsletter';
-
-    const newsletterForm = document.createElement('form');
-    newsletterForm.id = 'newsletterForm';
-    newsletterForm.method = 'post';
-    newsletterForm.action = '/contact';
-
-    const hiddenFormType = document.createElement('input');
-    hiddenFormType.type = 'hidden';
-    hiddenFormType.name = 'form_type';
-    hiddenFormType.value = 'customer';
-
-    const hiddenUtf8 = document.createElement('input');
-    hiddenUtf8.type = 'hidden';
-    hiddenUtf8.name = 'utf8';
-    hiddenUtf8.value = '✓';
-
-    const emailInput = document.createElement('input');
-    emailInput.type = 'email';
-    emailInput.id = 'newsletterEmail';
-    emailInput.name = 'contact[email]';
-    emailInput.placeholder = 'Enter your email';
-    emailInput.value = document.getElementById('Email').value;
-
-    const hiddenTag = document.createElement('input');
-    hiddenTag.type = 'hidden';
-    hiddenTag.name = 'contact[tags]';
-    hiddenTag.value = 'newsletter';
-
-    const subscribeButton = document.createElement('button');
-    subscribeButton.type = 'submit';
-    subscribeButton.innerText = 'Subscribe';
-
-    const closeButton = document.createElement('button');
-    closeButton.id = 'closePopup';
-    closeButton.style.cssText = 'position:absolute; top:10px; right:10px; background:none; border:none; font-size:20px; cursor:pointer;';
-    closeButton.innerHTML = '&times;';
-
-    // Append elements to the form
-    newsletterForm.appendChild(hiddenFormType);
-    newsletterForm.appendChild(hiddenUtf8);
-    newsletterForm.appendChild(emailInput);
-    newsletterForm.appendChild(hiddenTag);
-    newsletterForm.appendChild(subscribeButton);
-
-    // Append form and title to the content div
-    popupContent.appendChild(popupTitle);
-    popupContent.appendChild(newsletterForm);
-    popupContent.appendChild(closeButton);
-
-    // Append content div to the popup
-    popup.appendChild(popupContent);
-
-    // Append popup to the body
-    document.body.appendChild(popup);
-
-    // Handle popup form submission
-    newsletterForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      const newsletterFormData = new FormData(newsletterForm);
-      fetch(newsletterForm.action, {
-        method: 'POST',
-        body: new URLSearchParams(newsletterFormData),
-      }).then(response => {
-        if (response.ok) {
-          // Close the popup and redirect
-          document.body.removeChild(popup);
-          window.location.href = '/account';
-        } else {
-          alert('Subscription failed. Please try again.');
-        }
-      }).catch(error => {
-        console.error('Newsletter subscription failed:', error);
-        alert('An error occurred. Please try again.');
-      });
-    });
-
-    // Handle popup close button
-    closeButton.addEventListener('click', function () {
-      document.body.removeChild(popup);
+    fetch('/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: newsletterData
+    }).then(response => {
+      if (response.ok) {
+        window.location.href = '/account';
+      } else {
+        alert('Subscription failed. Please try again.');
+        window.location.href = '/account';
+      }
+    }).catch(error => {
+      console.error('Newsletter subscription failed:', error);
+      alert('An error occurred. Please try again.');
+      window.location.href = '/account';
     });
   }
 });
