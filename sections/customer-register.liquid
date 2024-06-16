@@ -33,6 +33,15 @@
 
         {% endform %}
       </div>
+<form action="/account" method="post">
+  <input type="email" name="email" placeholder="Email" required>
+  <input type="password" name="password" placeholder="Password" required>
+  <label>
+    <input type="checkbox" name="subscribe_marketing" value="yes">
+    I want to receive updates and promotional offers.
+  </label>
+  <button type="submit">Create Account</button>
+</form>
 
     </div>
 
