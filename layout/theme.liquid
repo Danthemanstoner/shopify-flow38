@@ -48,7 +48,8 @@
 <!-- voucher pop up dicount code section Dan -->
 <div id="discount-popup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); z-index: 1000; width: 80%; max-width: 500px; text-align: center;">
   <h2>Discount Code</h2>
-  <p>Use the code <strong id="discount-code" style="cursor: pointer;" onclick="copyDiscountCode()">Free2Door</strong> at checkout to get your discount!</p>
+  <p>Click to copy your discount code:</p>
+  <p id="discount-code" style="cursor: pointer; padding: 10px; background-color: #f0f0f0; border: 1px solid #ccc; display: inline-block; margin: 10px 0;" onclick="copyDiscountCode()">Free2Door</p>
   <p>Your discount has been added to the checkout page.</p>
   <button id="close-popup" style="padding: 10px 20px; background-color: #18533A; color: #fff; border: none; cursor: pointer;">Close</button>
 </div>
@@ -94,7 +95,6 @@
     alert('Discount code copied: ' + discountCodeElement.innerText);
   }
 </script>
-
 
 
 
