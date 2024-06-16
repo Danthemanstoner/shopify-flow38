@@ -10,21 +10,20 @@
       </div>
 
       <div class="form-vertical">
-        {% form 'create_customer', id: 'createCustomerForm' %}
-
+        <form id="createCustomerForm" method="post" action="/account">
           {{ form.errors | default_errors }}
 
           <label for="FirstName" class="hidden-label">{{ 'customer.register.first_name' | t }}</label>
-          <input type="text" name="customer[first_name]" id="FirstName" class="input-full" placeholder="{{ 'customer.register.first_name' | t }}" {% if form.first_name %}value="{{ form.first_name }}"{% endif %} autocapitalize="words" autofocus>
+          <input type="text" name="customer[first_name]" id="FirstName" class="input-full" placeholder="{{ 'customer.register.first_name' | t }}" autocapitalize="words" autofocus>
 
           <label for="LastName" class="hidden-label">{{ 'customer.register.last_name' | t }}</label>
-          <input type="text" name="customer[last_name]" id="LastName" class="input-full" placeholder="{{ 'customer.register.last_name' | t }}" {% if form.last_name %}value="{{ form.last_name }}"{% endif %} autocapitalize="words">
+          <input type="text" name="customer[last_name]" id="LastName" class="input-full" placeholder="{{ 'customer.register.last_name' | t }}" autocapitalize="words">
 
           <label for="Email" class="hidden-label">{{ 'customer.register.email' | t }}</label>
-          <input type="email" name="customer[email]" id="Email" class="input-full{% if form.errors contains 'email' %} error{% endif %}" placeholder="{{ 'customer.register.email' | t }}" {% if form.email %} value="{{ form.email }}"{% endif %} autocorrect="off" autocapitalize="off">
+          <input type="email" name="customer[email]" id="Email" class="input-full" placeholder="{{ 'customer.register.email' | t }}" autocorrect="off" autocapitalize="off">
 
           <label for="CreatePassword" class="hidden-label">{{ 'customer.register.password' | t }}</label>
-          <input type="password" name="customer[password]" id="CreatePassword" class="input-full{% if form.errors contains 'password' %} error{% endif %}" placeholder="{{ 'customer.register.password' | t }}">
+          <input type="password" name="customer[password]" id="CreatePassword" class="input-full" placeholder="{{ 'customer.register.password' | t }}">
 
           <label class="checkbox-label" for="SubscribeMarketing" style="display: block; margin-top: 15px; text-align: left; font-size: 14px;">
             <input type="checkbox" name="subscribe_marketing" id="SubscribeMarketing" value="yes" style="margin-right: 10px;">
@@ -32,18 +31,9 @@
           </label>
 
           <p>
-            <button type="submit" class="btn btn--full account-section--btn">{{ 'customer.register.submit' | t }}</button>
+            <button type="submit" class="btn btn--full account-section--btn">Create Account</button>
           </p>
-          <span class="register-cancel--wrapper nav-link-animated--custom"><a class="animated-link--item" href="{{ shop.url }}">{{ 'customer.register.cancel' | t }}</a></span>
-
-        {% endform %}
-
-        <!-- Hidden Newsletter Form -->
-        <form id="newsletterForm" method="post" action="/contact" accept-charset="UTF-8" class="contact-form" style="display: none;">
-          <input type="hidden" name="form_type" value="customer">
-          <input type="hidden" name="utf8" value="✓">
-          <input type="hidden" id="newsletterEmail" name="contact[email]">
-          <input type="hidden" name="contact[tags]" value="newsletter">
+          <span class="register-cancel--wrapper nav-link-animated--custom"><a class="animated-link--item" href="{{ shop.url }}">Cancel</a></span>
         </form>
       </div>
 
@@ -54,7 +44,7 @@
 
 {% schema %}
 {
-  "name": "t:sections.customer-register.name",
+  "name": "Customer Register",
   "settings": [
 
   ]
@@ -65,41 +55,41 @@
 document.addEventListener('DOMContentLoaded', function () {
   const createCustomerForm = document.getElementById('createCustomerForm');
   const subscribeMarketingCheckbox = document.getElementById('SubscribeMarketing');
-  const newsletterForm = document.getElementById('newsletterForm');
-  const newsletterEmailInput = document.getElementById('newsletterEmail');
 
   createCustomerForm.addEventListener('submit', function (event) {
-    // Check if the email field is already taken and show error if it is
-    const email = document.getElementById('Email').value;
-    if (subscribeMarketingCheckbox.checked) {
-      event.preventDefault(); // Prevent the default form submission
+    event.preventDefault(); // Prevent the default form submission
 
-      // Simulate form submission to check for errors
-      fetch('/account', {
-        method: 'POST',
-        body: new FormData(createCustomerForm)
-      }).then(response => {
-        if (response.ok) {
-          // If no error, submit the newsletter form
-          newsletterEmailInput.value = email;
-          return fetch(newsletterForm.action, {
+    const formData = new FormData(createCustomerForm);
+    fetch('/account', {
+      method: 'POST',
+      body: formData
+    }).then(response => {
+      if (response.ok) {
+        if (subscribeMarketingCheckbox.checked) {
+          const email = document.getElementById('Email').value;
+          const newsletterData = new URLSearchParams();
+          newsletterData.append('form_type', 'customer');
+          newsletterData.append('contact[email]', email);
+          newsletterData.append('contact[tags]', 'newsletter');
+
+          return fetch('/contact', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
             },
-            body: new URLSearchParams(new FormData(newsletterForm))
+            body: newsletterData
           });
-        } else {
-          return Promise.reject('Email has already been taken.');
         }
-      }).then(() => {
-        // Finally, submit the original form
-        createCustomerForm.submit();
-      }).catch(error => {
-        console.error('Error:', error);
-        createCustomerForm.submit(); // Submit the original form even if the subscription fails
-      });
-    }
+      } else {
+        return Promise.reject('Account creation failed');
+      }
+    }).then(() => {
+      // Redirect to a success page or refresh the page
+      window.location.href = '/account';
+    }).catch(error => {
+      console.error('Error:', error);
+      window.location.href = '/account';
+    });
   });
 });
 </script>
