@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
       method: 'POST',
       body: formData,
     }).then(response => {
-      if (response.ok) {
+      if (response.redirected) {
         // Show the newsletter popup
         const email = document.getElementById('Email').value;
         newsletterEmail.value = email;
