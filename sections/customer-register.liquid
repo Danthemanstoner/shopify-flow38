@@ -31,15 +31,20 @@
             I want to receive updates and promotional offers.
           </label>
 
-          <input type="hidden" name="contact[tags]" value="newsletter">
-          <input type="hidden" id="newsletter_email" name="contact[email]" value="">
-
           <p>
             <button type="submit" class="btn btn--full account-section--btn">{{ 'customer.register.submit' | t }}</button>
           </p>
           <span class="register-cancel--wrapper nav-link-animated--custom"><a class="animated-link--item" href="{{ shop.url }}">{{ 'customer.register.cancel' | t }}</a></span>
 
         {% endform %}
+        
+        <!-- Hidden Newsletter Form -->
+        <form id="newsletterForm" method="post" action="/contact" accept-charset="UTF-8" class="contact-form" style="display: none;">
+          <input type="hidden" name="form_type" value="customer">
+          <input type="hidden" name="utf8" value="✓">
+          <input type="hidden" id="newsletterEmail" name="contact[email]">
+          <input type="hidden" name="contact[tags]" value="newsletter">
+        </form>
       </div>
 
     </div>
@@ -59,13 +64,15 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.querySelector('form[action="/account"]');
-  const emailField = document.getElementById('Email');
-  const newsletterEmailField = document.getElementById('newsletter_email');
   const checkbox = document.getElementById('SubscribeMarketing');
+  const newsletterForm = document.getElementById('newsletterForm');
+  const newsletterEmail = document.getElementById('newsletterEmail');
 
   form.addEventListener('submit', function () {
     if (checkbox.checked) {
-      newsletterEmailField.value = emailField.value;
+      const email = document.getElementById('Email').value;
+      newsletterEmail.value = email;
+      newsletterForm.submit();
     }
   });
 });
