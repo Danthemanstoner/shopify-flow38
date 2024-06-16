@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   createCustomerForm.addEventListener('submit', function (event) {
     event.preventDefault(); // Prevent the default form submission
+    console.log('Form submission triggered'); // Debug log
 
     const formData = new FormData(createCustomerForm);
 
@@ -62,9 +63,12 @@ document.addEventListener('DOMContentLoaded', function () {
         'Accept': 'application/json',
       }
     }).then(response => {
+      console.log('Account creation response:', response); // Debug log
       if (response.ok) {
+        console.log('Account created successfully'); // Debug log
         // Check if the user wants to subscribe to the newsletter
         if (subscribeMarketingCheckbox.checked) {
+          console.log('Subscribing to newsletter'); // Debug log
           const email = document.getElementById('Email').value;
           const newsletterData = new URLSearchParams();
           newsletterData.append('form_type', 'customer');
@@ -77,7 +81,8 @@ document.addEventListener('DOMContentLoaded', function () {
               'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: newsletterData
-          }).then(() => {
+          }).then(newsletterResponse => {
+            console.log('Newsletter subscription response:', newsletterResponse); // Debug log
             // Redirect to the account page after subscribing to the newsletter
             window.location.href = '/account';
           }).catch(error => {
