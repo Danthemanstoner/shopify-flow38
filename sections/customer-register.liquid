@@ -82,8 +82,12 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         body: new URLSearchParams(new FormData(newsletterForm))
       }).then(response => {
-        // After subscribing to the newsletter, submit the original form
-        form.submit();
+        if (response.ok) {
+          form.submit();
+        } else {
+          console.error('Newsletter subscription failed:', response.statusText);
+          form.submit(); // Submit the original form even if the subscription fails
+        }
       }).catch(error => {
         console.error('Error subscribing to newsletter:', error);
         form.submit(); // Submit the original form even if the subscription fails
