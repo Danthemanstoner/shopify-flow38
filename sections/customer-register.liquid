@@ -68,11 +68,26 @@ document.addEventListener('DOMContentLoaded', function () {
   const newsletterForm = document.getElementById('newsletterForm');
   const newsletterEmail = document.getElementById('newsletterEmail');
 
-  form.addEventListener('submit', function () {
+  form.addEventListener('submit', function (event) {
     if (checkbox.checked) {
+      event.preventDefault(); // Prevent the default form submission
       const email = document.getElementById('Email').value;
       newsletterEmail.value = email;
-      newsletterForm.submit();
+
+      // Submit the newsletter form
+      fetch(newsletterForm.action, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams(new FormData(newsletterForm))
+      }).then(response => {
+        // After subscribing to the newsletter, submit the original form
+        form.submit();
+      }).catch(error => {
+        console.error('Error subscribing to newsletter:', error);
+        form.submit(); // Submit the original form even if the subscription fails
+      });
     }
   });
 });
