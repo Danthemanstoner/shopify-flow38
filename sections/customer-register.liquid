@@ -31,11 +31,8 @@
       </div>
 
       <!-- Success Message -->
-      <div id="successMessage" style="display:none; margin-top:20px; margin-bottom:20px; padding:20px; background-color:#d4edda; color:#155724; border:1px solid #c3e6cb; border-radius:5px; font-size: 16px;">
-        Welcome to theFruitBox family! Please remember to sign up for our newsletter to get your 10% discount on your next order.
-        <p style="margin-top: 20px;">
-          <a href="https://thefruitbox.co/pages/newsletter-signup" class="btn btn--full">Sign up for the newsletter</a>
-        </p>
+      <div id="successMessage" style="display:none; margin-top:20px; padding:10px; background-color:#d4edda; color:#155724; border:1px solid #c3e6cb; border-radius:5px;">
+        Welcome to theFruitBox family, you've successfully created an account. Please remember to <a href="https://thefruitbox.co/pages/newsletter-signup" id="newsletterLink" class="btn btn--full account-section--btn">sign up for our newsletter</a> to get your 10% discount on your next order.
       </div>
     </div>
   </div>
@@ -44,16 +41,13 @@
 {% schema %}
 {
   "name": "t:sections.customer-register.name",
-  "settings": [
-
-  ]
+  "settings": []
 }
 {% endschema %}
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   const createCustomerForm = document.querySelector('form[action="/account"]');
-  const successMessage = document.getElementById('successMessage');
 
   createCustomerForm.addEventListener('submit', function (event) {
     event.preventDefault(); // Prevent the default form submission
@@ -66,13 +60,11 @@ document.addEventListener('DOMContentLoaded', function () {
       body: formData,
     }).then(response => {
       if (response.ok) {
-        successMessage.style.display = 'block';
-        createCustomerForm.style.display = 'none';
-
-        // Redirect to the newsletter signup page with email as a query parameter
-        window.location.href = 'https://thefruitbox.co/pages/newsletter-signup?email=' + encodeURIComponent(email);
+        // Show the success message
+        document.querySelector('.form-vertical').style.display = 'none';
+        document.getElementById('successMessage').style.display = 'block';
       } else {
-        alert('An error occurred. Please try again.');
+        return response.text().then(text => { throw new Error(text); });
       }
     }).catch(error => {
       console.error('Error:', error);
