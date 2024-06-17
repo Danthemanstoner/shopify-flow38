@@ -68,6 +68,9 @@ document.addEventListener('DOMContentLoaded', function () {
       if (response.ok) {
         successMessage.style.display = 'block';
         createCustomerForm.style.display = 'none';
+
+        // Redirect to the newsletter signup page with email as a query parameter
+        window.location.href = 'https://thefruitbox.co/pages/newsletter-signup?email=' + encodeURIComponent(email);
       } else {
         alert('An error occurred. Please try again.');
       }
