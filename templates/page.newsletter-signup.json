@@ -2,7 +2,6 @@
   "sections": {
     "main": {
       "type": "template--page",
-      "disabled": true,
       "settings": {
         "page_title_enabled": true,
         "page_width": "narrow"
@@ -13,6 +12,7 @@
       "blocks": {
         "heading_9rbKgq": {
           "type": "heading",
+          "disabled": true,
           "settings": {
             "heading": "Welcome, Now let's get you signed up..."
           }
