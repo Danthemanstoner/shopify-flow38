@@ -20,7 +20,6 @@
         },
         "newsletter": {
           "type": "newsletter",
-          "disabled": true,
           "settings": {
             "newsletter_title": "TheFruitBox Friends",
             "footer_newsletter_description": "<p>Sign up now for 10% off your first order and exclusive offers.<\/p>"
