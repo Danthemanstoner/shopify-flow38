@@ -1,1 +1,56 @@
-{"type":"footer","name":"Footer","sections":{"footer-main":{"type":"footer-main","blocks":{"menu":{"type":"menu","settings":{"menu_title":"","footer_linklist":"footer"}},"social":{"type":"social","settings":{"social_title":""}},"newsletter":{"type":"newsletter","settings":{"newsletter_title":"TheFruitBox Friends","footer_newsletter_description":"<p>Sign up now for 10% off your first order and exclusive offers.<\/p>"}}},"block_order":["menu","social","newsletter"],"settings":{"alignment":"left","color_scheme":"accent"}},"footer-bottom":{"type":"footer-bottom","settings":{"show_methods_of_payment":true,"center_content_on_desktop":true,"footer_text":"","show_currency_selector":true,"show_locale_selector":false,"color_scheme":"dark"}}},"order":["footer-main","footer-bottom"]}
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "footer-main": {
+      "type": "footer-main",
+      "blocks": {
+        "menu": {
+          "type": "menu",
+          "settings": {
+            "menu_title": "",
+            "footer_linklist": "footer"
+          }
+        },
+        "social": {
+          "type": "social",
+          "settings": {
+            "social_title": ""
+          }
+        },
+        "newsletter": {
+          "type": "newsletter",
+          "disabled": true,
+          "settings": {
+            "newsletter_title": "TheFruitBox Friends",
+            "footer_newsletter_description": "<p>Sign up now for 10% off your first order and exclusive offers.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "menu",
+        "social",
+        "newsletter"
+      ],
+      "settings": {
+        "alignment": "left",
+        "color_scheme": "accent"
+      }
+    },
+    "footer-bottom": {
+      "type": "footer-bottom",
+      "settings": {
+        "show_methods_of_payment": true,
+        "center_content_on_desktop": true,
+        "footer_text": "",
+        "show_currency_selector": true,
+        "show_locale_selector": false,
+        "color_scheme": "dark"
+      }
+    }
+  },
+  "order": [
+    "footer-main",
+    "footer-bottom"
+  ]
+}
