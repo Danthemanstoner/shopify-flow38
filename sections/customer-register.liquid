@@ -54,9 +54,9 @@ document.addEventListener('DOMContentLoaded', function () {
       method: 'POST',
       body: formData,
     }).then(response => {
-      if (response.ok || response.redirected) {
+      if (response.redirected) {
         // Redirect to the newsletter signup page
-        window.location.href = '/pages/newsletter-signup';
+        window.location.href = 'https://thefruitbox.co/pages/newsletter-signup';
       } else {
         response.json().then(data => {
           alert('Account creation failed: ' + (data.errors ? data.errors.join(', ') : 'Unknown error'));
