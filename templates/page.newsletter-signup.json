@@ -39,22 +39,10 @@
         "text_alignment_mobile": "center",
         "colors": "white"
       }
-    },
-    "newsletter_newsletter_JFwrnn": {
-      "type": "newsletter--newsletter",
-      "custom_css": [
-
-      ],
-      "settings": {
-        "newsletter_heading": "",
-        "newsletter_description": "<p>Subscribe to our newsletter to get 10% off your next order<\/p>",
-        "colors": "white"
-      }
     }
   },
   "order": [
     "main",
-    "text_rich_text_fbcXkd",
-    "newsletter_newsletter_JFwrnn"
+    "text_rich_text_fbcXkd"
   ]
 }
