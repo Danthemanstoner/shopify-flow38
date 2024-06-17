@@ -42,7 +42,6 @@
     },
     "advanced_layout_custom_liquid_QdAa73": {
       "type": "advanced-layout--custom-liquid",
-      "disabled": true,
       "custom_css": [
         "{margin-bottom: 100px;}"
       ],
@@ -52,6 +51,10 @@
     },
     "newsletter_newsletter_JFwrnn": {
       "type": "newsletter--newsletter",
+      "disabled": true,
+      "custom_css": [
+
+      ],
       "settings": {
         "newsletter_heading": "",
         "newsletter_description": "<p>Subscribe to our newsletter to get 10% off your next order<\/p>",
