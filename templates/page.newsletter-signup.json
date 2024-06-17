@@ -40,19 +40,8 @@
         "colors": "white"
       }
     },
-    "advanced_layout_custom_liquid_QdAa73": {
-      "type": "advanced-layout--custom-liquid",
-      "disabled": true,
-      "custom_css": [
-        "{margin-bottom: 100px;}"
-      ],
-      "settings": {
-        "custom_liquid": "<!-- newsletter-signup.liquid -->\n\n<div class=\"wrapper-padded\">\n  <div class=\"grid page-main--wrapper\">\n    <div class=\"grid__item large--one-third push--large--one-third text-center\">\n      <div class=\"sitewide--title-wrapper\">\n        <h1 class=\"page--title\" style=\"display: none;\">Newsletter Signup<\/h1> <!-- Hiding the title -->\n      <\/div>\n\n      <p class=\"discount-message\">Subscribe to our newsletter to receive a 10% discount on your next order!<\/p>\n\n      <!-- Success Message -->\n      <div id=\"successMessage\" style=\"display:none; margin-top:20px; padding:10px; background-color:#d4edda; color:#155724; border:1px solid #c3e6cb; border-radius:5px;\">\n        Welcome to theFruitBox family, you've successfully created an account, signed up for the newsletter, and will get your 10% discount emailed to you soon...\n      <\/div>\n\n      <div class=\"form-vertical\" id=\"newsletterFormContainer\">\n        <form id=\"newsletterSignupForm\">\n          <input type=\"hidden\" name=\"form_type\" value=\"customer\">\n          <input type=\"hidden\" name=\"utf8\" value=\"✓\">\n\n          <label for=\"Email\" class=\"hidden-label\">Email<\/label>\n          <input type=\"email\" name=\"contact[email]\" id=\"Email\" class=\"input-full\" placeholder=\"Enter your email\" autocorrect=\"off\" autocapitalize=\"off\" required>\n\n          <input type=\"hidden\" name=\"contact[tags]\" value=\"newsletter\">\n\n          <p>\n            <button type=\"submit\" class=\"btn btn--full account-section--btn\">Subscribe<\/button>\n          <\/p>\n        <\/form>\n      <\/div>\n    <\/div>\n  <\/div>\n<\/div>\n\n<script>\ndocument.addEventListener('DOMContentLoaded', function () {\n  const urlParams = new URLSearchParams(window.location.search);\n  const email = urlParams.get('email');\n  \n  if (email) {\n    document.getElementById('Email').value = email;\n  }\n\n  const newsletterForm = document.getElementById('newsletterSignupForm');\n  const successMessage = document.getElementById('successMessage');\n  const newsletterFormContainer = document.getElementById('newsletterFormContainer');\n\n  newsletterForm.addEventListener('submit', function (e) {\n    e.preventDefault();\n    \n    const emailInput = document.getElementById('Email').value;\n    const formData = new URLSearchParams();\n    formData.append('form_type', 'customer');\n    formData.append('utf8', '✓');\n    formData.append('contact[email]', emailInput);\n    formData.append('contact[tags]', 'newsletter');\n\n    fetch('\/contact', {\n      method: 'POST',\n      headers: {\n        'Content-Type': 'application\/x-www-form-urlencoded'\n      },\n      body: formData.toString()\n    }).then(response => {\n      if (response.ok) {\n        successMessage.style.display = 'block';\n        newsletterFormContainer.style.display = 'none';\n      } else {\n        alert('Subscription failed. Please try again.');\n      }\n    }).catch(error => {\n      console.error('Error:', error);\n      alert('An error occurred. Please try again.');\n    });\n  });\n});\n<\/script>"
-      }
-    },
     "newsletter_newsletter_JFwrnn": {
       "type": "newsletter--newsletter",
-      "disabled": true,
       "custom_css": [
 
       ],
@@ -66,7 +55,6 @@
   "order": [
     "main",
     "text_rich_text_fbcXkd",
-    "advanced_layout_custom_liquid_QdAa73",
     "newsletter_newsletter_JFwrnn"
   ]
 }
