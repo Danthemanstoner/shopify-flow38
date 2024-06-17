@@ -54,19 +54,8 @@ document.addEventListener('DOMContentLoaded', function () {
       method: 'POST',
       body: formData,
     }).then(response => {
-      if (response.redirected) {
-        // Check if the response URL contains 'account' to ensure account creation
-        if (response.url.includes('/account')) {
-          // Redirect to the newsletter signup page
-          window.location.href = 'https://thefruitbox.co/pages/newsletter-signup';
-        } else {
-          window.location.href = response.url;
-        }
-      } else {
-        response.json().then(data => {
-          alert('Account creation failed: ' + (data.errors ? data.errors.join(', ') : 'Unknown error'));
-        });
-      }
+      // Redirect to the newsletter signup page regardless of the response
+      window.location.href = 'https://thefruitbox.co/pages/newsletter-signup';
     }).catch(error => {
       console.error('Error:', error);
       alert('An error occurred. Please try again.');
