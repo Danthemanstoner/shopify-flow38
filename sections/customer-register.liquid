@@ -26,13 +26,11 @@
             <button type="submit" class="btn btn--full account-section--btn">Create Account</button>
           </p>
 
-          <p class="reminder-text">Don't forget to sign up for our newsletter on the next page to receive a 10% discount!</p>
+          <div id="welcomeMessage" style="display:none; margin-top:20px; padding:20px; background-color:#d4edda; color:#155724; border:1px solid #c3e6cb; border-radius:5px;">
+            <p>Welcome to theFruitBox family, you've successfully created an account. Please remember to sign up for our newsletter to get your 10% discount on your next order.</p>
+            <button id="newsletterSignupButton" class="btn btn--full">SIGN UP FOR OUR NEWSLETTER</button>
+          </div>
         {% endform %}
-      </div>
-
-      <!-- Success Message -->
-      <div id="successMessage" style="display:none; margin-top:20px; padding:10px; background-color:#d4edda; color:#155724; border:1px solid #c3e6cb; border-radius:5px;">
-        Welcome to theFruitBox family, you've successfully created an account. Please remember to <a href="https://thefruitbox.co/pages/newsletter-signup" id="newsletterLink" class="btn btn--full account-section--btn">sign up for our newsletter</a> to get your 10% discount on your next order.
       </div>
     </div>
   </div>
@@ -41,13 +39,17 @@
 {% schema %}
 {
   "name": "t:sections.customer-register.name",
-  "settings": []
+  "settings": [
+
+  ]
 }
 {% endschema %}
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   const createCustomerForm = document.querySelector('form[action="/account"]');
+  const welcomeMessage = document.getElementById('welcomeMessage');
+  const newsletterSignupButton = document.getElementById('newsletterSignupButton');
 
   createCustomerForm.addEventListener('submit', function (event) {
     event.preventDefault(); // Prevent the default form submission
@@ -60,11 +62,13 @@ document.addEventListener('DOMContentLoaded', function () {
       body: formData,
     }).then(response => {
       if (response.ok) {
-        // Show the success message
-        document.querySelector('.form-vertical').style.display = 'none';
-        document.getElementById('successMessage').style.display = 'block';
+        welcomeMessage.style.display = 'block';
+        newsletterSignupButton.addEventListener('click', function () {
+          window.location.href = 'https://thefruitbox.co/pages/newsletter-signup?email=' + encodeURIComponent(email);
+        });
       } else {
-        return response.text().then(text => { throw new Error(text); });
+        console.error('Error:', response.statusText);
+        alert('An error occurred. Please try again.');
       }
     }).catch(error => {
       console.error('Error:', error);
