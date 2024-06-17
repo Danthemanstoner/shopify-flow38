@@ -8,7 +8,7 @@
       </div>
 
       <div class="form-vertical">
-        <form id="createCustomerForm" method="post" action="/account">
+        {% form 'create_customer' %}
           {{ form.errors | default_errors }}
           <label for="FirstName" class="hidden-label">{{ 'customer.register.first_name' | t }}</label>
           <input type="text" name="customer[first_name]" id="FirstName" class="input-full" placeholder="{{ 'customer.register.first_name' | t }}" autocapitalize="words" autofocus>
@@ -23,10 +23,10 @@
           <input type="password" name="customer[password]" id="CreatePassword" class="input-full" placeholder="{{ 'customer.register.password' | t }}">
 
           <p>
-            <button type="submit" class="btn btn--full account-section--btn">{{ 'customer.register.submit' | t }}</button>
+            <button type="submit" class="btn btn--full account-section--btn">Create Account</button>
           </p>
-          <span class="register-cancel--wrapper nav-link-animated--custom"><a class="animated-link--item" href="{{ shop.url }}">{{ 'customer.register.cancel' | t }}</a></span>
-        </form>
+          <span class="register-cancel--wrapper nav-link-animated--custom"><a class="animated-link--item" href="{{ shop.url }}">Cancel</a></span>
+        {% endform %}
       </div>
     </div>
   </div>
@@ -43,7 +43,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-  const createCustomerForm = document.getElementById('createCustomerForm');
+  const createCustomerForm = document.querySelector('form[action="/account"]');
 
   createCustomerForm.addEventListener('submit', function (event) {
     event.preventDefault(); // Prevent the default form submission
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
       method: 'POST',
       body: formData,
     }).then(response => {
-      if (response.redirected) {
+      if (response.ok || response.redirected) {
         // Redirect to the newsletter signup page
         window.location.href = '/pages/newsletter-signup';
       } else {
