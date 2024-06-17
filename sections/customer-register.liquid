@@ -25,6 +25,9 @@
           <p>
             <button type="submit" class="btn btn--full account-section--btn">Create Account</button>
           </p>
+
+          <p class="reminder-text">Don't forget to sign up for our newsletter on the next page to receive a 10% discount!</p>
+
           <span class="register-cancel--wrapper nav-link-animated--custom"><a class="animated-link--item" href="{{ shop.url }}">Cancel</a></span>
         {% endform %}
       </div>
@@ -49,13 +52,14 @@ document.addEventListener('DOMContentLoaded', function () {
     event.preventDefault(); // Prevent the default form submission
 
     const formData = new FormData(createCustomerForm);
+    const email = document.getElementById('Email').value;
 
     fetch('/account', {
       method: 'POST',
       body: formData,
     }).then(response => {
-      // Redirect to the newsletter signup page regardless of the response
-      window.location.href = 'https://thefruitbox.co/pages/newsletter-signup';
+      // Redirect to the newsletter signup page with email as a query parameter
+      window.location.href = 'https://thefruitbox.co/pages/newsletter-signup?email=' + encodeURIComponent(email);
     }).catch(error => {
       console.error('Error:', error);
       alert('An error occurred. Please try again.');
