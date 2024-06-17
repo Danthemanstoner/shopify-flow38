@@ -23,10 +23,8 @@
           <input type="password" name="customer[password]" id="CreatePassword" class="input-full" placeholder="{{ 'customer.register.password' | t }}">
 
           <p>
-            <button type="submit" class="btn btn--full account-section--btn">Create Account</button>
+            <button type="submit" class="btn btn--full account-section--btn">{{ 'customer.register.submit' | t }}</button>
           </p>
-
-          <p class="reminder-text">Don't forget to sign up for our newsletter on the next page to receive a 10% discount!</p>
         {% endform %}
       </div>
     </div>
@@ -41,27 +39,3 @@
   ]
 }
 {% endschema %}
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const createCustomerForm = document.querySelector('form[action="/account"]');
-
-  createCustomerForm.addEventListener('submit', function (event) {
-    event.preventDefault(); // Prevent the default form submission
-
-    const formData = new FormData(createCustomerForm);
-    const email = document.getElementById('Email').value;
-
-    fetch('/account', {
-      method: 'POST',
-      body: formData,
-    }).then(response => {
-      // Redirect to the newsletter signup page with email as a query parameter
-      window.location.href = 'https://thefruitbox.co/pages/newsletter-signup?email=' + encodeURIComponent(email);
-    }).catch(error => {
-      console.error('Error:', error);
-      alert('An error occurred. Please try again.');
-    });
-  });
-});
-</script>
