@@ -42,6 +42,7 @@
     },
     "advanced_layout_custom_liquid_QdAa73": {
       "type": "advanced-layout--custom-liquid",
+      "disabled": true,
       "custom_css": [
         "{margin-bottom: 100px;}"
       ],
