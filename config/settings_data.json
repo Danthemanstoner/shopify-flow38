@@ -100,20 +100,6 @@
         "settings": {
         }
       },
-      "1768834845299682660": {
-        "type": "shopify:\/\/apps\/subscriptions\/blocks\/app-embed-block\/a3bfe9ec-96f8-4508-a003-df608a36d2ad",
-        "disabled": false,
-        "settings": {
-          "color_text_title": "#18533a",
-          "color_text_body": "#6D7175",
-          "dividers_color": "#8F8D8D",
-          "bacgkround_color": "#FFFFFF",
-          "border_thickness": 1,
-          "border_radius": 0,
-          "supporting_text_title": "Subscription Options",
-          "subscription_policy_url": ""
-        }
-      },
       "15683396631634586217": {
         "type": "shopify:\/\/apps\/inbox\/blocks\/chat\/841fc607-4181-4ad1-842d-e24d7f8bad6b",
         "disabled": true,
@@ -132,6 +118,20 @@
         "type": "shopify:\/\/apps\/sendbird-ai-chatbot\/blocks\/sendbird_ai_chatbot\/b03eb8ba-9162-4761-90d8-4ea6e597ce98",
         "disabled": false,
         "settings": {
+        }
+      },
+      "1768834845299682660": {
+        "type": "shopify:\/\/apps\/subscriptions\/blocks\/app-embed-block\/a3bfe9ec-96f8-4508-a003-df608a36d2ad",
+        "disabled": true,
+        "settings": {
+          "color_text_title": "#18533a",
+          "color_text_body": "#6d7175",
+          "dividers_color": "#8f8d8d",
+          "bacgkround_color": "#ffffff",
+          "border_thickness": 1,
+          "border_radius": 0,
+          "supporting_text_title": "Subscription Options",
+          "subscription_policy_url": ""
         }
       }
     }
