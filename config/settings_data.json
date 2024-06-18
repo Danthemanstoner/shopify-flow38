@@ -114,12 +114,6 @@
           "greeting_message": ""
         }
       },
-      "14019014016809704581": {
-        "type": "shopify:\/\/apps\/sendbird-ai-chatbot\/blocks\/sendbird_ai_chatbot\/b03eb8ba-9162-4761-90d8-4ea6e597ce98",
-        "disabled": false,
-        "settings": {
-        }
-      },
       "1768834845299682660": {
         "type": "shopify:\/\/apps\/subscriptions\/blocks\/app-embed-block\/a3bfe9ec-96f8-4508-a003-df608a36d2ad",
         "disabled": true,
@@ -132,6 +126,12 @@
           "border_radius": 0,
           "supporting_text_title": "Subscription Options",
           "subscription_policy_url": ""
+        }
+      },
+      "8235103442733216709": {
+        "type": "shopify:\/\/apps\/gleen-ai-accurate-ai-support\/blocks\/app-embed\/e1e7fb97-cc5c-41df-8f53-c8609cae4409",
+        "disabled": false,
+        "settings": {
         }
       }
     }
