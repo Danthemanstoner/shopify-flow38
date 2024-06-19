@@ -1,3 +1,12 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "type": "header",
   "name": "Header",
@@ -8,7 +17,7 @@
         "00-announcement": {
           "type": "announcement",
           "settings": {
-            "announcement_text": "FRUITBOX COMING SOON - BANGKOK EXPRESS DELIVERY - FRUIT DELIVERED FRESH",
+            "announcement_text": "FRUIT DELIVERED FRESH - EXPRESS 2HR BANGKOK",
             "announcement_bg_color": "#18533a",
             "announcement_text_color": "#ffffff"
           }
