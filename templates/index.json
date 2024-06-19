@@ -381,7 +381,7 @@
     "video_video_hero_xCr7Qc": {
       "type": "video--video-hero",
       "custom_css": [
-        "{}"
+
       ],
       "settings": {
         "video": "shopify:\/\/files\/videos\/juice fall.mp4",
