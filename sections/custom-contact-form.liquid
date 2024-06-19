@@ -1,6 +1,65 @@
 {% schema %}
-  {
-    "name": "Section name",
-    "settings": []
-  }
+{
+  "name": "Custom Contact Form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "form_title",
+      "label": "Form Title",
+      "default": "Contact Us"
+    },
+    {
+      "type": "textarea",
+      "id": "form_description",
+      "label": "Form Description",
+      "default": "Have a question, or want a product recommendation? Get in touch."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Contact Form",
+      "category": "Contact"
+    }
+  ]
+}
 {% endschema %}
+
+<section class="section-contact-form">
+  <div class="wrapper">
+    <div class="grid">
+      {% if section.settings.form_title != blank %}
+        <div class="grid__item">
+          <h2>{{ section.settings.form_title }}</h2>
+        </div>
+      {% endif %}
+      {% if section.settings.form_description != blank %}
+        <div class="grid__item">
+          <p>{{ section.settings.form_description }}</p>
+        </div>
+      {% endif %}
+      <div class="grid__item">
+        <form method="post" action="/contact" id="ContactForm" accept-charset="UTF-8" class="contact-form">
+          <input type="hidden" name="form_type" value="contact">
+          <input type="hidden" name="utf8" value="✓">
+          <div class="form-group">
+            <label for="ContactFormName">Name</label>
+            <input type="text" id="ContactFormName" name="contact[name]" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="ContactFormEmail">Email</label>
+            <input type="email" id="ContactFormEmail" name="contact[email]" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="ContactFormPhone">Phone</label>
+            <input type="tel" id="ContactFormPhone" name="contact[phone]" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="ContactFormMessage">Message</label>
+            <textarea id="ContactFormMessage" name="contact[body]" class="form-control" required></textarea>
+          </div>
+          <button type="submit" class="btn">Send</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
