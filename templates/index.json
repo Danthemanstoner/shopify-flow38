@@ -227,6 +227,29 @@
         "colors": "white"
       }
     },
+    "video_video_hero_xCr7Qc": {
+      "type": "video--video-hero",
+      "custom_css": [
+        "{margin-top: 30px;}"
+      ],
+      "settings": {
+        "video": "shopify:\/\/files\/videos\/juice fall.mp4",
+        "url": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
+        "desktopHeight": "450",
+        "mobileHeight": "fit",
+        "title": "plus+ Cold Press",
+        "subheading": "Discover More About Our Cold Press Fruit Juices",
+        "textAlignment": "center",
+        "textShadow": false,
+        "heading--text-size": 40,
+        "subheading--text-size": 24,
+        "link": "https:\/\/thefruitbox.co\/collections\/plus-cold-press",
+        "button_label": "Check It Out",
+        "textColor": "#ffffff",
+        "button-text": "#ffffff",
+        "button-background": "#242424"
+      }
+    },
     "3c4d9433-fe83-4e4a-afa6-63c348fea245": {
       "type": "collection--featured-collection",
       "custom_css": [
@@ -376,29 +399,6 @@
         "width_6": "1",
         "height_6": "6",
         "block_alignment": "center"
-      }
-    },
-    "video_video_hero_xCr7Qc": {
-      "type": "video--video-hero",
-      "custom_css": [
-
-      ],
-      "settings": {
-        "video": "shopify:\/\/files\/videos\/juice fall.mp4",
-        "url": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
-        "desktopHeight": "550",
-        "mobileHeight": "fit",
-        "title": "plus+ Cold Press",
-        "subheading": "Discover More About Our Cold Press Fruit Juices",
-        "textAlignment": "center",
-        "textShadow": false,
-        "heading--text-size": 40,
-        "subheading--text-size": 24,
-        "link": "https:\/\/thefruitbox.co\/collections\/plus-cold-press",
-        "button_label": "Check It Out",
-        "textColor": "#ffffff",
-        "button-text": "#ffffff",
-        "button-background": "#242424"
       }
     },
     "shop_the_look_JpLfMN": {
@@ -648,13 +648,13 @@
     "06b36118-35e6-4312-b5b2-099a0ddc5aa6",
     "animated_text_LNiTw8",
     "3643d38b-24f2-4040-ab67-4b4b44a63aab",
+    "video_video_hero_xCr7Qc",
     "3c4d9433-fe83-4e4a-afa6-63c348fea245",
     "35b28867-77fd-4573-8212-101b3b8e2245",
     "collection_featured_collection_QVGEU9",
     "collection_featured_collection_deM6yg",
     "collection_featured_collection_hUzjep",
     "50b03afc-6c7a-4252-94c2-7579c9d3b3ee",
-    "video_video_hero_xCr7Qc",
     "shop_the_look_JpLfMN",
     "cf965c26-6ea8-499a-8a05-a4e350ede58a",
     "8e9e36da-191e-4c8c-ba3a-8a307b84bae9",
