@@ -154,12 +154,10 @@
             
             {% if section.blocks.size > 0 %}
               <div class="section-contact-form--submit-wrapper w-full text-link-animated">
-                <!-- Remove or comment out the spam detection disclaimer -->
-                <!-- {{ 'shopify.online_store.spam_detection.disclaimer_html' | t }} -->
+                {{ 'shopify.online_store.spam_detection.disclaimer_html' | t }}
                 <button type="submit" class="btn">{{ 'contact.form.send' | t }}</button>
               </div>
             {% endif %}
-            
 
           {% endform %}
         </div>
