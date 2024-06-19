@@ -1,3 +1,12 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "current": {
     "color_body_text": "#242424",
@@ -62,10 +71,12 @@
     "predictive_search_enabled": true,
     "predictive_search_show_vendor": false,
     "predictive_search_show_price": true,
+    "sm_facebook_link": "https:\/\/www.facebook.com\/thefruitboxbangkok",
+    "sm_instagram_link": "https:\/\/www.instagram.com\/thefruitboxbangkok\/",
     "social_sharing_blog": true,
     "share_facebook": true,
-    "share_x": true,
-    "share_pinterest": true,
+    "share_x": false,
+    "share_pinterest": false,
     "enable_breadcrumbs": true,
     "popup--enable": true,
     "pop-up-time": "7",
