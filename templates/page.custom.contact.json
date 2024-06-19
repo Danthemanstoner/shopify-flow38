@@ -15,9 +15,15 @@
         "page_title_enabled": true,
         "page_width": "narrow"
       }
+    },
+    "custom-contact-form": {
+      "type": "custom-contact-form",
+      "settings": {
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "custom-contact-form"
   ]
 }
