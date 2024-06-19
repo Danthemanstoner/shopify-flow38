@@ -68,6 +68,7 @@
     "quick_shop_button_display": "below_image",
     "quick_shop_button_style": "filled",
     "back_to_top_homepage": false,
+    "back_to_top_all": false,
     "predictive_search_enabled": true,
     "predictive_search_show_vendor": false,
     "predictive_search_show_price": true,
