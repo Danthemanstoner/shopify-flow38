@@ -1,3 +1,12 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "sections": {
     "af3e824e-6ca9-4ac4-9510-a07cb14e4a66": {
@@ -369,6 +378,29 @@
         "block_alignment": "center"
       }
     },
+    "video_video_hero_xCr7Qc": {
+      "type": "video--video-hero",
+      "custom_css": [
+        "{}"
+      ],
+      "settings": {
+        "video": "shopify:\/\/files\/videos\/juice fall.mp4",
+        "url": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
+        "desktopHeight": "450",
+        "mobileHeight": "fit",
+        "title": "plus+ Cold Press",
+        "subheading": "Discover More About Our Cold Press Fruit Juices",
+        "textAlignment": "center",
+        "textShadow": false,
+        "heading--text-size": 40,
+        "subheading--text-size": 24,
+        "link": "https:\/\/thefruitbox.co\/collections\/plus-cold-press",
+        "button_label": "Check It Out",
+        "textColor": "#ffffff",
+        "button-text": "#ffffff",
+        "button-background": "#242424"
+      }
+    },
     "shop_the_look_JpLfMN": {
       "type": "shop-the-look",
       "blocks": {
@@ -622,6 +654,7 @@
     "collection_featured_collection_deM6yg",
     "collection_featured_collection_hUzjep",
     "50b03afc-6c7a-4252-94c2-7579c9d3b3ee",
+    "video_video_hero_xCr7Qc",
     "shop_the_look_JpLfMN",
     "cf965c26-6ea8-499a-8a05-a4e350ede58a",
     "8e9e36da-191e-4c8c-ba3a-8a307b84bae9",
