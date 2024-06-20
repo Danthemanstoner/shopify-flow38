@@ -77,10 +77,28 @@
         "rotate": "0",
         "color_scheme": "white"
       }
+    },
+    "advanced_layout_custom_html_ywzt8M": {
+      "type": "advanced-layout--custom-html",
+      "blocks": {
+        "html_Bh3mx9": {
+          "type": "html",
+          "settings": {
+            "code": "<div class=\"homepage-sections-wrapper text-link-animated\" data-wetheme-section-id=\"template--22926859993403__171884973422939f72\">\n  <div class=\"wrapper-padded\">\n    <div id=\"shopify-block-forms_inline_9gKwqL\" class=\"shopify-block shopify-app-block\">\n      <div id=\"forms_inline_9gKwqL\" data-form-root=\"true\" data-forms-id=\"forms-root-126305\" data-forms-text-color=\"#202020\" data-forms-button-background-color=\"#18533a\" data-forms-button-label-color=\"#FFFFFF\" data-forms-links-color=\"#1878B9\" data-forms-errors-color=\"#E02229\" data-forms-text-alignment=\"center\" data-forms-alignment=\"center\" data-forms-padding-top=\"0\" data-forms-padding-right=\"0\" data-forms-padding-bottom=\"0\" data-forms-padding-left=\"0\" style=\"--inline-container-min-height: 125px\">\n        <form-embed id=\"app-embed\" style=\"display: block;\"><\/form-embed>\n      <\/div>\n\n      <script>\n        window['ShopifyForms'] = {\n          ...window['ShopifyForms'],\n          currentPageType: \"page\"\n        };\n      <\/script>\n    <\/div>\n  <\/div>\n<\/div>\n\n<script>\ndocument.addEventListener('DOMContentLoaded', function () {\n  const urlParams = new URLSearchParams(window.location.search);\n  const email = urlParams.get('email');\n\n  if (email) {\n    const interval = setInterval(() => {\n      const formEmbed = document.querySelector('form-embed');\n      if (formEmbed) {\n        clearInterval(interval);\n        const emailInput = formEmbed.shadowRoot.querySelector('input[type=\"email\"]');\n        if (emailInput) {\n          emailInput.value = email;\n        }\n      }\n    }, 100);\n  }\n});\n<\/script>",
+            "width": "25%"
+          }
+        }
+      },
+      "block_order": [
+        "html_Bh3mx9"
+      ],
+      "settings": {
+      }
     }
   },
   "order": [
     "171884973422939f72",
-    "scrolling_banner_Tf3BpL"
+    "scrolling_banner_Tf3BpL",
+    "advanced_layout_custom_html_ywzt8M"
   ]
 }
