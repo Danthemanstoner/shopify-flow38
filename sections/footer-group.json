@@ -40,6 +40,9 @@
         "social",
         "newsletter"
       ],
+      "custom_css": [
+        "{margin-top: 50px;}"
+      ],
       "settings": {
         "alignment": "left",
         "color_scheme": "accent"
