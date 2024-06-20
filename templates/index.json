@@ -240,7 +240,7 @@
         "title": "plus+ Cold Press",
         "subheading": "Discover More About Our Cold Press Fruit Juices",
         "textAlignment": "center",
-        "textShadow": false,
+        "textShadow": true,
         "heading--text-size": 40,
         "subheading--text-size": 24,
         "link": "https:\/\/thefruitbox.co\/collections\/plus-cold-press",
