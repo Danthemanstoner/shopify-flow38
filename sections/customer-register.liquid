@@ -25,12 +25,14 @@
           <p>
             <button type="submit" class="btn btn--full account-section--btn">Create Account</button>
           </p>
-        {% endform %}
-      </div>
 
-      <div id="successMessage" style="display:none; margin-top:20px; padding:20px; background-color:#d4edda; color:#155724; border:1px solid #c3e6cb; border-radius:5px;">
-        <p>Welcome to theFruitBox family, you've successfully created an account. Please remember to sign up for our newsletter to get your 10% discount on your next order.</p>
-        <a href="" id="newsletterSignupLink" class="btn btn--full account-section--btn">Sign Up for Our Newsletter</a>
+          <div id="welcomeMessage" style="display: none; margin-top: 20px; padding: 10px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px; margin-bottom: 20px;">
+            Welcome to theFruitBox family, you've successfully created an account. Please remember to sign up for our newsletter to get your 10% discount on your next order.
+            <p>
+              <button id="newsletterButton" class="btn btn--full account-section--btn" style="margin-top: 10px;">Sign Up for Our Newsletter</button>
+            </p>
+          </div>
+        {% endform %}
       </div>
     </div>
   </div>
@@ -39,15 +41,15 @@
 {% schema %}
 {
   "name": "t:sections.customer-register.name",
-  "settings": [
-
-  ]
+  "settings": []
 }
 {% endschema %}
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   const createCustomerForm = document.querySelector('form[action="/account"]');
+  const welcomeMessage = document.getElementById('welcomeMessage');
+  const newsletterButton = document.getElementById('newsletterButton');
 
   createCustomerForm.addEventListener('submit', function (event) {
     event.preventDefault(); // Prevent the default form submission
@@ -60,9 +62,11 @@ document.addEventListener('DOMContentLoaded', function () {
       body: formData,
     }).then(response => {
       if (response.ok) {
-        document.getElementById('successMessage').style.display = 'block';
-        createCustomerForm.style.display = 'none';
-        document.getElementById('newsletterSignupLink').href = '/pages/newsletter-signup?email=' + encodeURIComponent(email);
+        welcomeMessage.style.display = 'block';
+
+        newsletterButton.addEventListener('click', function () {
+          window.location.href = window.location.href.split('?')[0] + '?email=' + encodeURIComponent(email);
+        });
       } else {
         return response.text().then(text => { throw new Error(text); });
       }
