@@ -71,7 +71,7 @@
         "show_fade": false,
         "borders": false,
         "animation_direction": "normal",
-        "animation_speed": 60,
+        "animation_speed": 70,
         "space_between_blocks_desktop": 44,
         "space_between_blocks_mobile": 12,
         "rotate": "0",
