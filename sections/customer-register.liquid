@@ -26,7 +26,7 @@
             <button type="submit" class="btn btn--full account-section--btn">Create Account</button>
           </p>
 
-          <div id="welcomeMessage" style="display: none; margin-top: 20px; padding: 10px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px; margin-bottom: 20px;">
+          <div id="welcomeMessage" style="display: none; margin-top: 20px; padding: 10px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px; margin-bottom: 50px;">
             Welcome to theFruitBox family, you've successfully created an account. Please remember to sign up for our newsletter to get your 10% discount on your next order.
             <p>
               <button id="newsletterButton" class="btn btn--full account-section--btn" style="margin-top: 10px;">Sign Up for Our Newsletter</button>
@@ -75,5 +75,24 @@ document.addEventListener('DOMContentLoaded', function () {
       alert('An error occurred. Please try again.');
     });
   });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const email = urlParams.get('email');
+  
+  if (email) {
+    // Wait for the Shopify Forms app to load
+    const interval = setInterval(() => {
+      const formEmbed = document.querySelector('form-embed');
+      if (formEmbed) {
+        clearInterval(interval);
+        const emailInput = formEmbed.shadowRoot.querySelector('input[type="email"]');
+        if (emailInput) {
+          emailInput.value = email;
+        }
+      }
+    }, 100);
+  }
 });
 </script>
