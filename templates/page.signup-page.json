@@ -100,6 +100,7 @@
         "b8952142-22e1-4b16-b9bd-9e42747928c9",
         "a379cb7a-ba34-48da-b0af-2b0379b8db62"
       ],
+      "disabled": true,
       "settings": {
         "colors": "white",
         "title": "Frequently asked questions",
@@ -190,6 +191,7 @@
         "fbb2a872-0770-4f56-913c-b7853e33a9c0",
         "template--14753984643142__057a50d5-3fee-4ea2-a832-2d38f47b959a-16788945317184afd8-3"
       ],
+      "disabled": true,
       "settings": {
         "form_width": "narrow",
         "form_title": "Contact us",
@@ -218,6 +220,7 @@
         "f68de724-df68-4ed1-9b69-bfdb40d1f552",
         "3ba6d5ff-4566-4d96-8d8b-52c42e2ca699"
       ],
+      "disabled": true,
       "settings": {
         "section_width": "narrow",
         "text_alignment_desktop": "center",
@@ -295,6 +298,7 @@
         "16292070946a646e48-0",
         "3a856712-4c09-43a7-8bd1-8e9d920e9093"
       ],
+      "disabled": true,
       "settings": {
         "colors": "light",
         "title": "",
@@ -307,6 +311,7 @@
     },
     "1645634969fb497783": {
       "type": "newsletter--newsletter",
+      "disabled": true,
       "settings": {
         "newsletter_heading": "Join our Mailing List",
         "newsletter_description": "<p>Sign up now for 10% off your first order and exclusive offers.<\/p>",
@@ -315,6 +320,7 @@
     },
     "f9008be2-cc52-4777-becc-c975f680a054": {
       "type": "store-information--map",
+      "disabled": true,
       "settings": {
         "heading": "Our store",
         "address": "<p>893 Phatthanakan 11 Alley, Suan Luang, Bangkok 10250<\/p><p>Mon - Fri, 8am - 9pm<br\/>Saturday, 8am - 9pm<br\/>Sunday, 8am - 6pm<\/p>",
@@ -324,6 +330,34 @@
         "layout": "right",
         "background_image": "shopify:\/\/shop_images\/Screenshot_2024-03-03_at_17.15.23.png",
         "colors": "white"
+      }
+    },
+    "171884973422939f72": {
+      "type": "apps",
+      "blocks": {
+        "forms_inline_9gKwqL": {
+          "type": "shopify:\/\/apps\/forms\/blocks\/inline\/8744a304-fcb1-4347-b211-bb6b4759a76a",
+          "settings": {
+            "form_id": "126305",
+            "text_color": "#202020",
+            "button_background_color": "#18533a",
+            "button_label_color": "#FFFFFF",
+            "links_color": "#1878B9",
+            "errors_color": "#E02229",
+            "text_alignment": "center",
+            "form_alignment": "center",
+            "padding_top": 0,
+            "padding_bottom": 0,
+            "padding_right": 0,
+            "padding_left": 0
+          }
+        }
+      },
+      "block_order": [
+        "forms_inline_9gKwqL"
+      ],
+      "settings": {
+        "include_margins": true
       }
     }
   },
@@ -335,6 +369,7 @@
     "728a0242-0170-4e0a-b7f1-3633abd8a200",
     "16292070946a646e48",
     "1645634969fb497783",
-    "f9008be2-cc52-4777-becc-c975f680a054"
+    "f9008be2-cc52-4777-becc-c975f680a054",
+    "171884973422939f72"
   ]
 }
