@@ -1,4 +1,5 @@
 <!-- /sections/customer-register.liquid -->
+
 <div class="wrapper-padded">
   <div class="grid page-main--wrapper">
     <div class="grid__item large--one-third push--large--one-third text-center">
@@ -24,16 +25,12 @@
           <p>
             <button type="submit" class="btn btn--full account-section--btn">Create Account</button>
           </p>
-
-          <p class="reminder-text">Don't forget to sign up for our newsletter on the next page to receive a 10% discount!</p>
         {% endform %}
       </div>
 
-      <!-- Success Message -->
-      <div id="successMessage" style="display: none; margin-top: 20px; padding: 10px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px; margin-bottom: 50px;">
-        Welcome to theFruitBox family, you've successfully created an account. Please remember to 
-        <a href="#" id="newsletterSignupLink" class="btn btn--full" style="display: inline-block; margin-top: 10px; background-color: #18533a; color: #FFFFFF; text-decoration: none; padding: 10px 20px; border-radius: 5px;">SIGN UP FOR OUR NEWSLETTER</a>
-        to get your 10% discount on your next order.
+      <div id="successMessage" style="display:none; margin-top:20px; padding:20px; background-color:#d4edda; color:#155724; border:1px solid #c3e6cb; border-radius:5px;">
+        <p>Welcome to theFruitBox family, you've successfully created an account. Please remember to sign up for our newsletter to get your 10% discount on your next order.</p>
+        <a href="" id="newsletterSignupLink" class="btn btn--full account-section--btn">Sign Up for Our Newsletter</a>
       </div>
     </div>
   </div>
@@ -51,8 +48,6 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   const createCustomerForm = document.querySelector('form[action="/account"]');
-  const successMessage = document.getElementById('successMessage');
-  const newsletterSignupLink = document.getElementById('newsletterSignupLink');
 
   createCustomerForm.addEventListener('submit', function (event) {
     event.preventDefault(); // Prevent the default form submission
@@ -65,8 +60,9 @@ document.addEventListener('DOMContentLoaded', function () {
       body: formData,
     }).then(response => {
       if (response.ok) {
-        successMessage.style.display = 'block';
-        newsletterSignupLink.href = 'https://thefruitbox.co/pages/newsletter-signup?email=' + encodeURIComponent(email);
+        document.getElementById('successMessage').style.display = 'block';
+        createCustomerForm.style.display = 'none';
+        document.getElementById('newsletterSignupLink').href = '/pages/newsletter-signup?email=' + encodeURIComponent(email);
       } else {
         return response.text().then(text => { throw new Error(text); });
       }
