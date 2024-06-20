@@ -39,9 +39,48 @@
       "settings": {
         "include_margins": true
       }
+    },
+    "scrolling_banner_Tf3BpL": {
+      "type": "scrolling-banner",
+      "blocks": {
+        "text_DFfLPy": {
+          "type": "text",
+          "settings": {
+            "text": "Signup Now For Your 10% Discount Code",
+            "font": "heading",
+            "style": "fill",
+            "font_size_desktop": 24,
+            "font_size_mobile": 22
+          }
+        },
+        "image_RDT9cE": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/favicon_TFB.png",
+            "height_desktop": 32,
+            "height_mobile": 40,
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "text_DFfLPy",
+        "image_RDT9cE"
+      ],
+      "settings": {
+        "show_fade": false,
+        "borders": false,
+        "animation_direction": "normal",
+        "animation_speed": 60,
+        "space_between_blocks_desktop": 44,
+        "space_between_blocks_mobile": 12,
+        "rotate": "0",
+        "color_scheme": "white"
+      }
     }
   },
   "order": [
-    "171884973422939f72"
+    "171884973422939f72",
+    "scrolling_banner_Tf3BpL"
   ]
 }
