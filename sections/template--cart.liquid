@@ -239,32 +239,29 @@
   {% endif %}
 
 </div>
-<script>
+
+{% schema %}
+{
+  "name": "t:sections.template--cart.name"
+}
+{% endschema %}
+
+                      <script>
   document.addEventListener("DOMContentLoaded", function() {
     var discountCode = sessionStorage.getItem("discountCode");
     if (discountCode) {
       fetch(`/checkout?discount=${discountCode}`)
         .then(response => {
           if (response.ok) {
-            return response.json();
+            // Optionally, show a message to the user
+            alert("Discount code applied successfully!");
+            sessionStorage.removeItem("discountCode");
           } else {
             throw new Error('Failed to apply discount code');
           }
-        })
-        .then(data => {
-          console.log('Discount code applied successfully:', data);
-          // Optionally, show a message to the user
-          alert("Discount code applied successfully!");
-          sessionStorage.removeItem("discountCode");
         })
         .catch(error => console.error("Error:", error));
     }
   });
 </script>
 
-                      
-{% schema %}
-{
-  "name": "t:sections.template--cart.name"
-}
-{% endschema %}
