@@ -246,22 +246,4 @@
 }
 {% endschema %}
 
-                      <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    var discountCode = sessionStorage.getItem("discountCode");
-    if (discountCode) {
-      fetch(`/checkout?discount=${discountCode}`)
-        .then(response => {
-          if (response.ok) {
-            // Optionally, show a message to the user
-            alert("Discount code applied successfully!");
-            sessionStorage.removeItem("discountCode");
-          } else {
-            throw new Error('Failed to apply discount code');
-          }
-        })
-        .catch(error => console.error("Error:", error));
-    }
-  });
-</script>
-
+                      
