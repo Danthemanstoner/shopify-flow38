@@ -162,37 +162,7 @@
               </td>
             </tr>
           {% endfor %}
-                      <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    var discountCode = sessionStorage.getItem("discountCode");
-    if (discountCode) {
-      fetch(`/cart/update.js`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: JSON.stringify({
-          attributes: {
-            discount_code: discountCode
-          }
-        })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === 200) {
-          // Optionally, show a message to the user
-          alert("Discount code applied successfully!");
-          sessionStorage.removeItem("discountCode");
-        } else {
-          console.error('Failed to apply discount code:', data);
-        }
-      })
-      .catch(error => console.error('Error:', error));
-    }
-  });
-</script>
-
+                      
         </tbody>
       </table>
       <div class="grid cart__row">
