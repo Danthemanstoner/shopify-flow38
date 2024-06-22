@@ -1,8 +1,5 @@
-<!-- /templates/cart.liquid -->
 {% comment %}
-  For info on test orders:
-    - General http://docs.shopify.com/manual/your-store/orders/test-orders
-    - Shopify Payments - http://docs.shopify.com/manual/more/shopify-payments/testing-shopify-payments
+  Enhanced cart template to display discounts and additional product details.
 {% endcomment %}
 
 <div class="wrapper-padded main-page-container">
@@ -27,10 +24,6 @@
             <tr class="cart__row table__section">
               <td data-label="{{ 'customer.order.product' | t }}">
                 <a href="{{ item.url | within: collections.all }}" class="cart__image">
-                  {% comment %}
-                    More image size options at:
-                      - http://docs.shopify.com/themes/filters/product-img-url
-                  {% endcomment %}
                   {% capture cart_page_product_image_alt %}{{ item.image.alt | default: item.title | escape }}{% endcapture %}
                   {% render 'responsive-image' with item.image, alt: cart_page_product_image_alt, blur: false %}
                 </a>
@@ -46,7 +39,6 @@
                     {% endfor %}
                   </div>
                 {% endunless %}
-
                 {% if item.selling_plan_allocation %}
                   <div class="cart__meta-text">
                     <span>{{ item.selling_plan_allocation.selling_plan.name }}<span>
@@ -57,12 +49,6 @@
                   <p>{{ item.vendor }}</p>
                 {% endif %}
 
-                {% comment %}
-                  Optional, loop through custom product line items if available
-
-                  For more info on line item properties, visit:
-                    - http://docs.shopify.com/support/your-store/products/how-do-I-collect-additional-information-on-the-product-page-Like-for-a-monogram-engraving-or-customization
-                {% endcomment %}
                 {% assign property_size = item.properties | size %}
                 {% if property_size > 0 %}
                   {% for p in item.properties %}
@@ -70,9 +56,6 @@
                       <div class="cart__row--property">
                         {{ p.first }}:
 
-                        {% comment %}
-                          Check if there was an uploaded file associated
-                        {% endcomment %}
                         {% if p.last contains '/uploads/' %}
                           <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
                         {% else %}
@@ -90,22 +73,13 @@
                 </span>
               </td>
               <td class="text-center" data-label="{{ 'cart.label.price' | t }}">
-                {%- if item.product.compare_at_price > item.price -%}
-              
-                  <span class="price-line-through sale-price">
-                    <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
-                    {{- item.product.compare_at_price | money -}}
-                  </span>
-
-                  <span class="money item-price">{{ item.price | money }}</span>
-              
-                {% else %}
-              
-                  <span class="money">{{ item.price | money }}</span>
-              
-                {% endif %}
-
-                {% render 'unit-price-measurement-variant', variant: item %}
+                {%- if item.original_price > item.final_price -%}
+                  <div class="price-original">{{ item.original_price | money }}</div>
+                  <div class="price-sale">{{ item.final_price | money }}</div>
+                  <div class="discount-amount">You save: {{ item.original_price | minus: item.final_price | money }}</div>
+                {%- else -%}
+                  <div class="price">{{ item.final_price | money }}</div>
+                {%- endif -%}
               </td>
               <td class="text-center" data-label="{{ 'cart.label.quantity' | t }}">
                 <div class="js-qty-wrapper">
@@ -164,6 +138,16 @@
           {% endfor %}
         </tbody>
       </table>
+      {% if cart.cart_level_discount_applications.size > 0 %}
+        <div class="cart-discounts">
+          <h3>Applied Discounts:</h3>
+          {% for discount in cart.cart_level_discount_applications %}
+            <div class="cart-discount">
+              {{ discount.title }}: -{{ discount.total_allocated_amount | money_with_currency }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
       <div class="grid cart__row">
         {% if settings.cart_notes_enable %}
           <div class="grid__item two-thirds medium--one-whole small--one-whole">
@@ -198,7 +182,6 @@
             <span class="cart__subtotal-title">{{ 'cart.general.subtotal' | t }}</span>
             <span class="h3 cart__subtotal"><span class="money">{{ cart.total_price | money }}</span></span>
           </p>
-
           {%- capture taxes_shipping_checkout -%}
             {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
               {{ 'cart.general.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
