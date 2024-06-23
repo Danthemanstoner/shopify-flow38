@@ -162,6 +162,32 @@
               </td>
             </tr>
           {% endfor %}
+
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+  var discountCode = sessionStorage.getItem("discountCode");
+  if (discountCode) {
+    // Fetch the checkout URL with the discount code
+    fetch(`/checkout?discount=${discountCode}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.text();
+      })
+      .then(data => {
+        console.log("Discount applied:", discountCode);
+        // Redirect to the checkout page
+        window.location.href = `/checkout?discount=${discountCode}`;
+        sessionStorage.removeItem("discountCode");
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+});
+</script>
+
                       
         </tbody>
       </table>
