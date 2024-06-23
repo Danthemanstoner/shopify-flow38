@@ -214,7 +214,7 @@
     var discountCode = '';
 
     if (urlParams.get('discount') === 'GetFreeShipping') {
-      discountCode = 'GetFreeShipping'; // Replace with your actual discount code for free shipping
+      discountCode = 'GetFreeShipping'; // Updated discount code
       document.getElementById('discount-popup').style.display = 'block';
       history.pushState(null, null, window.location.pathname);
     }
@@ -223,12 +223,22 @@
       discountCodeElement.innerText = discountCode;
 
       // Apply discount code to cart
-      fetch('/cart/update.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ note: discountCode })
+      fetch('/cart.js')
+      .then(response => response.json())
+      .then(cart => {
+        return fetch('/cart/update.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            updates: cart.items.reduce((acc, item) => {
+              acc[item.id] = item.quantity;
+              return acc;
+            }, {}),
+            note: discountCode
+          })
+        });
       })
       .then(response => response.json())
       .then(data => console.log('Discount code applied'))
