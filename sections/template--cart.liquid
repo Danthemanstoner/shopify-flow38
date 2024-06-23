@@ -57,12 +57,22 @@
                   <p>{{ item.vendor }}</p>
                 {% endif %}
 
+                {% comment %}
+                  Optional, loop through custom product line items if available
+
+                  For more info on line item properties, visit:
+                    - http://docs.shopify.com/support/your-store/products/how-do-I-collect-additional-information-on-the-product-page-Like-for-a-monogram-engraving-or-customization
+                {% endcomment %}
                 {% assign property_size = item.properties | size %}
                 {% if property_size > 0 %}
                   {% for p in item.properties %}
                     {% if p.last != blank and p.first.first != '_' %}
                       <div class="cart__row--property">
                         {{ p.first }}:
+
+                        {% comment %}
+                          Check if there was an uploaded file associated
+                        {% endcomment %}
                         {% if p.last contains '/uploads/' %}
                           <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
                         {% else %}
@@ -86,6 +96,7 @@
                     <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
                     {{- item.product.compare_at_price | money -}}
                   </span>
+
                   <span class="money item-price">{{ item.price | money }}</span>
               
                 {% else %}
@@ -138,6 +149,7 @@
                 {%- else -%}
                   <span class="money">{{ item.final_line_price | money }}</span>
                 {%- endif -%}
+
                 {%- if item.line_level_discount_allocations != blank -%}
                   <ul class="order-discount--cart-list discount--sale-color" aria-label="{{ 'customer.order.discount' | t }}">
                     {%- for discount_allocation in item.line_level_discount_allocations -%}
@@ -151,23 +163,37 @@
             </tr>
           {% endfor %}
 
-          {% if cart.cart_level_discount_applications.size > 0 %}
-            <div class="cart-discounts">
-              <h3>Applied Discounts</h3>
-              <ul class="cart-discounts-list">
-                {%- for discount_application in cart.cart_level_discount_applications -%}
-                  <li class="cart-discount">
-                    <span class="cart-discount__title">{{ discount_application.title }}</span>
-                    <span class="cart-discount__amount">-{{ discount_application.total_allocated_amount | money }}</span>
-                  </li>
-                {%- endfor -%}
-              </ul>
-            </div>
-          {% endif %}
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+  var discountCode = sessionStorage.getItem("discountCode");
+  if (discountCode) {
+    // Fetch the checkout URL with the discount code
+    fetch(`/checkout?discount=${discountCode}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.text();
+      })
+      .then(data => {
+        console.log("Discount applied:", discountCode);
+        // Redirect to the checkout page
+        window.location.href = `/checkout?discount=${discountCode}`;
+        sessionStorage.removeItem("discountCode");
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+});
+</script>
+
+                      
         </tbody>
       </table>
       <div class="grid cart__row">
         {% if settings.cart_notes_enable %}
+          <div class="grid__item two-thirds medium--one-whole small--one-whole">
             <label for="CartSpecialInstructions" class="label-font">{{ 'cart.general.note' | t }}</label>
             <textarea name="note" class="input-full" id="CartSpecialInstructions">{{ cart.note }}</textarea>
           </div>
@@ -189,6 +215,7 @@
               {%- endfor -%}
             </div>
           {%- endif -%}
+
           {% if subtotal_compare_at_price != cart.total_price %}
             <span class="cart__subtotal">
               <del><span class="money">{{ subtotal_compare_at_price | money }}</span></del>
@@ -235,35 +262,15 @@
       <p>{{ 'cart.general.empty' | t }}</p>
       <a href="{{ routes.all_products_collection_url }}" class="btn">{{ 'general.continue_shopping' | t }}</a>
     </div>
+
   {% endif %}
+
 </div>
+
+                      
+
 {% schema %}
 {
   "name": "t:sections.template--cart.name"
 }
 {% endschema %}
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  var discountCode = sessionStorage.getItem("discountCode");
-  if (discountCode) {
-    // Fetch the checkout URL with the discount code
-    fetch(`/checkout?discount=${discountCode}`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok ' + response.statusText);
-        }
-        return response.text();
-      })
-      .then(data => {
-        console.log("Discount applied:", discountCode);
-        // Redirect to the checkout page
-        window.location.href = `/checkout?discount=${discountCode}`;
-        sessionStorage.removeItem("discountCode");
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  }
-});
-</script>
