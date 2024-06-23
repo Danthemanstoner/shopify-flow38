@@ -222,19 +222,8 @@
     if (discountCode) {
       discountCodeElement.innerText = discountCode;
 
-      // Apply discount code to cart
-      fetch('/cart/update.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          note: discountCode
-        })
-      })
-      .then(response => response.json())
-      .then(data => console.log('Discount code applied'))
-      .catch(error => console.error('Error applying discount code:', error));
+      // Apply discount code to cart by redirecting to checkout with discount code
+      window.location.href = '/checkout?discount=' + discountCode;
     }
 
     document.getElementById('close-popup').addEventListener('click', function() {
