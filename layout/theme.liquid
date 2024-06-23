@@ -432,23 +432,7 @@
   }
 </style>
 
-  <div id="discount-popup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); z-index: 1000; width: 80%; max-width: 500px; text-align: center;">
-  <h2>Discount Code</h2>
-  <p>Use the code <strong id="discount-code" style="cursor: pointer;" onclick="copyDiscountCode()">GetFreeShipping</strong> at checkout to get your discount!</p>
-  <p>Your discount has been added to the checkout page.</p>
-  <button id="close-popup" style="padding: 10px 20px; background-color: #18533A; color: #fff; border: none; cursor: pointer;">Close</button>
-</div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var urlParams = new URLSearchParams(window.location.search);
-    var discountCodeElement = document.getElementById('discount-code');
-    var discountCode = '';
-
-    if (urlParams.get('discount') === 'freeShipping') {
-      discountCode = 'GetFreeShipping'; // Replace with your actual discount code for free shipping
-      document
-
+  
 
 </head>
 
