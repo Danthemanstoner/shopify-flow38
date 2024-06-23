@@ -18,7 +18,6 @@
       }
     </style>
   </div>
-
   <!-- Remove Border Lines -->
   <div id="shopify-section-template--22517881897275__text_text_adverts_XTaGgp" class="shopify-section homepage-section--text-adverts-wrapper shown-on-scroll animated fadeInUp">
     <link href="//thefruitbox.co/cdn/shop/t/8/assets/section-text-blocks.min.css?v=86379295954260848761712737655" rel="stylesheet" type="text/css" media="all">
@@ -52,7 +51,6 @@
   {% when 3 %}
     {%- assign column_size = 'large--one-third medium--one-third' -%}
 {% endcase %}
-
   <div class="wrapper-padded small--hide">
     <div class="grid text-advert-section {{ column_amount }}">
 
@@ -65,12 +63,11 @@
         <div class="grid__item {{ column_size }}" {{ block.shopify_attributes }}>
           {% if advert_has_link %}
             {% if forloop.index == 1 %}
-              <a href="?discount=freeShipping">
+              <a href="?discount=GetFreeShipping">
             {% elsif forloop.index > 1 %}
               <a href="{{ block.settings.link }}">
             {% endif %}
           {% endif %}
-
             {% if block.settings.heading != blank %}
               <span class="text-advert-section--header h5">{{ block.settings.heading | escape }}</span>
             {% endif %}
@@ -87,7 +84,6 @@
       {% endfor %}
     </div>
   </div>
-
   <div class="container large--hide small--show medium--hide">
     <div class="grid text-advert-section swiper mobile-homepage-text-adverts {{ column_amount }}">
       <div class="swiper-wrapper">
@@ -100,12 +96,11 @@
           <div class="swiper-slide grid__item {{ column_size }}" {{ block.shopify_attributes }}>
             {% if advert_has_link %}
               {% if forloop.index == 1 %}
-                <a href="?discount=freeShipping">
+                <a href="?discount=GetFreeShipping">
               {% elsif forloop.index > 1 %}
                 <a href="{{ block.settings.link }}">
               {% endif %}
             {% endif %}
-
               {% if block.settings.heading != blank %}
                 <span class="text-advert-section--header h5">{{ block.settings.heading }}</span>
               {% endif %}
@@ -123,7 +118,6 @@
     </div>
   </div>
 </div>
-
 {% schema %}
 {
   "name": "t:sections.text--text-adverts.name",
@@ -204,3 +198,61 @@
   }
 }
 {% endschema %}
+<!-- HTML for Popup -->
+<div id="discount-popup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); z-index: 1000; width: 80%; max-width: 500px; text-align: center;">
+  <h2>Discount Code</h2>
+  <p>Use the code <strong id="discount-code" style="cursor: pointer;" onclick="copyDiscountCode()">GetFreeShipping</strong> at checkout to get your discount!</p>
+  <p>Your discount has been added to the checkout page.</p>
+  <button id="close-popup" style="padding: 10px 20px; background-color: #18533A; color: #fff; border: none; cursor: pointer;">Close</button>
+</div>
+
+<!-- JavaScript for Popup and Discount Logic -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var discountCodeElement = document.getElementById('discount-code');
+    var discountCode = '';
+
+    if (urlParams.get('discount') === 'GetFreeShipping') {
+      discountCode = 'GetFreeShipping'; // Replace with your actual discount code for free shipping
+      document.getElementById('discount-popup').style.display = 'block';
+      history.pushState(null, null, window.location.pathname);
+    }
+
+    if (discountCode) {
+      discountCodeElement.innerText = discountCode;
+
+      // Apply discount code to cart
+      fetch('/cart/update.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ note: discountCode })
+      })
+      .then(response => response.json())
+      .then(data => console.log('Discount code applied'))
+      .catch(error => console.error('Error applying discount code:', error));
+    }
+
+    document.getElementById('close-popup').addEventListener('click', function() {
+      document.getElementById('discount-popup').style.display = 'none';
+      history.replaceState(null, null, window.location.pathname);
+    });
+
+    window.addEventListener('popstate', function() {
+      document.getElementById('discount-popup').style.display = 'none';
+    });
+  });
+
+  function copyDiscountCode() {
+    var discountCodeElement = document.getElementById('discount-code');
+    var range = document.createRange();
+    range.selectNode(discountCodeElement);
+    window.getSelection().removeAllRanges(); // Clear any existing selection
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges(); // Clear selection after copying
+    alert('Discount code copied: ' + discountCodeElement.innerText);
+  }
+</script>
