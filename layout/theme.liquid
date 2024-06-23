@@ -432,6 +432,61 @@
   }
 </style>
 
+  <div id="discount-popup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); z-index: 1000; width: 80%; max-width: 500px; text-align: center;">
+  <h2>Discount Code</h2>
+  <p>Use the code <strong id="discount-code" style="cursor: pointer;" onclick="copyDiscountCode()">GetFreeShipping</strong> at checkout to get your discount!</p>
+  <p>Your discount has been added to the checkout page.</p>
+  <button id="close-popup" style="padding: 10px 20px; background-color: #18533A; color: #fff; border: none; cursor: pointer;">Close</button>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var discountCodeElement = document.getElementById('discount-code');
+    var discountCode = '';
+
+    if (urlParams.get('discount') === 'freeShipping') {
+      discountCode = 'GetFreeShipping'; // Replace with your actual discount code for free shipping
+      document.getElementById('discount-popup').style.display = 'block';
+      history.pushState(null, null, window.location.pathname);
+    }
+
+    if (discountCode) {
+      discountCodeElement.innerText = discountCode;
+
+      // Apply discount code to cart
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/cart/update.js');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          console.log('Discount code applied');
+        }
+      };
+      xhr.send(JSON.stringify({ note: discountCode }));
+    }
+
+    document.getElementById('close-popup').addEventListener('click', function() {
+      document.getElementById('discount-popup').style.display = 'none';
+      history.replaceState(null, null, window.location.pathname);
+    });
+
+    window.addEventListener('popstate', function() {
+      document.getElementById('discount-popup').style.display = 'none';
+    });
+  });
+
+  function copyDiscountCode() {
+    var discountCodeElement = document.getElementById('discount-code');
+    var range = document.createRange();
+    range.selectNode(discountCodeElement);
+    window.getSelection().removeAllRanges(); // Clear any existing selection
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges(); // Clear selection after copying
+    alert('Discount code copied: ' + discountCodeElement.innerText);
+  }
+</script>
+
 
 </head>
 
