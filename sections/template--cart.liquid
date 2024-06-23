@@ -46,6 +46,7 @@
                     {% endfor %}
                   </div>
                 {% endunless %}
+
                 {% if item.selling_plan_allocation %}
                   <div class="cart__meta-text">
                     <span>{{ item.selling_plan_allocation.selling_plan.name }}<span>
@@ -97,6 +98,7 @@
                   </span>
 
                   <span class="money item-price">{{ item.price | money }}</span>
+              
                 {% else %}
               
                   <span class="money">{{ item.price | money }}</span>
@@ -160,6 +162,33 @@
               </td>
             </tr>
           {% endfor %}
+
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+  var discountCode = sessionStorage.getItem("discountCode");
+  if (discountCode) {
+    // Fetch the checkout URL with the discount code
+    fetch(`/checkout?discount=${discountCode}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.text();
+      })
+      .then(data => {
+        console.log("Discount applied:", discountCode);
+        // Redirect to the checkout page
+        window.location.href = `/checkout?discount=${discountCode}`;
+        sessionStorage.removeItem("discountCode");
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+});
+</script>
+
+                      
         </tbody>
       </table>
       <div class="grid cart__row">
@@ -196,6 +225,7 @@
             <span class="cart__subtotal-title">{{ 'cart.general.subtotal' | t }}</span>
             <span class="h3 cart__subtotal"><span class="money">{{ cart.total_price | money }}</span></span>
           </p>
+
           {%- capture taxes_shipping_checkout -%}
             {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
               {{ 'cart.general.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
@@ -237,30 +267,8 @@
 
 </div>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  var discountCode = sessionStorage.getItem("discountCode");
-  if (discountCode) {
-    // Fetch the checkout URL with the discount code
-    fetch(`/checkout?discount=${discountCode}`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok ' + response.statusText);
-        }
-        return response.text();
-      })
-      .then(data => {
-        console.log("Discount applied:", discountCode);
-        // Redirect to the checkout page
-        window.location.href = `/checkout?discount=${discountCode}`;
-        sessionStorage.removeItem("discountCode");
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  }
-});
-</script>
+                      
+
 {% schema %}
 {
   "name": "t:sections.template--cart.name"
