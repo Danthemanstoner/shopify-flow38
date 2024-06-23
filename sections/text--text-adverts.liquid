@@ -222,8 +222,8 @@
     if (discountCode) {
       discountCodeElement.innerText = discountCode;
 
-      // Inform the user that the discount has been applied
-      console.log('Discount code applied:', discountCode);
+      // Apply discount code to cart by redirecting to checkout with discount code
+      window.location.href = '/checkout?discount=' + discountCode;
     }
 
     document.getElementById('close-popup').addEventListener('click', function() {
