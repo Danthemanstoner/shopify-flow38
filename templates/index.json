@@ -62,7 +62,7 @@
       "settings": {
         "colors": "accent",
         "image_desktop": "shopify:\/\/shop_images\/green_machine_test.jpg",
-        "height_desktop": "l",
+        "height_desktop": "original",
         "text_size_desktop": 50,
         "text_position_desktop": "bottom_center",
         "image_mobile": "shopify:\/\/shop_images\/green_machine_test.jpg",
