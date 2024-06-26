@@ -352,7 +352,7 @@
   },
   "platform_customizations": {
     "custom_css": [
-
+      "}.ajaxcart-item__discount {color: red !important;}"
     ]
   }
 }
