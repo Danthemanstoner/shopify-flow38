@@ -45,4 +45,7 @@
   justify-content: space-around; /* Adjust alignment as needed */
 }
 
-  
+}
+.ajaxcart-item__discount {
+  color: red !important;
+}
