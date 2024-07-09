@@ -1,3 +1,12 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "sections": {
     "e635abf7-4793-4302-96d6-07b26f4e2ef3": {
@@ -39,7 +48,7 @@
             "overlay-btn-text": "",
             "show-gradient-overlay": false,
             "overlay_font_color": "#262428",
-            "button_text_color": "#FFFFFF",
+            "button_text_color": "#ffffff",
             "button_background_color": "#242424",
             "overlay_color": "#ffffff"
           }
@@ -53,7 +62,7 @@
             "overlay-btn-text": "",
             "show-gradient-overlay": false,
             "overlay_font_color": "#262428",
-            "button_text_color": "#FFFFFF",
+            "button_text_color": "#ffffff",
             "button_background_color": "#242424",
             "overlay_color": "#ffffff"
           }
@@ -67,7 +76,7 @@
             "overlay-btn-text": "",
             "show-gradient-overlay": false,
             "overlay_font_color": "#262428",
-            "button_text_color": "#FFFFFF",
+            "button_text_color": "#ffffff",
             "button_background_color": "#242424",
             "overlay_color": "#ffffff"
           }
@@ -81,7 +90,7 @@
             "overlay-btn-text": "",
             "show-gradient-overlay": false,
             "overlay_font_color": "#262428",
-            "button_text_color": "#FFFFFF",
+            "button_text_color": "#ffffff",
             "button_background_color": "#242424",
             "overlay_color": "#ffffff"
           }
@@ -93,6 +102,7 @@
         "image_Nb9HXk",
         "image_3JeBrU"
       ],
+      "disabled": true,
       "settings": {
         "colors": "white",
         "title": "{{ article.title }}",
@@ -102,11 +112,32 @@
         "section-width": "full",
         "content-position": "hide"
       }
+    },
+    "products_featured_product_8bLRWN": {
+      "type": "products--featured-product",
+      "settings": {
+        "title": "Featured product",
+        "richtext": "",
+        "featured_product": "classic-fruitbox",
+        "title_font": "h3",
+        "price_font": "h3",
+        "variant_style": "swatches",
+        "hide_out_of_stock_variants": false,
+        "show-giftwrap": false,
+        "show-vendor": false,
+        "show_product_description": true,
+        "show_quantity_selector": true,
+        "show_add_to_cart": true,
+        "show_smart_checkout": true,
+        "image-placement": "left",
+        "enable_video_loop": false
+      }
     }
   },
   "order": [
     "e635abf7-4793-4302-96d6-07b26f4e2ef3",
     "main",
-    "image_gallery_eP7g8r"
+    "image_gallery_eP7g8r",
+    "products_featured_product_8bLRWN"
   ]
 }
