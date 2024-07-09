@@ -17,7 +17,7 @@
         "menu": {
           "type": "menu",
           "settings": {
-            "menu_title": "",
+            "menu_title": "Quick Info",
             "footer_linklist": "footer"
           }
         },
@@ -30,7 +30,7 @@
         "newsletter": {
           "type": "newsletter",
           "settings": {
-            "newsletter_title": "TheFruitBox Friends",
+            "newsletter_title": "Be Our FruitBox Friends",
             "footer_newsletter_description": "<p>Sign up now for 10% off your first order and exclusive offers.<\/p>"
           }
         }
@@ -41,7 +41,8 @@
         "newsletter"
       ],
       "custom_css": [
-        "{margin-top: 50px;}"
+        "{margin-top: 50px;}",
+        " {margin-bottom: -20px;}"
       ],
       "settings": {
         "alignment": "left",
@@ -54,8 +55,8 @@
         "show_methods_of_payment": true,
         "center_content_on_desktop": true,
         "footer_text": "",
-        "show_currency_selector": true,
-        "show_locale_selector": false,
+        "show_currency_selector": false,
+        "show_locale_selector": true,
         "color_scheme": "dark"
       }
     }
