@@ -1,3 +1,12 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin theme editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "sections": {
     "product-form": {
@@ -51,10 +60,10 @@
         "a55b9011-1b1a-4353-9d97-7bdcd60949f2": {
           "type": "product-description",
           "settings": {
-            "collapsible_tab": false,
-            "icon": "home-smile",
+            "collapsible_tab": true,
+            "icon": "info",
             "heading": "Product Details",
-            "open_close_icon": "plus_minus",
+            "open_close_icon": "caret",
             "margin_bottom": 20
           }
         },
@@ -333,6 +342,7 @@
         "block-column-01",
         "block-column-02"
       ],
+      "disabled": true,
       "settings": {
         "colors": "light",
         "heading": "",
