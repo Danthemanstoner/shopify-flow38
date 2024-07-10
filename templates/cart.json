@@ -12,8 +12,7 @@
     "main": {
       "type": "template--cart",
       "custom_css": [
-        "{margin-left: -150px;}",
-        "{margin-right: -150px;}"
+
       ],
       "settings": {
       }
