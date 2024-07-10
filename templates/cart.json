@@ -12,8 +12,8 @@
     "main": {
       "type": "template--cart",
       "custom_css": [
-        "{padding-left: -50px;}",
-        "{padding-right: -50px;}"
+        "{padding-left: -150px;}",
+        " {padding-right: -150px;}"
       ],
       "settings": {
       }
