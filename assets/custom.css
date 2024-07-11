@@ -111,4 +111,5 @@
 .ajaxcart__subtotal_header {
   position: relative;
   top: -25px; /* Adjust the value as needed */
+  bottom: -25px;
 }
