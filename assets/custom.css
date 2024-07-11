@@ -108,3 +108,7 @@
     margin: 0;
   }
 }
+.ajaxcart__subtotal_header {
+  position: relative;
+  top: -15px; /* Adjust the value as needed */
+}
