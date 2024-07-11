@@ -114,10 +114,10 @@
   margin-bottom: -50px; /* Adjust the value to reduce the bottom margin */
 }
 
-/* reduce gap of items on mobile in cart */
-@media (max-width: 767px) {
+/* Adjustments for tablet devices */
+@media (max-width: 1024px) and (min-width: 768px) {
   .cart-table td, .cart-table th {
-    padding: 5px; /* Adjust the padding as needed */
+    padding: 10px 5px; /* Adjust the padding as needed */
   }
 }
 
