@@ -63,30 +63,23 @@
 #cart-link {
   display: flex;
   align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  border: 2px solid green;
+  border: 1px solid green;
+  border-radius: 5px;
   padding: 5px 10px;
-  border-radius: 4px;
-  margin-left: auto; 
-  max-width: fit-content; /* Ensure it doesn't take more space than needed */
+  text-decoration: none;
+  color: green;
+  max-width: fit-content;
 }
 
 #cart-link svg {
-  width: 24px; 
-  height: 24px; 
+  width: 24px; /* Adjust the width as needed */
+  height: 24px; /* Adjust the height as needed */
   display: inline-block;
   vertical-align: middle;
-  fill: green;
+  margin-right: 5px; /* Add some space between the icon and text */
 }
 
-.view-cart-text {
-  margin-left: 5px; 
-  color: green; 
-}
-
-.right-drawer-vue .ajaxcart__inner {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* Ensure the items inside the cart are aligned properly */
+#cart-link .view-cart-text {
+  margin-left: 5px;
+  font-size: 16px;
 }
