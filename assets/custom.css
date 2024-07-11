@@ -70,7 +70,7 @@
   color: green;
   max-width: fit-content;
   margin-left: auto; /* Align to the right */
-  transform: translateX(15%); /* Move 15% to the right */
+  transform: translateX(5%); /* Move 15% to the right */
 }
 
 #cart-link svg {
@@ -81,7 +81,7 @@
   margin-right: 5px; /* Add some space between the icon and text */
   fill: none; /* Ensure the inside is transparent */
   stroke: green; /* Outline color */
-  stroke-width: 2px; /* Outline width */
+  stroke-width: 1px; /* Outline width */
 }
 
 #cart-link .view-cart-text {
