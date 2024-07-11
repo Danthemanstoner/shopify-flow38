@@ -119,12 +119,6 @@
   .cart-table td, .cart-table th {
     padding: 5px; /* Adjust the padding as needed */
   }
-
-/* Adjustments for tablet devices */
-@media (max-width: 1024px) and (min-width: 768px) {
-  .cart-table td, .cart-table th {
-    padding: 10px 5px; /* Adjust the padding as needed */
-  }
 }
 
 @media (max-width: 767px) {
