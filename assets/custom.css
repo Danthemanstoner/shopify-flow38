@@ -123,3 +123,6 @@
 .ajaxcart__product-image {
   margin: -20px;
 }
+.grid--full {
+  padding: 0; /* Remove padding from the container */
+}
