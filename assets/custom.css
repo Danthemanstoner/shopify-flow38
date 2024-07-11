@@ -110,6 +110,7 @@
 }
 .ajaxcart__subtotal_header {
   position: relative;
-  top: -25px; /* Adjust the value as needed */
-  bottom: -25px;
+  top: -25px; /* Adjust the value as needed to move it up */
+  margin-bottom: -25px; /* Adjust the value to reduce the bottom margin */
 }
+
