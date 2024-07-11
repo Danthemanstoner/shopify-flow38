@@ -68,6 +68,7 @@
   border: 2px solid green; /* Outlines in green */
   padding: 5px 10px; /* Adjust padding as needed */
   border-radius: 4px; /* Optional: adds rounded corners */
+  margin-left: auto; /* Ensures the element is pushed to the right */
 }
 
 #cart-link svg {
