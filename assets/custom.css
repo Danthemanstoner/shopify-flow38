@@ -116,16 +116,8 @@
 
 /* reduce gap of items on mobile in cart */
 @media (max-width: 767px) {
-  .ajaxcart__product {
-    margin-bottom: 10px; /* Reduce the bottom margin */
+  .cart-table td, .cart-table th {
+    padding: 5px; /* Adjust the padding as needed */
   }
+}
 
-  .ajaxcart__product img {
-    margin-bottom: 5px; /* Adjust image margin if needed */
-  }
-
-  .ajaxcart__product p, 
-  .ajaxcart__product .text-center,
-  .ajaxcart__product .price {
-    margin: 5px 0; /* Adjust margin for text elements */
-  }
