@@ -70,7 +70,6 @@
   color: green;
   max-width: fit-content;
   margin-left: auto; /* Align to the right */
-  transform: translateX(1%); /* Move 1% to the right */
 }
 
 #cart-link svg {
