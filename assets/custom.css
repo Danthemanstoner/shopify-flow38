@@ -114,3 +114,18 @@
   margin-bottom: -20px; /* Adjust the value to reduce the bottom margin */
 }
 
+/* reduce gap of items on mobile in cart */
+@media (max-width: 767px) {
+  .ajaxcart__product {
+    margin-bottom: 10px; /* Reduce the bottom margin */
+  }
+
+  .ajaxcart__product img {
+    margin-bottom: 5px; /* Adjust image margin if needed */
+  }
+
+  .ajaxcart__product p, 
+  .ajaxcart__product .text-center,
+  .ajaxcart__product .price {
+    margin: 5px 0; /* Adjust margin for text elements */
+  }
