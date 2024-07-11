@@ -60,6 +60,7 @@
     }
 }
 
+/* include the full shopping cart page link in the side cart */
 #cart-link {
   display: flex;
   align-items: center;
@@ -88,7 +89,13 @@
   font-size: 16px;
 }
 
+/* reduce side cart contents width */
 .ajaxcart__footer {
   width: 80%;
   margin: 0 auto; /* Center the footer horizontally */
+}
+
+.ajaxcart__product {
+  width: 80%;
+  margin: 0 auto;
 }
