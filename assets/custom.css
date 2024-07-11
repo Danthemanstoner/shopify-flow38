@@ -88,3 +88,7 @@
   font-size: 16px;
 }
 
+.ajaxcart__footer {
+  width: 80%;
+  margin: 0 auto; /* Center the footer horizontally */
+}
