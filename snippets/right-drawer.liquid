@@ -179,14 +179,14 @@
 
                     <span v-for="(item, index) in cart.items" v-if="item.compare_at_price > 0" class="cart__compare-total hide"></span>
                     <s><span v-for="(item, index) in cart.items" v-if="item.compare_at_price > 0" class="line__compare_price ajaxcart__price-strikeout text-center"></span></s>
-
+                    {% comment %}
                     <ul class="grid__item ajaxcart-item__discounts" style="margin: 0" v-for="cartItem in cart.items">
                       <li class="ajaxcart-item__discount" v-if="cartItem.line_level_discount_allocations.amount > 0">
                         <span class="ajaxcart-item__discount_title" v-text="cartItem.line_level_discount_allocations.title"></span>
                         <span class="ajaxcart-item__discount_money">- <span v-money="cartItem.line_level_discount_allocations.amount"></span></span>
                       </li>
                     </ul>
-
+                    {% endcomment %}
                     <p class="hide cart__total" v-text="cart.total_price"></p>
                     <div class="grid__item ajaxcart__subtotal">
                       <p v-money="cart.total_price"></p>
