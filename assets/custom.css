@@ -109,9 +109,7 @@
   }
 }
 .ajaxcart__subtotal_header {
-  position: relative;
-  top: -25px; /* Adjust the value as needed to move it up */
-  margin-bottom: -20px; /* Adjust the value to reduce the bottom margin */
+  margin: -20px; /* Adjust the value to reduce the bottom margin */
 }
 
 /* reduce gap of items on mobile in cart */
