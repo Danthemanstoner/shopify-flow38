@@ -101,34 +101,41 @@
   margin: 0 auto;
 }
 
-/* Override styles for mobile and tablet devices */
+/* Override styles for mobile devices */
 @media (max-width: 768px) {
   .ajaxcart__product {
     width: 100%;
     margin: 0;
   }
-}
-.ajaxcart__subtotal_header {
-  position: relative;
-  top: -55px; /* Adjust the value as needed to move it up */
-  margin-bottom: -50px; /* Adjust the value to reduce the bottom margin */
-}
 
-/* reduce gap of items on mobile in cart */
-@media (max-width: 767px) {
-  .cart-table td, .cart-table th {
-    padding: 5px; /* Adjust the padding as needed */
-  }
-}
-
-@media (max-width: 767px) {
-.ajaxcart__product-image {
-  margin: -20px;
-}
-
-@media (max-width: 767px) {
   .ajaxcart__subtotal {
     margin-top: -5px;
     margin-bottom: -10px; /* Add the unit 'px' */
+  }
+
+  .cart-table td, .cart-table th {
+    padding: 5px; /* Adjust the padding as needed */
+  }
+
+  .ajaxcart__product-image {
+    margin: -20px;
+  }
+}
+
+/* Adjust styles for tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .cart-table td, .cart-table th {
+    padding: 5px; /* Adjust the padding as needed */
+  }
+
+  .ajaxcart__product {
+    width: 95%; /* Slightly reduce the width */
+    margin: 0 auto;
+  }
+
+  .ajaxcart__subtotal_header {
+    position: relative;
+    top: -55px; /* Adjust the value as needed to move it up */
+    margin-bottom: -50px; /* Adjust the value to reduce the bottom margin */
   }
 }
