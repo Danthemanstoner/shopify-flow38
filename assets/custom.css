@@ -102,7 +102,7 @@
 }
 
 /* Override styles for mobile devices */
-@media (max-width: 768px) {
+@media (max-width: 898px) {
   .ajaxcart__product {
     width: 100%;
     margin: 0;
