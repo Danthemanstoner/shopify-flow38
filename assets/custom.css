@@ -95,7 +95,16 @@
   margin: 0 auto; /* Center the footer horizontally */
 }
 
+/* Default styles for larger screens */
 .ajaxcart__product {
   width: 90%;
   margin: 0 auto;
+}
+
+/* Override styles for mobile and tablet devices */
+@media (max-width: 768px) {
+  .ajaxcart__product {
+    width: 100%;
+    margin: 0;
+  }
 }
