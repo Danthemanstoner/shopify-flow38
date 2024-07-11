@@ -110,8 +110,8 @@
 }
 .ajaxcart__subtotal_header {
   position: relative;
-  top: -25px; /* Adjust the value as needed to move it up */
-  margin-bottom: -20px; /* Adjust the value to reduce the bottom margin */
+  top: -55px; /* Adjust the value as needed to move it up */
+  margin-bottom: -50px; /* Adjust the value to reduce the bottom margin */
 }
 
 /* reduce gap of items on mobile in cart */
@@ -122,7 +122,4 @@
 }
 .ajaxcart__product-image {
   margin: -20px;
-}
-.grid--full {
-  padding: -15; /* Remove padding from the container */
 }
