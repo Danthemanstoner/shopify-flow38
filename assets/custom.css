@@ -50,14 +50,26 @@
   color: red !important;
 }
 
-@media (min-width: 768px) {
-    form.cart.table-wrap {
-        margin-left: auto !important;
-        margin-right: auto !important;
-        max-width: 70% !important; /* Adjust this value to your desired width */
-        padding-left: 10px !important; /* Add some padding if needed */
-        padding-right: 10px !important; /* Add some padding if needed */
-    }
+/* Tablet specific styling */
+@media (min-width: 768px) and (max-width: 1024px) {
+  form.cart.table-wrap {
+    max-width: 100% !important; /* Set to 100% for tablets */
+    padding-left: 10px !important; /* Add some padding if needed */
+    padding-right: 10px !important; /* Add some padding if needed */
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+/* Larger screens styling */
+@media (min-width: 1025px) {
+  form.cart.table-wrap {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 70% !important; /* Adjust this value to your desired width */
+    padding-left: 10px !important; /* Add some padding if needed */
+    padding-right: 10px !important; /* Add some padding if needed */
+  }
 }
 
 /* include the full shopping cart page link in the side cart */
@@ -102,7 +114,7 @@
 }
 
 /* Override styles for mobile devices */
-@media (max-width: 898px) {
+@media (max-width: 768px) {
   .ajaxcart__product {
     width: 100%;
     margin: 0;
