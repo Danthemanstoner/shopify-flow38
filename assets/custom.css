@@ -123,3 +123,8 @@
 .ajaxcart__product-image {
   margin: -20px;
 }
+@media (max-width: 768px) 
+  .ajaxcart__subtotal {
+      margin-top: -5px;
+      margin-bottom: -10;
+  }
