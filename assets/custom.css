@@ -69,7 +69,7 @@
   text-decoration: none;
   color: green;
   max-width: fit-content;
-  margin-left: auto; /* Align to the right */
+  margin-left: 20px; /* Adjust the left margin as needed */
 }
 
 #cart-link svg {
