@@ -120,9 +120,12 @@
     padding: 5px; /* Adjust the padding as needed */
   }
 }
+
+@media (max-width: 767px) {
 .ajaxcart__product-image {
   margin: -20px;
 }
+
 @media (max-width: 767px) {
   .ajaxcart__subtotal {
     margin-top: -5px;
