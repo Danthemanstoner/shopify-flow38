@@ -63,13 +63,12 @@
 #cart-link {
   display: flex;
   align-items: center;
-  border: 1px solid green;
   border-radius: 5px;
   padding: 5px 10px;
   text-decoration: none;
   color: green;
   max-width: fit-content;
-  margin-left: 20px; /* Adjust the left margin as needed */
+  margin-left: 25px; /* Adjust the left margin as needed */
 }
 
 #cart-link svg {
