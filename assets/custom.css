@@ -60,9 +60,25 @@
     }
 }
 
+#cart-link {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Aligns to the right */
+  text-decoration: none;
+  border: 2px solid green; /* Outlines in green */
+  padding: 5px 10px; /* Adjust padding as needed */
+  border-radius: 4px; /* Optional: adds rounded corners */
+}
+
 #cart-link svg {
-    width: 24px; /* Adjust the width as needed */
-    height: 24px; /* Adjust the height as needed */
-    display: inline-block;
-    vertical-align: middle;
+  width: 24px; /* Adjust the width as needed */
+  height: 24px; /* Adjust the height as needed */
+  display: inline-block;
+  vertical-align: middle;
+  fill: green; /* Changes the SVG color to green */
+}
+
+.view-cart-text {
+  margin-left: 5px; /* Adjust space between icon and text */
+  color: green; /* Changes text color to green */
 }
