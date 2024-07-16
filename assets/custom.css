@@ -1,4 +1,20 @@
 /* Place any CSS overrides in this file. *//* Place any CSS overrides in this file. */
+
+@font-face {
+  font-family: 'Mairo';
+  src: url('https://cdn.shopify.com/s/files/1/0860/2877/9835/files/mairo.woff?v=1721108137') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Targeting the p element within the specific div */
+.h2.text-box-max-width.text-link-animated-custom-color p {
+    font-family: 'Mairo', Arial, sans-serif;
+    color: #ffffff !important; /* Ensures the text color is white */
+}
+
+
+
 .sale-badge {
     font-size: 15px; /* Adjust the size as needed */
     /* Other styles like background-color, color, padding, etc. */
