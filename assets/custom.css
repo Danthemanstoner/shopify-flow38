@@ -1,5 +1,6 @@
 /* Place any CSS overrides in this file. *//* Place any CSS overrides in this file. */
 
+/* Custom Font Targeting - Disabled
 @font-face {
   font-family: 'Mairo';
   src: url('https://cdn.shopify.com/s/files/1/0860/2877/9835/files/mairo.woff?v=1721108137') format('woff');
@@ -7,12 +8,11 @@
   font-style: normal;
 }
 
-/* Targeting the p element within the specific div */
 .h2.text-box-max-width.text-link-animated-custom-color p {
     font-family: 'Mairo', Arial, sans-serif;
-    color: #ffffff !important; /* Ensures the text color is white */
+    color: #ffffff !important; 
 }
-
+*/
 
 
 .sale-badge {
