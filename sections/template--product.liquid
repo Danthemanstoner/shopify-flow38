@@ -8,6 +8,7 @@
   {%- endif -%}
   <meta itemprop="brand" content="{{ product.vendor }}">
   <meta itemprop="sku" content="{{ product.selected_or_first_available_variant.sku }}">
+
   {% assign pick_an_option = false %}
 
   {% if pick_an_option %}
@@ -20,6 +21,7 @@
   {% if current_variant.compare_at_price > current_variant.price %}
     {% assign on_sale = true %}
   {% endif %}
+
   {%- assign product_description_width = '' -%}
   {%- assign product_image_width = '' -%}
 
@@ -39,10 +41,13 @@
       {%- assign product_description_width = 'large--five-twelfths' -%}
       {%- assign product_image_width = 'large--seven-twelfths' -%}
   {% endcase %}
+
   <div class="product-media-templates">
     {% assign featured_media = current_variant.featured_media | default: product.featured_media %}
     {% render 'product-media-templates', product: product, section_id: section.id, featured_media_id: featured_media.id, enable_video_loop: section.settings.enable_video_loop %}
   </div>
+
+
   {% assign style = 'full_width' %}
   {% if section.settings.image-display == 'thumbnails' %}
     {% assign style = section.settings.thumbnail_position %}
@@ -51,6 +56,7 @@
     {% comment %} No thumbnails {% endcomment %}
     {% assign style = 'full_width' %}
   {% endif %}
+
   {% assign wrap_product_variant_id = 0 %}
   {% assign wrap_product = false %}
   {% if settings.giftwrap_product_selector != blank %}
@@ -59,6 +65,7 @@
       {% assign wrap_product_variant_id = wrap_product.variants.first.id %}
     {% endif %}
   {% endif %}
+
   {% assign locations_enabled = false %}
   {% if pickup_block %}
     {% assign locations_enabled = true %}
@@ -68,11 +75,13 @@
   {% if options_block.settings.thumbnail_changes_variant %}
     {% assign thumbnail_changes_variant = true %}
   {% endif %}
+
   {% if options_block.settings.variant_style == 'swatches' %}
-    <safe-load-scripts class="hidden">
-      <script src="{{ 'component-product-swatch.js' | asset_url }}" defer="defer" type="module" data-flow-load-key="product-swatch"></script>
-    </safe-load-scripts>
+		<safe-load-scripts class="hidden">
+			<script src="{{ 'component-product-swatch.js' | asset_url }}" defer="defer" type="module" data-flow-load-key="product-swatch"></script>
+		</safe-load-scripts>
   {% endif %}
+
   <div class="wrapper-padded product-form-vue main-page-container product-section">
     <wetheme-product-form
       inline-template
@@ -91,52 +100,49 @@
       v-bind:locations-enabled="{{ locations_enabled }}"
       language-url="{{ localization.language.root_url }}"
     >
-    <div class="product-single-wrapper">
-    <div class="grid product-single{% if section.settings.enable_sticky %} product-sticky-wrapper{% endif %}{% if options_block.settings.variant_style == 'dropdowns' %} variant-dropdown-enabled{% else %} variant-swatches-enabled{% endif %}" data-section-id="{{ section.id }}">
-      <div class="grid__item {{ product_image_width }} context mobile--no-top-margin{% if section.settings.enable_sticky %} product-sticky{% endif %}">
-        {% render 'product-media', product: product, style: style, hide_out_of_stock_variants: options_block.settings.hide_out_of_stock_variants %}
-      </div>
-    <div class="grid__item product-form-wrapper {{ product_description_width }}{% if section.settings.enable_sticky %} product-sticky{% endif %}">
-      <div>
-        <div class="product-details-wrapper">
-          <!-- Assign category code and add datepicker script -->
-          {% assign category_code = product.metafields.custom.category_code %}
-          <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-          <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-          <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-          <script>
-            $(function() {
-              $("#datepicker").datepicker();
-            });
-          </script>
-          <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="product-details--form-wrapper{% if product.available %} product-details--form-wrapper---in-stock{% else %} product-details--form-wrapper---out-of-stock{% endif %}">
-            <meta itemprop="priceCurrency" content="{{ shop.currency }}">
-            <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
-            <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
-            <div class="form-vertical">
-              {% form 'product', product, id: "AddToCartForm" %}
-                <!-- Datepicker input field -->
-                <div class="product-form-block">
-                  <label for="datepicker" class="product-form__label">Delivery Date</label>
-                  <input type="text" id="datepicker" name="delivery_date" class="product-form__input" placeholder="Select delivery date">
-                </div>
+      <div class="product-single-wrapper">
+        <div
+          class="grid product-single{% if section.settings.enable_sticky %} product-sticky-wrapper{% endif %}{% if options_block.settings.variant_style == 'dropdowns' %} variant-dropdown-enabled{% else %} variant-swatches-enabled{% endif %}"
+          data-section-id="{{ section.id }}"
+        >
+          <div class="grid__item {{ product_image_width }} context mobile--no-top-margin{% if section.settings.enable_sticky %} product-sticky{% endif %}">
+            {% render 'product-media', product: product, style: style, hide_out_of_stock_variants: options_block.settings.hide_out_of_stock_variants %}
+          </div>
 
-                {% assign spacing_classes = 'product-form-block' %}
-                {% if settings.enable_breadcrumbs %}
-                  <div id="breadcrumbs">
-                    {% render 'breadcrumb' %}
-                  </div>
-                {% endif %}
-                {%- for block in section.blocks -%}
-                  {%- case block.type -%}
-                    {%- when '@app' -%}
-                      <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ section.settings.app_margin_bottom }}px" id="shopify-block-{{ block.id }}" {{ block.shopify_attributes }}></div>
+          <div class="grid__item product-form-wrapper {{ product_description_width }}{% if section.settings.enable_sticky %} product-sticky{% endif %}">
 
-                    {%- when 'complementary-products' -%}
-                      <div class="complementary-products hidden {{ spacing_classes }}{% if block.settings.collapsible_tab %} collapsible{% if block.settings.margin_bottom == 0 %} no_margin_bottom{% endif %}{% endif %}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
-                        {%- render 'complementary-products-block' with title: block.settings.title, products_limit: block.settings.products_limit, collapsible: block.settings.collapsible_tab, open_close_icon: block.settings.open_close_icon, custom_icon: block.settings.custom_icon, icon: block.settings.icon, id: block.id -%}
-                      </div>
+            <div>
+
+              <div class="product-details-wrapper">
+
+              <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="product-details--form-wrapper{% if product.available %} product-details--form-wrapper---in-stock{% else %} product-details--form-wrapper---out-of-stock{% endif %}">
+                <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+                <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
+                <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+
+                <div class="form-vertical">
+                  {% form 'product', product, id: "AddToCartForm" %}
+
+                  {% assign spacing_classes = 'product-form-block' %}
+
+                  {% if settings.enable_breadcrumbs %}
+                    <div id="breadcrumbs">
+                      {% render 'breadcrumb' %}
+                    </div>
+                  {% endif %}
+
+                  {%- for block in section.blocks -%}
+                    {%- case block.type -%}
+                      {%- when '@app' -%}
+                        <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ section.settings.app_margin_bottom }}px" id="shopify-block-{{ block.id }}" {{ block.shopify_attributes }}></div>
+
+                      {%- when 'complementary-products' -%}
+                        <div class="complementary-products hidden {{ spacing_classes }}{% if block.settings.collapsible_tab %} collapsible{% if block.settings.margin_bottom == 0 %} no_margin_bottom{% endif %}{% endif %}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
+                          {%- render 'complementary-products-block' with title: block.settings.title, products_limit: block.settings.products_limit, collapsible: block.settings.collapsible_tab, open_close_icon: block.settings.open_close_icon, custom_icon: block.settings.custom_icon, icon: block.settings.icon, id: block.id -%}
+                        </div>
+                        
                       {%- when 'cross-sells' -%}
+
                         {% if block.settings.cross_sell_product_1.available or block.settings.cross_sell_product_2.available or block.settings.cross_sell_product_3.available %}
                           <div class="cross-sell {{ spacing_classes }}{% if block.settings.collapsible_tab %} collapsible{% if block.settings.margin_bottom == 0 %} no_margin_bottom{% endif %}{% endif %}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
                             {%- assign cross_sells_products = block.settings.cross_sell_product_1 | append: ',' | append: block.settings.cross_sell_product_2 | append: ',' | append: block.settings.cross_sell_product_3 | split: ',' | compact -%}
@@ -153,26 +159,30 @@
                                     assign custom_icon = false
                                   endif 
                                 %}
+{% comment  %} Shopify Subscription Snippet {% endcomment %}
+<div class="subscriptions_app_embed_block"></div>
                                 <div class="collapsible-tab">
                                   <collapsible-button tabindex="0">
-                                    <div class="summary">
-                                      {% render 'text-with-icon', icon: icon, custom_icon: custom_icon, text: block.settings.title, text_classes: 'label-font' %}
-                                      <span class="inline-icon--wrapper icon--right">
-                                        {% if block.settings.open_close_icon == "plus_minus" %}
-                                          {% render 'theme-icon' with icon: 'plus', iconClasses: 'plus-icon' %}
-                                          {% render 'theme-icon' with icon: 'minus', iconClasses: 'minus-icon' %}
-                                        {% elsif block.settings.open_close_icon == "caret" %}
-                                          {% render 'theme-icon', icon: 'chevron_down', iconClasses: 'chevron-down' %}
-                                        {% endif %}
-                                      </span>
-                                    </div>
+                                      <div class="summary">
+                                        {% render 'text-with-icon', icon: icon, custom_icon: custom_icon, text: block.settings.title, text_classes: 'label-font' %}
+                                          <span class="inline-icon--wrapper icon--right">
+                                              {% if block.settings.open_close_icon == "plus_minus" %}
+                                                  {% render 'theme-icon' with icon: 'plus', iconClasses: 'plus-icon' %}
+                                                  {% render 'theme-icon' with icon: 'minus', iconClasses: 'minus-icon' %}
+                                              {% elsif block.settings.open_close_icon == "caret" %}
+                                                  {% render 'theme-icon', icon: 'chevron_down', iconClasses: 'chevron-down' %}
+                                              {% endif %}
+                                          </span>
+                                      </div>
                                   </collapsible-button>
+                              
                                   <div class="collapsible-content">
-                                    <div class="content rte">
-                                      {% render 'cross-sells' with title: blank, cross_sells_products: cross_sells_products, id: block.id %}
-                                    </div>
+                                      <div class="content rte">
+                                        {% render 'cross-sells' with title: blank, cross_sells_products: cross_sells_products, id: block.id %}
+                                      </div>
                                   </div>
                                 </div>
+
                                 <safe-load-scripts class="hidden">
                                   <script src="{{ 'component-collapsible-button.js' | asset_url }}" type="module" defer="defer" data-flow-load-key="component-collapsible-button"></script>
                                 </safe-load-scripts>
@@ -180,447 +190,510 @@
                             </div>
                           </div>
                         {%- endif -%}
-                        {%- when 'title' -%}
-                          <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
-                            <h1 itemprop="name" class="{{ block.settings.title_font }} product-details-product-title">{{ product.title | escape }}</h1>
+
+                      {%- when 'title' -%}
+                        <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
+                          <h1 itemprop="name" class="{{ block.settings.title_font }} product-details-product-title">{{ product.title | escape }}</h1>
+                        </div>
+
+                      {%- when 'price' -%}
+                        <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
+                          <div class="product-price-size--{{ block.settings.price_font }} product-price-group">
+                            <span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
+                            <p id="ComparePrice" class="compare-at-price sale-price{% if on_sale %} on-sale{% else %} js{% endif %}" v-bind:class="{ 'on-sale' : isSale }" v-if="isSale" v-money="variant.compare_at_price">
+                              <span class="money">{{ current_variant.compare_at_price | money }}</span>
+                            </p>
+
+                            {% render 'product-pricing', current_variant: current_variant %}
+                            {% render 'unit-price-measurement-variant', variant: current_variant %}
                           </div>
-                          {%- when 'price' -%}
-                            <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
-                              <div class="product-price-size--{{ block.settings.price_font }} product-price-group">
-                                <span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
-                                <p id="ComparePrice" class="compare-at-price sale-price{% if on_sale %} on-sale{% else %} js{% endif %}" v-bind:class="{ 'on-sale' : isSale }" v-if="isSale" v-money="variant.compare_at_price">
-                                  <span class="money">{{ current_variant.compare_at_price | money }}</span>
-                                </p>
-                                {% render 'product-pricing', current_variant: current_variant %}
-                                {% render 'unit-price-measurement-variant', variant: current_variant %}
-                              </div>
-                              {%- liquid
-                                if cart.taxes_included and block.settings.tax_included
-                                  assign show_tax_included = true
-                                endif
-                                if shop.shipping_policy.body != blank and block.settings.shipping_policy
-                                  assign show_shipping_policy = true
-                                endif
-                              -%}
-                              {%- if show_tax_included or show_shipping_policy -%}
-                                <div class="product-page__policies rte text-link-animated">
-                                  {%- if show_tax_included -%}
-                                    {{ 'products.product.include_taxes' | t }}
-                                  {%- endif -%}
-                                  {%- if show_shipping_policy -%}
-                                    {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
-                                  {%- endif -%}
-                                </div>
+
+                          {%- liquid
+                            if cart.taxes_included and block.settings.tax_included
+                              assign show_tax_included = true
+                            endif
+                            if shop.shipping_policy.body != blank and block.settings.shipping_policy
+                              assign show_shipping_policy = true
+                            endif
+                          -%}
+                          {%- if show_tax_included or show_shipping_policy -%}
+                            <div class="product-page__policies rte text-link-animated">
+                              {%- if show_tax_included -%}
+                                {{ 'products.product.include_taxes' | t }}
                               {%- endif -%}
-                              <div class="shopify-payment-terms__container">
-                                {{ form | payment_terms }}
+                              {%- if show_shipping_policy -%}
+                                {{ 'products.product.shipping_policy_html' | t: link: shop.shipping_policy.url }}
+                              {%- endif -%}
+                            </div>
+                          {%- endif -%}
+
+                          <div class="shopify-payment-terms__container">
+                            {{ form | payment_terms }}
+                          </div>
+                        </div>
+
+                      {%- when 'vendor' -%}
+                        {% if product.vendor != "" %}
+                          <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
+                            <span class="product__meta--vendor nav-link-animated">
+                              <span class="label-font">{{ product.vendor | link_to_vendor }}</span>
+                            </span>
+                          </div>
+                        {% endif %}
+
+                      {%- when 'sku' -%}
+                        {% if current_variant.sku != blank %}
+                          <div
+                            class="{{ spacing_classes }} {% if current_variant.sku == "" %}js{% endif %}"
+                            style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px"
+                            v-if="variant && variant.sku !== ''"
+                          >
+                            <span class="js__currentVariantSKU" v-text="variant.sku">{{ current_variant.sku }}</span>
+                          </div>
+                        {% endif %}
+
+                      {%- when 'options' -%}
+                        <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px">
+                          {% render 'product-options' with product: product, 
+                            size_option_name: block.settings.size_option_name, 
+                            size_guide_page: block.settings.size_guide_page, 
+                            variant_style: options_block.settings.variant_style, 
+                            section_id: section.id, 
+                            current_variant: current_variant, 
+                            hide_out_of_stock_variants: options_block.settings.hide_out_of_stock_variants, 
+                            block_attributes: options_block.shopify_attributes
+                          %}
+                        </div>
+
+                      {%- when 'linked-products' -%}
+												<safe-load-scripts class="hidden">
+													<script src="{{ 'component-linked-products.js' | asset_url }}" defer="defer" type="module" data-flow-load-key="linked-products"></script>
+												</safe-load-scripts>
+
+                        {%- if block.settings.linked_products != blank -%}
+                          {% assign linked_products_ids = block.settings.linked_products | map: 'id' %}
+                          {% unless linked_products_ids.size == 1 and linked_products_ids contains product.id %}
+                            {% assign option_index =  0 %}
+                            {% assign swatches_aspect_ratio = block.settings.swatches_aspect_ratio %}
+                            <linked-products class="{{ spacing_classes }} linked-products" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
+                              <div class="swatch linked-products-swatch" data-option-index="{{ option_index }}">
+
+                                {% if block.settings.option_name != blank %}
+                                  <div class="header linked-products--title-wrapper">
+																		<span class="linked-option-label label-font">{{ block.settings.option_name }}</span>
+																		<span class="linked-option-product-title"></span>
+																	</div>
+                                {% endif %}
+                          
+                                <div class="swatch-items-wrapper">
+                                  {% liquid
+                                    for linked_product in block.settings.linked_products
+                                      assign  escaped_linked_product_variant = linked_product.title | split: ' - ' | last | escape
+																			if linked_product.id == product.id
+																				assign checked = true
+																				assign redirect = blank
+																			else
+																				assign checked = false
+																				assign redirect = linked_product.url
+																			endif
+																			if linked_product.media and linked_product.media.size > 0
+                                        assign image_url = linked_product.media[0].preview_image | image_url: width: 250
+																				assign img_aspect_ratio = linked_product.media[0].preview_image.aspect_ratio
+																			elsif linked_product.featured_image != blank
+                                        assign image_url = linked_product.featured_image | image_url: width: 250
+																				assign img_aspect_ratio = linked_product.featured_image.aspect_ratio
+																			else
+																				assign image_url = blank
+																				assign img_aspect_ratio = blank
+																			endif
+																			render 'image-swatch', image_url: image_url, value: escaped_linked_product_variant, checked: checked, available: linked_product.available, size: block.settings.swatches_size, aspect_ratio: swatches_aspect_ratio, img_aspect_ratio: img_aspect_ratio, variation_redirect: redirect, section: section, option_index: option_index
+                                    endfor
+                                  %}
+                                </div>
+                              </div>
+                            </linked-products>
+                          {% endunless %}
+                        {%- endif -%}
+
+                      {%- when 'product-description' -%}
+                        {%- if product.description != blank -%}
+                          <div class="product-description {{ spacing_classes }}{% if block.settings.collapsible_tab %} product-description--collapsible collapsible{% if block.settings.margin_bottom == 0 %} no_margin_bottom{% endif %}{% endif %}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
+                            {% unless block.settings.collapsible_tab %}
+                              <div class="text-link-animated">{{ product.description }}</div>
+                            {% else %}
+                              {% liquid
+                                if block.settings.custom_icon
+                                  assign icon = block.settings.custom_icon
+                                  assign custom_icon = true
+                                else
+                                  assign icon = block.settings.icon
+                                  assign custom_icon = false
+                                endif 
+                              %}
+
+                              {% render 'collapsible-tab', icon: icon, custom_icon: custom_icon, heading: block.settings.heading, content: product.description, open_close_icon: block.settings.open_close_icon, open_by_default: false, heading_classes: 'label-font' %}
+                            {% endunless %}
+                          </div>
+                        {%- endif -%}
+
+                      {%- when 'separator' -%}
+                        <div class="product-form-separator {{ spacing_classes }}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
+                        </div>
+
+                      {%- when 'collapsible-tab' -%}
+                        {% liquid
+                          if block.settings.custom_icon
+                            assign icon = block.settings.custom_icon
+                            assign custom_icon = true
+                          else
+                            assign icon = block.settings.icon
+                            assign custom_icon = false
+                          endif 
+                        %}
+                        
+                        {% assign content = block.settings.text %}
+                        {% if block.settings.page.content %}
+                          {% assign content = content | append: block.settings.page.content %}
+                        {% endif %}
+
+                        {%- if icon != 'none' or block.settings.heading != blank or content != blank -%}
+
+                          <div class="collapsible-tab-container collapsible {{ spacing_classes }}{% if block.settings.margin_bottom == 0 %} no_margin_bottom{% endif %}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
+                            {% render 'collapsible-tab', icon: icon, custom_icon: custom_icon, heading: block.settings.heading, content: content, open_close_icon: block.settings.open_close_icon, open_by_default: block.settings.open_by_default, heading_classes: 'label-font' %}
+                          </div>
+
+                        {%- endif -%}
+
+                      {%- when 'giftwrap' -%}
+                        {%- if settings.giftwrap_product_selector > '' and product.available and wrap_product -%}
+                          {% if wrap_product.available %}
+                            <div class="{{ spacing_classes }} product__meta--giftwrap" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
+                              <div class="product__meta--giftwrap--inner">
+                                <input type="checkbox" id="checkbox" v-model="giftwrapProduct" class="focus-visible">
+                                <label for="checkbox">{{ settings.giftwrap_label_text }}</label>
                               </div>
                             </div>
-                            {%- when 'vendor' -%}
-                              {% if product.vendor != "" %}
-                                <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
-                                  <span class="product__meta--vendor nav-link-animated">
-                                    <span class="label-font">{{ product.vendor | link_to_vendor }}</span>
-                                  </span>
-                                </div>
-                              {% endif %}
-                              {%- when 'sku' -%}
-                                {% if current_variant.sku != blank %}
-                                  <div class="{{ spacing_classes }} {% if current_variant.sku == "" %}js{% endif %}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" v-if="variant && variant.sku !== ''">
-                                    <span class="js__currentVariantSKU" v-text="variant.sku">{{ current_variant.sku }}</span>
-                                  </div>
-                                {% endif %}
-                                {%- when 'options' -%}
-                                  <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px">
-                                    {% render 'product-options' with product: product, size_option_name: block.settings.size_option_name, size_guide_page: block.settings.size_guide_page, variant_style: options_block.settings.variant_style, section_id: section.id, current_variant: current_variant, hide_out_of_stock_variants: options_block.settings.hide_out_of_stock_variants, block_attributes: options_block.shopify_attributes %}
-                                  </div>
-                                  {%- when 'linked-products' -%}
-                                    <safe-load-scripts class="hidden">
-                                      <script src="{{ 'component-linked-products.js' | asset_url }}" defer="defer" type="module" data-flow-load-key="linked-products"></script>
-                                    </safe-load-scripts>
-              
-                                    {%- if block.settings.linked_products != blank -%}
-                                      {% assign linked_products_ids = block.settings.linked_products | map: 'id' %}
-                                      {% unless linked_products_ids.size == 1 and linked_products_ids contains product.id %}
-                                        {% assign option_index =  0 %}
-                                        {% assign swatches_aspect_ratio = block.settings.swatches_aspect_ratio %}
-                                        <linked-products class="{{ spacing_classes }} linked-products" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
-                                          <div class="swatch linked-products-swatch" data-option-index="{{ option_index }}">
-              
-                                            {% if block.settings.option_name != blank %}
-                                              <div class="header linked-products--title-wrapper">
-                                                <span class="linked-option-label label-font">{{ block.settings.option_name }}</span>
-                                                <span class="linked-option-product-title"></span>
-                                              </div>
-                                            {% endif %}
-                                        
-                                            <div class="swatch-items-wrapper">
-                                              {% liquid
-                                                for linked_product in block.settings.linked_products
-                                                  assign escaped_linked_product_variant = linked_product.title | split: ' - ' | last | escape
-                                                  if linked_product.id == product.id
-                                                    assign checked = true
-                                                    assign redirect = blank
-                                                  else
-                                                    assign checked = false
-                                                    assign redirect = linked_product.url
-                                                  endif
-                                                  if linked_product.media and linked_product.media.size > 0
-                                                    assign image_url = linked_product.media[0].preview_image | image_url: width: 250
-                                                    assign img_aspect_ratio = linked_product.media[0].preview_image.aspect_ratio
-                                                  elsif linked_product.featured_image != blank
-                                                    assign image_url = linked_product.featured_image | image_url: width: 250
-                                                    assign img_aspect_ratio = linked_product.featured_image.aspect_ratio
-                                                  else
-                                                    assign image_url = blank
-                                                    assign img_aspect_ratio = blank
-                                                  endif
-                                                  render 'image-swatch', image_url: image_url, value: escaped_linked_product_variant, checked: checked, available: linked_product.available, size: block.settings.swatches_size, aspect_ratio: swatches_aspect_ratio, img_aspect_ratio: img_aspect_ratio, variation_redirect: redirect, section: section, option_index: option_index
-                                              endfor
-                                              %}
-                                            </div>
-                                          </div>
-                                        </linked-products>
-                                      {% endunless %}
-                                    {%- endif -%}
-                                    {%- when 'product-description' -%}
-                                      {%- if product.description != blank -%}
-                                        <div class="product-description {{ spacing_classes }}{% if block.settings.collapsible_tab %} product-description--collapsible collapsible{% if block.settings.margin_bottom == 0 %} no_margin_bottom{% endif %}{% endif %}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
-                                          {% unless block.settings.collapsible_tab %}
-                                            <div class="text-link-animated">{{ product.description }}</div>
-                                          {% else %}
-                                            {% liquid
-                                              if block.settings.custom_icon
-                                                assign icon = block.settings.custom_icon
-                                                assign custom_icon = true
-                                              else
-                                                assign icon = block.settings.icon
-                                                assign custom_icon = false
-                                              endif 
-                                            %}
-                                            {% render 'collapsible-tab', icon: icon, custom_icon: custom_icon, heading: block.settings.heading, content: product.description, open_close_icon: block.settings.open_close_icon, open_by_default: false, heading_classes: 'label-font' %}
-                                          {% endunless %}
-                                        </div>
-                                      {%- endif -%}
-                                      {%- when 'separator' -%}
-                                        <div class="product-form-separator {{ spacing_classes }}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
-                                        </div>
-                                        {%- when 'collapsible-tab' -%}
-                                          {% liquid
-                                            if block.settings.custom_icon
-                                              assign icon = block.settings.custom_icon
-                                              assign custom_icon = true
-                                            else
-                                              assign icon = block.settings.icon
-                                              assign custom_icon = false
-                                            endif 
-                                          %}
-                                          
-                                          {% assign content = block.settings.text %}
-                                          {% if block.settings.page.content %}
-                                            {% assign content = content | append: block.settings.page.content %}
-                                          {% endif %}
-                    
-                                          {%- if icon != 'none' or block.settings.heading != blank or content != blank -%}
-                                            <div class="collapsible-tab-container collapsible {{ spacing_classes }}{% if block.settings.margin_bottom == 0 %} no_margin_bottom{% endif %}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
-                                              {% render 'collapsible-tab', icon: icon, custom_icon: custom_icon, heading: block.settings.heading, content: content, open_close_icon: block.settings.open_close_icon, open_by_default: block.settings.open_by_default, heading_classes: 'label-font' %}
-                                            </div>
-                                          {%- endif -%}
-                                          {%- when 'giftwrap' -%}
-                                            {%- if settings.giftwrap_product_selector > '' and product.available and wrap_product -%}
-                                              {% if wrap_product.available %}
-                                                <div class="{{ spacing_classes }} product__meta--giftwrap" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
-                                                  <div class="product__meta--giftwrap--inner">
-                                                    <input type="checkbox" id="checkbox" v-model="giftwrapProduct" class="focus-visible">
-                                                    <label for="checkbox">{{ settings.giftwrap_label_text }}</label>
-                                                  </div>
-                                                </div>
-                                              {% endif %}
-                                            {%- endif -%}
-                                            {%- when 'quantity' -%}
-                                            <div class="{{ spacing_classes }} {% if section.settings.image_size == 'large' %}col-md-12{% else %}col-md-6{% endif %} col-sm-12 col-xs-12" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
-                                              <label for="Quantity" class="quantity-selector product-sub-label label-font">{{ 'products.product.quantity' | t }}</label>
-                                              <div class="js-qty">
-                                                <button type="button" aria-label="{{ 'general.accessibility.quantity.decrease_quantity' | t }}" class="js-qty__adjust js-qty__adjust--minus icon-fallback-text standalone-icon--wrapper" v-on:click="decreaseQuantity">
-                                                  {% render 'theme-icon' with icon: 'minus', iconClasses: 'flex-full', iconAttributes: 'aria-hidden="true"' %}
-                                                  <span class="fallback-text">−</span>
-                                                </button>
-                                                <input
-                                                  v-model="quantity"
-                                                  type="text"
-                                                  class="js-qty__num"
-                                                  value="1"
-                                                  min="1"
-                                                  aria-label="quantity"
-                                                  pattern="[0-9]*"
-                                                  name="quantity-js"
-                                                  id="Quantity"
-                                                >
-                                                <button type="button" aria-label="{{ 'general.accessibility.quantity.increase_quantity' | t }}" class="js-qty__adjust js-qty__adjust--plus icon-fallback-text standalone-icon--wrapper" v-on:click="increaseQuantity">
-                                                  {% render 'theme-icon' with icon: 'plus', iconClasses: 'flex-full', iconAttributes: 'aria-hidden="true"' %}
-                                                  <span class="fallback-text">+</span>
-                                                </button>
-                                              </div>
-                                              <noscript>
-                                                <input
-                                                  class="quantity-noscript"
-                                                  type="number"
-                                                  name="quantity"
-                                                  id="Quantity-{{ section.id }}"
-                                                  aria-label="quantity"
-                                                  min="1"
-                                                  value="1"
-                                                >
-                                              </noscript>
-                                            </div>
-                                            {%- when 'buy_buttons' -%}
-                                              <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
-                                                {%- if product.gift_card? and block.settings.enable_gift_card_recipient_form and product.available -%}
-                                                  {% render 'gift-card-recipient-form' %}
-                                                {%- endif -%}
-                        
-                                                <div class="paymentButtonsWrapper btn-wrapper-default">
-                                                  <button type="submit" data-cart-url="{{ routes.cart_url }}" aria-label="{{ 'products.product.add_to_cart' | t }}" name="add" id="AddToCart" class="btn{% if buttons_block.settings.show_smart_checkout and product.selling_plan_groups.size == 0 %} btn--secondary{% endif %}"
-                                                    v-bind:class="{ disabled: addToCartDisabled, 'btn--secondary': state === 'soldOut' }"
-                                                    v-bind:disabled="addToCartDisabled"
-                                                  >
-                                                    {% assign icon_attrs = 'v-if="state === ' | append: "'adding'" | append: '" v-cloak' %}
-                                                    {% render 'theme-icon' with icon: 'circle-notch', iconClasses: 'spin js fa-2x flex-full', iconAttributes: icon_attrs iconSize: '1.6em', icon_fill: settings.color_primary_button_text %}<span class="sr-only">{{ 'collections.paginate.loading' | t }}</span>
-                                                    <span class="{% if current_variant.available %}js{% endif %}" v-if="state === 'ready'"{% unless current_variant.available %} v-cloak{% endunless %}>{{ 'products.product.add_to_cart' | t }}</span>
-                                                    <span class="js" v-if="state === 'added'" v-cloak>{{ 'products.product.added' | t }}</span>
-                                                    <span class="{% unless current_variant.available %}js{% endunless %}" v-if="state === 'soldOut'" v-cloak>{{ 'products.product.sold_out' | t }}</span>
-                                                    <span class="js" v-if="state === 'unavailable'" v-cloak>{{ 'products.product.unavailable' | t }}</span>
-                                                  </button>
-                        
-                                                  <noscript>
-                                                    <button type="submit" class="btn" aria-label="{{ 'products.product.add_to_cart' | t }}">
-                                                      <span>{{ 'products.product.add_to_cart' | t }}</span>
-                                                    </button>
-                                                  </noscript>
-                        
-                                                  {% if buttons_block.settings.show_smart_checkout %}
-                                                    {{ form | payment_button }}
-                                                  {% endif %}
-                                                </div>
-                                              </div>
-                                              {%- when 'local_pickup' -%}
-                                                <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
-                                                  <div class="product-page--local-pickup" v-if="hasLocalPickup" v-html="hasLocalPickup"></div>
-                                                  <div id="initialPickupInfo">
-                                                    {% render 'store-availability-placeholder' with product_variant: current_variant %}
-                                                  </div>
-                                                </div>
-                                                {%- when 'trust_badges' -%}
-                                                  {%- if trust_block.settings.trust-badge -%}
-                                                    <div class="{{ spacing_classes }} trust-badge-container" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
-                                                      {% capture styles %}width: {{ trust_block.settings.trust-badge_max_width | escape }}px;{% endcapture %}
-                                                      {% render 'responsive-image' with trust_block.settings.trust-badge, class: 'trust-badge', alt: '', blur: false, styles: styles %}
-                                                    </div>
-                                                  {%- endif -%}
-                                                  {%- when 'product_meta' -%}
-                                                    {%- if product.tags.size > 0 or product.collections.size > 0 or product.type != "" -%}
-                                                      <div class="{{ spacing_classes }} product__meta" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
-                                                        {% if product.tags.size > 0 %}
-                                                          <div class="product__meta--tags nav-link-animated--custom">
-                                                            <span><strong>{{ 'products.product.tags' | t }}:</strong></span>
-                                                            {% for tag in product.tags %}
-                                                              <a class="animated-link--item" href="{{ routes.all_products_collection_url }}/{{ tag | handleize }}"><span>{{ tag }}</span></a>{% if forloop.last == false %}, {% endif %}
-                                                            {% endfor %}
-                                                          </div>
-                                                        {% endif %}
-                                                        {% if product.collections.size > 0 %}
-                                                          <div class="product__meta--tagss nav-link-animated--custom">
-                                                            <span><strong>{{ 'products.product.category' | t }}:</strong> </span>
-                                                            {% for collection in product.collections %}
-                                                              <a class="animated-link--item" href="{{ collection.url }}"><span>{{ collection.title }}</span></a>{% if forloop.last == false %}, {% endif %}
-                                                            {% endfor %}
-                                                          </div>
-                                                        {% endif %}
-                                                        {% if product.type != "" %}
-                                                          <div class="product__meta--type">
-                                                            <span><strong>{{ 'products.product.type' | t }}: </strong></span>
-                                                            <span>{{ product.type }}</span>
-                                                          </div>
-                                                        {% endif %}
-                                                      </div>
-                                                    {%- endif -%}
-                                                    {%- when 'social_sharing' -%}
-                                                      {%- if settings.share_facebook or settings.share_x or settings.share_pinterest %}
-                                                        <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
-                                                          {% render 'social-share' %}
-                                                        </div>
-                                                      {%- endif -%}
-                                                      {%- when 'custom_liquid' -%}
-                                                        {%- if block.settings.custom_liquid != blank -%}
-                                                          <div class="{{ spacing_classes }} custom-liquid rte text-link-animated" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>{{ block.settings.custom_liquid }}</div>
-                                                        {%- endif -%}
-                                                        {%- when 'product-rating' -%}
-                                                          {% if block.settings.rating != blank %}
-                                                            <div class="{{ spacing_classes }} product-rating" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
-                                                              {% if block.settings.rating-label != blank %}
-                                                                <p class="rating-label label-font">{{ block.settings.rating-label }}</p>
-                                                                {% assign rating_aria_label = block.settings.rating-label %}
-                                                              {% else %}
-                                                                {% assign rating_aria_label = "Rating" %}
-                                                              {% endif %}
-                                                              {% if block.settings.rating-icon-full %}
-                                                                {% liquid
-                                                                  assign rating_decimal = 0
-                                                                  assign decimal = block.settings.rating | modulo: 1
-                                                                  if decimal >= 0.3 and decimal <= 0.7
-                                                                    assign rating_decimal = 0.5
-                                                                  elsif decimal > 0.7
-                                                                    assign rating_decimal = 1
-                                                                  endif
-                                                                  assign full_icons = block.settings.rating | floor | plus: rating_decimal | floor
-                                                                  assign empty_icons = block.settings.rating-max | round | minus: full_icons
-                                                                  if rating_decimal == 0.5
-                                                                    assign empty_icons = empty_icons | minus: 1
-                                                                  endif
-                                                                  assign full_alt = block.settings.rating-icon-full.alt | default: "Full icon"
-                                                                  assign empty_alt = block.settings.rating-icon-empty.alt | default: "Empty icon"
-                                                                %}
-                                                                <div class="rating-icons" role="img" aria-label="{{ rating_aria_label }} - {{ block.settings.rating }} out of {{ block.settings.rating-max }}">
-                                                                  {% for i in (1..full_icons) %}
-                                                                    <div class="rating-icons__icon" aria-hidden="true">
-                                                                      {% render 'responsive-image' with block.settings.rating-icon-full, alt: full_alt %}
-                                                                    </div>
-                                                                  {% endfor %}
-                                                                  {% if block.settings.rating-icon-empty %}
-                                                                    {% if rating_decimal == 0.5 %}
-                                                                      <div class="rating-icons__icon rating-icons__icon--half" aria-hidden="true">
-                                                                        <div class="rating-icons__image--full">
-                                                                          {% render 'responsive-image' with block.settings.rating-icon-full, alt: full_alt %}
-                                                                        </div>
-                                                                        <div class="rating-icons__image--empty">
-                                                                          {% render 'responsive-image' with block.settings.rating-icon-empty, alt: empty_alt %}
-                                                                        </div>
-                                                                      </div>
-                                                                    {% endif %}
-                                                                    {% for i in (1..empty_icons) %}
-                                                                      <div class="rating-icons__icon" aria-hidden="true">
-                                                                        {% render 'responsive-image' with block.settings.rating-icon-empty, alt: empty_alt %}
-                                                                      </div>
-                                                                    {% endfor %}
-                                                                  {% endif %}                          
-                                                                </div>
-                                                              {% else %}
-                                                                <p>{{ block.settings.rating }} / {{ block.settings.rating-max }}</p>
-                                                              {% endif %}
-                                                            </div>
-                                                          {% endif %}
-                                                          {%- when 'image-offer' -%}
-                                                            <div class="{{ spacing_classes }} image-offer-container" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
-                                                              {% if block.settings.link != blank and block.settings.image != blank %}
-                                                                <a href="{{ block.settings.link }}" class="image-offer-container--is-link">
-                                                              {% endif %}
-                                                              {% if block.settings.image == blank %}
-                                                                  {{ 'lifestyle-1' | placeholder_svg_tag: 'icon icon--placeholder' }}
-                                                              {% else %}
-                                                                  {% capture alt %}{{ block.settings.image.alt | default: shop.name }}{% endcapture %}
-                                                                  {% render 'responsive-image' with block.settings.image, alt: alt %}
-                                                              {% endif %}
-                                                              {% if block.settings.link != blank and block.settings.image != blank %}
-                                                                </a>
-                                                              {% endif %}
-                                                            </div>
-                                                            {%- when 'text-with-icon' -%}
-                                                              {% liquid
-                                                                if block.settings.custom_icon
-                                                                  assign icon = block.settings.custom_icon
-                                                                  assign custom_icon = true
-                                                                else
-                                                                  assign icon = block.settings.icon
-                                                                  assign custom_icon = false
-                                                                endif
-                                                                assign classes = spacing_classes
-                                                                if block.settings.margin_bottom == 0
-                                                                  assign classes = classes | append: ' no_margin_bottom'
-                                                                endif
-                                                              %}
-                                                              {% capture styles %}
-                                                                style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px"
-                                                              {% endcapture %}
-                                                              {%- if icon != 'none' or block.settings.text != blank -%}
-                                                                {% render 'text-with-icon' with icon: icon, 
-                                                                  custom_icon: custom_icon, 
-                                                                  text: block.settings.text, 
-                                                                  link: block.settings.link, 
-                                                                  borders: true, 
-                                                                  block_attributes: block.shopify_attributes,
-                                                                  classes: classes,
-                                                                  attributes: styles
-                                                                %}
-                                                              {%- endif -%}
-                                                              {%- when 'stock-level-indicator' -%}
-                                                                <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px">
-                                                                  {% render 'stock-level-indicator' with 
-                                                                    block_attributes: block.shopify_attributes,
-                                                                    stock_product: product,
-                                                                    stock_variant: current_variant,
-                                                                    stock_style: block.settings.stock-level-indicator-style,
-                                                                    stock_bar_color: block.settings.bar-indicator-color,
-                                                                    stock_indicator_animation: block.settings.stock_indicator_animation,
-                                                                    stock_amt: block.settings.stock-range,
-                                                                    stock_notice: block.settings.stock-level-notice,
-                                                                    show_stock_count: block.settings.show-stock-count,
-                                                                    in_stock_message: block.settings.in-stock-message,
-                                                                    low_stock_message: block.settings.low-stock-message,
-                                                                    out_of_stock_message: block.settings.out-of-stock-message
-                                                                  %}
-                                                                </div>
-                                                                {%- when 'star_rating' -%}
-                                                                  <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
-                                                                    {% render 'reviews-star-rating' with
-                                                                      rating_product: product,
-                                                                      show_product_rating_if_no_reviews: block.settings.show_product_rating_if_no_reviews,
-                                                                      show_rating_as: block.settings.show_rating_as,
-                                                                      star_color: settings.star_rating_color,
-                                                                      star_size: block.settings.star_size,
-                                                                      no_reviews_label: block.settings.no_reviews_label,
-                                                                      classes: spacing_classes
-                                                                    %}
-                                                                  </div>
-                                                                {%- endcase -%}
-                                                              {%- endfor -%}
-                                              
-                                                              <div class="errors qty-error" v-if="hasErrors" v-html="hasErrors" v-cloak></div>
-                                              
-                                                              {% endform %}
-                                              
-                                                              {% if section.settings.show_out_of_stock_email %}
-                                                                {% render 'out-of-stock-form' %}
-                                                                <div class="shopify-disclaimer--hidden">{{ 'shopify.online_store.spam_detection.disclaimer_html' | t }}</div>
-                                                              {% endif %}
-                                              
-                                                            </div>
-                                                          </div>
-                                                        </div>
-                                                      </div>
-                                                    </div>
-                                                  </wetheme-product-form>
-                                                </div>
-                                              
-                                                {% unless product == empty %}
-                                                  <script type="application/json" class="product-json" id="ProductJson-{{ section.id }}">
-                                                    {{ product | json }}
-                                                  </script>
-                                                {% endunless %}
-                                              </div>
-                                              {%- for block in section.blocks -%}
-                                                {%- case block.type -%}
-                                                  {%- when '@app' -%}
-                                                    <div id="appInit" data-block-id="{{ block.id }}">
-                                                      {% render block %}
-                                                    </div>
-                                                    {%- when 'image-offer' -%}
-                                                      <style>
-                                                        .image-offer-container--is-link:hover img {
-                                                          border-color: {{ block.settings.hover_border_color }};
-                                                        }
-                                                      </style>
+                          {% endif %}
+                        {%- endif -%}
 
-{%- endcase -%}
+                      {%- when 'quantity' -%}
+                        <div class="{{ spacing_classes }} {% if section.settings.image_size == 'large' %}col-md-12{% else %}col-md-6{% endif %} col-sm-12 col-xs-12" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
+                          <label for="Quantity" class="quantity-selector product-sub-label label-font">{{ 'products.product.quantity' | t }}</label>
+
+                          <div class="js-qty">
+                            <button type="button" aria-label="{{ 'general.accessibility.quantity.decrease_quantity' | t }}" class="js-qty__adjust js-qty__adjust--minus icon-fallback-text standalone-icon--wrapper" v-on:click="decreaseQuantity">
+                              {% render 'theme-icon' with icon: 'minus', iconClasses: 'flex-full', iconAttributes: 'aria-hidden="true"' %}
+                              <span class="fallback-text">−</span>
+                            </button>
+                            <input
+                              v-model="quantity"
+                              type="text"
+                              class="js-qty__num"
+                              value="1"
+                              min="1"
+                              aria-label="quantity"
+                              pattern="[0-9]*"
+                              name="quantity-js"
+                              id="Quantity"
+                            >
+                            <button type="button" aria-label="{{ 'general.accessibility.quantity.increase_quantity' | t }}" class="js-qty__adjust js-qty__adjust--plus icon-fallback-text standalone-icon--wrapper" v-on:click="increaseQuantity">
+                              {% render 'theme-icon' with icon: 'plus', iconClasses: 'flex-full', iconAttributes: 'aria-hidden="true"' %}
+                              <span class="fallback-text">+</span>
+                            </button>
+                          </div>
+
+                          <noscript>
+                            <input
+                              class="quantity-noscript"
+                              type="number"
+                              name="quantity"
+                              id="Quantity-{{ section.id }}"
+                              aria-label="quantity"
+                              min="1"
+                              value="1"
+                            >
+                          </noscript>
+                        </div>
+
+                      {%- when 'buy_buttons' -%}
+                        <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
+                          {%- if product.gift_card? and block.settings.enable_gift_card_recipient_form and product.available -%}
+                            {% render 'gift-card-recipient-form' %}
+                          {%- endif -%}
+
+                          <div class="paymentButtonsWrapper btn-wrapper-default">
+                            <button type="submit" data-cart-url="{{ routes.cart_url }}" aria-label="{{ 'products.product.add_to_cart' | t }}" name="add" id="AddToCart" class="btn{% if buttons_block.settings.show_smart_checkout and product.selling_plan_groups.size == 0 %} btn--secondary{% endif %}"
+                              v-bind:class="{ disabled: addToCartDisabled, 'btn--secondary': state === 'soldOut' }"
+                              v-bind:disabled="addToCartDisabled"
+                            >
+                              {% assign icon_attrs = 'v-if="state === ' | append: "'adding'" | append: '" v-cloak' %}
+                              {% render 'theme-icon' with icon: 'circle-notch', iconClasses: 'spin js fa-2x flex-full', iconAttributes: icon_attrs iconSize: '1.6em', icon_fill: settings.color_primary_button_text %}<span class="sr-only">{{ 'collections.paginate.loading' | t }}</span>
+                              <span class="{% if current_variant.available %}js{% endif %}" v-if="state === 'ready'"{% unless current_variant.available %} v-cloak{% endunless %}>{{ 'products.product.add_to_cart' | t }}</span>
+                              <span class="js" v-if="state === 'added'" v-cloak>{{ 'products.product.added' | t }}</span>
+                              <span class="{% unless current_variant.available %}js{% endunless %}" v-if="state === 'soldOut'" v-cloak>{{ 'products.product.sold_out' | t }}</span>
+                              <span class="js" v-if="state === 'unavailable'" v-cloak>{{ 'products.product.unavailable' | t }}</span>
+                            </button>
+
+                            <noscript>
+                              <button type="submit" class="btn" aria-label="{{ 'products.product.add_to_cart' | t }}">
+                                <span>{{ 'products.product.add_to_cart' | t }}</span>
+                              </button>
+                            </noscript>
+
+                            {% if buttons_block.settings.show_smart_checkout %}
+                              {{ form | payment_button }}
+                            {% endif %}
+                          </div>
+                        </div>
+
+                      {%- when 'local_pickup' -%}
+                        <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
+                          <div class="product-page--local-pickup" v-if="hasLocalPickup" v-html="hasLocalPickup"></div>
+                          <div id="initialPickupInfo">
+                            {% render 'store-availability-placeholder' with product_variant: current_variant %}
+                          </div>
+                        </div>
+
+                      {%- when 'trust_badges' -%}
+                        {%- if trust_block.settings.trust-badge -%}
+                          <div class="{{ spacing_classes }} trust-badge-container" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
+                            {% capture styles %}width: {{ trust_block.settings.trust-badge_max_width | escape }}px;{% endcapture %}
+                            {% render 'responsive-image' with trust_block.settings.trust-badge, class: 'trust-badge', alt: '', blur: false, styles: styles %}
+                          </div>
+                        {%- endif -%}
+
+                      {%- when 'product_meta' -%}
+                        {%- if product.tags.size > 0 or product.collections.size > 0 or product.type != "" -%}
+                          <div class="{{ spacing_classes }} product__meta" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
+                            {% if product.tags.size > 0 %}
+                              <div class="product__meta--tags nav-link-animated--custom">
+                                <span><strong>{{ 'products.product.tags' | t }}:</strong></span>
+                                {% for tag in product.tags %}
+                                  <a class="animated-link--item" href="{{ routes.all_products_collection_url }}/{{ tag | handleize }}"><span>{{ tag }}</span></a>{% if forloop.last == false %}, {% endif %}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+
+                            {% if product.collections.size > 0 %}
+                              <div class="product__meta--tagss nav-link-animated--custom">
+                                <span><strong>{{ 'products.product.category' | t }}:</strong> </span>
+                                {% for collection in product.collections %}
+                                  <a class="animated-link--item" href="{{ collection.url }}"><span>{{ collection.title }}</span></a>{% if forloop.last == false %}, {% endif %}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+
+                            {% if product.type != "" %}
+                              <div class="product__meta--type">
+                                <span><strong>{{ 'products.product.type' | t }}: </strong></span>
+                                <span>{{ product.type }}</span>
+                              </div>
+                            {% endif %}
+                          </div>
+                        {%- endif -%}
+
+                      {%- when 'social_sharing' -%}
+                        {%- if settings.share_facebook or settings.share_x or settings.share_pinterest %}
+                          <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
+                            {% render 'social-share' %}
+                          </div>
+                        {%- endif -%}
+
+                      {%- when 'custom_liquid' -%}
+                        {%- if block.settings.custom_liquid != blank -%}
+                          <div class="{{ spacing_classes }} custom-liquid rte text-link-animated" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>{{ block.settings.custom_liquid }}</div>
+                        {%- endif -%}
+
+                      {%- when 'product-rating' -%}
+                        {% if block.settings.rating != blank %}
+                          <div class="{{ spacing_classes }} product-rating" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
+                            {% if block.settings.rating-label != blank %}
+                              <p class="rating-label label-font">{{ block.settings.rating-label }}</p>
+                              {% assign rating_aria_label = block.settings.rating-label %}
+                            {% else %}
+                              {% assign rating_aria_label = "Rating" %}
+                            {% endif %}
+      
+                            {% if block.settings.rating-icon-full %}
+      
+                              {% liquid
+                                assign rating_decimal = 0
+                                assign decimal = block.settings.rating | modulo: 1
+                                if decimal >= 0.3 and decimal <= 0.7
+                                  assign rating_decimal = 0.5
+                                elsif decimal > 0.7
+                                  assign rating_decimal = 1
+                                endif
+      
+                                assign full_icons = block.settings.rating | floor | plus: rating_decimal | floor
+                                assign empty_icons = block.settings.rating-max | round | minus: full_icons
+                                if rating_decimal == 0.5
+                                  assign empty_icons = empty_icons | minus: 1
+                                endif
+      
+                                assign full_alt = block.settings.rating-icon-full.alt | default: "Full icon"
+                                assign empty_alt = block.setting.rating-icon-empty.alt | default: "Empty icon"
+                              %}
+      
+                              <div class="rating-icons" role="img" aria-label="{{ rating_aria_label }} - {{ block.settings.rating }} out of {{ block.settings.rating-max }}">
+                                {% for i in (1..full_icons) %}
+                                  <div class="rating-icons__icon" aria-hidden="true">
+                                    {% render 'responsive-image' with block.settings.rating-icon-full, alt: full_alt %}
+                                  </div>
+                                {% endfor %}
+      
+                                {% if block.settings.rating-icon-empty %}
+      
+                                  {% if rating_decimal == 0.5 %}
+                                    <div class="rating-icons__icon rating-icons__icon--half" aria-hidden="true">
+                                      <div class="rating-icons__image--full">
+                                        {% render 'responsive-image' with block.settings.rating-icon-full, alt: full_alt %}
+                                      </div>
+                                      <div class="rating-icons__image--empty">
+                                        {% render 'responsive-image' with block.settings.rating-icon-empty, alt: empty_alt %}
+                                      </div>
+                                    </div>
+                                  {% endif %}
+      
+                                  {% for i in (1..empty_icons) %}
+                                    <div class="rating-icons__icon" aria-hidden="true">
+                                      {% render 'responsive-image' with block.settings.rating-icon-empty, alt: empty_alt %}
+                                    </div>
+                                  {% endfor %}
+      
+                                {% endif %}                          
+                              </div>
+                            {% else %}
+                              <p>{{ block.settings.rating }} / {{ block.settings.rating-max }}</p>
+                            {% endif %}
+                          </div>
+                        {% endif %}
+
+                      {%- when 'image-offer' -%}
+                        <div class="{{ spacing_classes }} image-offer-container" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
+                          {% if block.settings.link != blank and block.settings.image != blank %}
+                            <a href="{{ block.settings.link }}" class="image-offer-container--is-link">
+                          {% endif %}
+
+                          {% if block.settings.image == blank %}
+                              {{ 'lifestyle-1' | placeholder_svg_tag: 'icon icon--placeholder' }}
+                          {% else %}
+                              {% capture alt %}{{ block.settings.image.alt | default: shop.name }}{% endcapture %}
+                              {% render 'responsive-image' with block.settings.image, alt: alt %}
+                          {% endif %}
+
+                          {% if block.settings.link != blank and block.settings.image != blank %}
+                            </a>
+                          {% endif %}
+                        </div>
+
+                      {%- when 'text-with-icon' -%}
+                        {% liquid
+                          if block.settings.custom_icon
+                            assign icon = block.settings.custom_icon
+                            assign custom_icon = true
+                          else
+                            assign icon = block.settings.icon
+                            assign custom_icon = false
+                          endif
+
+                          assign classes = spacing_classes
+                          if block.settings.margin_bottom == 0
+                            assign classes = classes | append: ' no_margin_bottom'
+                          endif
+                        %}
+
+                        {% capture styles %}
+                          style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px"
+                        {% endcapture %}
+
+                        {%- if icon != 'none' or  block.settings.text != blank -%}
+                          {% render 'text-with-icon' with icon: icon, 
+                            custom_icon: custom_icon, 
+                            text: block.settings.text, 
+                            link: block.settings.link, 
+                            borders: true, 
+                            block_attributes: block.shopify_attributes,
+                            classes: classes,
+                            attributes: styles
+                          %}
+                        {%- endif -%}
+
+                      {%- when 'stock-level-indicator' -%}
+                        <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px">
+                          {% render 'stock-level-indicator' with 
+                            block_attributes: block.shopify_attributes,
+                            stock_product: product,
+                            stock_variant: current_variant,
+                            stock_style: block.settings.stock-level-indicator-style,
+                            stock_bar_color: block.settings.bar-indicator-color,
+                            stock_indicator_animation: block.settings.stock_indicator_animation,
+                            stock_amt: block.settings.stock-range,
+                            stock_notice: block.settings.stock-level-notice,
+                            show_stock_count: block.settings.show-stock-count,
+                            in_stock_message: block.settings.in-stock-message,
+                            low_stock_message: block.settings.low-stock-message,
+                            out_of_stock_message: block.settings.out-of-stock-message
+                          %}
+                        </div>
+
+                      {%- when 'star_rating' -%}
+                        <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
+                          {% render 'reviews-star-rating' with
+                            rating_product: product,
+                            show_product_rating_if_no_reviews: block.settings.show_product_rating_if_no_reviews,
+                            show_rating_as: block.settings.show_rating_as,
+                            star_color: settings.star_rating_color,
+                            star_size: block.settings.star_size,
+                            no_reviews_label: block.settings.no_reviews_label,
+                            classes: spacing_classes
+                          %}
+                        </div>
+
+                    {%- endcase -%}
+                  {%- endfor -%}
+
+                  <div class="errors qty-error" v-if="hasErrors" v-html="hasErrors" v-cloak></div>
+
+                  {% endform %}
+
+                  {% if section.settings.show_out_of_stock_email %}
+                    {% render 'out-of-stock-form' %}
+                    <div class="shopify-disclaimer--hidden">{{ 'shopify.online_store.spam_detection.disclaimer_html' | t }}</div>
+                  {% endif %}
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </wetheme-product-form>
+  </div>
+
+  {% unless product == empty %}
+    <script type="application/json" class="product-json" id="ProductJson-{{ section.id }}">
+      {{ product | json }}
+    </script>
+  {% endunless %}
+</div>
+
+{%- for block in section.blocks -%}
+  {%- case block.type -%}
+    {%- when '@app' -%}
+      <div id="appInit" data-block-id="{{ block.id }}">
+        {% render block %}
+      </div>
+
+    {%- when 'image-offer' -%}
+      <style>
+        .image-offer-container--is-link:hover img {
+          border-color: {{ block.settings.hover_border_color }};
+        }
+      </style>
+
+  {%- endcase -%}
 {%- endfor -%}
 
 {% schema %}
@@ -2469,4 +2542,3 @@
   ]
 }
 {% endschema %}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
