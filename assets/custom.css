@@ -167,13 +167,21 @@
     margin-bottom: -50px; /* Adjust the value to reduce the bottom margin */
   }
 }
-/* Ensure the date picker has a higher z-index */
-.date-picker {
-  z-index: 9999; /* Adjust the value as needed */
-  position: relative; /* Ensure it respects z-index */
+/* Ensuring the date picker is on top */
+.date-picker, .date-picker-container {
+  position: absolute; /* Ensure it's positioned relative to the nearest positioned ancestor */
+  z-index: 9999; /* Make sure it's on top of other elements */
+  background: white; /* Ensure the background is visible */
+  border: 1px solid #ccc; /* Add a border for better visibility */
 }
 
-/* Ensure the container allows overflow */
+/* Ensuring the parent container allows overflow */
 .date-picker-container {
-  overflow: visible; /* Allows the date picker to be fully visible */
+  position: relative; /* Ensure the container is positioned */
+  overflow: visible; /* Allow the date picker to overflow */
+}
+
+/* Additional rule to handle any unexpected overflow issues */
+body {
+  overflow: visible !important; /* Ensure body overflow is visible (use with caution) */
 }
