@@ -167,16 +167,24 @@
     margin-bottom: -50px; /* Adjust the value to reduce the bottom margin */
   }
 }
-/* Ensuring the date picker is on top */
-.date-picker, .ui-datepicker, .pikaday, .flatpickr-calendar {
-  position: absolute; /* Ensure it's positioned relative to the nearest positioned ancestor */
-  z-index: 9999; /* Make sure it's on top of other elements */
-  background: white; /* Ensure the background is visible */
-  border: 1px solid #ccc; /* Add a border for better visibility */
+/* General styles to ensure the date picker is displayed correctly */
+.date-picker, .ui-datepicker, .flatpickr-calendar {
+  position: absolute;
+  z-index: 9999;
+  background: white;
+  border: 1px solid #ccc;
 }
 
 /* Ensuring the parent container allows overflow */
 .date-picker-container {
-  position: relative; /* Ensure the container is positioned */
-  overflow: visible; /* Allow the date picker to overflow */
+  position: relative;
+  overflow: visible;
+}
+
+/* Specific styles for desktop viewports */
+@media (min-width: 768px) {
+  .date-picker, .ui-datepicker, .flatpickr-calendar {
+    position: absolute;
+    z-index: 9999;
+  }
 }
