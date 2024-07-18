@@ -168,7 +168,7 @@
   }
 }
 /* Ensuring the date picker is on top */
-.date-picker, .date-picker-container {
+.date-picker, .ui-datepicker, .pikaday, .flatpickr-calendar {
   position: absolute; /* Ensure it's positioned relative to the nearest positioned ancestor */
   z-index: 9999; /* Make sure it's on top of other elements */
   background: white; /* Ensure the background is visible */
@@ -179,9 +179,4 @@
 .date-picker-container {
   position: relative; /* Ensure the container is positioned */
   overflow: visible; /* Allow the date picker to overflow */
-}
-
-/* Additional rule to handle any unexpected overflow issues */
-body {
-  overflow: visible !important; /* Ensure body overflow is visible (use with caution) */
 }
