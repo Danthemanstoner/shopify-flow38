@@ -100,133 +100,49 @@
       v-bind:locations-enabled="{{ locations_enabled }}"
       language-url="{{ localization.language.root_url }}"
     >
-    <div class="product-single-wrapper">
-      <div
-        class="grid product-single{% if section.settings.enable_sticky %} product-sticky-wrapper{% endif %}{% if options_block.settings.variant_style == 'dropdowns' %} variant-dropdown-enabled{% else %} variant-swatches-enabled{% endif %}"
-        data-section-id="{{ section.id }}"
-      >
-        <div class="grid__item {{ product_image_width }} context mobile--no-top-margin{% if section.settings.enable_sticky %} product-sticky{% endif %}">
-          {% render 'product-media', product: product, style: style, hide_out_of_stock_variants: options_block.settings.hide_out_of_stock_variants %}
-        </div>
-    
-        <div class="grid__item product-form-wrapper {{ product_description_width }}{% if section.settings.enable_sticky %} product-sticky{% endif %}">
-          <div>
-    
-            <!-- Assign category code and add JavaScript logic -->
-            {% assign category_code = product.metafields.custom.category_code %}
-    
-            <!-- Include jQuery and jQuery UI for the datepicker -->
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-            <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    
-            <!-- Datepicker Input -->
-            <input type="text" id="delivery_date" name="delivery_date" placeholder="Select Delivery Date">
-            <div id="delivery_cost"></div>
-            <div id="delivery_note"></div>
-            <div id="cart_total">Total: $0.00</div>
-    
-            <script>
-              var categoryCode = "{{ category_code }}";
-    
-              function calculateDeliveryCost(dateText) {
-                // Assuming you have a function to get these values
-                var postcode = '10200'; // Replace with dynamic value
-                var size = 'M'; // Replace with dynamic value
-                var order_time_hour = new Date().getHours();
-                var special_condition = null; // Replace with dynamic value if needed
-    
-                const basePrices = { "S": 130, "M": 155, "L": 210, "XL": 280 };
-                const alternativePrice = 200;
-                const deliveryZoneID = postcodeToZone[postcode];
-                const extraCharge = parseInt(extraCharges[deliveryZoneID], 10);
-    
-                let price = basePrices[size] + extraCharge;
-                if (special_condition === "alternative") {
-                  price = alternativePrice + extraCharge;
-                }
-    
-                let deliveryTimeNote = '';
-                if (7 <= order_time_hour && order_time_hour <= 17) {
-                  if (order_time_hour < 14) {
-                    deliveryTimeNote = 'Gift will arrive in 2 days';
-                  } else {
-                    deliveryTimeNote = 'Gift will arrive in 3 days';
-                  }
-                } else {
-                  if (order_time_hour < 6 || order_time_hour === 24) {
-                    deliveryTimeNote = 'Gift will arrive in 3 days';
-                  } else {
-                    deliveryTimeNote = 'Gift will arrive in 2 days';
-                  }
-                }
-    
-                if (special_condition === 'fast_delivery') {
-                  deliveryTimeNote = '2 HR Deliver';
-                }
-    
-                // Add category code logic here
-                if (categoryCode === 'CATEGORY_CODE_X') {
-                  // Apply specific logic for this category
-                }
-    
-                // Display the calculated cost and note
-                $('#delivery_cost').text(`Delivery Cost: ${price}`);
-                $('#delivery_note').text(deliveryTimeNote);
-                updateCartWithDeliveryCost(price);
-              }
-    
-              // Example mappings (replace with actual data)
-              const postcodeToZone = { '10200': '100101', /* Add other mappings */ };
-              const extraCharges = { '100101': '10075', /* Add other mappings */ };
-    
-              $(function() {
-                $("#delivery_date").datepicker({
-                  dateFormat: 'yy-mm-dd',
-                  minDate: 2,
-                  onSelect: function(dateText) {
-                    calculateDeliveryCost(dateText);
-                  }
-                });
-              });
-    
-              function updateCartWithDeliveryCost(price) {
-                const cartTotalElement = document.getElementById('cart_total');
-                const currentTotal = parseFloat(cartTotalElement.textContent.replace('Total: $', ''));
-                const newTotal = currentTotal + price;
-                cartTotalElement.textContent = `Total: $${newTotal.toFixed(2)}`;
-              }
-            </script>
-    
-            <div class="product-details-wrapper">
+      <div class="product-single-wrapper">
+        <div
+          class="grid product-single{% if section.settings.enable_sticky %} product-sticky-wrapper{% endif %}{% if options_block.settings.variant_style == 'dropdowns' %} variant-dropdown-enabled{% else %} variant-swatches-enabled{% endif %}"
+          data-section-id="{{ section.id }}"
+        >
+          <div class="grid__item {{ product_image_width }} context mobile--no-top-margin{% if section.settings.enable_sticky %} product-sticky{% endif %}">
+            {% render 'product-media', product: product, style: style, hide_out_of_stock_variants: options_block.settings.hide_out_of_stock_variants %}
+          </div>
+
+          <div class="grid__item product-form-wrapper {{ product_description_width }}{% if section.settings.enable_sticky %} product-sticky{% endif %}">
+
+            <div>
+
+              <div class="product-details-wrapper">
+
               <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="product-details--form-wrapper{% if product.available %} product-details--form-wrapper---in-stock{% else %} product-details--form-wrapper---out-of-stock{% endif %}">
                 <meta itemprop="priceCurrency" content="{{ shop.currency }}">
                 <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
                 <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
-    
+
                 <div class="form-vertical">
                   {% form 'product', product, id: "AddToCartForm" %}
-    
+
                   {% assign spacing_classes = 'product-form-block' %}
-    
+
                   {% if settings.enable_breadcrumbs %}
                     <div id="breadcrumbs">
                       {% render 'breadcrumb' %}
                     </div>
                   {% endif %}
-    
+
                   {%- for block in section.blocks -%}
                     {%- case block.type -%}
                       {%- when '@app' -%}
                         <div class="{{ spacing_classes }}" style="--custom-margin-bottom: {{ section.settings.app_margin_bottom }}px" id="shopify-block-{{ block.id }}" {{ block.shopify_attributes }}></div>
-    
+
                       {%- when 'complementary-products' -%}
                         <div class="complementary-products hidden {{ spacing_classes }}{% if block.settings.collapsible_tab %} collapsible{% if block.settings.margin_bottom == 0 %} no_margin_bottom{% endif %}{% endif %}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
                           {%- render 'complementary-products-block' with title: block.settings.title, products_limit: block.settings.products_limit, collapsible: block.settings.collapsible_tab, open_close_icon: block.settings.open_close_icon, custom_icon: block.settings.custom_icon, icon: block.settings.icon, id: block.id -%}
                         </div>
                         
                       {%- when 'cross-sells' -%}
-    
+
                         {% if block.settings.cross_sell_product_1.available or block.settings.cross_sell_product_2.available or block.settings.cross_sell_product_3.available %}
                           <div class="cross-sell {{ spacing_classes }}{% if block.settings.collapsible_tab %} collapsible{% if block.settings.margin_bottom == 0 %} no_margin_bottom{% endif %}{% endif %}" style="--custom-margin-bottom: {{ block.settings.margin_bottom }}px" {{ block.shopify_attributes }}>
                             {%- assign cross_sells_products = block.settings.cross_sell_product_1 | append: ',' | append: block.settings.cross_sell_product_2 | append: ',' | append: block.settings.cross_sell_product_3 | split: ',' | compact -%}
