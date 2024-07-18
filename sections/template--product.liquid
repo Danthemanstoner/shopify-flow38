@@ -696,6 +696,39 @@
   {%- endcase -%}
 {%- endfor -%}
 
+<!-- Include Swiper library if not already included -->
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Select the swiper container
+  const swiperContainer = document.querySelector('.swiper');
+
+  // Initialize Swiper
+  const swiper = new Swiper(swiperContainer, {
+    // Your swiper options here, if any
+  });
+
+  // Function to play video when the slide becomes active
+  const playVideoOnActiveSlide = () => {
+    const activeSlide = document.querySelector('.swiper-slide-active');
+    const videoButton = activeSlide.querySelector('button[aria-label="Play media"]');
+
+    if (videoButton) {
+      videoButton.click();
+    }
+  };
+
+  // Listen for the slide change event
+  swiper.on('slideChange', playVideoOnActiveSlide);
+
+  // Play video on the initial active slide
+  playVideoOnActiveSlide();
+});
+</script>
+
+
 {% schema %}
 {
   "name": "t:sections.template--product.name",
