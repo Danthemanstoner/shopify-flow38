@@ -706,7 +706,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Select the swiper container
   const swiperContainer = document.querySelector('.swiper-container');
-  
+
   if (!swiperContainer) {
     console.error('Swiper container not found');
     return;
@@ -715,20 +715,24 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize Swiper
   const swiper = new Swiper(swiperContainer, {
     // Your swiper options here, if any
+    loop: true,
+    autoplay: false, // Turn off Swiper autoplay
   });
 
-  // Function to play video when the slide becomes active
+  // Function to play video on the initial active slide or when the slide becomes active
   const playVideoOnActiveSlide = () => {
-    const activeSlide = document.querySelector('.swiper-slide-active');
-    console.log('Active slide:', activeSlide);
-    const videoButton = activeSlide.querySelector('button[data-media-id]');
+    setTimeout(() => { // Adding a delay to ensure the slide is fully rendered
+      const activeSlide = document.querySelector('.swiper-slide-active');
+      console.log('Active slide:', activeSlide);
+      const videoButton = activeSlide.querySelector('button[aria-label="Play media"]');
 
-    if (videoButton) {
-      console.log('Video button found:', videoButton);
-      videoButton.click();
-    } else {
-      console.error('Video button not found in active slide');
-    }
+      if (videoButton) {
+        console.log('Video button found:', videoButton);
+        videoButton.click();
+      } else {
+        console.error('Video button not found in active slide');
+      }
+    }, 500); // Adjust delay as needed
   };
 
   // Play video on the initial active slide
