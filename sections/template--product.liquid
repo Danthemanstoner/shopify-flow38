@@ -704,25 +704,12 @@
 document.addEventListener('DOMContentLoaded', function() {
   console.log('DOM fully loaded and parsed');
 
-  // Select the swiper container
-  const swiperContainer = document.querySelector('.swiper-container');
-  
-  if (!swiperContainer) {
-    console.error('Swiper container not found');
-    return;
-  }
-
   // Initialize Swiper
-  const swiper = new Swiper(swiperContainer, {
-    // Example Swiper options
-    loop: true,
-    autoplay: {
-      delay: 5000,
-    },
-    // Additional Swiper options here
+  const swiper = new Swiper('.swiper-container', {
+    // Your swiper options here, if any
   });
 
-  // Function to play video when the slide becomes active
+  // Function to play video on the initial active slide or when the slide becomes active
   const playVideoOnActiveSlide = () => {
     const activeSlide = document.querySelector('.swiper-slide-active');
     console.log('Active slide:', activeSlide);
@@ -736,11 +723,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
 
-  // Listen for the slide change event
-  swiper.on('slideChange', playVideoOnActiveSlide);
-
   // Play video on the initial active slide
   playVideoOnActiveSlide();
+
+  // Listen for the slide change event to play the video on active slide change
+  swiper.on('slideChange', playVideoOnActiveSlide);
 });
 </script>
 
