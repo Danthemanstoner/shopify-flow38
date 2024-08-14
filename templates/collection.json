@@ -164,12 +164,33 @@
         "height_6": "4",
         "block_alignment": "center"
       }
+    },
+    "video_video_hero_aVpUfB": {
+      "type": "video--video-hero",
+      "settings": {
+        "video": "shopify:\/\/files\/videos\/Gen-3 Alpha 2619724919, Make all the fruit a, Cropped - green_mach.mp4",
+        "url": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
+        "desktopHeight": "550",
+        "mobileHeight": "fullscreen",
+        "title": "Make a splash",
+        "subheading": "",
+        "textAlignment": "center",
+        "textShadow": true,
+        "heading--text-size": 50,
+        "subheading--text-size": 24,
+        "link": "",
+        "button_label": "",
+        "textColor": "#ffffff",
+        "button-text": "#ffffff",
+        "button-background": "#242424"
+      }
     }
   },
   "order": [
     "image-with-text-overlay",
     "collection-header-default",
     "product-grid",
-    "collage-builder"
+    "collage-builder",
+    "video_video_hero_aVpUfB"
   ]
 }
