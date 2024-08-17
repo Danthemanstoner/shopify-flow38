@@ -1,12 +1,21 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin language editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "general": {
-    "meta": {
-      "tags": "標記為 \"{{ tags }}\"",
-      "page": "第 {{ page }} 頁"
-    },
     "404": {
       "title": "404 頁面未找到",
       "subtext_html": "您請求的頁面不存在。"
+    },
+    "meta": {
+      "tags": "標記為 \"{{ tags }}\"",
+      "page": "第 {{ page }} 頁"
     },
     "continue_shopping": "繼續購物",
     "breadcrumbs": {
@@ -46,11 +55,11 @@
     },
     "onboarding": {
       "modal_title": "快完成了...",
-      "no_products_html": "您的首頁集合中沒有產品。此占位符將顯示，直到您<a href=\"/admin/collections?tutorial=Frontpage\">添加產品至此集合</a>。",
+      "no_products_html": "您的首頁集合中沒有產品。此占位符將顯示，直到您<a href=\"\/admin\/collections?tutorial=Frontpage\">添加產品至此集合<\/a>。",
       "add_product": "添加產品",
       "product_title": "產品名稱",
       "product_description": "此區域用於描述您的產品的詳細信息。向顧客介紹產品的外觀、質地和風格。添加關於顏色、使用的材料、尺寸和生產地的詳細資訊。",
-      "no_collections_html": "您沒有要在這裡展示的任何收藏。<a href=\"/admin/custom_collections\">添加一些收藏</a>以配合默認的首頁。",
+      "no_collections_html": "您沒有要在這裡展示的任何收藏。<a href=\"\/admin\/custom_collections\">添加一些收藏<\/a>以配合默認的首頁。",
       "add_collection": "添加收藏",
       "collection_title": "收藏名稱",
       "blog_title": "您的文章標題",
@@ -61,10 +70,10 @@
       "return_text": "返回"
     },
     "localization": {
-      "country_label": "國家/地區",
+      "country_label": "國家\/地區",
       "language_label": "語言",
       "update_language": "更新語言",
-      "update_country": "更新國家/地區"
+      "update_country": "更新國家\/地區"
     },
     "accessibility": {
       "back_to_top": {
@@ -165,9 +174,9 @@
       "see_more": "查看更多",
       "subtotal": "小計",
       "taxes_and_shipping_at_checkout": "稅金和運費將在結帳時計算",
-      "taxes_and_shipping_policy_at_checkout_html": "稅金和<a href=\"{{ link }}\">運費</a>將在結帳時計算",
+      "taxes_and_shipping_policy_at_checkout_html": "稅金和<a href=\"{{ link }}\">運費<\/a>將在結帳時計算",
       "taxes_included_but_shipping_at_checkout": "已包含稅金，運費將在結帳時計算",
-      "taxes_included_and_shipping_policy_html": "已包含稅金。運費將在<a href=\"{{ link }}\">結帳</a>時計算。",
+      "taxes_included_and_shipping_policy_html": "已包含稅金。運費將在<a href=\"{{ link }}\">結帳<\/a>時計算。",
       "update": "更新購物車",
       "checkout": "結帳",
       "empty": "您的購物車目前是空的。",
@@ -253,7 +262,7 @@
       "sort_by_label": "排序方式",
       "title": "收藏",
       "to": "至",
-      "use_fewer_filters_html": "使用更少的篩選或<a class=\"{{ class }}\" href=\"{{ link }}\">全部清除</a>"
+      "use_fewer_filters_html": "使用更少的篩選或<a class=\"{{ class }}\" href=\"{{ link }}\">全部清除<\/a>"
     },
     "events_calendar": {
       "tbc_text": "待定"
@@ -261,7 +270,7 @@
     "map": {
       "address_error": "尋找此地址時發生錯誤",
       "address_no_results": "此地址無結果",
-      "address_query_limit_html": "您已超出 Google API 使用量限制。請考慮升級為<a href=\"https://developers.google.com/maps/premium/usage-limits\">付費方案</a>。",
+      "address_query_limit_html": "您已超出 Google API 使用量限制。請考慮升級為<a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">付費方案<\/a>。",
       "auth_error_html": "驗證 Google 地圖 API 金鑰時發生問題。"
     },
     "shop_the_look": {
@@ -310,7 +319,7 @@
       "city": "城市",
       "country": "國家",
       "province": "省份",
-      "zip": "郵政/郵遞區號",
+      "zip": "郵政\/郵遞區號",
       "phone": "電話",
       "set_default": "設為預設地址",
       "add": "新增地址",
@@ -395,7 +404,7 @@
       "add_product": "添加產品",
       "product_title": "產品名稱",
       "product_vendor": "供應商",
-      "no_collections_html": "您沒有要在這裡展示的任何收藏。<a href=\"/admin/custom_collections\">添加一些收藏</a>以配合默認的首頁。",
+      "no_collections_html": "您沒有要在這裡展示的任何收藏。<a href=\"\/admin\/custom_collections\">添加一些收藏<\/a>以配合默認的首頁。",
       "add_collection": "添加收藏",
       "collection_title": "收藏名稱",
       "no_content": "此部分目前不包含任何內容。使用側欄添加內容到此部分。"
@@ -467,13 +476,13 @@
       "category": "分類",
       "type": "類型",
       "include_taxes": "已含稅。",
-      "shipping_policy_html": "<a href=\"{{ link }}\">運費</a>將在結帳時計算。",
+      "shipping_policy_html": "<a href=\"{{ link }}\">運費<\/a>將在結帳時計算。",
       "quote": "報價",
       "in_stock": "現貨",
       "low_stock": "庫存不足",
       "out_of_stock": "缺貨",
       "stock_left": "庫存剩餘",
-      "out_of_stock_html": "單擊<a href=\"#\"><strong>這裡</strong></a>以在{{ product }}可用時通過電子郵件通知您。",
+      "out_of_stock_html": "單擊<a href=\"#\"><strong>這裡<\/strong><\/a>以在{{ product }}可用時通過電子郵件通知您。",
       "wrong_email": "請提供有效的電子郵件地址。",
       "out_of_stock_success": "謝謝！我們將在此產品可用時通知您！",
       "read_more_html": "閱讀更多",
@@ -482,7 +491,7 @@
       "view_in_space_label": "在您的空間中查看，將項目加載到擴增實境視窗中",
       "video_thumbnail_alt": "在畫廊查看器中加載並播放視頻，{{ imageAlt }}",
       "model_thumbnail_alt": "在畫廊查看器中加載3D模型，{{ imageAlt }}",
-      "reviews_rating": "評論評分 - {{ value }} / {{ max }} 顆星",
+      "reviews_rating": "評論評分 - {{ value }} \/ {{ max }} 顆星",
       "reviews": "評論",
       "review": "評論",
       "no_reviews": "無評論"
@@ -526,9 +535,54 @@
       "find_out": "了解我們何時開放",
       "password": "輸入密碼進入商店",
       "store_owner": "您是商店擁有者嗎？",
-      "store_owner_html": "<a href=\"/admin\">在這裡登入</a>",
+      "store_owner_html": "<a href=\"\/admin\">在這裡登入<\/a>",
       "continue": "繼續",
-      "powered_by_html": "本商店將由 <a href=\"http://www.shopify.com\">Shopify</a> 提供技術支持"
+      "powered_by_html": "本商店將由 <a href=\"http:\/\/www.shopify.com\">Shopify<\/a> 提供技術支持"
+    }
+  },
+  "pagefly": {
+    "products": {
+      "product": {
+        "regular_price": "Regular price",
+        "sold_out": "Sold out",
+        "unavailable": "Unavailable",
+        "on_sale": "Sale",
+        "quantity": "Quantity",
+        "add_to_cart": "Add to cart",
+        "back_to_collection": "Back to {{ title }}",
+        "view_details": "View details"
+      }
+    },
+    "article": {
+      "tags": "Tags:",
+      "all_topics": "All topics",
+      "by_author": "by {{ author }}",
+      "posted_in": "Posted in",
+      "read_more": "Read more",
+      "back_to_blog": "Back to {{ title }}"
+    },
+    "comments": {
+      "title": "Leave a comment",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "post": "Post comment",
+      "moderated": "Please note, comments must be approved before they are published",
+      "success_moderated": "Your comment was posted successfully. We will publish it in a little while, as our blog is moderated.",
+      "success": "Your comment was posted successfully! Thank you!",
+      "comments_with_count": {
+        "one": "{{ count }} comment",
+        "other": "{{ count }} comments"
+      }
+    },
+    "password_page": {
+      "login_form_message": "Enter store using password:",
+      "login_form_password_label": "Password",
+      "login_form_password_placeholder": "Your password",
+      "login_form_submit": "Enter",
+      "signup_form_email_label": "Email",
+      "signup_form_success": "We will send you an email right before we open!",
+      "password_link": "Enter using password"
     }
   }
 }
