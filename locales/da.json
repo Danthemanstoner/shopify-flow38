@@ -1,12 +1,21 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin language editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "general": {
-    "meta": {
-      "tags": "Mærket som \"{{ tags }}\"",
-      "page": "Side {{ page }}"
-    },
     "404": {
       "title": "404 Side ikke fundet",
       "subtext_html": "Den side, du har anmodet om, eksisterer ikke."
+    },
+    "meta": {
+      "tags": "Mærket som \"{{ tags }}\"",
+      "page": "Side {{ page }}"
     },
     "continue_shopping": "Fortsæt med at shoppe",
     "breadcrumbs": {
@@ -46,11 +55,11 @@
     },
     "onboarding": {
       "modal_title": "Næsten færdig...",
-      "no_products_html": "Du har ingen produkter i din startsidekollektion. Dette er en pladsholder, indtil du <a href=\"/admin/collections?tutorial=Frontpage\">tilføjer et produkt til denne kollektion</a>.",
+      "no_products_html": "Du har ingen produkter i din startsidekollektion. Dette er en pladsholder, indtil du <a href=\"\/admin\/collections?tutorial=Frontpage\">tilføjer et produkt til denne kollektion<\/a>.",
       "add_product": "Tilføj et produkt",
       "product_title": "Produkttitel",
       "product_description": "Dette område bruges til at beskrive dine produktdetaljer. Fortæl kunderne om udseendet, følelsen og stilen af dit produkt. Tilføj detaljer om farve, anvendte materialer, størrelse og hvor det er lavet.",
-      "no_collections_html": "Du har ingen kollektioner at vise her. <a href=\"/admin/custom_collections\">Tilføj nogle kollektioner</a> til din standardstartside.",
+      "no_collections_html": "Du har ingen kollektioner at vise her. <a href=\"\/admin\/custom_collections\">Tilføj nogle kollektioner<\/a> til din standardstartside.",
       "add_collection": "Tilføj en kollektion",
       "collection_title": "Kollektionstitel",
       "blog_title": "Titel på dit indlæg",
@@ -61,10 +70,10 @@
       "return_text": "Tilbage"
     },
     "localization": {
-      "country_label": "Land/region",
+      "country_label": "Land\/region",
       "language_label": "Sprog",
       "update_language": "Opdater sprog",
-      "update_country": "Opdater land/region"
+      "update_country": "Opdater land\/region"
     },
     "accessibility": {
       "back_to_top": {
@@ -165,9 +174,9 @@
       "see_more": "Se mere",
       "subtotal": "Subtotal",
       "taxes_and_shipping_at_checkout": "Skatter og forsendelse beregnes ved betaling",
-      "taxes_and_shipping_policy_at_checkout_html": "Skatter og <a href=\"{{ link }}\">forsendelse</a> beregnes ved betaling",
+      "taxes_and_shipping_policy_at_checkout_html": "Skatter og <a href=\"{{ link }}\">forsendelse<\/a> beregnes ved betaling",
       "taxes_included_but_shipping_at_checkout": "Skat inkluderet, og forsendelse beregnes ved betaling",
-      "taxes_included_and_shipping_policy_html": "Skat inkluderet. <a href=\"{{ link }}\">Forsendelse</a> beregnes ved betaling.",
+      "taxes_included_and_shipping_policy_html": "Skat inkluderet. <a href=\"{{ link }}\">Forsendelse<\/a> beregnes ved betaling.",
       "update": "Opdater kurv",
       "checkout": "Til betaling",
       "empty": "Din kurv er i øjeblikket tom.",
@@ -253,7 +262,7 @@
       "sort_by_label": "Sorter efter",
       "title": "Kollektion",
       "to": "Til",
-      "use_fewer_filters_html": "Brug færre filtre eller <a class=\"{{ class }}\" href=\"{{ link }}\">ryd alt</a>"
+      "use_fewer_filters_html": "Brug færre filtre eller <a class=\"{{ class }}\" href=\"{{ link }}\">ryd alt<\/a>"
     },
     "events_calendar": {
       "tbc_text": "Afsendes senere"
@@ -261,7 +270,7 @@
     "map": {
       "address_error": "Der opstod en fejl under forsøg på at finde adressen",
       "address_no_results": "Ingen resultater for den adresse",
-      "address_query_limit_html": "Du har overskredet Googles API-brugerbegrænsning. Overvej at opgradere til et <a href=\"https://developers.google.com/maps/premium/usage-limits\">Premium-abonnement</a>.",
+      "address_query_limit_html": "Du har overskredet Googles API-brugerbegrænsning. Overvej at opgradere til et <a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">Premium-abonnement<\/a>.",
       "auth_error_html": "Der opstod en fejl under bekræftelse af din Google Maps API-nøgle."
     },
     "shop_the_look": {
@@ -395,7 +404,7 @@
       "add_product": "Tilføj et produkt",
       "product_title": "Produkttitel",
       "product_vendor": "Leverandør",
-      "no_collections_html": "Du har ingen kollektioner at vise her. <a href=\"/admin/custom_collections\">Tilføj nogle kollektioner</a> til standardforsiden.",
+      "no_collections_html": "Du har ingen kollektioner at vise her. <a href=\"\/admin\/custom_collections\">Tilføj nogle kollektioner<\/a> til standardforsiden.",
       "add_collection": "Tilføj en kollektion",
       "collection_title": "Kollektionstitel",
       "no_content": "Denne sektion indeholder i øjeblikket ingen indhold. Tilføj indhold til denne sektion ved hjælp af sidepanelet."
@@ -467,13 +476,13 @@
       "category": "Kategori",
       "type": "Type",
       "include_taxes": "Inkl. skat.",
-      "shipping_policy_html": "<a href=\"{{ link }}\">Fragt</a> beregnes ved kassen.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Fragt<\/a> beregnes ved kassen.",
       "quote": "Citat",
       "in_stock": "På lager",
       "low_stock": "Lavt lager",
       "out_of_stock": "Ikke på lager",
       "stock_left": "tilbage",
-      "out_of_stock_html": "Klik <a href=\"#\"><strong>her</strong></a> for at få besked pr. e-mail, når {{ product }} bliver tilgængelig.",
+      "out_of_stock_html": "Klik <a href=\"#\"><strong>her<\/strong><\/a> for at få besked pr. e-mail, når {{ product }} bliver tilgængelig.",
       "wrong_email": "Indtast venligst en gyldig e-mail-adresse.",
       "out_of_stock_success": "Tak! Vi giver dig besked, når dette produkt bliver tilgængeligt!",
       "read_more_html": "Læs mere",
@@ -526,9 +535,54 @@
       "find_out": "Find ud af, når vi åbner",
       "password": "Indtast butikken med adgangskode",
       "store_owner": "Er du butiksejeren?",
-      "store_owner_html": "<a href=\"/admin\">Log ind her</a>",
+      "store_owner_html": "<a href=\"\/admin\">Log ind her<\/a>",
       "continue": "Fortsæt",
-      "powered_by_html": "Denne butik vil blive drevet af <a href=\"http://www.shopify.com\">Shopify</a>"
+      "powered_by_html": "Denne butik vil blive drevet af <a href=\"http:\/\/www.shopify.com\">Shopify<\/a>"
+    }
+  },
+  "pagefly": {
+    "products": {
+      "product": {
+        "regular_price": "Regular price",
+        "sold_out": "Sold out",
+        "unavailable": "Unavailable",
+        "on_sale": "Sale",
+        "quantity": "Quantity",
+        "add_to_cart": "Add to cart",
+        "back_to_collection": "Back to {{ title }}",
+        "view_details": "View details"
+      }
+    },
+    "article": {
+      "tags": "Tags:",
+      "all_topics": "All topics",
+      "by_author": "by {{ author }}",
+      "posted_in": "Posted in",
+      "read_more": "Read more",
+      "back_to_blog": "Back to {{ title }}"
+    },
+    "comments": {
+      "title": "Leave a comment",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "post": "Post comment",
+      "moderated": "Please note, comments must be approved before they are published",
+      "success_moderated": "Your comment was posted successfully. We will publish it in a little while, as our blog is moderated.",
+      "success": "Your comment was posted successfully! Thank you!",
+      "comments_with_count": {
+        "one": "{{ count }} comment",
+        "other": "{{ count }} comments"
+      }
+    },
+    "password_page": {
+      "login_form_message": "Enter store using password:",
+      "login_form_password_label": "Password",
+      "login_form_password_placeholder": "Your password",
+      "login_form_submit": "Enter",
+      "signup_form_email_label": "Email",
+      "signup_form_success": "We will send you an email right before we open!",
+      "password_link": "Enter using password"
     }
   }
 }

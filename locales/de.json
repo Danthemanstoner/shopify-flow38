@@ -1,12 +1,21 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin language editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "general": {
-    "meta": {
-      "tags": "Gekennzeichnet als \"{{ tags }}\"",
-      "page": "Seite {{ page }}"
-    },
     "404": {
       "title": "404 Seite nicht gefunden",
       "subtext_html": "Die angeforderte Seite existiert nicht."
+    },
+    "meta": {
+      "tags": "Gekennzeichnet als \"{{ tags }}\"",
+      "page": "Seite {{ page }}"
     },
     "continue_shopping": "Einkauf fortsetzen",
     "breadcrumbs": {
@@ -46,11 +55,11 @@
     },
     "onboarding": {
       "modal_title": "Fast geschafft...",
-      "no_products_html": "Sie haben keine Produkte in Ihrer Startseite-Sammlung. Dieser Platzhalter wird angezeigt, bis Sie <a href=\"/admin/collections?tutorial=Frontpage\">ein Produkt zu dieser Sammlung hinzufügen</a>.",
+      "no_products_html": "Sie haben keine Produkte in Ihrer Startseite-Sammlung. Dieser Platzhalter wird angezeigt, bis Sie <a href=\"\/admin\/collections?tutorial=Frontpage\">ein Produkt zu dieser Sammlung hinzufügen<\/a>.",
       "add_product": "Produkt hinzufügen",
       "product_title": "Produkttitel",
       "product_description": "Dieser Bereich dient dazu, die Details Ihres Produkts zu beschreiben. Informieren Sie Kunden über das Aussehen, das Gefühl und den Stil Ihres Produkts. Fügen Sie Details zur Farbe, den verwendeten Materialien, den Größen und dem Herstellungsort hinzu.",
-      "no_collections_html": "Sie haben keine Sammlungen, die hier angezeigt werden sollen. <a href=\"/admin/custom_collections\">Fügen Sie einige Sammlungen hinzu</a>, um sie zusammen mit der Standard-Startseite anzuzeigen.",
+      "no_collections_html": "Sie haben keine Sammlungen, die hier angezeigt werden sollen. <a href=\"\/admin\/custom_collections\">Fügen Sie einige Sammlungen hinzu<\/a>, um sie zusammen mit der Standard-Startseite anzuzeigen.",
       "add_collection": "Sammlung hinzufügen",
       "collection_title": "Sammlungstitel",
       "blog_title": "Titel Ihres Beitrags",
@@ -61,10 +70,10 @@
       "return_text": "Zurück"
     },
     "localization": {
-      "country_label": "Land/Region",
+      "country_label": "Land\/Region",
       "language_label": "Sprache",
       "update_language": "Sprache aktualisieren",
-      "update_country": "Land/Region aktualisieren"
+      "update_country": "Land\/Region aktualisieren"
     },
     "accessibility": {
       "back_to_top": {
@@ -165,9 +174,9 @@
       "see_more": "Mehr anzeigen",
       "subtotal": "Zwischensumme",
       "taxes_and_shipping_at_checkout": "Steuern und Versandkosten werden an der Kasse berechnet",
-      "taxes_and_shipping_policy_at_checkout_html": "Steuern und <a href=\"{{ link }}\">Versand</a> werden an der Kasse berechnet",
+      "taxes_and_shipping_policy_at_checkout_html": "Steuern und <a href=\"{{ link }}\">Versand<\/a> werden an der Kasse berechnet",
       "taxes_included_but_shipping_at_checkout": "Steuer inklusive und Versandkosten werden an der Kasse berechnet",
-      "taxes_included_and_shipping_policy_html": "Steuer inklusive. <a href=\"{{ link }}\">Versand</a> wird an der Kasse berechnet.",
+      "taxes_included_and_shipping_policy_html": "Steuer inklusive. <a href=\"{{ link }}\">Versand<\/a> wird an der Kasse berechnet.",
       "update": "Warenkorb aktualisieren",
       "checkout": "Zur Kasse",
       "empty": "Ihr Warenkorb ist derzeit leer.",
@@ -253,7 +262,7 @@
       "sort_by_label": "Sortieren nach",
       "title": "Kollektion",
       "to": "Bis",
-      "use_fewer_filters_html": "Verwenden Sie weniger Filter oder <a class=\"{{ class }}\" href=\"{{ link }}\">löschen Sie alle</a>"
+      "use_fewer_filters_html": "Verwenden Sie weniger Filter oder <a class=\"{{ class }}\" href=\"{{ link }}\">löschen Sie alle<\/a>"
     },
     "events_calendar": {
       "tbc_text": "Noch nicht bekannt"
@@ -261,7 +270,7 @@
     "map": {
       "address_error": "Kann die Adresse nicht finden",
       "address_no_results": "Keine Ergebnisse für diese Adresse",
-      "address_query_limit_html": "Du hast die Nutzungsgrenze der Google-API überschritten. Du solltest über ein Upgrade auf einen <a href=\"https://developers.google.com/maps/premium/usage-limits\">Premium-Plan</a> nachdenken.",
+      "address_query_limit_html": "Du hast die Nutzungsgrenze der Google-API überschritten. Du solltest über ein Upgrade auf einen <a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">Premium-Plan<\/a> nachdenken.",
       "auth_error_html": "Es gab ein Problem bei Google Maps API Konto zu authentifizieren."
     },
     "shop_the_look": {
@@ -395,7 +404,7 @@
       "add_product": "Produkt hinzufügen",
       "product_title": "Produktname",
       "product_vendor": "Hersteller",
-      "no_collections_html": "Sie haben keine Sammlungen zum Anzeigen. <a href=\"/admin/custom_collections\">Fügen Sie einige Sammlungen hinzu</a>, um sie mit der Standard-Startseite zu verwenden.",
+      "no_collections_html": "Sie haben keine Sammlungen zum Anzeigen. <a href=\"\/admin\/custom_collections\">Fügen Sie einige Sammlungen hinzu<\/a>, um sie mit der Standard-Startseite zu verwenden.",
       "add_collection": "Sammlung hinzufügen",
       "collection_title": "Sammlungstitel",
       "no_content": "Dieser Abschnitt enthält derzeit keinen Inhalt. Fügen Sie Inhalte zu diesem Abschnitt über die Seitenleiste hinzu."
@@ -467,13 +476,13 @@
       "category": "Kategorie",
       "type": "Typ",
       "include_taxes": "Inklusive Steuern.",
-      "shipping_policy_html": "<a href=\"{{ link }}\">Versand</a> wird beim Checkout berechnet.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Versand<\/a> wird beim Checkout berechnet.",
       "quote": "Zitat",
       "in_stock": "Auf Lager",
       "low_stock": "Niedriger Bestand",
       "out_of_stock": "Ausverkauft",
       "stock_left": "übrig",
-      "out_of_stock_html": "Klicken Sie <a href=\"#\"><strong>hier</strong></a>, um per E-Mail benachrichtigt zu werden, wenn {{ product }} wieder verfügbar ist.",
+      "out_of_stock_html": "Klicken Sie <a href=\"#\"><strong>hier<\/strong><\/a>, um per E-Mail benachrichtigt zu werden, wenn {{ product }} wieder verfügbar ist.",
       "wrong_email": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
       "out_of_stock_success": "Danke! Wir benachrichtigen Sie, wenn dieses Produkt wieder verfügbar ist!",
       "read_more_html": "Mehr lesen",
@@ -526,9 +535,54 @@
       "find_out": "Erfahren Sie, wann wir öffnen",
       "password": "Geschäft mit Passwort betreten",
       "store_owner": "Sind Sie der Geschäftsinhaber?",
-      "store_owner_html": "<a href=\"/admin\">Hier einloggen</a>",
+      "store_owner_html": "<a href=\"\/admin\">Hier einloggen<\/a>",
       "continue": "Fortfahren",
-      "powered_by_html": "Dieses Geschäft wird von <a href=\"http://www.shopify.com\">Shopify</a> betrieben"
+      "powered_by_html": "Dieses Geschäft wird von <a href=\"http:\/\/www.shopify.com\">Shopify<\/a> betrieben"
+    }
+  },
+  "pagefly": {
+    "products": {
+      "product": {
+        "regular_price": "Regular price",
+        "sold_out": "Sold out",
+        "unavailable": "Unavailable",
+        "on_sale": "Sale",
+        "quantity": "Quantity",
+        "add_to_cart": "Add to cart",
+        "back_to_collection": "Back to {{ title }}",
+        "view_details": "View details"
+      }
+    },
+    "article": {
+      "tags": "Tags:",
+      "all_topics": "All topics",
+      "by_author": "by {{ author }}",
+      "posted_in": "Posted in",
+      "read_more": "Read more",
+      "back_to_blog": "Back to {{ title }}"
+    },
+    "comments": {
+      "title": "Leave a comment",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "post": "Post comment",
+      "moderated": "Please note, comments must be approved before they are published",
+      "success_moderated": "Your comment was posted successfully. We will publish it in a little while, as our blog is moderated.",
+      "success": "Your comment was posted successfully! Thank you!",
+      "comments_with_count": {
+        "one": "{{ count }} comment",
+        "other": "{{ count }} comments"
+      }
+    },
+    "password_page": {
+      "login_form_message": "Enter store using password:",
+      "login_form_password_label": "Password",
+      "login_form_password_placeholder": "Your password",
+      "login_form_submit": "Enter",
+      "signup_form_email_label": "Email",
+      "signup_form_success": "We will send you an email right before we open!",
+      "password_link": "Enter using password"
     }
   }
 }
