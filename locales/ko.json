@@ -1,12 +1,21 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin language editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "general": {
-    "meta": {
-      "tags": "태그된 \"{{ tags }}\"",
-      "page": "페이지 {{ page }}"
-    },
     "404": {
       "title": "404 페이지를 찾을 수 없음",
       "subtext_html": "요청하신 페이지가 존재하지 않습니다."
+    },
+    "meta": {
+      "tags": "태그된 \"{{ tags }}\"",
+      "page": "페이지 {{ page }}"
     },
     "continue_shopping": "쇼핑 계속하기",
     "breadcrumbs": {
@@ -46,11 +55,11 @@
     },
     "onboarding": {
       "modal_title": "거의 다 왔어요...",
-      "no_products_html": "홈 페이지 컬렉션에 제품이 없습니다. 이 자리에 나타나는 것은 <a href=\"/admin/collections?tutorial=Frontpage\">이 컬렉션에 제품을 추가</a>할 때까지 유지됩니다.",
+      "no_products_html": "홈 페이지 컬렉션에 제품이 없습니다. 이 자리에 나타나는 것은 <a href=\"\/admin\/collections?tutorial=Frontpage\">이 컬렉션에 제품을 추가<\/a>할 때까지 유지됩니다.",
       "add_product": "제품 추가",
       "product_title": "제품 제목",
       "product_description": "이 영역은 제품 세부 정보를 설명하는 데 사용됩니다. 고객에게 제품의 외관, 느낌 및 스타일에 대해 알려주세요. 색상, 사용된 재료, 사이즈 및 제조지에 대한 세부 정보를 추가하세요.",
-      "no_collections_html": "여기에 표시할 컬렉션이 없습니다. 기본 홈 페이지와 함께 사용할 컬렉션을 <a href=\"/admin/custom_collections\">추가</a>하세요.",
+      "no_collections_html": "여기에 표시할 컬렉션이 없습니다. 기본 홈 페이지와 함께 사용할 컬렉션을 <a href=\"\/admin\/custom_collections\">추가<\/a>하세요.",
       "add_collection": "컬렉션 추가",
       "collection_title": "컬렉션 제목",
       "blog_title": "게시물 제목",
@@ -61,10 +70,10 @@
       "return_text": "뒤로"
     },
     "localization": {
-      "country_label": "국가/지역",
+      "country_label": "국가\/지역",
       "language_label": "언어",
       "update_language": "언어 업데이트",
-      "update_country": "국가/지역 업데이트"
+      "update_country": "국가\/지역 업데이트"
     },
     "accessibility": {
       "back_to_top": {
@@ -165,9 +174,9 @@
       "see_more": "더 보기",
       "subtotal": "소계",
       "taxes_and_shipping_at_checkout": "결제 시 세금 및 배송비가 계산됩니다",
-      "taxes_and_shipping_policy_at_checkout_html": "결제 시 세금 및 <a href=\"{{ link }}\">배송</a>이 계산됩니다",
+      "taxes_and_shipping_policy_at_checkout_html": "결제 시 세금 및 <a href=\"{{ link }}\">배송<\/a>이 계산됩니다",
       "taxes_included_but_shipping_at_checkout": "세금 포함 및 결제 시 배송비가 계산됩니다",
-      "taxes_included_and_shipping_policy_html": "세금 포함. 결제 시 <a href=\"{{ link }}\">배송</a>이 계산됩니다.",
+      "taxes_included_and_shipping_policy_html": "세금 포함. 결제 시 <a href=\"{{ link }}\">배송<\/a>이 계산됩니다.",
       "update": "장바구니 업데이트",
       "checkout": "결제하기",
       "empty": "장바구니가 현재 비어 있습니다.",
@@ -253,7 +262,7 @@
       "sort_by_label": "정렬 기준",
       "title": "컬렉션",
       "to": "까지",
-      "use_fewer_filters_html": "더 적은 필터 사용하거나 <a class=\"{{ class }}\" href=\"{{ link }}\">모두 지우세요</a>"
+      "use_fewer_filters_html": "더 적은 필터 사용하거나 <a class=\"{{ class }}\" href=\"{{ link }}\">모두 지우세요<\/a>"
     },
     "events_calendar": {
       "tbc_text": "미정"
@@ -261,7 +270,7 @@
     "map": {
       "address_error": "주소 찾기 오류",
       "address_no_results": "주소 검색 결과 없음",
-      "address_query_limit_html": "Google API 사용 제한을 초과하였습니다. <a href=\"https://developers.google.com/maps/premium/usage-limits\">프리미엄 플랜</a> 으로 업그레이드를 고려하십시오.",
+      "address_query_limit_html": "Google API 사용 제한을 초과하였습니다. <a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">프리미엄 플랜<\/a> 으로 업그레이드를 고려하십시오.",
       "auth_error_html": "Google 지도 API 키를 인증하는 중 문제가 발생했습니다."
     },
     "shop_the_look": {
@@ -395,7 +404,7 @@
       "add_product": "제품 추가",
       "product_title": "제품 제목",
       "product_vendor": "공급업체",
-      "no_collections_html": "여기에 표시할 컬렉션이 없습니다. 기본 Frontpage와 함께 사용할 컬렉션을 <a href=\"/admin/custom_collections\">추가</a>하세요.",
+      "no_collections_html": "여기에 표시할 컬렉션이 없습니다. 기본 Frontpage와 함께 사용할 컬렉션을 <a href=\"\/admin\/custom_collections\">추가<\/a>하세요.",
       "add_collection": "컬렉션 추가",
       "collection_title": "컬렉션 제목",
       "no_content": "이 섹션에는 현재 콘텐츠가 포함되어 있지 않습니다. 사이드바를 사용하여 이 섹션에 콘텐츠를 추가하세요."
@@ -467,13 +476,13 @@
       "category": "카테고리",
       "type": "유형",
       "include_taxes": "세금 포함.",
-      "shipping_policy_html": "<a href=\"{{ link }}\">배송</a> 결제 시 계산됩니다.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">배송<\/a> 결제 시 계산됩니다.",
       "quote": "견적",
       "in_stock": "재고 있음",
       "low_stock": "재고 부족",
       "out_of_stock": "품절",
       "stock_left": "남음",
-      "out_of_stock_html": "{{ product }}이(가) 사용 가능해지면 이메일로 알림을 받으려면 <a href=\"#\"><strong>여기</strong></a>를 클릭하세요.",
+      "out_of_stock_html": "{{ product }}이(가) 사용 가능해지면 이메일로 알림을 받으려면 <a href=\"#\"><strong>여기<\/strong><\/a>를 클릭하세요.",
       "wrong_email": "유효한 이메일 주소를 입력하세요.",
       "out_of_stock_success": "감사합니다! 이 제품을 사용 가능해질 때 알림드리겠습니다!",
       "read_more_html": "더 읽기",
@@ -482,7 +491,7 @@
       "view_in_space_label": "자신의 공간에서 보기, 증강 현실 창에 항목 로드",
       "video_thumbnail_alt": "갤러리 뷰어에서 비디오 로드 및 재생, {{ imageAlt }}",
       "model_thumbnail_alt": "갤러리 뷰어에 3D 모델 로드, {{ imageAlt }}",
-      "reviews_rating": "리뷰 평점 - {{ value }} / {{ max }} 별",
+      "reviews_rating": "리뷰 평점 - {{ value }} \/ {{ max }} 별",
       "reviews": "리뷰",
       "review": "리뷰",
       "no_reviews": "리뷰 없음"
@@ -526,9 +535,54 @@
       "find_out": "오픈 시기 확인하기",
       "password": "비밀번호를 입력하여 상점에 액세스하세요",
       "store_owner": "상점 소유자이신가요?",
-      "store_owner_html": "<a href=\"/admin\">여기에서 로그인하세요</a>",
+      "store_owner_html": "<a href=\"\/admin\">여기에서 로그인하세요<\/a>",
       "continue": "계속하기",
-      "powered_by_html": "이 상점은 <a href=\"http://www.shopify.com\">Shopify</a>으로 제공됩니다."
+      "powered_by_html": "이 상점은 <a href=\"http:\/\/www.shopify.com\">Shopify<\/a>으로 제공됩니다."
+    }
+  },
+  "pagefly": {
+    "products": {
+      "product": {
+        "regular_price": "Regular price",
+        "sold_out": "Sold out",
+        "unavailable": "Unavailable",
+        "on_sale": "Sale",
+        "quantity": "Quantity",
+        "add_to_cart": "Add to cart",
+        "back_to_collection": "Back to {{ title }}",
+        "view_details": "View details"
+      }
+    },
+    "article": {
+      "tags": "Tags:",
+      "all_topics": "All topics",
+      "by_author": "by {{ author }}",
+      "posted_in": "Posted in",
+      "read_more": "Read more",
+      "back_to_blog": "Back to {{ title }}"
+    },
+    "comments": {
+      "title": "Leave a comment",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "post": "Post comment",
+      "moderated": "Please note, comments must be approved before they are published",
+      "success_moderated": "Your comment was posted successfully. We will publish it in a little while, as our blog is moderated.",
+      "success": "Your comment was posted successfully! Thank you!",
+      "comments_with_count": {
+        "one": "{{ count }} comment",
+        "other": "{{ count }} comments"
+      }
+    },
+    "password_page": {
+      "login_form_message": "Enter store using password:",
+      "login_form_password_label": "Password",
+      "login_form_password_placeholder": "Your password",
+      "login_form_submit": "Enter",
+      "signup_form_email_label": "Email",
+      "signup_form_success": "We will send you an email right before we open!",
+      "password_link": "Enter using password"
     }
   }
 }
