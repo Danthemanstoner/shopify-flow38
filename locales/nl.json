@@ -1,12 +1,21 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin language editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "general": {
-    "meta": {
-      "tags": "Getagd met \"{{ tags }}\"",
-      "page": "Pagina {{ page }}"
-    },
     "404": {
       "title": "404 Pagina niet gevonden",
       "subtext_html": "De pagina die je hebt opgevraagd, bestaat niet."
+    },
+    "meta": {
+      "tags": "Getagd met \"{{ tags }}\"",
+      "page": "Pagina {{ page }}"
     },
     "continue_shopping": "Doorgaan met winkelen",
     "breadcrumbs": {
@@ -46,11 +55,11 @@
     },
     "onboarding": {
       "modal_title": "Bijna daar...",
-      "no_products_html": "Je hebt geen producten in je startpagina-collectie. Deze tijdelijke tekst verschijnt totdat je <a href=\"/admin/collecties?handle=frontpage\">een product aan deze collectie toevoegt</a>.",
+      "no_products_html": "Je hebt geen producten in je startpagina-collectie. Deze tijdelijke tekst verschijnt totdat je <a href=\"\/admin\/collecties?handle=frontpage\">een product aan deze collectie toevoegt<\/a>.",
       "add_product": "Product toevoegen",
       "product_title": "Producttitel",
       "product_description": "Dit gedeelte wordt gebruikt om de details van je product te beschrijven. Vertel klanten over het uiterlijk, het gevoel en de stijl van je product. Voeg details toe over kleur, gebruikte materialen, maatvoering en de herkomst ervan.",
-      "no_collections_html": "Je hebt hier geen collecties om te tonen. <a href=\"/admin/aangepaste-collecties\">Voeg enkele collecties toe</a> om samen met de standaard startpagina te gebruiken.",
+      "no_collections_html": "Je hebt hier geen collecties om te tonen. <a href=\"\/admin\/aangepaste-collecties\">Voeg enkele collecties toe<\/a> om samen met de standaard startpagina te gebruiken.",
       "add_collection": "Collectie toevoegen",
       "collection_title": "Collectietitel",
       "blog_title": "Titel van je bericht",
@@ -61,10 +70,10 @@
       "return_text": "Terug"
     },
     "localization": {
-      "country_label": "Land/regio",
+      "country_label": "Land\/regio",
       "language_label": "Taal",
       "update_language": "Taal bijwerken",
-      "update_country": "Land/regio bijwerken"
+      "update_country": "Land\/regio bijwerken"
     },
     "accessibility": {
       "back_to_top": {
@@ -165,9 +174,9 @@
       "see_more": "Zie meer",
       "subtotal": "Subtotaal",
       "taxes_and_shipping_at_checkout": "Belastingen en verzendkosten worden berekend bij het afrekenen",
-      "taxes_and_shipping_policy_at_checkout_html": "Belastingen en <a href=\"{{ link }}\">verzending</a> worden berekend bij het afrekenen",
+      "taxes_and_shipping_policy_at_checkout_html": "Belastingen en <a href=\"{{ link }}\">verzending<\/a> worden berekend bij het afrekenen",
       "taxes_included_but_shipping_at_checkout": "Belasting inbegrepen en verzendkosten worden berekend bij het afrekenen",
-      "taxes_included_and_shipping_policy_html": "Belasting inbegrepen. <a href=\"{{ link }}\">Verzending</a> wordt berekend bij het afrekenen.",
+      "taxes_included_and_shipping_policy_html": "Belasting inbegrepen. <a href=\"{{ link }}\">Verzending<\/a> wordt berekend bij het afrekenen.",
       "update": "Winkelwagen bijwerken",
       "checkout": "Afrekenen",
       "empty": "Je winkelwagen is momenteel leeg.",
@@ -253,7 +262,7 @@
       "sort_by_label": "Sorteren op",
       "title": "Collectie",
       "to": "Tot",
-      "use_fewer_filters_html": "Gebruik minder filters of <a class=\"{{ class }}\" href=\"{{ link }}\">wis alles</a>"
+      "use_fewer_filters_html": "Gebruik minder filters of <a class=\"{{ class }}\" href=\"{{ link }}\">wis alles<\/a>"
     },
     "events_calendar": {
       "tbc_text": "Nog te bepalen"
@@ -261,7 +270,7 @@
     "map": {
       "address_error": "Fout bij het opzoeken van dat adres",
       "address_no_results": "Geen resultaten voor dat adres",
-      "address_query_limit_html": "Je hebt de gebruikslimiet van de Google API overschreden. Overweeg een upgrade naar een <a href=\"https://developers.google.com/maps/premium/usage-limits\">Premium-pakket</a>.",
+      "address_query_limit_html": "Je hebt de gebruikslimiet van de Google API overschreden. Overweeg een upgrade naar een <a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">Premium-pakket<\/a>.",
       "auth_error_html": "Er is een probleem opgetreden bij het verifiëren van je Google Maps API-sleutel."
     },
     "shop_the_look": {
@@ -395,7 +404,7 @@
       "add_product": "Product toevoegen",
       "product_title": "Producttitel",
       "product_vendor": "Leverancier",
-      "no_collections_html": "Je hebt hier geen collecties om te tonen. <a href=\"/admin/aangepaste-collecties\">Voeg enkele collecties toe</a> om samen te gaan met de standaard Frontpage.",
+      "no_collections_html": "Je hebt hier geen collecties om te tonen. <a href=\"\/admin\/aangepaste-collecties\">Voeg enkele collecties toe<\/a> om samen te gaan met de standaard Frontpage.",
       "add_collection": "Collectie toevoegen",
       "collection_title": "Collectietitel",
       "no_content": "Dit gedeelte bevat momenteel geen inhoud. Voeg inhoud toe aan dit gedeelte via de zijbalk."
@@ -467,13 +476,13 @@
       "category": "Categorie",
       "type": "Type",
       "include_taxes": "Inclusief belastingen.",
-      "shipping_policy_html": "<a href=\"{{ link }}\">Verzending</a> wordt berekend bij het afrekenen.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Verzending<\/a> wordt berekend bij het afrekenen.",
       "quote": "Citaat",
       "in_stock": "Op voorraad",
       "low_stock": "Beperkte voorraad",
       "out_of_stock": "Uitverkocht",
       "stock_left": "over",
-      "out_of_stock_html": "Klik <a href=\"#\"><strong>hier</strong></a> om per e-mail op de hoogte te worden gebracht wanneer {{ product }} weer beschikbaar is.",
+      "out_of_stock_html": "Klik <a href=\"#\"><strong>hier<\/strong><\/a> om per e-mail op de hoogte te worden gebracht wanneer {{ product }} weer beschikbaar is.",
       "wrong_email": "Vul een geldig e-mailadres in.",
       "out_of_stock_success": "Bedankt! We zullen je op de hoogte stellen wanneer dit product weer beschikbaar is!",
       "read_more_html": "Lees meer",
@@ -526,9 +535,54 @@
       "find_out": "Ontdek wanneer we openen",
       "password": "Toegang tot de winkel met een wachtwoord",
       "store_owner": "Ben jij de winkelbeheerder?",
-      "store_owner_html": "<a href=\"/admin\">Log hier in</a>",
+      "store_owner_html": "<a href=\"\/admin\">Log hier in<\/a>",
       "continue": "Doorgaan",
-      "powered_by_html": "Deze winkel wordt aangedreven door <a href=\"http://www.shopify.com\">Shopify</a>"
+      "powered_by_html": "Deze winkel wordt aangedreven door <a href=\"http:\/\/www.shopify.com\">Shopify<\/a>"
+    }
+  },
+  "pagefly": {
+    "products": {
+      "product": {
+        "regular_price": "Regular price",
+        "sold_out": "Sold out",
+        "unavailable": "Unavailable",
+        "on_sale": "Sale",
+        "quantity": "Quantity",
+        "add_to_cart": "Add to cart",
+        "back_to_collection": "Back to {{ title }}",
+        "view_details": "View details"
+      }
+    },
+    "article": {
+      "tags": "Tags:",
+      "all_topics": "All topics",
+      "by_author": "by {{ author }}",
+      "posted_in": "Posted in",
+      "read_more": "Read more",
+      "back_to_blog": "Back to {{ title }}"
+    },
+    "comments": {
+      "title": "Leave a comment",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "post": "Post comment",
+      "moderated": "Please note, comments must be approved before they are published",
+      "success_moderated": "Your comment was posted successfully. We will publish it in a little while, as our blog is moderated.",
+      "success": "Your comment was posted successfully! Thank you!",
+      "comments_with_count": {
+        "one": "{{ count }} comment",
+        "other": "{{ count }} comments"
+      }
+    },
+    "password_page": {
+      "login_form_message": "Enter store using password:",
+      "login_form_password_label": "Password",
+      "login_form_password_placeholder": "Your password",
+      "login_form_submit": "Enter",
+      "signup_form_email_label": "Email",
+      "signup_form_success": "We will send you an email right before we open!",
+      "password_link": "Enter using password"
     }
   }
 }

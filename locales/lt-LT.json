@@ -1,12 +1,21 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin language editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "general": {
-    "meta": {
-      "tags": "Pažymėta „{{ tags }}“",
-      "page": "Puslapis {{ page }}"
-    },
     "404": {
       "title": "404 Puslapis nerastas",
       "subtext_html": "Jūsų užklaustas puslapis neegzistuoja."
+    },
+    "meta": {
+      "tags": "Pažymėta „{{ tags }}“",
+      "page": "Puslapis {{ page }}"
     },
     "continue_shopping": "Tęsti apsipirkimą",
     "breadcrumbs": {
@@ -46,11 +55,11 @@
     },
     "onboarding": {
       "modal_title": "Beveik baigta...",
-      "no_products_html": "Jūs neturite produktų savo pagrindinėje puslapio kolekcijoje. Ši vieta laikinai atsiras, kol <a href=\"/admin/collections?tutorial=Frontpage\">pridėsite produktą į šią kolekciją</a>.",
+      "no_products_html": "Jūs neturite produktų savo pagrindinėje puslapio kolekcijoje. Ši vieta laikinai atsiras, kol <a href=\"\/admin\/collections?tutorial=Frontpage\">pridėsite produktą į šią kolekciją<\/a>.",
       "add_product": "Pridėti produktą",
       "product_title": "Produkto pavadinimas",
       "product_description": "Ši vieta skirta produkto detalioms aprašyti. Praneškite klientams apie produkto išvaizdą, stilių ir charakteristikas. Pridėkite informacijos apie spalvą, naudojamus medžiagas, dydį ir gamybos vietą.",
-      "no_collections_html": "Jūs neturite jokių kolekcijų šiame puslapyje. <a href=\"/admin/custom_collections\">Pridėkite kolekcijų</a>, kad galėtumėte pateikti pagrindinėje puslapyje.",
+      "no_collections_html": "Jūs neturite jokių kolekcijų šiame puslapyje. <a href=\"\/admin\/custom_collections\">Pridėkite kolekcijų<\/a>, kad galėtumėte pateikti pagrindinėje puslapyje.",
       "add_collection": "Pridėti kolekciją",
       "collection_title": "Kolekcijos pavadinimas",
       "blog_title": "Jūsų straipsnio pavadinimas",
@@ -61,10 +70,10 @@
       "return_text": "Atgal"
     },
     "localization": {
-      "country_label": "Šalis/regionas",
+      "country_label": "Šalis\/regionas",
       "language_label": "Kalba",
       "update_language": "Atnaujinti kalbą",
-      "update_country": "Atnaujinti šalį/regioną"
+      "update_country": "Atnaujinti šalį\/regioną"
     },
     "accessibility": {
       "back_to_top": {
@@ -165,9 +174,9 @@
       "see_more": "Peržiūrėti daugiau",
       "subtotal": "Viso",
       "taxes_and_shipping_at_checkout": "Mokesčiai ir pristatymas apskaičiuojami pirkimo metu",
-      "taxes_and_shipping_policy_at_checkout_html": "Mokesčiai ir <a href=\"{{ link }}\">pristatymas</a> apskaičiuojami pirkimo metu",
+      "taxes_and_shipping_policy_at_checkout_html": "Mokesčiai ir <a href=\"{{ link }}\">pristatymas<\/a> apskaičiuojami pirkimo metu",
       "taxes_included_but_shipping_at_checkout": "Mokestis įskaičiuotas, pristatymas apskaičiuojamas pirkimo metu",
-      "taxes_included_and_shipping_policy_html": "Mokestis įskaičiuotas. <a href=\"{{ link }}\">Pristatymas</a> apskaičiuojamas pirkimo metu.",
+      "taxes_included_and_shipping_policy_html": "Mokestis įskaičiuotas. <a href=\"{{ link }}\">Pristatymas<\/a> apskaičiuojamas pirkimo metu.",
       "update": "Atnaujinti krepšelį",
       "checkout": "Baigti apsipirkimą",
       "empty": "Jūsų krepšelis šiuo metu tuščias.",
@@ -253,7 +262,7 @@
       "sort_by_label": "Rūšiuoti pagal",
       "title": "Kolekcija",
       "to": "Iki",
-      "use_fewer_filters_html": "Naudokite mažiau filtrų arba <a class=\"{{ class }}\" href=\"{{ link }}\">išvalykite viską</a>"
+      "use_fewer_filters_html": "Naudokite mažiau filtrų arba <a class=\"{{ class }}\" href=\"{{ link }}\">išvalykite viską<\/a>"
     },
     "events_calendar": {
       "tbc_text": "VČB (Vėliau bus nurodyta)"
@@ -261,7 +270,7 @@
     "map": {
       "address_error": "Ieškant šio adreso įvyko klaida",
       "address_no_results": "Nerasta šio adreso rezultatų",
-      "address_query_limit_html": "Viršijote „Google“ API naudojimo apribojimą. Apsvarstykite galimybę naujovinti į <a href=\"https://developers.google.com/maps/premium/usage-limits\">planą „Premium“</a>.",
+      "address_query_limit_html": "Viršijote „Google“ API naudojimo apribojimą. Apsvarstykite galimybę naujovinti į <a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">planą „Premium“<\/a>.",
       "auth_error_html": "Patvirtinant „Google“ žemėlapių API raktą įvyko klaida."
     },
     "shop_the_look": {
@@ -310,7 +319,7 @@
       "city": "Miestas",
       "country": "Šalis",
       "province": "Apskritis",
-      "zip": "Pašto / Zip kodas",
+      "zip": "Pašto \/ Zip kodas",
       "phone": "Telefonas",
       "set_default": "Nustatyti kaip numatytąjį adresą",
       "add": "Pridėti adresą",
@@ -395,7 +404,7 @@
       "add_product": "Pridėti produktą",
       "product_title": "Prekės pavadinimas",
       "product_vendor": "Tiekėjas",
-      "no_collections_html": "Neturite jokių kolekcijų rodyti čia. <a href=\"/admin/custom_collections\">Pridėkite keletą kolekcijų</a>, kad suderintumėte su pagrindine kolekcija.",
+      "no_collections_html": "Neturite jokių kolekcijų rodyti čia. <a href=\"\/admin\/custom_collections\">Pridėkite keletą kolekcijų<\/a>, kad suderintumėte su pagrindine kolekcija.",
       "add_collection": "Pridėti kolekciją",
       "collection_title": "Kolekcijos pavadinimas",
       "no_content": "Šis skyrius šiuo metu neturi jokios turinio. Pridėkite turinį į šį skyrių naudodami šoninį meniu."
@@ -467,13 +476,13 @@
       "category": "Kategorija",
       "type": "Tipas",
       "include_taxes": "Mokestis įtrauktas.",
-      "shipping_policy_html": "<a href=\"{{ link }}\">Pristatymas</a> skaičiuojamas apmokėjimo metu.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Pristatymas<\/a> skaičiuojamas apmokėjimo metu.",
       "quote": "Citata",
       "in_stock": "Turime sandėlyje",
       "low_stock": "Mažai liko",
       "out_of_stock": "Nėra sandėlyje",
       "stock_left": "liko",
-      "out_of_stock_html": "Spustelėkite <a href=\"#\"><strong>čia</strong></a>, kad gautumėte pranešimą el. paštu, kai {{ product }} taptų prieinamas.",
+      "out_of_stock_html": "Spustelėkite <a href=\"#\"><strong>čia<\/strong><\/a>, kad gautumėte pranešimą el. paštu, kai {{ product }} taptų prieinamas.",
       "wrong_email": "Pateikite galiojantį el. pašto adresą.",
       "out_of_stock_success": "Dėkojame! Pranešime jums, kai šis produktas taps prieinamas!",
       "read_more_html": "Skaityti daugiau",
@@ -526,9 +535,54 @@
       "find_out": "Sužinokite, kai atsidarysime",
       "password": "Įveskite parduotuvę naudodami slaptažodį",
       "store_owner": "Ar jūs esate parduotuvės savininkas?",
-      "store_owner_html": "<a href=\"/admin\">Prisijunkite čia</a>",
+      "store_owner_html": "<a href=\"\/admin\">Prisijunkite čia<\/a>",
       "continue": "Toliau",
-      "powered_by_html": "Ši parduotuvė veiks naudojant <a href=\"http://www.shopify.com\">Shopify</a>"
+      "powered_by_html": "Ši parduotuvė veiks naudojant <a href=\"http:\/\/www.shopify.com\">Shopify<\/a>"
+    }
+  },
+  "pagefly": {
+    "products": {
+      "product": {
+        "regular_price": "Regular price",
+        "sold_out": "Sold out",
+        "unavailable": "Unavailable",
+        "on_sale": "Sale",
+        "quantity": "Quantity",
+        "add_to_cart": "Add to cart",
+        "back_to_collection": "Back to {{ title }}",
+        "view_details": "View details"
+      }
+    },
+    "article": {
+      "tags": "Tags:",
+      "all_topics": "All topics",
+      "by_author": "by {{ author }}",
+      "posted_in": "Posted in",
+      "read_more": "Read more",
+      "back_to_blog": "Back to {{ title }}"
+    },
+    "comments": {
+      "title": "Leave a comment",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "post": "Post comment",
+      "moderated": "Please note, comments must be approved before they are published",
+      "success_moderated": "Your comment was posted successfully. We will publish it in a little while, as our blog is moderated.",
+      "success": "Your comment was posted successfully! Thank you!",
+      "comments_with_count": {
+        "one": "{{ count }} comment",
+        "other": "{{ count }} comments"
+      }
+    },
+    "password_page": {
+      "login_form_message": "Enter store using password:",
+      "login_form_password_label": "Password",
+      "login_form_password_placeholder": "Your password",
+      "login_form_submit": "Enter",
+      "signup_form_email_label": "Email",
+      "signup_form_success": "We will send you an email right before we open!",
+      "password_link": "Enter using password"
     }
   }
 }

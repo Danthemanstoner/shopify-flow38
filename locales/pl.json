@@ -1,12 +1,21 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin language editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "general": {
-    "meta": {
-      "tags": "Oznaczone jako \"{{ tags }}\"",
-      "page": "Strona {{ page }}"
-    },
     "404": {
       "title": "404 Strona nie znaleziona",
       "subtext_html": "Strona, którą chciałeś odwiedzić, nie istnieje."
+    },
+    "meta": {
+      "tags": "Oznaczone jako \"{{ tags }}\"",
+      "page": "Strona {{ page }}"
     },
     "continue_shopping": "Kontynuuj zakupy",
     "breadcrumbs": {
@@ -46,11 +55,11 @@
     },
     "onboarding": {
       "modal_title": "Już prawie...",
-      "no_products_html": "Nie masz jeszcze żadnych produktów w kolekcji na stronie głównej. To zastąpienie będzie widoczne, dopóki nie <a href=\"/admin/collections?tutorial=Frontpage\">dodasz produktu do tej kolekcji</a>.",
+      "no_products_html": "Nie masz jeszcze żadnych produktów w kolekcji na stronie głównej. To zastąpienie będzie widoczne, dopóki nie <a href=\"\/admin\/collections?tutorial=Frontpage\">dodasz produktu do tej kolekcji<\/a>.",
       "add_product": "Dodaj produkt",
       "product_title": "Tytuł produktu",
       "product_description": "To miejsce służy do opisania szczegółów produktu. Powiedz klientom o wyglądzie, materiale, rozmiarze i miejscu produkcji produktu. Dodaj informacje o kolorze, użytych materiałach, rozmiarze i miejscu produkcji.",
-      "no_collections_html": "Nie masz jeszcze żadnych kolekcji do wyświetlenia. <a href=\"/admin/custom_collections\">Dodaj kilka kolekcji</a> do domyślnej strony głównej.",
+      "no_collections_html": "Nie masz jeszcze żadnych kolekcji do wyświetlenia. <a href=\"\/admin\/custom_collections\">Dodaj kilka kolekcji<\/a> do domyślnej strony głównej.",
       "add_collection": "Dodaj kolekcję",
       "collection_title": "Tytuł kolekcji",
       "blog_title": "Tytuł twojego wpisu",
@@ -61,10 +70,10 @@
       "return_text": "Powrót"
     },
     "localization": {
-      "country_label": "Kraj/region",
+      "country_label": "Kraj\/region",
       "language_label": "Język",
       "update_language": "Aktualizuj język",
-      "update_country": "Aktualizuj kraj/region"
+      "update_country": "Aktualizuj kraj\/region"
     },
     "accessibility": {
       "back_to_top": {
@@ -165,9 +174,9 @@
       "see_more": "Zobacz więcej",
       "subtotal": "Razem",
       "taxes_and_shipping_at_checkout": "Podatki i dostawa obliczane przy kasie",
-      "taxes_and_shipping_policy_at_checkout_html": "Podatki i <a href=\"{{ link }}\">dostawa</a> obliczane przy kasie",
+      "taxes_and_shipping_policy_at_checkout_html": "Podatki i <a href=\"{{ link }}\">dostawa<\/a> obliczane przy kasie",
       "taxes_included_but_shipping_at_checkout": "Podatek zawarty i dostawa obliczana przy kasie",
-      "taxes_included_and_shipping_policy_html": "Podatek zawarty. <a href=\"{{ link }}\">Dostawa</a> obliczana przy kasie.",
+      "taxes_included_and_shipping_policy_html": "Podatek zawarty. <a href=\"{{ link }}\">Dostawa<\/a> obliczana przy kasie.",
       "update": "Aktualizuj koszyk",
       "checkout": "Przejdź do kasy",
       "empty": "Twój koszyk jest obecnie pusty.",
@@ -253,7 +262,7 @@
       "sort_by_label": "Sortuj według",
       "title": "Kolekcja",
       "to": "Do",
-      "use_fewer_filters_html": "Użyj mniej filtrów lub <a class=\"{{ class }}\" href=\"{{ link }}\">wyczyść wszystko</a>"
+      "use_fewer_filters_html": "Użyj mniej filtrów lub <a class=\"{{ class }}\" href=\"{{ link }}\">wyczyść wszystko<\/a>"
     },
     "events_calendar": {
       "tbc_text": "TBC (do potwierdzenia)"
@@ -261,7 +270,7 @@
     "map": {
       "address_error": "Błąd podczas wyszukiwania tego adresu",
       "address_no_results": "Brak wyników dla tego adresu",
-      "address_query_limit_html": "Przekroczono limit używania interfejsu API Google. Rozważ przejście do <a href=\"https://developers.google.com/maps/premium/usage-limits\">Planu Premium</a>.",
+      "address_query_limit_html": "Przekroczono limit używania interfejsu API Google. Rozważ przejście do <a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">Planu Premium<\/a>.",
       "auth_error_html": "Wystąpił problem z uwierzytelnianiem klucza API Google Maps."
     },
     "shop_the_look": {
@@ -395,7 +404,7 @@
       "add_product": "Dodaj produkt",
       "product_title": "Tytuł produktu",
       "product_vendor": "Dostawca",
-      "no_collections_html": "Nie masz jeszcze żadnych kolekcji do wyświetlenia. <a href=\"/admin/custom_collections\">Dodaj kilka kolekcji</a> do domyślnej strony głównej.",
+      "no_collections_html": "Nie masz jeszcze żadnych kolekcji do wyświetlenia. <a href=\"\/admin\/custom_collections\">Dodaj kilka kolekcji<\/a> do domyślnej strony głównej.",
       "add_collection": "Dodaj kolekcję",
       "collection_title": "Tytuł kolekcji",
       "no_content": "Ta sekcja obecnie nie zawiera żadnych treści. Dodaj treść do tej sekcji, korzystając z panelu bocznego."
@@ -467,13 +476,13 @@
       "category": "Kategoria",
       "type": "Typ",
       "include_taxes": "Podatek wliczony.",
-      "shipping_policy_html": "<a href=\"{{ link }}\">Dostawa</a> obliczana przy kasie.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Dostawa<\/a> obliczana przy kasie.",
       "quote": "Cytat",
       "in_stock": "Dostępny",
       "low_stock": "Niski stan",
       "out_of_stock": "Niedostępny",
       "stock_left": "pozostało",
-      "out_of_stock_html": "Kliknij <a href=\"#\"><strong>tutaj</strong></a>, aby otrzymać powiadomienie e-mailem, gdy {{ product }} będzie dostępny.",
+      "out_of_stock_html": "Kliknij <a href=\"#\"><strong>tutaj<\/strong><\/a>, aby otrzymać powiadomienie e-mailem, gdy {{ product }} będzie dostępny.",
       "wrong_email": "Podaj prawidłowy adres e-mail.",
       "out_of_stock_success": "Dzięki! Poinformujemy Cię, gdy ten produkt będzie dostępny!",
       "read_more_html": "Czytaj więcej",
@@ -526,9 +535,54 @@
       "find_out": "Dowiedz się, kiedy otworzymy",
       "password": "Wprowadź sklep za pomocą hasła",
       "store_owner": "Jesteś właścicielem sklepu?",
-      "store_owner_html": "<a href=\"/admin\">Zaloguj się tutaj</a>",
+      "store_owner_html": "<a href=\"\/admin\">Zaloguj się tutaj<\/a>",
       "continue": "Kontynuuj",
-      "powered_by_html": "Ten sklep będzie zasilany przez <a href=\"http://www.shopify.com\">Shopify</a>"
+      "powered_by_html": "Ten sklep będzie zasilany przez <a href=\"http:\/\/www.shopify.com\">Shopify<\/a>"
+    }
+  },
+  "pagefly": {
+    "products": {
+      "product": {
+        "regular_price": "Regular price",
+        "sold_out": "Sold out",
+        "unavailable": "Unavailable",
+        "on_sale": "Sale",
+        "quantity": "Quantity",
+        "add_to_cart": "Add to cart",
+        "back_to_collection": "Back to {{ title }}",
+        "view_details": "View details"
+      }
+    },
+    "article": {
+      "tags": "Tags:",
+      "all_topics": "All topics",
+      "by_author": "by {{ author }}",
+      "posted_in": "Posted in",
+      "read_more": "Read more",
+      "back_to_blog": "Back to {{ title }}"
+    },
+    "comments": {
+      "title": "Leave a comment",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "post": "Post comment",
+      "moderated": "Please note, comments must be approved before they are published",
+      "success_moderated": "Your comment was posted successfully. We will publish it in a little while, as our blog is moderated.",
+      "success": "Your comment was posted successfully! Thank you!",
+      "comments_with_count": {
+        "one": "{{ count }} comment",
+        "other": "{{ count }} comments"
+      }
+    },
+    "password_page": {
+      "login_form_message": "Enter store using password:",
+      "login_form_password_label": "Password",
+      "login_form_password_placeholder": "Your password",
+      "login_form_submit": "Enter",
+      "signup_form_email_label": "Email",
+      "signup_form_success": "We will send you an email right before we open!",
+      "password_link": "Enter using password"
     }
   }
 }
