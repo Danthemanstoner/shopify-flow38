@@ -1,12 +1,21 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin language editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "general": {
-    "meta": {
-      "tags": "Označené \"{{ tags }}\"",
-      "page": "Strana {{ page }}"
-    },
     "404": {
       "title": "404 Stránka nenalezena",
       "subtext_html": "Požadovaná stránka neexistuje."
+    },
+    "meta": {
+      "tags": "Označené \"{{ tags }}\"",
+      "page": "Strana {{ page }}"
     },
     "continue_shopping": "Pokračovať v nákupe",
     "breadcrumbs": {
@@ -46,11 +55,11 @@
     },
     "onboarding": {
       "modal_title": "Už takmer...",
-      "no_products_html": "Na úvodnej stránke nemáte žiadne produkty. Tento zástupný text sa zobrazí, kým <a href=\"/admin/collections?tutorial=Frontpage\">pridáte produkt do tejto kolekcie</a>.",
+      "no_products_html": "Na úvodnej stránke nemáte žiadne produkty. Tento zástupný text sa zobrazí, kým <a href=\"\/admin\/collections?tutorial=Frontpage\">pridáte produkt do tejto kolekcie<\/a>.",
       "add_product": "Pridať produkt",
       "product_title": "Názov produktu",
       "product_description": "Táto oblasť slúži na popis detailov vášho produktu. Povedzte zákazníkom o vzhľade, materiáloch, veľkosti a pôvode produktu. Pridajte informácie o farbe, materiáloch, veľkosti a mieste výroby.",
-      "no_collections_html": "Tu nie sú žiadne kolekcie na zobrazenie. <a href=\"/admin/custom_collections\">Pridajte niektoré kolekcie</a> k predvolenej úvodnej stránke.",
+      "no_collections_html": "Tu nie sú žiadne kolekcie na zobrazenie. <a href=\"\/admin\/custom_collections\">Pridajte niektoré kolekcie<\/a> k predvolenej úvodnej stránke.",
       "add_collection": "Pridať kolekciu",
       "collection_title": "Názov kolekcie",
       "blog_title": "Názov vášho príspevku",
@@ -61,10 +70,10 @@
       "return_text": "Späť"
     },
     "localization": {
-      "country_label": "Krajina/region",
+      "country_label": "Krajina\/region",
       "language_label": "Jazyk",
       "update_language": "Aktualizovať jazyk",
-      "update_country": "Aktualizovať krajinu/region"
+      "update_country": "Aktualizovať krajinu\/region"
     },
     "accessibility": {
       "back_to_top": {
@@ -165,9 +174,9 @@
       "see_more": "Zobraziť viac",
       "subtotal": "Medzisúčet",
       "taxes_and_shipping_at_checkout": "Daň a doprava sa vypočítavajú pri pokladni",
-      "taxes_and_shipping_policy_at_checkout_html": "Daň a <a href=\"{{ link }}\">doprava</a> sa vypočítavajú pri pokladni",
+      "taxes_and_shipping_policy_at_checkout_html": "Daň a <a href=\"{{ link }}\">doprava<\/a> sa vypočítavajú pri pokladni",
       "taxes_included_but_shipping_at_checkout": "Daň je zahrnutá a doprava sa vypočítava pri pokladni",
-      "taxes_included_and_shipping_policy_html": "Daň je zahrnutá. <a href=\"{{ link }}\">Doprava</a> sa vypočítava pri pokladni.",
+      "taxes_included_and_shipping_policy_html": "Daň je zahrnutá. <a href=\"{{ link }}\">Doprava<\/a> sa vypočítava pri pokladni.",
       "update": "Aktualizovať košík",
       "checkout": "Pokladňa",
       "empty": "Váš košík je prázdny.",
@@ -253,7 +262,7 @@
       "sort_by_label": "Zoradiť podľa",
       "title": "Kolekcia",
       "to": "Do",
-      "use_fewer_filters_html": "Použite menej filtrov alebo <a class=\"{{ class }}\" href=\"{{ link }}\">zrušte všetko</a>"
+      "use_fewer_filters_html": "Použite menej filtrov alebo <a class=\"{{ class }}\" href=\"{{ link }}\">zrušte všetko<\/a>"
     },
     "events_calendar": {
       "tbc_text": "Na stanovenie"
@@ -261,7 +270,7 @@
     "map": {
       "address_error": "Pri vyhľadávaní tejto adresy sa vyskytla chyba",
       "address_no_results": "Pre túto adresu sa nenašli žiadne výsledky",
-      "address_query_limit_html": "Prekročili ste limit používania rozhrania Google API. Zvážte inováciu na <a href=\"https://developers.google.com/maps/premium/usage-limits\">prémiový plán</a>.",
+      "address_query_limit_html": "Prekročili ste limit používania rozhrania Google API. Zvážte inováciu na <a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">prémiový plán<\/a>.",
       "auth_error_html": "Pri overovaní kľúča rozhrania API Máp Google sa vyskytol problém."
     },
     "shop_the_look": {
@@ -395,7 +404,7 @@
       "add_product": "Pridať produkt",
       "product_title": "Názov produktu",
       "product_vendor": "Dodávateľ",
-      "no_collections_html": "Nemáte žiadne kolekcie na zobrazenie. <a href=\"/admin/custom_collections\">Pridajte nejaké kolekcie</a>, ktoré sa budú zobrazovať na úvodnej stránke.",
+      "no_collections_html": "Nemáte žiadne kolekcie na zobrazenie. <a href=\"\/admin\/custom_collections\">Pridajte nejaké kolekcie<\/a>, ktoré sa budú zobrazovať na úvodnej stránke.",
       "add_collection": "Pridať kolekciu",
       "collection_title": "Názov kolekcie",
       "no_content": "Táto sekcia momentálne neobsahuje žiadny obsah. Pridajte obsah do tejto sekcie pomocou bočného panela."
@@ -467,13 +476,13 @@
       "category": "Kategória",
       "type": "Typ",
       "include_taxes": "Daň je zahrnutá.",
-      "shipping_policy_html": "<a href=\"{{ link }}\">Poštovné</a> vypočítané pri pokladni.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Poštovné<\/a> vypočítané pri pokladni.",
       "quote": "Citát",
       "in_stock": "Na sklade",
       "low_stock": "Obmedzené množstvo",
       "out_of_stock": "Nedostupné",
       "stock_left": "kusov na sklade",
-      "out_of_stock_html": "Kliknite <a href=\"#\"><strong>sem</strong></a>, aby vás upozornili e-mailom, keď bude produkt {{ product }} k dispozícii.",
+      "out_of_stock_html": "Kliknite <a href=\"#\"><strong>sem<\/strong><\/a>, aby vás upozornili e-mailom, keď bude produkt {{ product }} k dispozícii.",
       "wrong_email": "Prosím, poskytnite platnú e-mailovú adresu.",
       "out_of_stock_success": "Ďakujeme! Budeme vás informovať, keď bude tento produkt k dispozícii!",
       "read_more_html": "Čítať viac",
@@ -526,9 +535,54 @@
       "find_out": "Zistite, keď otvoríme",
       "password": "Vstúpte do obchodu heslom",
       "store_owner": "Ste majiteľ obchodu?",
-      "store_owner_html": "<a href=\"/admin\">Prihlásiť sa tu</a>",
+      "store_owner_html": "<a href=\"\/admin\">Prihlásiť sa tu<\/a>",
       "continue": "Pokračovať",
-      "powered_by_html": "Tento obchod bude poháňaný <a href=\"http://www.shopify.com\">Shopify</a>"
+      "powered_by_html": "Tento obchod bude poháňaný <a href=\"http:\/\/www.shopify.com\">Shopify<\/a>"
+    }
+  },
+  "pagefly": {
+    "products": {
+      "product": {
+        "regular_price": "Regular price",
+        "sold_out": "Sold out",
+        "unavailable": "Unavailable",
+        "on_sale": "Sale",
+        "quantity": "Quantity",
+        "add_to_cart": "Add to cart",
+        "back_to_collection": "Back to {{ title }}",
+        "view_details": "View details"
+      }
+    },
+    "article": {
+      "tags": "Tags:",
+      "all_topics": "All topics",
+      "by_author": "by {{ author }}",
+      "posted_in": "Posted in",
+      "read_more": "Read more",
+      "back_to_blog": "Back to {{ title }}"
+    },
+    "comments": {
+      "title": "Leave a comment",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "post": "Post comment",
+      "moderated": "Please note, comments must be approved before they are published",
+      "success_moderated": "Your comment was posted successfully. We will publish it in a little while, as our blog is moderated.",
+      "success": "Your comment was posted successfully! Thank you!",
+      "comments_with_count": {
+        "one": "{{ count }} comment",
+        "other": "{{ count }} comments"
+      }
+    },
+    "password_page": {
+      "login_form_message": "Enter store using password:",
+      "login_form_password_label": "Password",
+      "login_form_password_placeholder": "Your password",
+      "login_form_submit": "Enter",
+      "signup_form_email_label": "Email",
+      "signup_form_success": "We will send you an email right before we open!",
+      "password_link": "Enter using password"
     }
   }
 }

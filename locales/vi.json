@@ -1,12 +1,21 @@
+/*
+* ------------------------------------------------------------
+* IMPORTANT: The contents of this file are auto-generated.
+*
+* This file may be updated by the Shopify admin language editor
+* or related systems. Please exercise caution as any changes
+* made to this file may be overwritten.
+* ------------------------------------------------------------
+*/
 {
   "general": {
-    "meta": {
-      "tags": "Gắn thẻ \"{{ tags }}\"",
-      "page": "Trang {{ page }}"
-    },
     "404": {
       "title": "404 Trang không tìm thấy",
       "subtext_html": "Trang bạn yêu cầu không tồn tại."
+    },
+    "meta": {
+      "tags": "Gắn thẻ \"{{ tags }}\"",
+      "page": "Trang {{ page }}"
     },
     "continue_shopping": "Tiếp tục mua sắm",
     "breadcrumbs": {
@@ -46,11 +55,11 @@
     },
     "onboarding": {
       "modal_title": "Gần đến rồi...",
-      "no_products_html": "Bạn chưa có sản phẩm nào trong bộ sưu tập trang chủ của bạn. Chỗ trống này sẽ xuất hiện cho đến khi bạn <a href=\"/admin/collections?tutorial=Frontpage\">thêm sản phẩm vào bộ sưu tập này</a>.",
+      "no_products_html": "Bạn chưa có sản phẩm nào trong bộ sưu tập trang chủ của bạn. Chỗ trống này sẽ xuất hiện cho đến khi bạn <a href=\"\/admin\/collections?tutorial=Frontpage\">thêm sản phẩm vào bộ sưu tập này<\/a>.",
       "add_product": "Thêm sản phẩm",
       "product_title": "Tên sản phẩm",
       "product_description": "Khu vực này được sử dụng để mô tả chi tiết sản phẩm của bạn. Hãy nói cho khách hàng biết về vẻ ngoại hình, cảm giác và phong cách của sản phẩm của bạn. Thêm thông tin về màu sắc, nguyên liệu sử dụng, kích thước và nơi sản xuất.",
-      "no_collections_html": "Bạn chưa có bộ sưu tập nào để hiển thị ở đây. <a href=\"/admin/custom_collections\">Thêm một số bộ sưu tập</a> để đi kèm với trang chủ mặc định.",
+      "no_collections_html": "Bạn chưa có bộ sưu tập nào để hiển thị ở đây. <a href=\"\/admin\/custom_collections\">Thêm một số bộ sưu tập<\/a> để đi kèm với trang chủ mặc định.",
       "add_collection": "Thêm bộ sưu tập",
       "collection_title": "Tên bộ sưu tập",
       "blog_title": "Tiêu đề bài viết của bạn",
@@ -61,10 +70,10 @@
       "return_text": "Quay lại"
     },
     "localization": {
-      "country_label": "Quốc gia/khu vực",
+      "country_label": "Quốc gia\/khu vực",
       "language_label": "Ngôn ngữ",
       "update_language": "Cập nhật ngôn ngữ",
-      "update_country": "Cập nhật quốc gia/khu vực"
+      "update_country": "Cập nhật quốc gia\/khu vực"
     },
     "accessibility": {
       "back_to_top": {
@@ -165,9 +174,9 @@
       "see_more": "Xem thêm",
       "subtotal": "Tổng tiền hàng",
       "taxes_and_shipping_at_checkout": "Thuế và vận chuyển được tính khi thanh toán",
-      "taxes_and_shipping_policy_at_checkout_html": "Thuế và <a href=\"{{ link }}\">vận chuyển</a> được tính khi thanh toán",
+      "taxes_and_shipping_policy_at_checkout_html": "Thuế và <a href=\"{{ link }}\">vận chuyển<\/a> được tính khi thanh toán",
       "taxes_included_but_shipping_at_checkout": "Đã bao gồm thuế và vận chuyển được tính khi thanh toán",
-      "taxes_included_and_shipping_policy_html": "Đã bao gồm thuế. <a href=\"{{ link }}\">Vận chuyển</a> được tính khi thanh toán.",
+      "taxes_included_and_shipping_policy_html": "Đã bao gồm thuế. <a href=\"{{ link }}\">Vận chuyển<\/a> được tính khi thanh toán.",
       "update": "Cập nhật giỏ hàng",
       "checkout": "Thanh toán",
       "empty": "Giỏ hàng của bạn hiện đang trống.",
@@ -253,7 +262,7 @@
       "sort_by_label": "Sắp xếp theo",
       "title": "Bộ sưu tập",
       "to": "Đến",
-      "use_fewer_filters_html": "Sử dụng ít bộ lọc hơn hoặc <a class=\"{{ class }}\" href=\"{{ link }}\">xóa tất cả</a>"
+      "use_fewer_filters_html": "Sử dụng ít bộ lọc hơn hoặc <a class=\"{{ class }}\" href=\"{{ link }}\">xóa tất cả<\/a>"
     },
     "events_calendar": {
       "tbc_text": "Sẽ thông báo sau"
@@ -261,7 +270,7 @@
     "map": {
       "address_error": "Lỗi tìm kiếm địa chỉ đó",
       "address_no_results": "Không có kết quả cho địa chỉ đó",
-      "address_query_limit_html": "Bạn đã vượt quá giới hạn sử dụng API của Google. Cân nhắc nâng cấp lên <a href=\"https://developers.google.com/maps/premium/usage-limits\">Gói Premium</a>.",
+      "address_query_limit_html": "Bạn đã vượt quá giới hạn sử dụng API của Google. Cân nhắc nâng cấp lên <a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">Gói Premium<\/a>.",
       "auth_error_html": "Đã xảy ra sự cố khi xác thực Khóa API của Google Maps."
     },
     "shop_the_look": {
@@ -309,7 +318,7 @@
       "address2": "Địa chỉ2",
       "city": "Thành phố",
       "country": "Quốc gia",
-      "province": "Tỉnh/Thành phố",
+      "province": "Tỉnh\/Thành phố",
       "zip": "Mã bưu chính",
       "phone": "Số điện thoại",
       "set_default": "Đặt làm địa chỉ mặc định",
@@ -395,7 +404,7 @@
       "add_product": "Thêm sản phẩm",
       "product_title": "Tiêu đề sản phẩm",
       "product_vendor": "Nhà cung cấp",
-      "no_collections_html": "Bạn chưa có bất kỳ bộ sưu tập nào để hiển thị ở đây. <a href=\"/admin/custom_collections\">Thêm một số bộ sưu tập</a> để kèm theo Trang chủ mặc định.",
+      "no_collections_html": "Bạn chưa có bất kỳ bộ sưu tập nào để hiển thị ở đây. <a href=\"\/admin\/custom_collections\">Thêm một số bộ sưu tập<\/a> để kèm theo Trang chủ mặc định.",
       "add_collection": "Thêm bộ sưu tập",
       "collection_title": "Tiêu đề bộ sưu tập",
       "no_content": "Mục này hiện không có nội dung. Thêm nội dung vào mục này bằng thanh bên."
@@ -467,13 +476,13 @@
       "category": "Danh mục",
       "type": "Loại",
       "include_taxes": "Đã bao gồm thuế.",
-      "shipping_policy_html": "<a href=\"{{ link }}\">Vận chuyển</a> tính ở bước thanh toán.",
+      "shipping_policy_html": "<a href=\"{{ link }}\">Vận chuyển<\/a> tính ở bước thanh toán.",
       "quote": "Báo giá",
       "in_stock": "Còn hàng",
       "low_stock": "Còn ít hàng",
       "out_of_stock": "Hết hàng",
       "stock_left": "còn lại",
-      "out_of_stock_html": "Nhấp vào <a href=\"#\"><strong>đây</strong></a> để được thông báo qua email khi {{ product }} có hàng.",
+      "out_of_stock_html": "Nhấp vào <a href=\"#\"><strong>đây<\/strong><\/a> để được thông báo qua email khi {{ product }} có hàng.",
       "wrong_email": "Vui lòng cung cấp một địa chỉ email hợp lệ.",
       "out_of_stock_success": "Cảm ơn! Chúng tôi sẽ thông báo cho bạn khi sản phẩm này có hàng!",
       "read_more_html": "Đọc thêm",
@@ -526,9 +535,54 @@
       "find_out": "Tìm hiểu khi chúng tôi mở cửa",
       "password": "Nhập cửa hàng bằng mật khẩu",
       "store_owner": "Bạn có phải chủ cửa hàng không?",
-      "store_owner_html": "<a href=\"/admin\">Đăng nhập tại đây</a>",
+      "store_owner_html": "<a href=\"\/admin\">Đăng nhập tại đây<\/a>",
       "continue": "Tiếp tục",
-      "powered_by_html": "Cửa hàng này sẽ được cung cấp bởi <a href=\"http://www.shopify.com\">Shopify</a>"
+      "powered_by_html": "Cửa hàng này sẽ được cung cấp bởi <a href=\"http:\/\/www.shopify.com\">Shopify<\/a>"
+    }
+  },
+  "pagefly": {
+    "products": {
+      "product": {
+        "regular_price": "Regular price",
+        "sold_out": "Sold out",
+        "unavailable": "Unavailable",
+        "on_sale": "Sale",
+        "quantity": "Quantity",
+        "add_to_cart": "Add to cart",
+        "back_to_collection": "Back to {{ title }}",
+        "view_details": "View details"
+      }
+    },
+    "article": {
+      "tags": "Tags:",
+      "all_topics": "All topics",
+      "by_author": "by {{ author }}",
+      "posted_in": "Posted in",
+      "read_more": "Read more",
+      "back_to_blog": "Back to {{ title }}"
+    },
+    "comments": {
+      "title": "Leave a comment",
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "post": "Post comment",
+      "moderated": "Please note, comments must be approved before they are published",
+      "success_moderated": "Your comment was posted successfully. We will publish it in a little while, as our blog is moderated.",
+      "success": "Your comment was posted successfully! Thank you!",
+      "comments_with_count": {
+        "one": "{{ count }} comment",
+        "other": "{{ count }} comments"
+      }
+    },
+    "password_page": {
+      "login_form_message": "Enter store using password:",
+      "login_form_password_label": "Password",
+      "login_form_password_placeholder": "Your password",
+      "login_form_submit": "Enter",
+      "signup_form_email_label": "Email",
+      "signup_form_success": "We will send you an email right before we open!",
+      "password_link": "Enter using password"
     }
   }
 }
