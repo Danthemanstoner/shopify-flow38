@@ -104,6 +104,7 @@
                 v-bind:mute="true"
                 v-bind:hide-controls="true"
                 v-bind:overlay="false"
+                style="object-fit: cover; object-position: center;"
             >
             </wetheme-video>
             {% endif %}
@@ -111,19 +112,19 @@
         <div class="hero-video--text">
             <div class="hero-video--text-content {{ textalignment | strip }}">
                 <div class="text-content--inner{% if section.settings.textShadow %} text-shadow{% endif %} wow fadeInUp">
-									{% unless section.settings.title == blank %}
+                    {% unless section.settings.title == blank %}
                     <div class="hero-video--text-title">
                         <h2 class="homepage-sections--title text-size-{{ section.settings.heading--text-size }}px wow fadeInUp" id="{{ section.id }}_title">
                             {% if buttonHidden == true %}<a href="{{ section.settings.link }}">{% endif %}{{ section.settings.title | escape }}{% if buttonHidden == true %}</a>{% endif %}
                         </h2>
                     </div>
-									{% endunless %}
-									{% unless section.settings.subheading == blank %}
+                    {% endunless %}
+                    {% unless section.settings.subheading == blank %}
                     <div class="hero-video--text-subtitle">
                         <p class="text-size-{{ section.settings.subheading--text-size }}px">{{ section.settings.subheading }}</p>
                     </div>
-									{% endunless %}
-										{% render 'home-section-button', link: section.settings.link, label: section.settings.button_label %}
+                    {% endunless %}
+                    {% render 'home-section-button', link: section.settings.link, label: section.settings.button_label %}
                 </div>
             </div>
         </div>
@@ -131,6 +132,11 @@
 </section>
 
 <style>
+    .homepage-content--{{ section.id }} .hero-video--media video,
+    .homepage-content--{{ section.id }} .hero-video--media wetheme-video {
+        object-fit: cover;
+        object-position: center center;
+    }
     {% if section.settings.textColor != 'rgba(0,0,0,0)' %}
       .homepage-content--{{ section.id }} .hero-video--text,
       .homepage-content--{{ section.id }} .hero-video--text .hero-video--text-title a:not(.btn) {
@@ -171,26 +177,26 @@
       }
     {% endif %}
 
-		{% if section.settings.subheading == blank and buttonEnabled == false %}
-			.homepage-sections--title {
-				margin-bottom: 0;
-			}
-		{% endif %}
+    {% if section.settings.subheading == blank and buttonEnabled == false %}
+        .homepage-sections--title {
+            margin-bottom: 0;
+        }
+    {% endif %}
 
-		{% if buttonEnabled == false %}
-			.hero-video--text-content div.hero-video--text-subtitle {
-				margin-bottom: 0;
-			}
-			.hero-video--text-subtitle p {
-				margin-bottom: 0;
-			}
-		{% endif %}
+    {% if buttonEnabled == false %}
+        .hero-video--text-content div.hero-video--text-subtitle {
+            margin-bottom: 0;
+        }
+        .hero-video--text-subtitle p {
+            margin-bottom: 0;
+        }
+    {% endif %}
 
-		{% if section.settings.title == blank and section.settings.subheading == blank %}
-			.hero-video--text-content .homepage-section-btn {
-				margin-top: 0;
-			}
-		{% endif %}
+    {% if section.settings.title == blank and section.settings.subheading == blank %}
+        .hero-video--text-content .homepage-section-btn {
+            margin-top: 0;
+        }
+    {% endif %}
 </style>
 
 {% schema %}
@@ -368,8 +374,7 @@
       "min": 12,
       "max": 30,
       "step": 2,
-      "unit": "t:all.px",
-      "label": "t:sections.video--video-hero.settings.subheading--text-size.label",
+      "unit": "t:sections.video--video-hero.settings.subheading--text-size.label",
       "default": 24
     },
     {
