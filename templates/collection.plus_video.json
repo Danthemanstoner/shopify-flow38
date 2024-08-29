@@ -33,11 +33,14 @@
     },
     "video_video_hero_aVpUfB": {
       "type": "video--video-hero",
+      "custom_css": [
+        ".hero-video--media {position: relative; width: 100%; height: 100%; overflow: hidden;}"
+      ],
       "settings": {
-        "video": "shopify:\/\/files\/videos\/Gen-3 Alpha 1905771669, Three juice bottles , Cropped - Multiple B.mp4",
+        "video": "shopify:\/\/files\/videos\/video banner.mp4",
         "url": "",
-        "desktopHeight": "550",
-        "mobileHeight": "fullscreen",
+        "desktopHeight": "650",
+        "mobileHeight": "fit",
         "title": "Plus+ Cold Press Juices",
         "subheading": "",
         "textAlignment": "center",
