@@ -43,6 +43,15 @@
 
 
 {% liquid
+  assign img_desktop = 'blank'
+  if section.settings.image_desktop != blank
+    assign img_desktop = 'selected'
+  endif
+  assign img_mobile = 'blank'
+  if section.settings.image_mobile != blank
+    assign img_mobile = 'selected'
+  endif
+  assign section_imgs = 'img-mobile--' | append: img_mobile | append: ' img-desktop--' | append: img_desktop
   assign section_height = 'height-mobile--' | append: section.settings.height_mobile | append: ' height-desktop--' | append: section.settings.height_desktop
   assign content_position = 'content-position-mobile--' | append: section.settings.text_position_mobile | append: ' content-position-desktop--' | append: section.settings.text_position_desktop
 
@@ -64,26 +73,48 @@
       assign alignment_desktop = 'right'
   endcase
 
-  assign content_alignment = 'content-wrapper-mobile--' | append: alignment_mobile | append: ' content-wrapper-desktop--' | append: alignment_desktop
+  assign content_aligment = 'content-wrapper-mobile--' | append: alignment_mobile | append: ' content-wrapper-desktop--' | append: alignment_desktop
 %}
 
-<section class="animated-text homepage-sections-wrapper--{{ section.settings.colors }} {{ section_height }} section--{{ section.id }}" data-wetheme-section-type="animated-text" data-wetheme-section-id="{{ section.id }}">
+<section class="animated-text homepage-sections-wrapper--{{ section.settings.colors }} {{ section_height }} {{ section_imgs }} section--{{ section.id }}" data-wetheme-section-type="animated-text" data-wetheme-section-id="{{ section.id }}">
   
-  <div class="animated-text--inner {{ content_position }}">
-    
-    <!-- Video Embed Section -->
-    <div class="animated-text--video">
-      <video autoplay muted loop playsinline class="background-video">
-        <source src="{{ section.settings.video_url }}" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-    </div>
+  {% liquid
+    assign kb = ' kb-enabled'
+    if settings.ken_burns_enabled == false
+      assign kb = ' kb-disabled'
+    endif
 
-    <!-- Content Section -->
+    if section.settings.image_mobile
+      assign bg_img_mobile = section.settings.image_mobile
+      assign bg_img_mobile_alt = bg_img_mobile.alt | default: shop.name | escape
+      assign bg_img_mobile_classes = ' animated-text--bg-img-mobile' | append: kb
+      assign bg_img_mobile_fit_container = true
+      if section.settings.height_mobile == 'original'
+        assign bg_img_mobile_fit_container = false
+      endif
+      
+      render 'responsive-image' with bg_img_mobile, alt: bg_img_mobile_alt, wrapper_class: bg_img_mobile_classes, allow_stretch: bg_img_mobile_fit_container
+    endif
+
+    if section.settings.image_desktop
+      assign bg_img_desktop = section.settings.image_desktop
+      assign bg_img_desktop_alt = bg_img_desktop.alt | default: shop.name | escape
+      assign bg_img_desktop_classes = ' animated-text--bg-img-desktop' | append: kb
+      assign bg_img_desktop_fit_container = true
+      if section.settings.height_desktop == 'original'
+        assign bg_img_desktop_fit_container = false
+      endif
+      
+      render 'responsive-image' with bg_img_desktop, alt: bg_img_desktop_alt, wrapper_class: bg_img_desktop_classes, allow_stretch: bg_img_desktop_fit_container
+    endif
+  %}
+
+  <div class="animated-text--inner {{ content_position }}">
     <div class="animated-text--content show-on-scroll">
       {% for block in section.blocks %}
-        <div class="content-wrapper--{{ block.type }} {{ content_alignment }} block-id--{{ block.id }}" {{ block.shopify_attributes }}>
+        <div class="content-wrapper--{{ block.type }} {{ content_aligment }} block-id--{{ block.id }}" {{ block.shopify_attributes }}>
           {% case block.type %}
+
             {% when 'text_static' %}
               {% assign text_color_red = block.settings.text_color.red %}
               {% assign text_color_green = block.settings.text_color.green %}
@@ -218,7 +249,6 @@
         </div>
       {% endfor %}
     </div>
-    
   </div>
 
 </section>
@@ -442,12 +472,6 @@
           "label": "t:all.Bottom_right"
         }
       ]
-    },
-    {
-      "type": "url",
-      "id": "video_url",
-      "label": "Video URL",
-      "info": "URL of the background video"
     }
   ],
   "blocks": [
