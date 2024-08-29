@@ -34,8 +34,7 @@
     "video_video_hero_aVpUfB": {
       "type": "video--video-hero",
       "custom_css": [
-        ".hero-video--media {position: relative; width: 100%; height: 80vh; \/* Adjust the height based on the viewport height *\/ overflow: hidden;}",
-        ".hero-video--media video {position: absolute; top: 50%; left: 50%; width: 100%; height: auto; \/* Maintain aspect ratio *\/ min-height: 100%; object-fit: cover; transform: translate(-50%, -50%);}"
+        "@media only screen and (min-width: 1024px) {.hero-video--media {position: relative; width: 100%; height: 37.5vw; \/* Maintain 1920x720 aspect ratio *\/ max-height: 80vh; overflow: hidden; } .hero-video--media video {position: absolute; top: 50%; left: 50%; width: 100%; min-height: 100%; object-fit: cover; transform: translate(-50%, -50%); } .hero-video--text {z-index: 1; }}"
       ],
       "settings": {
         "video": "shopify:\/\/files\/videos\/video banner.mp4",
