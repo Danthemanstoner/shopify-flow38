@@ -1,0 +1,134 @@
+<div class="fruit-game-container">
+  <canvas id="gameCanvas" width="800" height="600"></canvas>
+  <div id="score">Score: 0</div>
+  <div id="highScore">High Score: 0</div>
+  <div id="reward" style="display: none;">
+    Congratulations! You've earned a 10% discount. Use code: <span id="discountCode"></span>
+  </div>
+</div>
+
+<script>
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');
+  const scoreElement = document.getElementById('score');
+  const highScoreElement = document.getElementById('highScore');
+  const rewardElement = document.getElementById('reward');
+  const discountCodeElement = document.getElementById('discountCode');
+
+  let score = 0;
+  let highScore = 0;
+  let fruits = [];
+  let cursorX = 0;
+  let cursorY = 0;
+
+  const fruitTypes = ['🍎', '🍌', '🍇', '🍊', '🍓'];
+
+  function createFruit() {
+    return {
+      x: Math.random() * canvas.width,
+      y: 0,
+      type: fruitTypes[Math.floor(Math.random() * fruitTypes.length)],
+      speed: 2 + Math.random() * 3
+    };
+  }
+
+  function updateGame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw cursor
+    ctx.fillStyle = 'blue';
+    ctx.beginPath();
+    ctx.arc(cursorX, cursorY, 10, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Update and draw fruits
+    for (let i = fruits.length - 1; i >= 0; i--) {
+      const fruit = fruits[i];
+      fruit.y += fruit.speed;
+
+      ctx.font = '30px Arial';
+      ctx.fillText(fruit.type, fruit.x, fruit.y);
+
+      // Check collision with cursor
+      if (Math.abs(fruit.x - cursorX) < 20 && Math.abs(fruit.y - cursorY) < 20) {
+        score++;
+        scoreElement.textContent = `Score: ${score}`;
+        fruits.splice(i, 1);
+      }
+
+      // Remove fruits that fall off screen
+      if (fruit.y > canvas.height) {
+        fruits.splice(i, 1);
+      }
+    }
+
+    // Add new fruits
+    if (Math.random() < 0.02) {
+      fruits.push(createFruit());
+    }
+
+    // Check for high score
+    if (score > highScore) {
+      highScore = score;
+      highScoreElement.textContent = `High Score: ${highScore}`;
+      if (highScore >= 20 && !rewardElement.style.display) {
+        showReward();
+      }
+    }
+
+    requestAnimationFrame(updateGame);
+  }
+
+  function showReward() {
+    const discountCode = generateDiscountCode();
+    discountCodeElement.textContent = discountCode;
+    rewardElement.style.display = 'block';
+    // Here you would typically send this code to your server to activate it
+  }
+
+  function generateDiscountCode() {
+    return 'FRUIT' + Math.random().toString(36).substr(2, 5).toUpperCase();
+  }
+
+  canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    cursorX = e.clientX - rect.left;
+    cursorY = e.clientY - rect.top;
+  });
+
+  updateGame();
+</script>
+
+<style>
+  .fruit-game-container {
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  #gameCanvas {
+    border: 1px solid black;
+    margin: 20px auto;
+    display: block;
+  }
+  #score, #highScore {
+    font-size: 20px;
+    margin: 10px 0;
+  }
+  #reward {
+    font-size: 18px;
+    color: green;
+    margin-top: 20px;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Fruit Catching Game",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Fruit Catching Game",
+      "category": "Interactive"
+    }
+  ]
+}
+{% endschema %}
