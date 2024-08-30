@@ -1,7 +1,22 @@
 <div class="fruit-game-container">
   <canvas id="gameCanvas" width="800" height="600"></canvas>
-  <div id="score">Score: 0</div>
-  <div id="highScore">High Score: 0</div>
+  <div id="gameInfo">
+    <div id="score">Score: 0</div>
+    <div id="level">Level: 1</div>
+    <div id="lives">Lives: ❤️❤️❤️</div>
+  </div>
+  <div id="gameOver" style="display: none;">
+    <h2>Game Over</h2>
+    <p>Your score: <span id="finalScore"></span></p>
+    <form id="leaderboardForm">
+      <input type="text" id="playerName" placeholder="Enter your name" required>
+      <button type="submit">Submit Score</button>
+    </form>
+  </div>
+  <div id="leaderboard" style="display: none;">
+    <h2>Leaderboard</h2>
+    <ol id="leaderboardList"></ol>
+  </div>
   <div id="reward" style="display: none;">
     Congratulations! You've earned a 10% discount. Use code: <span id="discountCode"></span>
   </div>
@@ -11,15 +26,22 @@
   const canvas = document.getElementById('gameCanvas');
   const ctx = canvas.getContext('2d');
   const scoreElement = document.getElementById('score');
-  const highScoreElement = document.getElementById('highScore');
+  const levelElement = document.getElementById('level');
+  const livesElement = document.getElementById('lives');
+  const gameOverElement = document.getElementById('gameOver');
+  const finalScoreElement = document.getElementById('finalScore');
+  const leaderboardElement = document.getElementById('leaderboard');
+  const leaderboardListElement = document.getElementById('leaderboardList');
   const rewardElement = document.getElementById('reward');
   const discountCodeElement = document.getElementById('discountCode');
 
   let score = 0;
-  let highScore = 0;
+  let level = 1;
+  let lives = 3;
   let fruits = [];
   let cursorX = 0;
   let cursorY = 0;
+  let gameActive = true;
 
   const fruitTypes = ['🍎', '🍌', '🍇', '🍊', '🍓'];
 
@@ -28,17 +50,19 @@
       x: Math.random() * canvas.width,
       y: 0,
       type: fruitTypes[Math.floor(Math.random() * fruitTypes.length)],
-      speed: 2 + Math.random() * 3
+      speed: 2 + Math.random() * 3 + (level - 1)
     };
   }
 
   function updateGame() {
+    if (!gameActive) return;
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw cursor
     ctx.fillStyle = 'blue';
     ctx.beginPath();
-    ctx.arc(cursorX, cursorY, 10, 0, Math.PI * 2);
+    ctx.arc(cursorX, cursorY, 20, 0, Math.PI * 2);
     ctx.fill();
 
     // Update and draw fruits
@@ -50,33 +74,44 @@
       ctx.fillText(fruit.type, fruit.x, fruit.y);
 
       // Check collision with cursor
-      if (Math.abs(fruit.x - cursorX) < 20 && Math.abs(fruit.y - cursorY) < 20) {
+      if (Math.abs(fruit.x - cursorX) < 30 && Math.abs(fruit.y - cursorY) < 30) {
         score++;
         scoreElement.textContent = `Score: ${score}`;
         fruits.splice(i, 1);
+        if (score % 10 === 0) {
+          level++;
+          levelElement.textContent = `Level: ${level}`;
+        }
       }
 
       // Remove fruits that fall off screen
       if (fruit.y > canvas.height) {
         fruits.splice(i, 1);
+        lives--;
+        updateLives();
+        if (lives <= 0) {
+          gameOver();
+          return;
+        }
       }
     }
 
     // Add new fruits
-    if (Math.random() < 0.02) {
+    if (Math.random() < 0.02 + (level * 0.005)) {
       fruits.push(createFruit());
     }
 
-    // Check for high score
-    if (score > highScore) {
-      highScore = score;
-      highScoreElement.textContent = `High Score: ${highScore}`;
-      if (highScore >= 20 && !rewardElement.style.display) {
-        showReward();
-      }
-    }
-
     requestAnimationFrame(updateGame);
+  }
+
+  function updateLives() {
+    livesElement.textContent = `Lives: ${'❤️'.repeat(lives)}`;
+  }
+
+  function gameOver() {
+    gameActive = false;
+    gameOverElement.style.display = 'block';
+    finalScoreElement.textContent = score;
   }
 
   function showReward() {
@@ -96,6 +131,30 @@
     cursorY = e.clientY - rect.top;
   });
 
+  document.getElementById('leaderboardForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const playerName = document.getElementById('playerName').value;
+    submitScore(playerName, score);
+    showLeaderboard();
+  });
+
+  function submitScore(name, score) {
+    // In a real implementation, you'd send this data to your server
+    // For now, we'll just store it in localStorage
+    const leaderboard = JSON.parse(localStorage.getItem('fruitGameLeaderboard') || '[]');
+    leaderboard.push({ name, score });
+    leaderboard.sort((a, b) => b.score - a.score);
+    localStorage.setItem('fruitGameLeaderboard', JSON.stringify(leaderboard.slice(0, 10)));
+  }
+
+  function showLeaderboard() {
+    const leaderboard = JSON.parse(localStorage.getItem('fruitGameLeaderboard') || '[]');
+    leaderboardListElement.innerHTML = leaderboard.map(entry => 
+      `<li>${entry.name}: ${entry.score}</li>`
+    ).join('');
+    leaderboardElement.style.display = 'block';
+  }
+
   updateGame();
 </script>
 
@@ -103,20 +162,35 @@
   .fruit-game-container {
     text-align: center;
     font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
   }
   #gameCanvas {
     border: 1px solid black;
     margin: 20px auto;
     display: block;
   }
-  #score, #highScore {
+  #gameInfo {
+    display: flex;
+    justify-content: space-between;
     font-size: 20px;
     margin: 10px 0;
+  }
+  #gameOver, #leaderboard, #reward {
+    margin-top: 20px;
+  }
+  #leaderboardForm input, #leaderboardForm button {
+    margin: 10px 0;
+    padding: 5px;
+    font-size: 16px;
+  }
+  #leaderboardList {
+    list-style-position: inside;
+    padding: 0;
   }
   #reward {
     font-size: 18px;
     color: green;
-    margin-top: 20px;
   }
 </style>
 
