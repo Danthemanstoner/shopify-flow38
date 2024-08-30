@@ -115,19 +115,15 @@
         ctx.fill();
         ctx.fillStyle = '#00AA00';
         ctx.fillRect(x - size/20, y - size/2, size/10, size/4);
-        ctx.fillStyle = '#000000';
-        ctx.font = `${size/3}px Arial`;
-        ctx.fillText('A', x - size/6, y + size/6);
         break;
       case '🍌':
         // Banana
         ctx.fillStyle = '#FFE135';
         ctx.beginPath();
-        ctx.ellipse(x, y, size/2, size/4, Math.PI/4, 0, Math.PI * 2);
+        ctx.moveTo(x - size/2, y);
+        ctx.quadraticCurveTo(x, y - size/2, x + size/2, y);
+        ctx.quadraticCurveTo(x, y + size/2, x - size/2, y);
         ctx.fill();
-        ctx.fillStyle = '#000000';
-        ctx.font = `${size/3}px Arial`;
-        ctx.fillText('B', x - size/6, y + size/6);
         break;
       case '🍇':
         // Grapes
@@ -139,9 +135,6 @@
             ctx.fill();
           }
         }
-        ctx.fillStyle = '#000000';
-        ctx.font = `${size/3}px Arial`;
-        ctx.fillText('G', x - size/6, y + size/6);
         break;
       case '🍊':
         // Orange
@@ -149,11 +142,11 @@
         ctx.beginPath();
         ctx.arc(x, y, size/2, 0, Math.PI * 2);
         ctx.fill();
-        ctx.fillStyle = '#00AA00';
-        ctx.fillRect(x - size/20, y - size/2, size/10, size/4);
-        ctx.fillStyle = '#000000';
-        ctx.font = `${size/3}px Arial`;
-        ctx.fillText('O', x - size/6, y + size/6);
+        ctx.strokeStyle = '#FF8C00';
+        ctx.lineWidth = size/20;
+        ctx.beginPath();
+        ctx.arc(x, y, size/2.5, 0, Math.PI * 2);
+        ctx.stroke();
         break;
       case '🍓':
         // Strawberry
@@ -168,23 +161,6 @@
         ctx.moveTo(x - size/4, y - size/2);
         ctx.lineTo(x, y - size/3);
         ctx.lineTo(x + size/4, y - size/2);
-        ctx.fill();
-        ctx.fillStyle = '#000000';
-        ctx.font = `${size/3}px Arial`;
-        ctx.fillText('S', x - size/6, y + size/6);
-        break;
-      case '🥕':
-        // Carrot
-        ctx.fillStyle = '#FFA500';
-        ctx.beginPath();
-        ctx.moveTo(x, y - size/2);
-        ctx.lineTo(x - size/3, y + size/2);
-        ctx.lineTo(x + size/3, y + size/2);
-        ctx.closePath();
-        ctx.fill();
-        ctx.fillStyle = '#00AA00';
-        ctx.beginPath();
-        ctx.ellipse(x, y - size/2, size/4, size/8, 0, 0, Math.PI);
         ctx.fill();
         break;
     }
@@ -415,20 +391,12 @@
     const discountCode = generateDiscountCode();
     const rewardElement = document.createElement('div');
     rewardElement.innerHTML = `
-      <h3>New High Score! You've earned a discount:</h3>
-      <p>Use code <strong>${discountCode}</strong> for 10% off your next purchase!</p>
+      <h3>New High Score!</h3>
+      <p>You've earned a discount:</p>
+      <p class="discount-code">${discountCode}</p>
+      <p>Use this code for 10% off your next purchase!</p>
     `;
-    rewardElement.style.position = 'fixed';
-    rewardElement.style.top = '50%';
-    rewardElement.style.left = '50%';
-    rewardElement.style.transform = 'translate(-50%, -50%)';
-    rewardElement.style.backgroundColor = '#fff';
-    rewardElement.style.padding = '20px';
-    rewardElement.style.border = '2px solid #000';
-    rewardElement.style.borderRadius = '10px';
-    rewardElement.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
-    rewardElement.style.zIndex = '1000';
-    rewardElement.style.fontFamily = 'Arial, sans-serif';
+    rewardElement.className = 'reward-popup';
     document.body.appendChild(rewardElement);
 
     setTimeout(() => {
@@ -525,6 +493,22 @@
     leaderboardElement.style.display = 'block';
   }
 
+  function submitHighScore(score, playerName) {
+    fetch('/api/highscores', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ score, playerName }),
+    })
+    .then(response => response.json())
+    .then(data => console.log('High score submitted:', data))
+    .catch((error) => console.error('Error:', error));
+  }
+
+  // Call this function when the game ends
+  submitHighScore(score, playerName);
+
   window.addEventListener('resize', resizeCanvas);
   resizeCanvas();
 
@@ -604,6 +588,27 @@
     text-decoration: none;
     border-radius: 5px;
     margin-top: 10px;
+  }
+
+  .reward-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #FFFFFF;
+    color: #18533A;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    z-index: 1000;
+    font-family: Arial, sans-serif;
+    text-align: center;
+  }
+
+  .reward-popup .discount-code {
+    font-size: 24px;
+    font-weight: bold;
+    color: #FF0000;
   }
 
   @media (max-width: 820px) {
