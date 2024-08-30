@@ -18,8 +18,12 @@
     <ol id="leaderboardList"></ol>
   </div>
   <div id="reward" style="display: none;">
-    YOU GOT A POWER-UP! 10% OFF CODE: <span id="discountCode"></span>
-    <p>Enter this code at checkout to receive your discount!</p>
+    <h3>New High Score!</h3>
+    <p>You've earned a discount:</p>
+    <p class="discount-code" id="discountCodeText">25PercentOFF</p>
+    <button id="copyDiscountCode">Copy Code</button>
+    <button id="applyDiscountCode">Apply to Cart</button>
+    <p>Use this code for 25% off your next purchase!</p>
   </div>
   <div id="productRecommendation" style="display: none;">
     <h3>We think you might like this:</h3>
@@ -28,6 +32,10 @@
   <audio id="collectSound" src="{{ 'collect.mp3' | asset_url }}" preload="auto"></audio>
   <audio id="shootSound" src="{{ 'shoot.mp3' | asset_url }}" preload="auto"></audio>
   <audio id="explosionSound" src="{{ 'explosion.mp3' | asset_url }}" preload="auto"></audio>
+</div>
+
+<div id="gameInstructions" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; font-size: 24px; color: #18533A;">
+  Click to fire poop!
 </div>
 
 <script>
@@ -43,9 +51,10 @@
   const leaderboardElement = document.getElementById('leaderboard');
   const leaderboardListElement = document.getElementById('leaderboardList');
   const rewardElement = document.getElementById('reward');
-  const discountCodeElement = document.getElementById('discountCode');
+  const discountCodeElement = document.getElementById('discountCodeText');
   const productRecommendationElement = document.getElementById('productRecommendation');
   const productDetailsElement = document.getElementById('productDetails');
+  const gameInstructions = document.getElementById('gameInstructions');
 
   let score = 0;
   let level = 1;
@@ -53,7 +62,7 @@
   let items = [];
   let bunnyX = 400;
   let bunnyY = 550;
-  let gameActive = true;
+  let gameActive = false;
   let cursorSize = 40;
   let backgroundColor = '#FFFFFF';
   const borderColor = '#494949';
@@ -388,24 +397,55 @@
   }
 
   function showReward() {
-    const discountCode = generateDiscountCode();
+    const discountCode = '25PercentOFF';
     const rewardElement = document.createElement('div');
     rewardElement.innerHTML = `
       <h3>New High Score!</h3>
       <p>You've earned a discount:</p>
-      <p class="discount-code">${discountCode}</p>
-      <p>Use this code for 10% off your next purchase!</p>
+      <p class="discount-code" id="discountCodeText">${discountCode}</p>
+      <button id="copyDiscountCode">Copy Code</button>
+      <button id="applyDiscountCode">Apply to Cart</button>
+      <p>Use this code for 25% off your next purchase!</p>
     `;
     rewardElement.className = 'reward-popup';
     document.body.appendChild(rewardElement);
 
+    document.getElementById('copyDiscountCode').addEventListener('click', () => {
+      navigator.clipboard.writeText(discountCode).then(() => {
+        alert('Discount code copied to clipboard!');
+      });
+    });
+
+    document.getElementById('applyDiscountCode').addEventListener('click', () => {
+      applyDiscountToCart(discountCode);
+    });
+
     setTimeout(() => {
       document.body.removeChild(rewardElement);
-    }, 5000);
+    }, 10000);
   }
 
-  function generateDiscountCode() {
-    return 'FRUIT' + Math.random().toString(36).substr(2, 5).toUpperCase();
+  function applyDiscountToCart(discountCode) {
+    // This function will depend on your Shopify setup
+    // Here's a basic example using the Shopify AJAX API
+    fetch('/discount/' + discountCode, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert('Discount applied to your cart!');
+      } else {
+        alert('Failed to apply discount. Please try again.');
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+      alert('An error occurred. Please try again.');
+    });
   }
 
   async function showRandomProduct() {
@@ -418,13 +458,17 @@
         <a href="/products/${randomProduct.handle}">
           <img src="${randomProduct.images[0].src}" alt="${randomProduct.title}" style="max-width: 200px;">
           <h4>${randomProduct.title}</h4>
-          <p>${randomProduct.price}</p>
+          <p>${formatMoney(randomProduct.price)}</p>
         </a>
       `;
       productRecommendationElement.style.display = 'block';
     } catch (error) {
       console.error('Error fetching random product:', error);
     }
+  }
+
+  function formatMoney(cents) {
+    return '$' + (cents / 100).toFixed(2);
   }
 
   function resizeCanvas() {
@@ -441,15 +485,20 @@
   });
 
   canvas.addEventListener('click', (e) => {
-    const poopsToFire = Math.floor(level / 5) + 1;
-    for (let i = 0; i < poopsToFire; i++) {
-      poos.push({ 
-        x: bunnyX + (i - (poopsToFire-1)/2) * 20, 
-        y: bunnyY 
-      });
+    if (!gameActive) {
+      startGame();
+      gameInstructions.style.display = 'none';
+    } else {
+      const poopsToFire = Math.floor(level / 5) + 1;
+      for (let i = 0; i < poopsToFire; i++) {
+        poos.push({ 
+          x: bunnyX + (i - (poopsToFire-1)/2) * 20, 
+          y: bunnyY 
+        });
+      }
+      poopsFired += poopsToFire;
+      shootSound.play();
     }
-    poopsFired += poopsToFire;
-    shootSound.play();
   });
 
   canvas.addEventListener('touchmove', (e) => {
@@ -515,6 +564,19 @@
   console.log('Starting game loop');
   startTime = new Date();
   updateGame();
+
+  // Show instructions at the start
+  gameInstructions.style.display = 'block';
+
+  function startGame() {
+    gameActive = true;
+    score = 0;
+    level = 1;
+    lives = 3;
+    items = [];
+    startTime = new Date();
+    updateGame();
+  }
 </script>
 
 <style>
