@@ -20,6 +20,10 @@
   <div id="reward" style="display: none;">
     YOU GOT A POWER-UP! 10% OFF CODE: <span id="discountCode"></span>
   </div>
+  <div id="productRecommendation" style="display: none;">
+    <h3>We think you might like this:</h3>
+    <div id="productDetails"></div>
+  </div>
 </div>
 
 <script>
@@ -36,6 +40,8 @@
   const leaderboardListElement = document.getElementById('leaderboardList');
   const rewardElement = document.getElementById('reward');
   const discountCodeElement = document.getElementById('discountCode');
+  const productRecommendationElement = document.getElementById('productRecommendation');
+  const productDetailsElement = document.getElementById('productDetails');
 
   let score = 0;
   let level = 1;
@@ -44,6 +50,8 @@
   let playerX = 400;
   let playerY = 500;
   let gameActive = true;
+  let primaryColor = '#18533A';
+  let secondaryColor = '#494949';
 
   const itemTypes = ['🍎', '🍌', '🍇', '🍊', '🍓'];
 
@@ -56,18 +64,25 @@
     };
   }
 
+  function draw8BitFruit(x, y, size, type) {
+    ctx.fillStyle = primaryColor;
+    ctx.fillRect(x, y, size, size);
+    ctx.fillStyle = secondaryColor;
+    ctx.font = `${size * 0.8}px Arial`;
+    ctx.fillText(type, x + size * 0.1, y + size * 0.8);
+  }
+
   function updateGame() {
-    console.log('Update game called');
     if (!gameActive) return;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw background
-    ctx.fillStyle = '#FFFFFF';
+    ctx.fillStyle = secondaryColor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Draw player
-    ctx.fillStyle = '#000000';
+    ctx.fillStyle = primaryColor;
     ctx.beginPath();
     ctx.arc(playerX, playerY - 20, 20, 0, Math.PI * 2);
     ctx.fill();
@@ -77,8 +92,7 @@
       const item = items[i];
       item.y += item.speed;
 
-      ctx.font = '30px Arial';
-      ctx.fillText(item.type, item.x, item.y);
+      draw8BitFruit(item.x, item.y, 40, item.type);
 
       // Check collision with player
       if (Math.abs(item.x - playerX) < 30 && Math.abs(item.y - playerY) < 30) {
@@ -88,6 +102,7 @@
         if (score % 10 === 0) {
           level++;
           levelElement.textContent = `LEVEL ${level}`;
+          [primaryColor, secondaryColor] = [secondaryColor, primaryColor];
         }
       }
 
@@ -120,6 +135,7 @@
     gameOverElement.style.display = 'block';
     finalScoreElement.textContent = score;
     showReward();
+    showRandomProduct();
   }
 
   function showReward() {
@@ -130,6 +146,24 @@
 
   function generateDiscountCode() {
     return 'FRUIT' + Math.random().toString(36).substr(2, 5).toUpperCase();
+  }
+
+  async function showRandomProduct() {
+    try {
+      const response = await fetch('/products.json');
+      const data = await response.json();
+      const randomProduct = data.products[Math.floor(Math.random() * data.products.length)];
+      
+      productDetailsElement.innerHTML = `
+        <img src="${randomProduct.images[0].src}" alt="${randomProduct.title}" style="max-width: 200px;">
+        <h4>${randomProduct.title}</h4>
+        <p>${randomProduct.price}</p>
+        <a href="/products/${randomProduct.handle}" class="btn">View Product</a>
+      `;
+      productRecommendationElement.style.display = 'block';
+    } catch (error) {
+      console.error('Error fetching random product:', error);
+    }
   }
 
   canvas.addEventListener('mousemove', (e) => {
@@ -174,11 +208,11 @@
     margin: 0 auto;
     background-color: #FFFFFF !important;
     padding: 20px;
-    border: 4px solid #000000 !important;
+    border: 4px solid #18533A !important;
     border-radius: 10px;
   }
   .fruit-game-container #gameCanvas {
-    border: 4px solid #000000 !important;
+    border: 4px solid #18533A !important;
     margin: 20px auto;
     display: block;
   }
@@ -187,14 +221,15 @@
     justify-content: space-between;
     font-size: 16px;
     margin: 10px 0;
-    color: #000000 !important;
+    color: #18533A !important;
   }
   .fruit-game-container #gameOver,
   .fruit-game-container #leaderboard,
-  .fruit-game-container #reward {
+  .fruit-game-container #reward,
+  .fruit-game-container #productRecommendation {
     margin-top: 20px;
     background-color: #F0F0F0 !important;
-    color: #000000 !important;
+    color: #18533A !important;
     padding: 10px;
     border-radius: 5px;
   }
@@ -212,6 +247,15 @@
   .fruit-game-container #reward {
     font-size: 18px;
     background-color: #E0FFE0 !important;
+  }
+  .fruit-game-container .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #18533A;
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 10px;
   }
 </style>
 
