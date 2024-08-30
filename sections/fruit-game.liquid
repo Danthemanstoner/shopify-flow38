@@ -19,6 +19,7 @@
   </div>
   <div id="reward" style="display: none;">
     YOU GOT A POWER-UP! 10% OFF CODE: <span id="discountCode"></span>
+    <p>Enter this code at checkout to receive your discount!</p>
   </div>
   <div id="productRecommendation" style="display: none;">
     <h3>We think you might like this:</h3>
@@ -47,12 +48,13 @@
   let level = 1;
   let lives = 3;
   let items = [];
-  let playerX = 400;
-  let playerY = 500;
+  let bunnyX = 400;
+  let bunnyY = 550;
   let gameActive = true;
   let cursorSize = 40;
   let backgroundColor = '#FFFFFF';
   const borderColor = '#494949';
+  let poos = [];
 
   const itemTypes = ['🍎', '🍌', '🍇', '🍊', '🍓'];
 
@@ -65,17 +67,31 @@
     };
   }
 
-  function drawKnife(x, y, size) {
-    ctx.fillStyle = '#C0C0C0';
+  function drawBunny(x, y, size) {
+    ctx.fillStyle = '#FFFFFF';
     ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(x - size/4, y + size);
-    ctx.lineTo(x + size/4, y + size);
-    ctx.closePath();
+    ctx.ellipse(x, y, size/2, size, 0, 0, 2 * Math.PI);
     ctx.fill();
     
+    // Draw ears
+    ctx.beginPath();
+    ctx.ellipse(x - size/4, y - size, size/8, size/2, 0, 0, 2 * Math.PI);
+    ctx.ellipse(x + size/4, y - size, size/8, size/2, 0, 0, 2 * Math.PI);
+    ctx.fill();
+    
+    // Draw eyes
+    ctx.fillStyle = '#000000';
+    ctx.beginPath();
+    ctx.arc(x - size/4, y, size/10, 0, 2 * Math.PI);
+    ctx.arc(x + size/4, y, size/10, 0, 2 * Math.PI);
+    ctx.fill();
+  }
+
+  function drawPoo(x, y) {
     ctx.fillStyle = '#8B4513';
-    ctx.fillRect(x - size/8, y + size, size/4, size/2);
+    ctx.beginPath();
+    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+    ctx.fill();
   }
 
   function draw8BitFruit(x, y, size, type) {
@@ -97,8 +113,19 @@
     ctx.lineWidth = 10;
     ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
 
-    // Draw knife cursor
-    drawKnife(playerX, playerY - cursorSize/2, cursorSize);
+    // Draw bunny
+    drawBunny(bunnyX, bunnyY, cursorSize);
+
+    // Update and draw poos
+    for (let i = poos.length - 1; i >= 0; i--) {
+      const poo = poos[i];
+      poo.y -= 5;
+      drawPoo(poo.x, poo.y);
+
+      if (poo.y < 0) {
+        poos.splice(i, 1);
+      }
+    }
 
     // Update and draw items
     for (let i = items.length - 1; i >= 0; i--) {
@@ -107,16 +134,21 @@
 
       draw8BitFruit(item.x, item.y, 60, item.type);
 
-      // Check collision with player
-      if (Math.abs(item.x - playerX) < cursorSize/2 + 30 && Math.abs(item.y - playerY) < cursorSize/2 + 30) {
-        score++;
-        scoreElement.textContent = `SCORE: ${score}`;
-        items.splice(i, 1);
-        if (score % 10 === 0) {
-          level++;
-          levelElement.textContent = `LEVEL ${level}`;
-          cursorSize += 5; // Slower growth
-          backgroundColor = backgroundColor === '#FFFFFF' ? '#18533A' : '#FFFFFF';
+      // Check collision with poos
+      for (let j = poos.length - 1; j >= 0; j--) {
+        const poo = poos[j];
+        if (Math.abs(item.x - poo.x) < 30 && Math.abs(item.y - poo.y) < 30) {
+          score++;
+          scoreElement.textContent = `SCORE: ${score}`;
+          items.splice(i, 1);
+          poos.splice(j, 1);
+          if (score % 10 === 0) {
+            level++;
+            levelElement.textContent = `LEVEL ${level}`;
+            cursorSize += 5; // Slower growth
+            backgroundColor = backgroundColor === '#FFFFFF' ? '#18533A' : '#FFFFFF';
+          }
+          break;
         }
       }
 
@@ -190,17 +222,23 @@
 
   canvas.addEventListener('mousemove', (e) => {
     const rect = canvas.getBoundingClientRect();
-    playerX = (e.clientX - rect.left) * (canvas.width / rect.width);
-    playerY = (e.clientY - rect.top) * (canvas.height / rect.height);
+    bunnyX = (e.clientX - rect.left) * (canvas.width / rect.width);
+  });
+
+  canvas.addEventListener('click', (e) => {
+    poos.push({ x: bunnyX, y: bunnyY });
   });
 
   canvas.addEventListener('touchmove', (e) => {
     e.preventDefault();
     const rect = canvas.getBoundingClientRect();
     const touch = e.touches[0];
-    playerX = (touch.clientX - rect.left) * (canvas.width / rect.width);
-    playerY = (touch.clientY - rect.top) * (canvas.height / rect.height);
+    bunnyX = (touch.clientX - rect.left) * (canvas.width / rect.width);
   }, { passive: false });
+
+  canvas.addEventListener('touchend', (e) => {
+    poos.push({ x: bunnyX, y: bunnyY });
+  });
 
   document.getElementById('leaderboardForm').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -317,11 +355,11 @@
 
 {% schema %}
 {
-  "name": "Fruit Slicing Game",
+  "name": "Fruit Shooting Game",
   "settings": [],
   "presets": [
     {
-      "name": "Fruit Slicing Game",
+      "name": "Fruit Shooting Game",
       "category": "Interactive"
     }
   ]
