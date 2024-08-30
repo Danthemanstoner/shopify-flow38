@@ -1,24 +1,24 @@
-<div class="fruit-game-container">
+<div class="mario-game-container">
   <canvas id="gameCanvas" width="800" height="600"></canvas>
   <div id="gameInfo">
-    <div id="score">Score: 0</div>
-    <div id="level">Level: 1</div>
-    <div id="lives">Lives: ❤️❤️❤️</div>
+    <div id="score">SCORE: 0</div>
+    <div id="level">WORLD 1-1</div>
+    <div id="lives">MARIO x 3</div>
   </div>
   <div id="gameOver" style="display: none;">
-    <h2>Game Over</h2>
-    <p>Your score: <span id="finalScore"></span></p>
+    <h2>GAME OVER</h2>
+    <p>YOUR SCORE: <span id="finalScore"></span></p>
     <form id="leaderboardForm">
       <input type="text" id="playerName" placeholder="Enter your name" required>
       <button type="submit">Submit Score</button>
     </form>
   </div>
   <div id="leaderboard" style="display: none;">
-    <h2>Leaderboard</h2>
+    <h2>HIGH SCORES</h2>
     <ol id="leaderboardList"></ol>
   </div>
   <div id="reward" style="display: none;">
-    Congratulations! You've earned a 10% discount. Use code: <span id="discountCode"></span>
+    YOU GOT A POWER-UP! 10% OFF CODE: <span id="discountCode"></span>
   </div>
 </div>
 
@@ -38,18 +38,22 @@
   let score = 0;
   let level = 1;
   let lives = 3;
-  let fruits = [];
-  let cursorX = 0;
-  let cursorY = 0;
+  let items = [];
+  let marioX = 400;
+  let marioY = 500;
   let gameActive = true;
 
-  const fruitTypes = ['🍎', '🍌', '🍇', '🍊', '🍓'];
+  const itemTypes = ['🍄', '🌟', '🍁', '🪙'];
+  const marioImage = new Image();
+  marioImage.src = 'https://example.com/path-to-mario-sprite.png'; // Replace with actual Mario sprite URL
+  const backgroundImage = new Image();
+  backgroundImage.src = 'https://example.com/path-to-mario-background.png'; // Replace with actual background image URL
 
-  function createFruit() {
+  function createItem() {
     return {
       x: Math.random() * canvas.width,
       y: 0,
-      type: fruitTypes[Math.floor(Math.random() * fruitTypes.length)],
+      type: itemTypes[Math.floor(Math.random() * itemTypes.length)],
       speed: 2 + Math.random() * 3 + (level - 1)
     };
   }
@@ -57,36 +61,33 @@
   function updateGame() {
     if (!gameActive) return;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
-    // Draw cursor
-    ctx.fillStyle = 'blue';
-    ctx.beginPath();
-    ctx.arc(cursorX, cursorY, 20, 0, Math.PI * 2);
-    ctx.fill();
+    // Draw Mario
+    ctx.drawImage(marioImage, marioX - 20, marioY - 40, 40, 40);
 
-    // Update and draw fruits
-    for (let i = fruits.length - 1; i >= 0; i--) {
-      const fruit = fruits[i];
-      fruit.y += fruit.speed;
+    // Update and draw items
+    for (let i = items.length - 1; i >= 0; i--) {
+      const item = items[i];
+      item.y += item.speed;
 
       ctx.font = '30px Arial';
-      ctx.fillText(fruit.type, fruit.x, fruit.y);
+      ctx.fillText(item.type, item.x, item.y);
 
-      // Check collision with cursor
-      if (Math.abs(fruit.x - cursorX) < 30 && Math.abs(fruit.y - cursorY) < 30) {
+      // Check collision with Mario
+      if (Math.abs(item.x - marioX) < 30 && Math.abs(item.y - marioY) < 30) {
         score++;
-        scoreElement.textContent = `Score: ${score}`;
-        fruits.splice(i, 1);
+        scoreElement.textContent = `SCORE: ${score}`;
+        items.splice(i, 1);
         if (score % 10 === 0) {
           level++;
-          levelElement.textContent = `Level: ${level}`;
+          levelElement.textContent = `WORLD 1-${level}`;
         }
       }
 
-      // Remove fruits that fall off screen
-      if (fruit.y > canvas.height) {
-        fruits.splice(i, 1);
+      // Remove items that fall off screen
+      if (item.y > canvas.height) {
+        items.splice(i, 1);
         lives--;
         updateLives();
         if (lives <= 0) {
@@ -96,16 +97,16 @@
       }
     }
 
-    // Add new fruits
+    // Add new items
     if (Math.random() < 0.02 + (level * 0.005)) {
-      fruits.push(createFruit());
+      items.push(createItem());
     }
 
     requestAnimationFrame(updateGame);
   }
 
   function updateLives() {
-    livesElement.textContent = `Lives: ${'❤️'.repeat(lives)}`;
+    livesElement.textContent = `MARIO x ${lives}`;
   }
 
   function gameOver() {
@@ -118,17 +119,15 @@
     const discountCode = generateDiscountCode();
     discountCodeElement.textContent = discountCode;
     rewardElement.style.display = 'block';
-    // Here you would typically send this code to your server to activate it
   }
 
   function generateDiscountCode() {
-    return 'FRUIT' + Math.random().toString(36).substr(2, 5).toUpperCase();
+    return 'MARIO' + Math.random().toString(36).substr(2, 5).toUpperCase();
   }
 
   canvas.addEventListener('mousemove', (e) => {
     const rect = canvas.getBoundingClientRect();
-    cursorX = e.clientX - rect.left;
-    cursorY = e.clientY - rect.top;
+    marioX = e.clientX - rect.left;
   });
 
   document.getElementById('leaderboardForm').addEventListener('submit', (e) => {
@@ -139,16 +138,14 @@
   });
 
   function submitScore(name, score) {
-    // In a real implementation, you'd send this data to your server
-    // For now, we'll just store it in localStorage
-    const leaderboard = JSON.parse(localStorage.getItem('fruitGameLeaderboard') || '[]');
+    const leaderboard = JSON.parse(localStorage.getItem('marioGameLeaderboard') || '[]');
     leaderboard.push({ name, score });
     leaderboard.sort((a, b) => b.score - a.score);
-    localStorage.setItem('fruitGameLeaderboard', JSON.stringify(leaderboard.slice(0, 10)));
+    localStorage.setItem('marioGameLeaderboard', JSON.stringify(leaderboard.slice(0, 10)));
   }
 
   function showLeaderboard() {
-    const leaderboard = JSON.parse(localStorage.getItem('fruitGameLeaderboard') || '[]');
+    const leaderboard = JSON.parse(localStorage.getItem('marioGameLeaderboard') || '[]');
     leaderboardListElement.innerHTML = leaderboard.map(entry => 
       `<li>${entry.name}: ${entry.score}</li>`
     ).join('');
@@ -159,48 +156,61 @@
 </script>
 
 <style>
-  .fruit-game-container {
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+  .mario-game-container {
     text-align: center;
-    font-family: Arial, sans-serif;
+    font-family: 'Press Start 2P', cursive;
     max-width: 800px;
     margin: 0 auto;
+    background-color: #5C94FC;
+    padding: 20px;
+    border: 4px solid #F83800;
+    border-radius: 10px;
   }
   #gameCanvas {
-    border: 1px solid black;
+    border: 4px solid #F83800;
     margin: 20px auto;
     display: block;
   }
   #gameInfo {
     display: flex;
     justify-content: space-between;
-    font-size: 20px;
+    font-size: 16px;
     margin: 10px 0;
+    color: #FFFFFF;
   }
   #gameOver, #leaderboard, #reward {
     margin-top: 20px;
+    background-color: #F83800;
+    color: #FFFFFF;
+    padding: 10px;
+    border-radius: 5px;
   }
   #leaderboardForm input, #leaderboardForm button {
     margin: 10px 0;
     padding: 5px;
     font-size: 16px;
+    font-family: 'Press Start 2P', cursive;
   }
   #leaderboardList {
     list-style-position: inside;
     padding: 0;
+    text-align: left;
   }
   #reward {
     font-size: 18px;
-    color: green;
+    background-color: #00B800;
   }
 </style>
 
 {% schema %}
 {
-  "name": "Fruit Catching Game",
+  "name": "Mario-style Game",
   "settings": [],
   "presets": [
     {
-      "name": "Fruit Catching Game",
+      "name": "Mario-style Game",
       "category": "Interactive"
     }
   ]
