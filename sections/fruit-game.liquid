@@ -1,9 +1,9 @@
-<div class="mario-game-container">
+<div class="fruit-game-container">
   <canvas id="gameCanvas" width="800" height="600"></canvas>
   <div id="gameInfo">
     <div id="score">SCORE: 0</div>
-    <div id="level">WORLD 1-1</div>
-    <div id="lives">MARIO x 3</div>
+    <div id="level">LEVEL 1</div>
+    <div id="lives">LIVES: 3</div>
   </div>
   <div id="gameOver" style="display: none;">
     <h2>GAME OVER</h2>
@@ -41,11 +41,11 @@
   let level = 1;
   let lives = 3;
   let items = [];
-  let marioX = 400;
-  let marioY = 500;
+  let playerX = 400;
+  let playerY = 500;
   let gameActive = true;
 
-  const itemTypes = ['🍄', '🌟', '🍁', '🪙'];
+  const itemTypes = ['🍎', '🍌', '🍇', '🍊', '🍓'];
 
   function createItem() {
     return {
@@ -63,12 +63,14 @@
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw background
-    ctx.fillStyle = '#5C94FC';
+    ctx.fillStyle = '#FFFFFF';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Draw Mario
-    ctx.fillStyle = 'red';
-    ctx.fillRect(marioX - 20, marioY - 40, 40, 40);
+    // Draw player
+    ctx.fillStyle = '#000000';
+    ctx.beginPath();
+    ctx.arc(playerX, playerY - 20, 20, 0, Math.PI * 2);
+    ctx.fill();
 
     // Update and draw items
     for (let i = items.length - 1; i >= 0; i--) {
@@ -78,14 +80,14 @@
       ctx.font = '30px Arial';
       ctx.fillText(item.type, item.x, item.y);
 
-      // Check collision with Mario
-      if (Math.abs(item.x - marioX) < 30 && Math.abs(item.y - marioY) < 30) {
+      // Check collision with player
+      if (Math.abs(item.x - playerX) < 30 && Math.abs(item.y - playerY) < 30) {
         score++;
         scoreElement.textContent = `SCORE: ${score}`;
         items.splice(i, 1);
         if (score % 10 === 0) {
           level++;
-          levelElement.textContent = `WORLD 1-${level}`;
+          levelElement.textContent = `LEVEL ${level}`;
         }
       }
 
@@ -110,13 +112,14 @@
   }
 
   function updateLives() {
-    livesElement.textContent = `MARIO x ${lives}`;
+    livesElement.textContent = `LIVES: ${lives}`;
   }
 
   function gameOver() {
     gameActive = false;
     gameOverElement.style.display = 'block';
     finalScoreElement.textContent = score;
+    showReward();
   }
 
   function showReward() {
@@ -126,12 +129,12 @@
   }
 
   function generateDiscountCode() {
-    return 'MARIO' + Math.random().toString(36).substr(2, 5).toUpperCase();
+    return 'FRUIT' + Math.random().toString(36).substr(2, 5).toUpperCase();
   }
 
   canvas.addEventListener('mousemove', (e) => {
     const rect = canvas.getBoundingClientRect();
-    marioX = e.clientX - rect.left;
+    playerX = e.clientX - rect.left;
   });
 
   document.getElementById('leaderboardForm').addEventListener('submit', (e) => {
@@ -142,14 +145,14 @@
   });
 
   function submitScore(name, score) {
-    const leaderboard = JSON.parse(localStorage.getItem('marioGameLeaderboard') || '[]');
+    const leaderboard = JSON.parse(localStorage.getItem('fruitGameLeaderboard') || '[]');
     leaderboard.push({ name, score });
     leaderboard.sort((a, b) => b.score - a.score);
-    localStorage.setItem('marioGameLeaderboard', JSON.stringify(leaderboard.slice(0, 10)));
+    localStorage.setItem('fruitGameLeaderboard', JSON.stringify(leaderboard.slice(0, 10)));
   }
 
   function showLeaderboard() {
-    const leaderboard = JSON.parse(localStorage.getItem('marioGameLeaderboard') || '[]');
+    const leaderboard = JSON.parse(localStorage.getItem('fruitGameLeaderboard') || '[]');
     leaderboardListElement.innerHTML = leaderboard.map(entry => 
       `<li>${entry.name}: ${entry.score}</li>`
     ).join('');
@@ -161,65 +164,64 @@
 </script>
 
 <style>
-  /* Add this line to ensure styles are scoped to the game container */
-  .mario-game-container * {
-    font-family: 'Press Start 2P', cursive !important;
+  .fruit-game-container * {
+    font-family: Arial, sans-serif !important;
   }
 
-  .mario-game-container {
+  .fruit-game-container {
     text-align: center;
     max-width: 800px;
     margin: 0 auto;
-    background-color: #5C94FC !important;
+    background-color: #FFFFFF !important;
     padding: 20px;
-    border: 4px solid #F83800 !important;
+    border: 4px solid #000000 !important;
     border-radius: 10px;
   }
-  .mario-game-container #gameCanvas {
-    border: 4px solid #F83800 !important;
+  .fruit-game-container #gameCanvas {
+    border: 4px solid #000000 !important;
     margin: 20px auto;
     display: block;
   }
-  .mario-game-container #gameInfo {
+  .fruit-game-container #gameInfo {
     display: flex;
     justify-content: space-between;
     font-size: 16px;
     margin: 10px 0;
-    color: #FFFFFF !important;
+    color: #000000 !important;
   }
-  .mario-game-container #gameOver,
-  .mario-game-container #leaderboard,
-  .mario-game-container #reward {
+  .fruit-game-container #gameOver,
+  .fruit-game-container #leaderboard,
+  .fruit-game-container #reward {
     margin-top: 20px;
-    background-color: #F83800 !important;
-    color: #FFFFFF !important;
+    background-color: #F0F0F0 !important;
+    color: #000000 !important;
     padding: 10px;
     border-radius: 5px;
   }
-  .mario-game-container #leaderboardForm input,
-  .mario-game-container #leaderboardForm button {
+  .fruit-game-container #leaderboardForm input,
+  .fruit-game-container #leaderboardForm button {
     margin: 10px 0;
     padding: 5px;
     font-size: 16px;
   }
-  .mario-game-container #leaderboardList {
+  .fruit-game-container #leaderboardList {
     list-style-position: inside;
     padding: 0;
     text-align: left;
   }
-  .mario-game-container #reward {
+  .fruit-game-container #reward {
     font-size: 18px;
-    background-color: #00B800 !important;
+    background-color: #E0FFE0 !important;
   }
 </style>
 
 {% schema %}
 {
-  "name": "Mario-style Game",
+  "name": "Fruit Catching Game",
   "settings": [],
   "presets": [
     {
-      "name": "Mario-style Game",
+      "name": "Fruit Catching Game",
       "category": "Interactive"
     }
   ]
