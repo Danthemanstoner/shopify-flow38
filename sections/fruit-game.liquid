@@ -60,7 +60,7 @@
     return {
       x: Math.random() * (canvas.width - 80) + 40,
       y: -80,
-      type: itemTypes[Math.floor(Math.random() * itemTypes.length)],
+      type: itemTypes[(level - 1) % itemTypes.length],
       speed: 1 + Math.random() * 2 + (level - 1) * 0.5
     };
   }
@@ -115,7 +115,7 @@
         if (score % 10 === 0) {
           level++;
           levelElement.textContent = `LEVEL ${level}`;
-          cursorSize += 10;
+          cursorSize += 5; // Slower growth
           backgroundColor = backgroundColor === '#FFFFFF' ? '#18533A' : '#FFFFFF';
         }
       }
@@ -180,11 +180,27 @@
     }
   }
 
+  function resizeCanvas() {
+    const container = canvas.parentElement;
+    const containerWidth = container.clientWidth;
+    const scale = containerWidth / 800;
+    canvas.style.transform = `scale(${scale})`;
+    canvas.style.transformOrigin = 'top left';
+  }
+
   canvas.addEventListener('mousemove', (e) => {
     const rect = canvas.getBoundingClientRect();
     playerX = e.clientX - rect.left;
     playerY = e.clientY - rect.top;
   });
+
+  canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    playerX = touch.clientX - rect.left;
+    playerY = touch.clientY - rect.top;
+  }, { passive: false });
 
   document.getElementById('leaderboardForm').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -207,6 +223,9 @@
     ).join('');
     leaderboardElement.style.display = 'block';
   }
+
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
 
   console.log('Starting game loop');
   updateGame();
