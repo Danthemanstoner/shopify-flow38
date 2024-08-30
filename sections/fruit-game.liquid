@@ -121,6 +121,10 @@
         }
       }
     }
+
+    // Draw emoji on top for clarity
+    ctx.font = `${size * 0.8}px Arial`;
+    ctx.fillText(type, x + size/2, y + size/2);
   }
 
   const fruitPixels = {
@@ -207,7 +211,7 @@
     // Update and draw poos
     for (let i = poos.length - 1; i >= 0; i--) {
       const poo = poos[i];
-      poo.y -= 8; // Increased speed
+      poo.y -= 8;
       drawPoo(poo.x, poo.y);
 
       if (poo.y < 0) {
@@ -250,9 +254,10 @@
       // Check collision with poos
       for (let j = poos.length - 1; j >= 0; j--) {
         const poo = poos[j];
-        if (Math.abs(item.x - poo.x) < 50 && Math.abs(item.y - poo.y) < 50) { // Increased collision area
+        if (Math.abs(item.x - poo.x) < 50 && Math.abs(item.y - poo.y) < 50) {
           if (item.type !== 'spareLife') {
             score++;
+            fruitCollected[item.type]++;
             scoreElement.textContent = `SCORE: ${score}`;
           }
           items.splice(i, 1);
@@ -282,7 +287,7 @@
     }
 
     // Add new items
-    if (Math.random() < 0.02 + (level * 0.005)) {
+    if (Math.random() < 0.01 + (level * 0.002)) { // Reduced frequency
       if (level % 10 === 0 && Math.random() < 0.1) {
         items.push({
           x: Math.random() * (canvas.width - 80) + 40,
