@@ -11,6 +11,7 @@
   "sections": {
     "main": {
       "type": "template--page",
+      "disabled": true,
       "settings": {
         "page_title_enabled": true,
         "page_width": "narrow"
