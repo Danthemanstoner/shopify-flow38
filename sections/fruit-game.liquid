@@ -68,7 +68,7 @@
   }
 
   function drawBunny(x, y, size) {
-    ctx.fillStyle = '#FFFFFF';
+    ctx.fillStyle = '#808080'; // Changed to grey
     ctx.beginPath();
     ctx.ellipse(x, y, size/2, size, 0, 0, 2 * Math.PI);
     ctx.fill();
@@ -90,7 +90,7 @@
   function drawPoo(x, y) {
     ctx.fillStyle = '#8B4513';
     ctx.beginPath();
-    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+    ctx.arc(x, y, 10, 0, 2 * Math.PI); // Increased size for better visibility
     ctx.fill();
   }
 
@@ -137,7 +137,7 @@
       // Check collision with poos
       for (let j = poos.length - 1; j >= 0; j--) {
         const poo = poos[j];
-        if (Math.abs(item.x - poo.x) < 30 && Math.abs(item.y - poo.y) < 30) {
+        if (Math.abs(item.x - poo.x) < 40 && Math.abs(item.y - poo.y) < 40) { // Increased collision area
           score++;
           scoreElement.textContent = `SCORE: ${score}`;
           items.splice(i, 1);
