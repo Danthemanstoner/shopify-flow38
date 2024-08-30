@@ -66,6 +66,11 @@
 
   const itemTypes = ['🍎', '🍌', '🍇', '🍊', '🍓'];
 
+  const fruitEmojis = ['🍎', '🍌', '🍇', '🍊', '🍓'];
+  const collectSound = new Audio('https://example.com/collect.mp3');
+  const shootSound = new Audio('https://example.com/shoot.mp3');
+  const explosionSound = new Audio('https://example.com/explosion.mp3');
+
   function createItem() {
     return {
       x: Math.random() * (canvas.width - 80) + 40,
@@ -110,82 +115,49 @@
     ctx.fill();
   }
 
-  function draw8BitFruit(x, y, size, type) {
-    const pixelSize = size / 8;
+  function drawPixelatedFruit(x, y, size, type) {
+    ctx.font = `${size}px Arial`;
+    ctx.imageSmoothingEnabled = false;
     
-    for (let i = 0; i < 8; i++) {
-      for (let j = 0; j < 8; j++) {
-        if (fruitPixels[type][i][j]) {
-          ctx.fillStyle = getFruitColor(type, fruitPixels[type][i][j]);
-          ctx.fillRect(x + j * pixelSize, y + i * pixelSize, pixelSize, pixelSize);
-        }
-      }
-    }
+    // Draw to a temporary canvas and scale up for pixelation effect
+    const tempCanvas = document.createElement('canvas');
+    const tempCtx = tempCanvas.getContext('2d');
+    tempCanvas.width = size / 4;
+    tempCanvas.height = size / 4;
+    tempCtx.font = `${size / 4}px Arial`;
+    tempCtx.fillText(type, 0, size / 4);
+    
+    ctx.drawImage(tempCanvas, x, y, size, size);
+    ctx.imageSmoothingEnabled = true;
   }
 
-  const fruitPixels = {
-    '🍎': [
-      [0,0,0,2,2,0,0,0],
-      [0,0,1,1,1,1,0,0],
-      [0,1,1,1,1,1,1,0],
-      [1,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1],
-      [0,1,1,1,1,1,1,0],
-      [0,0,1,1,1,1,0,0]
-    ],
-    '🍌': [
-      [0,0,0,0,0,1,1,1],
-      [0,0,0,0,1,1,1,0],
-      [0,0,0,1,1,1,0,0],
-      [0,0,1,1,1,0,0,0],
-      [0,1,1,1,0,0,0,0],
-      [1,1,1,0,0,0,0,0],
-      [1,1,0,0,0,0,0,0],
-      [1,0,0,0,0,0,0,0]
-    ],
-    '🍇': [
-      [0,1,0,1,0,1,0,0],
-      [1,1,1,1,1,1,1,0],
-      [1,1,1,1,1,1,1,1],
-      [0,1,1,1,1,1,1,1],
-      [0,1,1,1,1,1,1,0],
-      [0,0,1,1,1,1,0,0],
-      [0,0,0,1,1,0,0,0],
-      [0,0,0,0,1,0,0,0]
-    ],
-    '🍊': [
-      [0,0,0,1,1,0,0,0],
-      [0,0,1,2,2,1,0,0],
-      [0,1,1,1,1,1,1,0],
-      [1,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1],
-      [0,1,1,1,1,1,1,0],
-      [0,0,1,1,1,1,0,0]
-    ],
-    '🍓': [
-      [0,0,2,2,2,2,0,0],
-      [0,2,1,1,1,1,2,0],
-      [2,1,1,1,1,1,1,2],
-      [1,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1],
-      [0,1,1,1,1,1,1,0],
-      [0,0,1,1,1,1,0,0],
-      [0,0,0,1,1,0,0,0]
-    ]
-  };
+  function createParticles(x, y, color) {
+    const particleCount = 20;
+    const particles = [];
 
-  function getFruitColor(type, shade) {
-    const baseColor = {
-      '🍎': ['#FF0000', '#8B0000', '#00FF00'],
-      '🍌': ['#FFD700', '#DAA520'],
-      '🍇': ['#800080', '#4B0082'],
-      '🍊': ['#FFA500', '#FF8C00', '#006400'],
-      '🍓': ['#FF69B4', '#C71585', '#228B22']
-    }[type];
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: x,
+        y: y,
+        size: Math.random() * 3 + 1,
+        speedX: (Math.random() - 0.5) * 5,
+        speedY: (Math.random() - 0.5) * 5,
+        color: color
+      });
+    }
 
-    return baseColor[shade - 1] || baseColor[0];
+    return particles;
+  }
+
+  function getFruitColor(type) {
+    switch(type) {
+      case '🍎': return '#FF0000';
+      case '🍌': return '#FFD700';
+      case '🍇': return '#800080';
+      case '🍊': return '#FFA500';
+      case '🍓': return '#FF69B4';
+      default: return '#000000';
+    }
   }
 
   function updateGame() {
@@ -224,7 +196,7 @@
       if (item.type === 'spareLife') {
         drawBunny(item.x, item.y, 30, true);
       } else {
-        draw8BitFruit(item.x, item.y, 60, item.type);
+        drawPixelatedFruit(item.x, item.y, 40, item.type);
       }
 
       // Check collision with bunny
@@ -237,7 +209,9 @@
           score++;
           fruitCollected[item.type]++;
           scoreElement.textContent = `SCORE: ${score}`;
+          item.particles = createParticles(item.x, item.y, getFruitColor(item.type));
         }
+        collectSound.play();
         items.splice(i, 1);
         if (score % 10 === 0) {
           level++;
@@ -251,12 +225,14 @@
       // Check collision with poos
       for (let j = poos.length - 1; j >= 0; j--) {
         const poo = poos[j];
-        if (Math.abs(item.x - poo.x) < 50 && Math.abs(item.y - poo.y) < 50) {
+        if (Math.abs(item.x - poo.x) < 30 && Math.abs(item.y - poo.y) < 30) {
           if (item.type !== 'spareLife') {
             score++;
             fruitCollected[item.type]++;
             scoreElement.textContent = `SCORE: ${score}`;
+            item.particles = createParticles(item.x, item.y, getFruitColor(item.type));
           }
+          explosionSound.play();
           items.splice(i, 1);
           poos.splice(j, 1);
           if (score % 10 === 0) {
@@ -267,6 +243,22 @@
           }
           break;
         }
+      }
+
+      // Draw particles
+      if (item.particles) {
+        item.particles.forEach((particle, index) => {
+          particle.x += particle.speedX;
+          particle.y += particle.speedY;
+          particle.size *= 0.95;
+
+          ctx.fillStyle = particle.color;
+          ctx.fillRect(particle.x, particle.y, particle.size, particle.size);
+
+          if (particle.size <= 0.5) {
+            item.particles.splice(index, 1);
+          }
+        });
       }
 
       // Remove items that fall off screen
@@ -373,6 +365,7 @@
   canvas.addEventListener('click', (e) => {
     poos.push({ x: bunnyX, y: bunnyY });
     poopsFired++;
+    shootSound.play();
   });
 
   canvas.addEventListener('touchmove', (e) => {
@@ -385,6 +378,7 @@
   canvas.addEventListener('touchend', (e) => {
     poos.push({ x: bunnyX, y: bunnyY });
     poopsFired++;
+    shootSound.play();
   });
 
   document.getElementById('leaderboardForm').addEventListener('submit', (e) => {
