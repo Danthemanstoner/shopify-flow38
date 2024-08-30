@@ -75,116 +75,104 @@
 
   let isBossLevel = false;
 
-  function drawPixelatedBunny(x, y, size) {
-    const pixelSize = size / 16;
-    const bunnyPixels = [
-      [0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0],
-      [0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],
-      [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-      [0,1,1,1,2,2,1,1,1,1,2,2,1,1,1,0],
-      [1,1,1,2,2,2,2,1,1,2,2,2,2,1,1,1],
-      [1,1,1,2,2,2,2,1,1,2,2,2,2,1,1,1],
-      [1,1,1,2,2,2,2,1,1,2,2,2,2,1,1,1],
-      [1,1,1,1,2,2,1,1,1,1,2,2,1,1,1,1],
-      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-      [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-      [0,1,1,1,1,1,1,0,0,1,1,1,1,1,1,0],
-      [0,0,1,1,1,1,0,0,0,0,1,1,1,1,0,0],
-      [0,0,0,1,1,0,0,0,0,0,0,1,1,0,0,0],
-      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-    ];
+  function drawArcadeBunny(x, y, size) {
+    ctx.fillStyle = '#FFFFFF';
+    ctx.beginPath();
+    ctx.ellipse(x, y, size/2, size/1.5, 0, 0, Math.PI * 2);
+    ctx.fill();
 
-    const colors = ['transparent', '#A0A0A0', '#000000'];
+    // Ears
+    ctx.fillStyle = '#FFCCCC';
+    ctx.beginPath();
+    ctx.ellipse(x - size/3, y - size/2, size/6, size/3, -Math.PI/6, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.ellipse(x + size/3, y - size/2, size/6, size/3, Math.PI/6, 0, Math.PI * 2);
+    ctx.fill();
 
-    for (let i = 0; i < 16; i++) {
-      for (let j = 0; j < 16; j++) {
-        const colorIndex = bunnyPixels[i][j];
-        if (colorIndex !== 0) {
-          ctx.fillStyle = colors[colorIndex];
-          ctx.fillRect(x + j * pixelSize - size/2, y + i * pixelSize - size/2, pixelSize, pixelSize);
-        }
-      }
-    }
+    // Eyes
+    ctx.fillStyle = '#000000';
+    ctx.beginPath();
+    ctx.arc(x - size/6, y - size/10, size/10, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(x + size/6, y - size/10, size/10, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Nose
+    ctx.fillStyle = '#FF9999';
+    ctx.beginPath();
+    ctx.ellipse(x, y + size/10, size/10, size/15, 0, 0, Math.PI * 2);
+    ctx.fill();
   }
 
-  function drawPixelatedFruit(x, y, size, type) {
-    const pixelSize = size / 16;
-    let fruitPixels;
-    let colors;
-
-    if (type === '🍎') {
-      fruitPixels = [
-        [0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0],
-        [0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0],
-        [0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0],
-        [0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],
-        [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-        [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-        [0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],
-        [0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0],
-        [0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0]
-      ];
-      colors = ['transparent', '#FF0000', '#000000'];
-    } else if (type === '🥕') {
-      fruitPixels = [
-        [0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0],
-        [0,0,0,0,0,0,0,0,0,0,1,1,2,1,1,0],
-        [0,0,0,0,0,0,0,0,0,1,1,2,2,2,1,0],
-        [0,0,0,0,0,0,0,0,1,1,2,2,2,1,0,0],
-        [0,0,0,0,0,0,0,1,1,2,2,2,1,0,0,0],
-        [0,0,0,0,0,0,1,1,2,2,2,1,0,0,0,0],
-        [0,0,0,0,0,1,1,2,2,2,1,0,0,0,0,0],
-        [0,0,0,0,1,1,2,2,2,1,0,0,0,0,0,0],
-        [0,0,0,1,1,2,2,2,1,0,0,0,0,0,0,0],
-        [0,0,1,1,2,2,2,1,0,0,0,0,0,0,0,0],
-        [0,1,1,2,2,2,1,0,0,0,0,0,0,0,0,0],
-        [1,1,2,2,2,1,0,0,0,0,0,0,0,0,0,0],
-        [1,2,2,2,1,0,0,0,0,0,0,0,0,0,0,0],
-        [1,2,2,1,0,0,0,0,0,0,0,0,0,0,0,0],
-        [1,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
-        [1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-      ];
-      colors = ['transparent', '#FFA500', '#00FF00', '#000000'];
-    } else {
-      // Default fruit (strawberry-like)
-      fruitPixels = [
-        [0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0],
-        [0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0],
-        [0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0],
-        [0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],
-        [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-        [0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0],
-        [0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0],
-        [0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0],
-        [0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0],
-        [0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0]
-      ];
-      colors = ['transparent', '#FF0000', '#00FF00', '#000000'];
-    }
-
-    for (let i = 0; i < 16; i++) {
-      for (let j = 0; j < 16; j++) {
-        const colorIndex = fruitPixels[i][j];
-        if (colorIndex !== 0) {
-          ctx.fillStyle = colors[colorIndex];
-          ctx.fillRect(x + j * pixelSize - size/2, y + i * pixelSize - size/2, pixelSize, pixelSize);
+  function drawArcadeFruit(x, y, size, type) {
+    switch(type) {
+      case '🍎':
+        // Apple
+        ctx.fillStyle = '#FF0000';
+        ctx.beginPath();
+        ctx.arc(x, y, size/2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#00AA00';
+        ctx.fillRect(x - size/20, y - size/2, size/10, size/4);
+        break;
+      case '🍌':
+        // Banana
+        ctx.fillStyle = '#FFE135';
+        ctx.beginPath();
+        ctx.ellipse(x, y, size/3, size/2, Math.PI/4, 0, Math.PI * 2);
+        ctx.fill();
+        break;
+      case '🍇':
+        // Grapes
+        ctx.fillStyle = '#6B2C91';
+        for(let i = 0; i < 3; i++) {
+          for(let j = 0; j < 3; j++) {
+            ctx.beginPath();
+            ctx.arc(x + (i-1)*size/4, y + (j-1)*size/4, size/6, 0, Math.PI * 2);
+            ctx.fill();
+          }
         }
-      }
+        break;
+      case '🍊':
+        // Orange
+        ctx.fillStyle = '#FFA500';
+        ctx.beginPath();
+        ctx.arc(x, y, size/2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#00AA00';
+        ctx.fillRect(x - size/20, y - size/2, size/10, size/4);
+        break;
+      case '🍓':
+        // Strawberry
+        ctx.fillStyle = '#FF0000';
+        ctx.beginPath();
+        ctx.moveTo(x, y - size/2);
+        ctx.bezierCurveTo(x + size/2, y - size/2, x + size/2, y + size/2, x, y + size/2);
+        ctx.bezierCurveTo(x - size/2, y + size/2, x - size/2, y - size/2, x, y - size/2);
+        ctx.fill();
+        ctx.fillStyle = '#00AA00';
+        ctx.beginPath();
+        ctx.moveTo(x - size/4, y - size/2);
+        ctx.lineTo(x, y - size/3);
+        ctx.lineTo(x + size/4, y - size/2);
+        ctx.fill();
+        break;
+      case '🥕':
+        // Carrot
+        ctx.fillStyle = '#FFA500';
+        ctx.beginPath();
+        ctx.moveTo(x, y - size/2);
+        ctx.lineTo(x - size/3, y + size/2);
+        ctx.lineTo(x + size/3, y + size/2);
+        ctx.closePath();
+        ctx.fill();
+        ctx.fillStyle = '#00AA00';
+        ctx.beginPath();
+        ctx.ellipse(x, y - size/2, size/4, size/8, 0, 0, Math.PI);
+        ctx.fill();
+        break;
     }
   }
 
@@ -245,7 +233,7 @@
     ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
 
     // Draw bunny
-    drawPixelatedBunny(bunnyX, bunnyY, cursorSize);
+    drawArcadeBunny(bunnyX, bunnyY, cursorSize);
 
     // Update and draw poos
     for (let i = poos.length - 1; i >= 0; i--) {
@@ -264,9 +252,9 @@
       item.y += item.speed;
 
       if (item.type === 'spareLife') {
-        drawPixelatedBunny(item.x, item.y, 30);
+        drawArcadeBunny(item.x, item.y, 30);
       } else {
-        drawPixelatedFruit(item.x, item.y, 40, item.type);
+        drawArcadeFruit(item.x, item.y, 40, item.type);
       }
 
       // Check collision with bunny
