@@ -55,6 +55,7 @@
   let backgroundColor = '#FFFFFF';
   const borderColor = '#494949';
   let poos = [];
+  let spareLives = [];
 
   const itemTypes = ['🍎', '🍌', '🍇', '🍊', '🍓'];
 
@@ -67,30 +68,38 @@
     };
   }
 
-  function drawBunny(x, y, size) {
-    ctx.fillStyle = '#808080'; // Changed to grey
-    ctx.beginPath();
-    ctx.ellipse(x, y, size/2, size, 0, 0, 2 * Math.PI);
-    ctx.fill();
+  function drawBunny(x, y, size, isSpareLife = false) {
+    ctx.fillStyle = '#808080'; // Grey color
+    ctx.fillRect(x - size/2, y - size, size, size * 1.5); // Body
     
-    // Draw ears
-    ctx.beginPath();
-    ctx.ellipse(x - size/4, y - size, size/8, size/2, 0, 0, 2 * Math.PI);
-    ctx.ellipse(x + size/4, y - size, size/8, size/2, 0, 0, 2 * Math.PI);
-    ctx.fill();
+    // Ears
+    ctx.fillRect(x - size/2, y - size * 1.5, size/4, size/2); // Left ear
+    ctx.fillRect(x + size/4, y - size * 1.5, size/4, size/2); // Right ear
     
-    // Draw eyes
+    // Eyes
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(x - size/3, y - size * 0.8, size/4, size/4); // Left eye
+    ctx.fillRect(x + size/12, y - size * 0.8, size/4, size/4); // Right eye
+    
     ctx.fillStyle = '#000000';
-    ctx.beginPath();
-    ctx.arc(x - size/4, y, size/10, 0, 2 * Math.PI);
-    ctx.arc(x + size/4, y, size/10, 0, 2 * Math.PI);
-    ctx.fill();
+    ctx.fillRect(x - size/4, y - size * 0.7, size/8, size/8); // Left pupil
+    ctx.fillRect(x + size/6, y - size * 0.7, size/8, size/8); // Right pupil
+    
+    // Nose
+    ctx.fillStyle = '#FFC0CB';
+    ctx.fillRect(x - size/8, y - size * 0.5, size/4, size/8);
+    
+    if (isSpareLife) {
+      ctx.strokeStyle = '#00FF00';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(x - size/2 - 2, y - size - 2, size + 4, size * 1.5 + 4);
+    }
   }
 
   function drawPoo(x, y) {
     ctx.fillStyle = '#8B4513';
     ctx.beginPath();
-    ctx.arc(x, y, 10, 0, 2 * Math.PI); // Increased size for better visibility
+    ctx.arc(x, y, 15, 0, 2 * Math.PI); // Increased size for better visibility
     ctx.fill();
   }
 
@@ -119,7 +128,7 @@
     // Update and draw poos
     for (let i = poos.length - 1; i >= 0; i--) {
       const poo = poos[i];
-      poo.y -= 5;
+      poo.y -= 8; // Increased speed
       drawPoo(poo.x, poo.y);
 
       if (poo.y < 0) {
@@ -127,19 +136,44 @@
       }
     }
 
-    // Update and draw items
+    // Update and draw items and spare lives
     for (let i = items.length - 1; i >= 0; i--) {
       const item = items[i];
       item.y += item.speed;
 
-      draw8BitFruit(item.x, item.y, 60, item.type);
+      if (item.type === 'spareLife') {
+        drawBunny(item.x, item.y, 30, true);
+      } else {
+        draw8BitFruit(item.x, item.y, 60, item.type);
+      }
+
+      // Check collision with bunny
+      if (Math.abs(item.x - bunnyX) < 40 && Math.abs(item.y - bunnyY) < 40) {
+        if (item.type === 'spareLife') {
+          lives++;
+          updateLives();
+        } else {
+          score++;
+          scoreElement.textContent = `SCORE: ${score}`;
+        }
+        items.splice(i, 1);
+        if (score % 10 === 0) {
+          level++;
+          levelElement.textContent = `LEVEL ${level}`;
+          cursorSize += 5; // Slower growth
+          backgroundColor = backgroundColor === '#FFFFFF' ? '#18533A' : '#FFFFFF';
+        }
+        continue;
+      }
 
       // Check collision with poos
       for (let j = poos.length - 1; j >= 0; j--) {
         const poo = poos[j];
-        if (Math.abs(item.x - poo.x) < 40 && Math.abs(item.y - poo.y) < 40) { // Increased collision area
-          score++;
-          scoreElement.textContent = `SCORE: ${score}`;
+        if (Math.abs(item.x - poo.x) < 50 && Math.abs(item.y - poo.y) < 50) { // Increased collision area
+          if (item.type !== 'spareLife') {
+            score++;
+            scoreElement.textContent = `SCORE: ${score}`;
+          }
           items.splice(i, 1);
           poos.splice(j, 1);
           if (score % 10 === 0) {
@@ -155,18 +189,29 @@
       // Remove items that fall off screen
       if (item.y > canvas.height) {
         items.splice(i, 1);
-        lives--;
-        updateLives();
-        if (lives <= 0) {
-          gameOver();
-          return;
+        if (item.type !== 'spareLife') {
+          lives--;
+          updateLives();
+          if (lives <= 0) {
+            gameOver();
+            return;
+          }
         }
       }
     }
 
     // Add new items
     if (Math.random() < 0.02 + (level * 0.005)) {
-      items.push(createItem());
+      if (level % 10 === 0 && Math.random() < 0.1) {
+        items.push({
+          x: Math.random() * (canvas.width - 80) + 40,
+          y: -80,
+          type: 'spareLife',
+          speed: 1 + Math.random() * 2
+        });
+      } else {
+        items.push(createItem());
+      }
     }
 
     requestAnimationFrame(updateGame);
