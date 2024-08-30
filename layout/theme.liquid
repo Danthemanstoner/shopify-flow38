@@ -1,6 +1,7 @@
 <!doctype html>
 <html class="no-js" lang="{{ request.locale.iso_code }}">
 <head>
+  
   <!-- Basic page needs ================================================== -->
   <meta charset="utf-8">
   {%- comment -%}DemoStoreRequirements{%- endcomment -%}
@@ -197,7 +198,9 @@
   {% endif %}
 
   <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
-{% include 'kart_discount' %}</head>
+
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
 
 {% comment %}
   Add the page template as a class for easy page or template specific styling.

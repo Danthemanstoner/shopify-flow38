@@ -156,53 +156,59 @@
 </script>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+  /* Add this line to ensure styles are scoped to the game container */
+  .mario-game-container * {
+    font-family: 'Press Start 2P', cursive !important;
+  }
 
   .mario-game-container {
     text-align: center;
-    font-family: 'Press Start 2P', cursive;
     max-width: 800px;
     margin: 0 auto;
-    background-color: #5C94FC;
+    background-color: #5C94FC !important;
     padding: 20px;
-    border: 4px solid #F83800;
+    border: 4px solid #F83800 !important;
     border-radius: 10px;
   }
-  #gameCanvas {
-    border: 4px solid #F83800;
+  .mario-game-container #gameCanvas {
+    border: 4px solid #F83800 !important;
     margin: 20px auto;
     display: block;
   }
-  #gameInfo {
+  .mario-game-container #gameInfo {
     display: flex;
     justify-content: space-between;
     font-size: 16px;
     margin: 10px 0;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
   }
-  #gameOver, #leaderboard, #reward {
+  .mario-game-container #gameOver,
+  .mario-game-container #leaderboard,
+  .mario-game-container #reward {
     margin-top: 20px;
-    background-color: #F83800;
-    color: #FFFFFF;
+    background-color: #F83800 !important;
+    color: #FFFFFF !important;
     padding: 10px;
     border-radius: 5px;
   }
-  #leaderboardForm input, #leaderboardForm button {
+  .mario-game-container #leaderboardForm input,
+  .mario-game-container #leaderboardForm button {
     margin: 10px 0;
     padding: 5px;
     font-size: 16px;
-    font-family: 'Press Start 2P', cursive;
   }
-  #leaderboardList {
+  .mario-game-container #leaderboardList {
     list-style-position: inside;
     padding: 0;
     text-align: left;
   }
-  #reward {
+  .mario-game-container #reward {
     font-size: 18px;
-    background-color: #00B800;
+    background-color: #00B800 !important;
   }
 </style>
+
+<!-- ... schema ... -->
 
 {% schema %}
 {
