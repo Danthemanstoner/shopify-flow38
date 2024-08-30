@@ -57,6 +57,13 @@
   let poos = [];
   let spareLives = [];
 
+  let startTime;
+  let poopsFired = 0;
+  let fruitCollected = {
+    '🍎': 0, '🍌': 0, '🍇': 0, '🍊': 0, '🍓': 0
+  };
+  let extraLivesCollected = 0;
+
   const itemTypes = ['🍎', '🍌', '🍇', '🍊', '🍓'];
 
   function createItem() {
@@ -104,8 +111,80 @@
   }
 
   function draw8BitFruit(x, y, size, type) {
-    ctx.font = `${size}px Arial`;
-    ctx.fillText(type, x, y);
+    const pixelSize = size / 8;
+    ctx.fillStyle = getFruitColor(type);
+    
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
+        if (fruitPixels[type][i][j]) {
+          ctx.fillRect(x + j * pixelSize, y + i * pixelSize, pixelSize, pixelSize);
+        }
+      }
+    }
+  }
+
+  const fruitPixels = {
+    '🍎': [
+      [0,0,0,1,1,0,0,0],
+      [0,0,1,1,1,1,0,0],
+      [0,1,1,1,1,1,1,0],
+      [1,1,1,1,1,1,1,1],
+      [1,1,1,1,1,1,1,1],
+      [0,1,1,1,1,1,1,0],
+      [0,0,1,1,1,1,0,0],
+      [0,0,0,1,1,0,0,0]
+    ],
+    '🍌': [
+      [0,0,0,0,0,1,1,0],
+      [0,0,0,0,1,1,1,0],
+      [0,0,0,1,1,1,0,0],
+      [0,0,1,1,1,0,0,0],
+      [0,1,1,1,0,0,0,0],
+      [1,1,1,0,0,0,0,0],
+      [1,1,0,0,0,0,0,0],
+      [1,0,0,0,0,0,0,0]
+    ],
+    '🍇': [
+      [0,1,0,1,0,1,0,0],
+      [1,1,1,1,1,1,1,0],
+      [1,1,1,1,1,1,1,0],
+      [0,1,1,1,1,1,0,0],
+      [0,1,1,1,1,1,0,0],
+      [0,0,1,1,1,0,0,0],
+      [0,0,0,1,0,0,0,0],
+      [0,0,0,0,0,0,0,0]
+    ],
+    '🍊': [
+      [0,0,0,1,1,0,0,0],
+      [0,0,1,1,1,1,0,0],
+      [0,1,1,1,1,1,1,0],
+      [1,1,1,1,1,1,1,1],
+      [1,1,1,1,1,1,1,1],
+      [0,1,1,1,1,1,1,0],
+      [0,0,1,1,1,1,0,0],
+      [0,0,0,1,1,0,0,0]
+    ],
+    '🍓': [
+      [0,0,1,1,1,1,0,0],
+      [0,1,1,1,1,1,1,0],
+      [1,1,1,1,1,1,1,1],
+      [1,1,1,1,1,1,1,1],
+      [0,1,1,1,1,1,1,0],
+      [0,0,1,1,1,1,0,0],
+      [0,0,0,1,1,0,0,0],
+      [0,0,0,0,0,0,0,0]
+    ]
+  };
+
+  function getFruitColor(type) {
+    switch(type) {
+      case '🍎': return '#FF0000';
+      case '🍌': return '#FFD700';
+      case '🍇': return '#800080';
+      case '🍊': return '#FFA500';
+      case '🍓': return '#FF69B4';
+      default: return '#000000';
+    }
   }
 
   function updateGame() {
@@ -151,9 +230,11 @@
       if (Math.abs(item.x - bunnyX) < 40 && Math.abs(item.y - bunnyY) < 40) {
         if (item.type === 'spareLife') {
           lives++;
+          extraLivesCollected++;
           updateLives();
         } else {
           score++;
+          fruitCollected[item.type]++;
           scoreElement.textContent = `SCORE: ${score}`;
         }
         items.splice(i, 1);
@@ -223,8 +304,25 @@
 
   function gameOver() {
     gameActive = false;
+    const endTime = new Date();
+    const timeTaken = (endTime - startTime) / 1000; // in seconds
+
     gameOverElement.style.display = 'block';
     finalScoreElement.textContent = score;
+
+    const statsElement = document.createElement('div');
+    statsElement.innerHTML = `
+      <h3>Game Statistics:</h3>
+      <p>Time taken: ${timeTaken.toFixed(2)} seconds</p>
+      <p>Poops fired: ${poopsFired}</p>
+      <p>Fruits collected:</p>
+      <ul>
+        ${Object.entries(fruitCollected).map(([fruit, count]) => `<li>${fruit}: ${count}</li>`).join('')}
+      </ul>
+      <p>Extra lives collected: ${extraLivesCollected}</p>
+    `;
+    gameOverElement.appendChild(statsElement);
+
     showReward();
     showRandomProduct();
   }
@@ -272,6 +370,7 @@
 
   canvas.addEventListener('click', (e) => {
     poos.push({ x: bunnyX, y: bunnyY });
+    poopsFired++;
   });
 
   canvas.addEventListener('touchmove', (e) => {
@@ -283,6 +382,7 @@
 
   canvas.addEventListener('touchend', (e) => {
     poos.push({ x: bunnyX, y: bunnyY });
+    poopsFired++;
   });
 
   document.getElementById('leaderboardForm').addEventListener('submit', (e) => {
@@ -311,6 +411,7 @@
   resizeCanvas();
 
   console.log('Starting game loop');
+  startTime = new Date();
   updateGame();
 </script>
 
