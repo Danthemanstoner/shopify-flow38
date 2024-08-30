@@ -76,30 +76,22 @@
   let isBossLevel = false;
 
   function drawPixelatedBunny(x, y, size) {
-    const pixelSize = size / 16;
+    const pixelSize = size / 8;
     const bunnyPixels = [
-      [0,0,1,1,0,0,0,0,0,0,0,0,1,1,0,0],
-      [0,1,2,2,1,0,0,0,0,0,0,1,2,2,1,0],
-      [1,2,2,2,2,1,0,0,0,0,1,2,2,2,2,1],
-      [1,2,2,2,2,1,0,0,0,0,1,2,2,2,2,1],
-      [1,2,2,2,2,1,0,0,0,0,1,2,2,2,2,1],
-      [0,1,2,2,1,0,0,0,0,0,0,1,2,2,1,0],
-      [0,0,1,1,0,1,1,1,1,1,1,0,1,1,0,0],
-      [0,0,0,0,1,2,2,2,2,2,2,1,0,0,0,0],
-      [0,0,0,1,2,2,2,2,2,2,2,2,1,0,0,0],
-      [0,0,1,2,2,2,3,3,3,3,2,2,2,1,0,0],
-      [0,0,1,2,2,3,3,2,2,3,3,2,2,1,0,0],
-      [0,0,1,2,2,3,3,2,2,3,3,2,2,1,0,0],
-      [0,0,1,2,2,2,2,1,1,2,2,2,2,1,0,0],
-      [0,0,0,1,2,2,1,2,2,1,2,2,1,0,0,0],
-      [0,0,0,0,1,1,1,2,2,1,1,1,0,0,0,0],
-      [0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0]
+      [0,1,1,0,0,1,1,0],
+      [1,2,2,1,1,2,2,1],
+      [1,2,3,2,2,3,2,1],
+      [1,2,2,2,2,2,2,1],
+      [0,1,2,3,3,2,1,0],
+      [0,0,1,2,2,1,0,0],
+      [0,1,1,0,0,1,1,0],
+      [1,1,0,0,0,0,1,1]
     ];
 
     const colors = ['transparent', '#A0A0A0', '#D0D0D0', '#000000'];
 
-    for (let i = 0; i < 16; i++) {
-      for (let j = 0; j < 16; j++) {
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
         const colorIndex = bunnyPixels[i][j];
         if (colorIndex !== 0) {
           ctx.fillStyle = colors[colorIndex];
@@ -342,14 +334,35 @@
     `;
     gameOverElement.appendChild(statsElement);
 
-    showReward();
+    const highScore = localStorage.getItem('fruitGameHighScore') || 0;
+    if (score > highScore) {
+      localStorage.setItem('fruitGameHighScore', score);
+      showReward();
+    }
+
     showRandomProduct();
   }
 
   function showReward() {
     const discountCode = generateDiscountCode();
-    discountCodeElement.textContent = discountCode;
-    rewardElement.style.display = 'block';
+    const rewardElement = document.createElement('div');
+    rewardElement.innerHTML = `
+      <h3>New High Score! You've earned a discount:</h3>
+      <p>Use code <strong>${discountCode}</strong> for 10% off your next purchase!</p>
+    `;
+    rewardElement.style.position = 'fixed';
+    rewardElement.style.top = '50%';
+    rewardElement.style.left = '50%';
+    rewardElement.style.transform = 'translate(-50%, -50%)';
+    rewardElement.style.backgroundColor = '#fff';
+    rewardElement.style.padding = '20px';
+    rewardElement.style.border = '2px solid #000';
+    rewardElement.style.zIndex = '1000';
+    document.body.appendChild(rewardElement);
+
+    setTimeout(() => {
+      document.body.removeChild(rewardElement);
+    }, 5000);
   }
 
   function generateDiscountCode() {
@@ -363,10 +376,11 @@
       const randomProduct = data.products[Math.floor(Math.random() * data.products.length)];
       
       productDetailsElement.innerHTML = `
-        <img src="${randomProduct.images[0].src}" alt="${randomProduct.title}" style="max-width: 200px;">
-        <h4>${randomProduct.title}</h4>
-        <p>${randomProduct.price}</p>
-        <a href="/products/${randomProduct.handle}" class="btn">View Product</a>
+        <a href="/products/${randomProduct.handle}">
+          <img src="${randomProduct.images[0].src}" alt="${randomProduct.title}" style="max-width: 200px;">
+          <h4>${randomProduct.title}</h4>
+          <p>${randomProduct.price}</p>
+        </a>
       `;
       productRecommendationElement.style.display = 'block';
     } catch (error) {
