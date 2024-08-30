@@ -23,6 +23,8 @@
 </div>
 
 <script>
+  console.log('Game script starting');
+
   const canvas = document.getElementById('gameCanvas');
   const ctx = canvas.getContext('2d');
   const scoreElement = document.getElementById('score');
@@ -44,10 +46,6 @@
   let gameActive = true;
 
   const itemTypes = ['🍄', '🌟', '🍁', '🪙'];
-  const marioImage = new Image();
-  marioImage.src = 'https://example.com/path-to-mario-sprite.png'; // Replace with actual Mario sprite URL
-  const backgroundImage = new Image();
-  backgroundImage.src = 'https://example.com/path-to-mario-background.png'; // Replace with actual background image URL
 
   function createItem() {
     return {
@@ -59,12 +57,18 @@
   }
 
   function updateGame() {
+    console.log('Update game called');
     if (!gameActive) return;
 
-    ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw background
+    ctx.fillStyle = '#5C94FC';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Draw Mario
-    ctx.drawImage(marioImage, marioX - 20, marioY - 40, 40, 40);
+    ctx.fillStyle = 'red';
+    ctx.fillRect(marioX - 20, marioY - 40, 40, 40);
 
     // Update and draw items
     for (let i = items.length - 1; i >= 0; i--) {
@@ -152,6 +156,7 @@
     leaderboardElement.style.display = 'block';
   }
 
+  console.log('Starting game loop');
   updateGame();
 </script>
 
@@ -207,8 +212,6 @@
     background-color: #00B800 !important;
   }
 </style>
-
-<!-- ... schema ... -->
 
 {% schema %}
 {
