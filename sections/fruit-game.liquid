@@ -76,13 +76,12 @@
   let isBossLevel = false;
 
   function drawArcadeBunny(x, y, size) {
-    ctx.fillStyle = '#FFFFFF';
+    ctx.fillStyle = '#A0A0A0'; // Grey color for the bunny
     ctx.beginPath();
     ctx.ellipse(x, y, size/2, size/1.5, 0, 0, Math.PI * 2);
     ctx.fill();
 
     // Ears
-    ctx.fillStyle = '#FFCCCC';
     ctx.beginPath();
     ctx.ellipse(x - size/3, y - size/2, size/6, size/3, -Math.PI/6, 0, Math.PI * 2);
     ctx.fill();
@@ -116,13 +115,19 @@
         ctx.fill();
         ctx.fillStyle = '#00AA00';
         ctx.fillRect(x - size/20, y - size/2, size/10, size/4);
+        ctx.fillStyle = '#000000';
+        ctx.font = `${size/3}px Arial`;
+        ctx.fillText('A', x - size/6, y + size/6);
         break;
       case '🍌':
         // Banana
         ctx.fillStyle = '#FFE135';
         ctx.beginPath();
-        ctx.ellipse(x, y, size/3, size/2, Math.PI/4, 0, Math.PI * 2);
+        ctx.ellipse(x, y, size/2, size/4, Math.PI/4, 0, Math.PI * 2);
         ctx.fill();
+        ctx.fillStyle = '#000000';
+        ctx.font = `${size/3}px Arial`;
+        ctx.fillText('B', x - size/6, y + size/6);
         break;
       case '🍇':
         // Grapes
@@ -134,6 +139,9 @@
             ctx.fill();
           }
         }
+        ctx.fillStyle = '#000000';
+        ctx.font = `${size/3}px Arial`;
+        ctx.fillText('G', x - size/6, y + size/6);
         break;
       case '🍊':
         // Orange
@@ -143,6 +151,9 @@
         ctx.fill();
         ctx.fillStyle = '#00AA00';
         ctx.fillRect(x - size/20, y - size/2, size/10, size/4);
+        ctx.fillStyle = '#000000';
+        ctx.font = `${size/3}px Arial`;
+        ctx.fillText('O', x - size/6, y + size/6);
         break;
       case '🍓':
         // Strawberry
@@ -158,6 +169,9 @@
         ctx.lineTo(x, y - size/3);
         ctx.lineTo(x + size/4, y - size/2);
         ctx.fill();
+        ctx.fillStyle = '#000000';
+        ctx.font = `${size/3}px Arial`;
+        ctx.fillText('S', x - size/6, y + size/6);
         break;
       case '🥕':
         // Carrot
@@ -411,7 +425,10 @@
     rewardElement.style.backgroundColor = '#fff';
     rewardElement.style.padding = '20px';
     rewardElement.style.border = '2px solid #000';
+    rewardElement.style.borderRadius = '10px';
+    rewardElement.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
     rewardElement.style.zIndex = '1000';
+    rewardElement.style.fontFamily = 'Arial, sans-serif';
     document.body.appendChild(rewardElement);
 
     setTimeout(() => {
@@ -456,8 +473,14 @@
   });
 
   canvas.addEventListener('click', (e) => {
-    poos.push({ x: bunnyX, y: bunnyY });
-    poopsFired++;
+    const poopsToFire = Math.floor(level / 5) + 1;
+    for (let i = 0; i < poopsToFire; i++) {
+      poos.push({ 
+        x: bunnyX + (i - (poopsToFire-1)/2) * 20, 
+        y: bunnyY 
+      });
+    }
+    poopsFired += poopsToFire;
     shootSound.play();
   });
 
@@ -469,8 +492,14 @@
   }, { passive: false });
 
   canvas.addEventListener('touchend', (e) => {
-    poos.push({ x: bunnyX, y: bunnyY });
-    poopsFired++;
+    const poopsToFire = Math.floor(level / 5) + 1;
+    for (let i = 0; i < poopsToFire; i++) {
+      poos.push({ 
+        x: bunnyX + (i - (poopsToFire-1)/2) * 20, 
+        y: bunnyY 
+      });
+    }
+    poopsFired += poopsToFire;
     shootSound.play();
   });
 
