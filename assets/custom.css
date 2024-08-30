@@ -167,15 +167,3 @@
     margin-bottom: -50px; /* Adjust the value to reduce the bottom margin */
   }
 }
-@media (max-width: 800px) {
-  .fruit-game-container {
-    padding: 10px;
-  }
-  .fruit-game-container #gameCanvas {
-    width: 100%;
-    height: auto;
-  }
-  .fruit-game-container #gameInfo {
-    font-size: 14px;
-  }
-}
