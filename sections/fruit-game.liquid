@@ -78,9 +78,10 @@
 
   const itemTypes = ['🍎', '🍌', '🍇', '🍊', '🍓'];
 
-  const collectSound = document.getElementById('collectSound');
-  const shootSound = document.getElementById('shootSound');
-  const explosionSound = document.getElementById('explosionSound');
+  // Comment out audio elements for now
+  // const collectSound = document.getElementById('collectSound');
+  // const shootSound = document.getElementById('shootSound');
+  // const explosionSound = document.getElementById('explosionSound');
 
   let isBossLevel = false;
 
@@ -145,7 +146,7 @@
           }
         }
         break;
-      case '🍊':
+      case '��':
         // Orange
         ctx.fillStyle = '#FFA500';
         ctx.beginPath();
@@ -271,7 +272,8 @@
         }
         scoreElement.textContent = `SCORE: ${score}`;
         item.particles = createParticles(item.x, item.y, getFruitColor(item.type), 40, 8);
-        collectSound.play();
+        // Comment out audio play for now
+        // collectSound.play();
         items.splice(i, 1);
         if (score % 10 === 0) {
           level++;
@@ -292,7 +294,8 @@
             scoreElement.textContent = `SCORE: ${score}`;
             item.particles = createParticles(item.x, item.y, getFruitColor(item.type), 60, 10);
           }
-          explosionSound.play();
+          // Comment out audio play for now
+          // explosionSound.play();
           items.splice(i, 1);
           poos.splice(j, 1);
           if (score % 10 === 0) {
@@ -568,7 +571,8 @@
         });
       }
       poopsFired += poopsToFire;
-      shootSound.play();
+      // Comment out audio play for now
+      // shootSound.play();
     }
   });
 
@@ -588,7 +592,8 @@
       });
     }
     poopsFired += poopsToFire;
-    shootSound.play();
+    // Comment out audio play for now
+    // shootSound.play();
   });
 
   document.getElementById('leaderboardForm').addEventListener('submit', (e) => {
@@ -751,6 +756,8 @@
       Shopify.QuickView.init();
     }
   });
+
+  console.log('Game script loaded');
 </script>
 
 <style>
