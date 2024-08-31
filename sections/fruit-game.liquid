@@ -105,6 +105,27 @@
               FruitGame.submitHighScore();
           });
 
+          // Preload and resize bunny images
+          const bunnyImages = [
+              'https://cdn.shopify.com/s/files/1/0860/2877/9835/files/PTR_Chubby_Pink_Bunny-4.png?v=1725113126',
+              'https://cdn.shopify.com/s/files/1/0860/2877/9835/files/PTR_Chubby_Pink_Bunny-1.png?v=1725113126',
+              'https://cdn.shopify.com/s/files/1/0860/2877/9835/files/PTR_Chubby_Pink_Bunny-3.png?v=1725113126',
+              'https://cdn.shopify.com/s/files/1/0860/2877/9835/files/PTR_Chubby_Pink_Bunny-2.png?v=1725113125'
+          ].map(src => {
+              const img = new Image();
+              img.src = src;
+              img.onload = () => {
+                  const canvas = document.createElement('canvas');
+                  const ctx = canvas.getContext('2d');
+                  const scale = 0.2; // Adjust this value to change the size
+                  canvas.width = img.width * scale;
+                  canvas.height = img.height * scale;
+                  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                  img.src = canvas.toDataURL();
+              };
+              return img;
+          });
+
           this.drawArcadeBunny(this.bunnyX, this.bunnyY, this.cursorSize);
 
           console.log('Game initialized');
@@ -688,5 +709,6 @@
   ]
 }
 {% endschema %}
+
 
 
