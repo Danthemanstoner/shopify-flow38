@@ -1,0 +1,87 @@
+<div class="fruit-game-invitation text-align-center">
+  <div class="text-content--inner wow fadeInUp animated" style="visibility: visible;">
+    <div class="fruit-game-title">
+      <h2 class="homepage-sections--title text-size-40px wow fadeInUp animated" style="visibility: visible;">
+        {{ section.settings.title }}
+      </h2>
+    </div>
+    
+    <div class="fruit-game-subtitle">
+      <p class="text-size-24px">{{ section.settings.subtitle }}</p>
+    </div>
+    
+    <div class="homepage-section-btn-container">
+      <a class="btn homepage-section-btn" href="{{ section.settings.button_link }}" data-section-main-link="">
+        {{ section.settings.button_text }}
+      </a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Fruit Game Invitation",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Play Our Fruit Game!"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Have fun and win discounts on your favorite fruit boxes!"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Play Now"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fruit Game Invitation",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+.fruit-game-invitation {
+  background-color: #f8f8f8;
+  padding: 60px 0;
+  margin-bottom: 40px;
+}
+
+.fruit-game-invitation .homepage-sections--title {
+  color: #18533A;
+  margin-bottom: 20px;
+}
+
+.fruit-game-invitation .text-size-24px {
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.fruit-game-invitation .homepage-section-btn {
+  background-color: #18533A;
+  color: #fff;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.fruit-game-invitation .homepage-section-btn:hover {
+  background-color: #123c2a;
+}
+{% endstylesheet %}

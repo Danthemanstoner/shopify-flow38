@@ -71,12 +71,6 @@
         "text_position_mobile": "bottom_center"
       }
     },
-    "fruit_game_invitation": {
-      "type": "custom-html",
-      "settings": {
-        "custom_html": "<div class=\"fruit-game-invitation text-align-center\">\n  <div class=\"text-content--inner wow fadeInUp animated\" style=\"visibility: visible;\">\n    <div class=\"fruit-game-title\">\n      <h2 class=\"homepage-sections--title text-size-40px wow fadeInUp animated\" style=\"visibility: visible;\">\n        Play Our Fruit Game!\n      </h2>\n    </div>\n    \n    <div class=\"fruit-game-subtitle\">\n      <p class=\"text-size-24px\">Have fun and win discounts on your favorite fruit boxes!</p>\n    </div>\n    \n    <div class=\"homepage-section-btn-container\">\n      <a class=\"btn homepage-section-btn\" href=\"/pages/fruit-game\" data-section-main-link=\"\">\n        Play Now\n      </a>\n    </div>\n  </div>\n</div>"
-      }
-    },
     "text_text_adverts_XTaGgp": {
       "type": "text--text-adverts",
       "blocks": {
@@ -650,7 +644,6 @@
   },
   "order": [
     "af3e824e-6ca9-4ac4-9510-a07cb14e4a66",
-    "fruit_game_invitation",
     "text_text_adverts_XTaGgp",
     "06b36118-35e6-4312-b5b2-099a0ddc5aa6",
     "animated_text_LNiTw8",
