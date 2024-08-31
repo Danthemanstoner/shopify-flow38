@@ -450,52 +450,69 @@
 
   async function showRandomProduct() {
     try {
-      console.log('Fetching random product...');
+      console.log('Starting showRandomProduct function');
+      
+      // Step 1: Fetch products
+      console.log('Fetching products...');
       const response = await fetch('/products.json');
       const data = await response.json();
-      console.log('Products data:', data);
-      
-      if (data.products && data.products.length > 0) {
-        const randomProduct = data.products[Math.floor(Math.random() * data.products.length)];
-        console.log('Selected random product:', randomProduct);
-        
-        productDetailsElement.innerHTML = `
-          <div class="grid__item small--one-half medium-up--one-quarter">
-            <div class="grid-view-item product-card">
-              <a class="grid-view-item__link" href="/products/${randomProduct.handle}">
-                <img class="grid-view-item__image" src="${randomProduct.images[0].src}" alt="${randomProduct.title}">
-                <div class="h4 grid-view-item__title">${randomProduct.title}</div>
-                <div class="grid-view-item__meta">
-                  <span class="product-price__price">
-                    <span class="money">${formatMoney(randomProduct.variants[0].price)}</span>
-                  </span>
-                </div>
-              </a>
-              <div class="grid-view-item__vendor">${randomProduct.vendor}</div>
-              <div class="quick-product__btn quick-product__btn--not-ready js-modal-open-quick-modal-${randomProduct.id} small--hide">
-                <span class="quick-product__label">+ Quick View</span>
-              </div>
-            </div>
-          </div>
-        `;
-        console.log('Product HTML generated:', productDetailsElement.innerHTML);
-        
-        productRecommendationElement.style.display = 'block';
-        console.log('Product recommendation element display set to block');
+      console.log('Products data received:', data);
 
-        // Initialize quick view functionality
-        if (window.Shopify && Shopify.QuickView) {
-          console.log('Initializing Shopify QuickView');
-          Shopify.QuickView.init();
-        } else {
-          console.log('Shopify QuickView not available');
-        }
-      } else {
+      if (!data.products || data.products.length === 0) {
         console.error('No products found in the data');
+        return;
       }
+
+      // Step 2: Select a random product
+      const randomProduct = data.products[Math.floor(Math.random() * data.products.length)];
+      console.log('Selected random product:', randomProduct);
+
+      // Step 3: Generate HTML
+      const productHTML = generateProductHTML(randomProduct);
+      console.log('Generated product HTML:', productHTML);
+
+      // Step 4: Insert HTML into the DOM
+      console.log('Inserting product HTML into DOM');
+      productDetailsElement.innerHTML = productHTML;
+
+      // Step 5: Make the product recommendation visible
+      console.log('Setting product recommendation element to visible');
+      productRecommendationElement.style.display = 'block';
+
+      // Step 6: Initialize QuickView if available
+      if (window.Shopify && Shopify.QuickView) {
+        console.log('Initializing Shopify QuickView');
+        Shopify.QuickView.init();
+      } else {
+        console.log('Shopify QuickView not available');
+      }
+
+      console.log('showRandomProduct function completed');
     } catch (error) {
-      console.error('Error fetching random product:', error);
+      console.error('Error in showRandomProduct:', error);
     }
+  }
+
+  function generateProductHTML(product) {
+    return `
+      <div class="grid__item small--one-half medium-up--one-quarter">
+        <div class="grid-view-item product-card">
+          <a class="grid-view-item__link" href="/products/${product.handle}">
+            <img class="grid-view-item__image" src="${product.images[0].src}" alt="${product.title}">
+            <div class="h4 grid-view-item__title">${product.title}</div>
+            <div class="grid-view-item__meta">
+              <span class="product-price__price">
+                <span class="money">${formatMoney(product.variants[0].price)}</span>
+              </span>
+            </div>
+          </a>
+          <div class="grid-view-item__vendor">${product.vendor}</div>
+          <div class="quick-product__btn quick-product__btn--not-ready js-modal-open-quick-modal-${product.id} small--hide">
+            <span class="quick-product__label">+ Quick View</span>
+          </div>
+        </div>
+      </div>
+    `;
   }
 
   function formatMoney(cents) {
@@ -765,6 +782,17 @@
 
   .product-actions button:hover {
     background-color: #123c2a;
+  }
+
+  #productRecommendation {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #e8e8e8;
+    background-color: #f8f8f8;
+  }
+
+  #productDetails {
+    margin-top: 10px;
   }
 </style>
 
