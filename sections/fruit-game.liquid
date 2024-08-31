@@ -455,16 +455,45 @@
       const randomProduct = data.products[Math.floor(Math.random() * data.products.length)];
       
       productDetailsElement.innerHTML = `
-        <a href="/products/${randomProduct.handle}">
-          <img src="${randomProduct.images[0].src}" alt="${randomProduct.title}" style="max-width: 200px;">
-          <h4>${randomProduct.title}</h4>
-          <p>${formatMoney(randomProduct.price)}</p>
-        </a>
+        <div class="product-card" data-product-id="${randomProduct.id}">
+          <a href="/products/${randomProduct.handle}">
+            <img src="${randomProduct.images[0].src}" alt="${randomProduct.title}" style="max-width: 200px;">
+            <h4>${randomProduct.title}</h4>
+          </a>
+          <p class="product-price">${formatMoney(randomProduct.variants[0].price)}</p>
+          <div class="product-actions">
+            <button class="add-to-wishlist" data-product-id="${randomProduct.id}">Add to Wishlist</button>
+            <button class="quick-buy" data-product-id="${randomProduct.id}">Quick Buy</button>
+          </div>
+        </div>
       `;
       productRecommendationElement.style.display = 'block';
+
+      // Add event listeners for wishlist and quick buy buttons
+      setupProductActions(randomProduct);
     } catch (error) {
       console.error('Error fetching random product:', error);
     }
+  }
+
+  function setupProductActions(product) {
+    const wishlistButton = document.querySelector(`.add-to-wishlist[data-product-id="${product.id}"]`);
+    const quickBuyButton = document.querySelector(`.quick-buy[data-product-id="${product.id}"]`);
+
+    wishlistButton.addEventListener('click', () => addToWishlist(product));
+    quickBuyButton.addEventListener('click', () => quickBuy(product));
+  }
+
+  function addToWishlist(product) {
+    // Implement your wishlist functionality here
+    console.log(`Added ${product.title} to wishlist`);
+    // You might want to send an AJAX request to your server to update the user's wishlist
+  }
+
+  function quickBuy(product) {
+    // Implement your quick buy functionality here
+    console.log(`Quick buy ${product.title}`);
+    // You might want to open a quick view modal or directly add the item to the cart
   }
 
   function formatMoney(cents) {
@@ -532,6 +561,18 @@
     leaderboard.push({ name, score });
     leaderboard.sort((a, b) => b.score - a.score);
     localStorage.setItem('fruitGameLeaderboard', JSON.stringify(leaderboard.slice(0, 10)));
+    
+    // Update the game over element
+    const gameOverElement = document.getElementById('gameOver');
+    const leaderboardForm = document.getElementById('leaderboardForm');
+    const congratsMessage = document.createElement('p');
+    congratsMessage.textContent = 'Congratulations, you made the list!';
+    
+    // Replace the form with the congrats message
+    leaderboardForm.replaceWith(congratsMessage);
+    
+    // Show the updated leaderboard
+    showLeaderboard();
   }
 
   function showLeaderboard() {
@@ -681,6 +722,42 @@
     .fruit-game-container #gameInfo {
       font-size: 14px;
     }
+  }
+
+  .product-card {
+    border: 1px solid #e8e8e8;
+    padding: 15px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .product-card img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .product-price {
+    font-weight: bold;
+    margin: 10px 0;
+  }
+
+  .product-actions {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+  }
+
+  .product-actions button {
+    background-color: #18533A;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .product-actions button:hover {
+    background-color: #123c2a;
   }
 </style>
 
