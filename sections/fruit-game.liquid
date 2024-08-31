@@ -455,49 +455,37 @@
       const randomProduct = data.products[Math.floor(Math.random() * data.products.length)];
       
       productDetailsElement.innerHTML = `
-        <div class="product-card" data-product-id="${randomProduct.id}">
-          <a href="/products/${randomProduct.handle}">
-            <img src="${randomProduct.images[0].src}" alt="${randomProduct.title}" style="max-width: 200px;">
-            <h4>${randomProduct.title}</h4>
-          </a>
-          <p class="product-price">${formatMoney(randomProduct.variants[0].price)}</p>
-          <div class="product-actions">
-            <button class="add-to-wishlist" data-product-id="${randomProduct.id}">Add to Wishlist</button>
-            <button class="quick-buy" data-product-id="${randomProduct.id}">Quick Buy</button>
+        <div class="grid__item small--one-half medium-up--one-quarter">
+          <div class="grid-view-item product-card">
+            <a class="grid-view-item__link" href="/products/${randomProduct.handle}">
+              <img class="grid-view-item__image" src="${randomProduct.images[0].src}" alt="${randomProduct.title}">
+              <div class="h4 grid-view-item__title">${randomProduct.title}</div>
+              <div class="grid-view-item__meta">
+                <span class="product-price__price">
+                  <span class="money">${formatMoney(randomProduct.variants[0].price)}</span>
+                </span>
+              </div>
+            </a>
+            <div class="grid-view-item__vendor">${randomProduct.vendor}</div>
+            <div class="quick-product__btn quick-product__btn--not-ready js-modal-open-quick-modal-${randomProduct.id} small--hide">
+              <span class="quick-product__label">+ Quick View</span>
+            </div>
           </div>
         </div>
       `;
       productRecommendationElement.style.display = 'block';
 
-      // Add event listeners for wishlist and quick buy buttons
-      setupProductActions(randomProduct);
+      // Initialize quick view functionality
+      if (window.Shopify && Shopify.QuickView) {
+        Shopify.QuickView.init();
+      }
     } catch (error) {
       console.error('Error fetching random product:', error);
     }
   }
 
-  function setupProductActions(product) {
-    const wishlistButton = document.querySelector(`.add-to-wishlist[data-product-id="${product.id}"]`);
-    const quickBuyButton = document.querySelector(`.quick-buy[data-product-id="${product.id}"]`);
-
-    wishlistButton.addEventListener('click', () => addToWishlist(product));
-    quickBuyButton.addEventListener('click', () => quickBuy(product));
-  }
-
-  function addToWishlist(product) {
-    // Implement your wishlist functionality here
-    console.log(`Added ${product.title} to wishlist`);
-    // You might want to send an AJAX request to your server to update the user's wishlist
-  }
-
-  function quickBuy(product) {
-    // Implement your quick buy functionality here
-    console.log(`Quick buy ${product.title}`);
-    // You might want to open a quick view modal or directly add the item to the cart
-  }
-
   function formatMoney(cents) {
-    return '$' + (cents / 100).toFixed(2);
+    return Shopify.formatMoney(cents, theme.moneyFormat);
   }
 
   function resizeCanvas() {
@@ -553,7 +541,6 @@
     e.preventDefault();
     const playerName = document.getElementById('playerName').value;
     submitScore(playerName, score);
-    showLeaderboard();
   });
 
   function submitScore(name, score) {
@@ -618,6 +605,12 @@
     startTime = new Date();
     updateGame();
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.Shopify && Shopify.QuickView) {
+      Shopify.QuickView.init();
+    }
+  });
 </script>
 
 <style>
