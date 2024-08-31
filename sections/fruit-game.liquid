@@ -452,10 +452,14 @@
                   const randomProduct = products[Math.floor(Math.random() * products.length)];
                   
                   this.productDetailsElement.innerHTML = `
-                      <h4>${randomProduct.title}</h4>
-                      <p>Price: $${randomProduct.variants[0].price}</p>
-                      <img src="${randomProduct.images[0].src}" alt="${randomProduct.title}" style="width:100px;height:100px;">
-                      <button onclick="FruitGame.addToCart(${randomProduct.variants[0].id})">Add to Cart</button>
+                      <div class="product-recommendation">
+                          <img src="${randomProduct.images[0].src}" alt="${randomProduct.title}" style="width:200px;height:200px;object-fit:cover;">
+                          <div class="product-info">
+                              <h4>${randomProduct.title}</h4>
+                              <p>Price: $${randomProduct.variants[0].price}</p>
+                              <button class="add-to-cart-button" onclick="FruitGame.addToCart(${randomProduct.variants[0].id})">Add to Cart</button>
+                          </div>
+                      </div>
                   `;
                   this.productRecommendationElement.style.display = 'block';
               })
@@ -637,51 +641,37 @@
       }
   }
 
-  .product-card {
-      border: 1px solid #e8e8e8;
-      padding: 15px;
-      text-align: center;
-      margin-bottom: 20px;
-  }
-
-  .product-card img {
-      max-width: 100%;
-      height: auto;
-  }
-
-  .product-price {
-      font-weight: bold;
-      margin: 10px 0;
-  }
-
-  .product-actions {
+  .product-recommendation {
       display: flex;
-      justify-content: space-around;
-      margin-top: 10px;
-  }
-
-  .product-actions button {
-      background-color: #18533A;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-  }
-
-  .product-actions button:hover {
-      background-color: #123c2a;
-  }
-
-  #productRecommendation {
+      align-items: center;
       margin-top: 20px;
-      padding: 15px;
-      border: 1px solid #e8e8e8;
-      background-color: #f8f8f8;
   }
 
-  #productDetails {
-      margin-top: 10px;
+  .product-recommendation img {
+      margin-right: 20px;
+  }
+
+  .product-info {
+      display: flex;
+      flex-direction: column;
+  }
+
+  .add-to-cart-button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      transition-duration: 0.4s;
+  }
+
+  .add-to-cart-button:hover {
+      background-color: #45a049;
   }
 </style>
 
