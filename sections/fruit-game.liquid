@@ -38,572 +38,574 @@
 <script>
   console.log('Game script starting');
 
-  const canvas = document.getElementById('gameCanvas');
-  const ctx = canvas.getContext('2d');
-  const scoreElement = document.getElementById('score');
-  const levelElement = document.getElementById('level');
-  const livesElement = document.getElementById('lives');
-  const gameOverElement = document.getElementById('gameOver');
-  const finalScoreElement = document.getElementById('finalScore');
-  const leaderboardElement = document.getElementById('leaderboard');
-  const leaderboardListElement = document.getElementById('leaderboardList');
-  const rewardElement = document.getElementById('reward');
-  const discountCodeElement = document.getElementById('discountCodeText');
-  const productRecommendationElement = document.getElementById('productRecommendation');
-  const productDetailsElement = document.getElementById('productDetails');
-  const gameInstructions = document.getElementById('gameInstructions');
+  (function() {
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const scoreElement = document.getElementById('score');
+    const levelElement = document.getElementById('level');
+    const livesElement = document.getElementById('lives');
+    const gameOverElement = document.getElementById('gameOver');
+    const finalScoreElement = document.getElementById('finalScore');
+    const leaderboardElement = document.getElementById('leaderboard');
+    const leaderboardListElement = document.getElementById('leaderboardList');
+    const rewardElement = document.getElementById('reward');
+    const discountCodeElement = document.getElementById('discountCodeText');
+    const productRecommendationElement = document.getElementById('productRecommendation');
+    const productDetailsElement = document.getElementById('productDetails');
+    const gameInstructions = document.getElementById('gameInstructions');
 
-  console.log('DOM elements initialized');
+    console.log('DOM elements initialized');
 
-  let score = 0;
-  let level = 1;
-  let lives = 3;
-  let items = [];
-  let bunnyX = 400;
-  let bunnyY = 550;
-  let gameActive = false;
-  let cursorSize = 40;
-  let backgroundColor = '#FFFFFF';
-  const borderColor = '#494949';
-  let poos = [];
-  let spareLives = [];
+    let score = 0;
+    let level = 1;
+    let lives = 3;
+    let items = [];
+    let bunnyX = 400;
+    let bunnyY = 550;
+    let gameActive = false;
+    let cursorSize = 40;
+    let backgroundColor = '#FFFFFF';
+    const borderColor = '#494949';
+    let poos = [];
+    let spareLives = [];
 
-  let startTime;
-  let poopsFired = 0;
-  let fruitCollected = {
-    '🍎': 0, '🍌': 0, '🍇': 0, '🍊': 0, '🍓': 0
-  };
-  let extraLivesCollected = 0;
-
-  const itemTypes = ['🍎', '🍌', '🍇', '🍊', '🍓'];
-
-  let isBossLevel = false;
-
-  console.log('Game variables initialized');
-
-  function drawArcadeBunny(x, y, size) {
-    ctx.fillStyle = '#A0A0A0'; // Grey color for the bunny
-    ctx.beginPath();
-    ctx.ellipse(x, y, size/2, size/1.5, 0, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Ears
-    ctx.beginPath();
-    ctx.ellipse(x - size/3, y - size/2, size/6, size/3, -Math.PI/6, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.ellipse(x + size/3, y - size/2, size/6, size/3, Math.PI/6, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Eyes
-    ctx.fillStyle = '#000000';
-    ctx.beginPath();
-    ctx.arc(x - size/6, y - size/10, size/10, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(x + size/6, y - size/10, size/10, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Nose
-    ctx.fillStyle = '#FF9999';
-    ctx.beginPath();
-    ctx.ellipse(x, y + size/10, size/10, size/15, 0, 0, Math.PI * 2);
-    ctx.fill();
-  }
-
-  function drawArcadeFruit(x, y, size, type) {
-    switch(type) {
-      case '🍎':
-        // Apple
-        ctx.fillStyle = '#FF0000';
-        ctx.beginPath();
-        ctx.arc(x, y, size/2, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = '#00AA00';
-        ctx.fillRect(x - size/20, y - size/2, size/10, size/4);
-        break;
-      case '🍌':
-        // Banana
-        ctx.fillStyle = '#FFE135';
-        ctx.beginPath();
-        ctx.moveTo(x - size/2, y);
-        ctx.quadraticCurveTo(x, y - size/2, x + size/2, y);
-        ctx.quadraticCurveTo(x, y + size/2, x - size/2, y);
-        ctx.fill();
-        break;
-      case '🍇':
-        // Grapes
-        ctx.fillStyle = '#6B2C91';
-        for(let i = 0; i < 3; i++) {
-          for(let j = 0; j < 3; j++) {
-            ctx.beginPath();
-            ctx.arc(x + (i-1)*size/4, y + (j-1)*size/4, size/6, 0, Math.PI * 2);
-            ctx.fill();
-          }
-        }
-        break;
-      case '🍊':
-        // Orange
-        ctx.fillStyle = '#FFA500';
-        ctx.beginPath();
-        ctx.arc(x, y, size/2, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.strokeStyle = '#FF8C00';
-        ctx.lineWidth = size/20;
-        ctx.beginPath();
-        ctx.arc(x, y, size/2.5, 0, Math.PI * 2);
-        ctx.stroke();
-        break;
-      case '🍓':
-        // Strawberry
-        ctx.fillStyle = '#FF0000';
-        ctx.beginPath();
-        ctx.moveTo(x, y - size/2);
-        ctx.bezierCurveTo(x + size/2, y - size/2, x + size/2, y + size/2, x, y + size/2);
-        ctx.bezierCurveTo(x - size/2, y + size/2, x - size/2, y - size/2, x, y - size/2);
-        ctx.fill();
-        ctx.fillStyle = '#00AA00';
-        ctx.beginPath();
-        ctx.moveTo(x - size/4, y - size/2);
-        ctx.lineTo(x, y - size/3);
-        ctx.lineTo(x + size/4, y - size/2);
-        ctx.fill();
-        break;
-    }
-  }
-
-  function createParticles(x, y, color, count = 20, speed = 5) {
-    const particles = [];
-    for (let i = 0; i < count; i++) {
-      particles.push({
-        x: x,
-        y: y,
-        size: Math.random() * 5 + 2,
-        speedX: (Math.random() - 0.5) * speed,
-        speedY: (Math.random() - 0.5) * speed,
-        color: color
-      });
-    }
-    return particles;
-  }
-
-  function createItem() {
-    return {
-      x: Math.random() * (canvas.width - 80) + 40,
-      y: -80,
-      type: itemTypes[(level - 1) % itemTypes.length],
-      speed: 1 + Math.random() * 2 + (level - 1) * 0.5
+    let startTime;
+    let poopsFired = 0;
+    let fruitCollected = {
+      '🍎': 0, '🍌': 0, '🍇': 0, '🍊': 0, '🍓': 0
     };
-  }
+    let extraLivesCollected = 0;
 
-  function drawPoo(x, y) {
-    ctx.fillStyle = '#8B4513';
-    ctx.beginPath();
-    ctx.arc(x, y, 15, 0, 2 * Math.PI);
-    ctx.fill();
-  }
+    const itemTypes = ['🍎', '🍌', '🍇', '🍊', '🍓'];
 
-  function getFruitColor(type) {
-    switch(type) {
-      case '🍎': return '#FF0000';
-      case '🍌': return '#FFD700';
-      case '🍇': return '#800080';
-      case '🍊': return '#FFA500';
-      case '🍓': return '#FF69B4';
-      default: return '#000000';
+    let isBossLevel = false;
+
+    console.log('Game variables initialized');
+
+    function drawArcadeBunny(x, y, size) {
+      ctx.fillStyle = '#A0A0A0'; // Grey color for the bunny
+      ctx.beginPath();
+      ctx.ellipse(x, y, size/2, size/1.5, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Ears
+      ctx.beginPath();
+      ctx.ellipse(x - size/3, y - size/2, size/6, size/3, -Math.PI/6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.ellipse(x + size/3, y - size/2, size/6, size/3, Math.PI/6, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Eyes
+      ctx.fillStyle = '#000000';
+      ctx.beginPath();
+      ctx.arc(x - size/6, y - size/10, size/10, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(x + size/6, y - size/10, size/10, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Nose
+      ctx.fillStyle = '#FF9999';
+      ctx.beginPath();
+      ctx.ellipse(x, y + size/10, size/10, size/15, 0, 0, Math.PI * 2);
+      ctx.fill();
     }
-  }
 
-  function updateGame() {
-    if (!gameActive) return;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Draw background
-    ctx.fillStyle = backgroundColor;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    // Draw border
-    ctx.strokeStyle = borderColor;
-    ctx.lineWidth = 10;
-    ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
-
-    // Draw bunny
-    drawArcadeBunny(bunnyX, bunnyY, cursorSize);
-
-    // Update and draw poos
-    for (let i = poos.length - 1; i >= 0; i--) {
-      const poo = poos[i];
-      poo.y -= 8;
-      drawPoo(poo.x, poo.y);
-
-      if (poo.y < 0) {
-        poos.splice(i, 1);
+    function drawArcadeFruit(x, y, size, type) {
+      switch(type) {
+        case '🍎':
+          // Apple
+          ctx.fillStyle = '#FF0000';
+          ctx.beginPath();
+          ctx.arc(x, y, size/2, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = '#00AA00';
+          ctx.fillRect(x - size/20, y - size/2, size/10, size/4);
+          break;
+        case '🍌':
+          // Banana
+          ctx.fillStyle = '#FFE135';
+          ctx.beginPath();
+          ctx.moveTo(x - size/2, y);
+          ctx.quadraticCurveTo(x, y - size/2, x + size/2, y);
+          ctx.quadraticCurveTo(x, y + size/2, x - size/2, y);
+          ctx.fill();
+          break;
+        case '🍇':
+          // Grapes
+          ctx.fillStyle = '#6B2C91';
+          for(let i = 0; i < 3; i++) {
+            for(let j = 0; j < 3; j++) {
+              ctx.beginPath();
+              ctx.arc(x + (i-1)*size/4, y + (j-1)*size/4, size/6, 0, Math.PI * 2);
+              ctx.fill();
+            }
+          }
+          break;
+        case '🍊':
+          // Orange
+          ctx.fillStyle = '#FFA500';
+          ctx.beginPath();
+          ctx.arc(x, y, size/2, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.strokeStyle = '#FF8C00';
+          ctx.lineWidth = size/20;
+          ctx.beginPath();
+          ctx.arc(x, y, size/2.5, 0, Math.PI * 2);
+          ctx.stroke();
+          break;
+        case '🍓':
+          // Strawberry
+          ctx.fillStyle = '#FF0000';
+          ctx.beginPath();
+          ctx.moveTo(x, y - size/2);
+          ctx.bezierCurveTo(x + size/2, y - size/2, x + size/2, y + size/2, x, y + size/2);
+          ctx.bezierCurveTo(x - size/2, y + size/2, x - size/2, y - size/2, x, y - size/2);
+          ctx.fill();
+          ctx.fillStyle = '#00AA00';
+          ctx.beginPath();
+          ctx.moveTo(x - size/4, y - size/2);
+          ctx.lineTo(x, y - size/3);
+          ctx.lineTo(x + size/4, y - size/2);
+          ctx.fill();
+          break;
       }
     }
 
-    // Update and draw items
-    for (let i = items.length - 1; i >= 0; i--) {
-      const item = items[i];
-      item.y += item.speed;
+    function createParticles(x, y, color, count = 20, speed = 5) {
+      const particles = [];
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: x,
+          y: y,
+          size: Math.random() * 5 + 2,
+          speedX: (Math.random() - 0.5) * speed,
+          speedY: (Math.random() - 0.5) * speed,
+          color: color
+        });
+      }
+      return particles;
+    }
 
-      if (item.type === 'spareLife') {
-        drawArcadeBunny(item.x, item.y, 30);
-      } else {
-        drawArcadeFruit(item.x, item.y, 40, item.type);
+    function createItem() {
+      return {
+        x: Math.random() * (canvas.width - 80) + 40,
+        y: -80,
+        type: itemTypes[(level - 1) % itemTypes.length],
+        speed: 1 + Math.random() * 2 + (level - 1) * 0.5
+      };
+    }
+
+    function drawPoo(x, y) {
+      ctx.fillStyle = '#8B4513';
+      ctx.beginPath();
+      ctx.arc(x, y, 15, 0, 2 * Math.PI);
+      ctx.fill();
+    }
+
+    function getFruitColor(type) {
+      switch(type) {
+        case '🍎': return '#FF0000';
+        case '🍌': return '#FFD700';
+        case '🍇': return '#800080';
+        case '🍊': return '#FFA500';
+        case '🍓': return '#FF69B4';
+        default: return '#000000';
+      }
+    }
+
+    function updateGame() {
+      if (!gameActive) return;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw background
+      ctx.fillStyle = backgroundColor;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Draw border
+      ctx.strokeStyle = borderColor;
+      ctx.lineWidth = 10;
+      ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
+
+      // Draw bunny
+      drawArcadeBunny(bunnyX, bunnyY, cursorSize);
+
+      // Update and draw poos
+      for (let i = poos.length - 1; i >= 0; i--) {
+        const poo = poos[i];
+        poo.y -= 8;
+        drawPoo(poo.x, poo.y);
+
+        if (poo.y < 0) {
+          poos.splice(i, 1);
+        }
       }
 
-      // Check collision with bunny
-      if (Math.abs(item.x - bunnyX) < 40 && Math.abs(item.y - bunnyY) < 40) {
+      // Update and draw items
+      for (let i = items.length - 1; i >= 0; i--) {
+        const item = items[i];
+        item.y += item.speed;
+
         if (item.type === 'spareLife') {
-          lives++;
-          extraLivesCollected++;
-          updateLives();
-        } else if (item.type === '🥕') {
-          score += 10;
-          isBossLevel = false;
+          drawArcadeBunny(item.x, item.y, 30);
         } else {
-          score++;
-          fruitCollected[item.type]++;
+          drawArcadeFruit(item.x, item.y, 40, item.type);
         }
-        scoreElement.textContent = `SCORE: ${score}`;
-        item.particles = createParticles(item.x, item.y, getFruitColor(item.type), 40, 8);
-        items.splice(i, 1);
-        if (score % 10 === 0) {
-          level++;
-          levelElement.textContent = `LEVEL ${level}`;
-          cursorSize += 5;
-          backgroundColor = backgroundColor === '#FFFFFF' ? '#18533A' : '#FFFFFF';
-        }
-        continue;
-      }
 
-      // Check collision with poos
-      for (let j = poos.length - 1; j >= 0; j--) {
-        const poo = poos[j];
-        if (Math.abs(item.x - poo.x) < 30 && Math.abs(item.y - poo.y) < 30) {
-          if (item.type !== 'spareLife') {
+        // Check collision with bunny
+        if (Math.abs(item.x - bunnyX) < 40 && Math.abs(item.y - bunnyY) < 40) {
+          if (item.type === 'spareLife') {
+            lives++;
+            extraLivesCollected++;
+            updateLives();
+          } else if (item.type === '🥕') {
+            score += 10;
+            isBossLevel = false;
+          } else {
             score++;
             fruitCollected[item.type]++;
-            scoreElement.textContent = `SCORE: ${score}`;
-            item.particles = createParticles(item.x, item.y, getFruitColor(item.type), 60, 10);
           }
+          scoreElement.textContent = `SCORE: ${score}`;
+          item.particles = createParticles(item.x, item.y, getFruitColor(item.type), 40, 8);
           items.splice(i, 1);
-          poos.splice(j, 1);
           if (score % 10 === 0) {
             level++;
             levelElement.textContent = `LEVEL ${level}`;
             cursorSize += 5;
             backgroundColor = backgroundColor === '#FFFFFF' ? '#18533A' : '#FFFFFF';
           }
-          break;
+          continue;
         }
-      }
 
-      // Draw particles
-      if (item.particles) {
-        item.particles.forEach((particle, index) => {
-          particle.x += particle.speedX;
-          particle.y += particle.speedY;
-          particle.size *= 0.95;
-
-          ctx.fillStyle = particle.color;
-          ctx.fillRect(particle.x, particle.y, particle.size, particle.size);
-
-          if (particle.size <= 0.5) {
-            item.particles.splice(index, 1);
-          }
-        });
-      }
-
-      // Remove items that fall off screen
-      if (item.y > canvas.height) {
-        items.splice(i, 1);
-        if (item.type !== 'spareLife') {
-          lives--;
-          updateLives();
-          if (lives <= 0) {
-            gameOver();
-            return;
+        // Check collision with poos
+        for (let j = poos.length - 1; j >= 0; j--) {
+          const poo = poos[j];
+          if (Math.abs(item.x - poo.x) < 30 && Math.abs(item.y - poo.y) < 30) {
+            if (item.type !== 'spareLife') {
+              score++;
+              fruitCollected[item.type]++;
+              scoreElement.textContent = `SCORE: ${score}`;
+              item.particles = createParticles(item.x, item.y, getFruitColor(item.type), 60, 10);
+            }
+            items.splice(i, 1);
+            poos.splice(j, 1);
+            if (score % 10 === 0) {
+              level++;
+              levelElement.textContent = `LEVEL ${level}`;
+              cursorSize += 5;
+              backgroundColor = backgroundColor === '#FFFFFF' ? '#18533A' : '#FFFFFF';
+            }
+            break;
           }
         }
-      }
-    }
 
-    // Add new items
-    if (Math.random() < 0.01 + (level * 0.002)) {
-      if (level % 20 === 0 && !isBossLevel) {
-        isBossLevel = true;
-        for (let i = 0; i < 10; i++) {
-          items.push({
-            x: Math.random() * (canvas.width - 80) + 40,
-            y: -80 - i * 100,
-            type: '🥕',
-            speed: 2 + Math.random() * 3
+        // Draw particles
+        if (item.particles) {
+          item.particles.forEach((particle, index) => {
+            particle.x += particle.speedX;
+            particle.y += particle.speedY;
+            particle.size *= 0.95;
+
+            ctx.fillStyle = particle.color;
+            ctx.fillRect(particle.x, particle.y, particle.size, particle.size);
+
+            if (particle.size <= 0.5) {
+              item.particles.splice(index, 1);
+            }
           });
         }
-      } else if (level % 10 === 0 && Math.random() < 0.1) {
-        items.push({
-          x: Math.random() * (canvas.width - 80) + 40,
-          y: -80,
-          type: 'spareLife',
-          speed: 1 + Math.random() * 2
+
+        // Remove items that fall off screen
+        if (item.y > canvas.height) {
+          items.splice(i, 1);
+          if (item.type !== 'spareLife') {
+            lives--;
+            updateLives();
+            if (lives <= 0) {
+              gameOver();
+              return;
+            }
+          }
+        }
+      }
+
+      // Add new items
+      if (Math.random() < 0.01 + (level * 0.002)) {
+        if (level % 20 === 0 && !isBossLevel) {
+          isBossLevel = true;
+          for (let i = 0; i < 10; i++) {
+            items.push({
+              x: Math.random() * (canvas.width - 80) + 40,
+              y: -80 - i * 100,
+              type: '🥕',
+              speed: 2 + Math.random() * 3
+            });
+          }
+        } else if (level % 10 === 0 && Math.random() < 0.1) {
+          items.push({
+            x: Math.random() * (canvas.width - 80) + 40,
+            y: -80,
+            type: 'spareLife',
+            speed: 1 + Math.random() * 2
+          });
+        } else if (!isBossLevel) {
+          items.push(createItem());
+        }
+      }
+
+      requestAnimationFrame(updateGame);
+    }
+
+    function updateLives() {
+      livesElement.textContent = `LIVES: ${lives}`;
+    }
+
+    function gameOver() {
+      gameActive = false;
+      const endTime = new Date();
+      const timeTaken = (endTime - startTime) / 1000;
+
+      gameOverElement.style.display = 'block';
+      finalScoreElement.textContent = score;
+
+      const statsElement = document.createElement('div');
+      statsElement.innerHTML = `
+        <h3>Game Statistics:</h3>
+        <p>Time taken: ${timeTaken.toFixed(2)} seconds</p>
+        <p>Poops fired: ${poopsFired}</p>
+        <p>Fruits collected:</p>
+        <ul>
+          ${Object.entries(fruitCollected).map(([fruit, count]) => `<li>${fruit}: ${count}</li>`).join('')}
+        </ul>
+        <p>Extra lives collected: ${extraLivesCollected}</p>
+      `;
+      gameOverElement.appendChild(statsElement);
+
+      const highScore = localStorage.getItem('fruitGameHighScore') || 0;
+      if (score > highScore) {
+        localStorage.setItem('fruitGameHighScore', score);
+        showReward();
+      }
+
+      showRandomProduct();
+    }
+
+    function showReward() {
+      const discountCode = '25PercentOFF';
+      const rewardElement = document.createElement('div');
+      rewardElement.innerHTML = `
+        <h3>New High Score!</h3>
+        <p>You've earned a discount:</p>
+        <p class="discount-code" id="discountCodeText">${discountCode}</p>
+        <button id="copyDiscountCode">Copy Code</button>
+        <button id="applyDiscountCode">Apply to Cart</button>
+        <p>Use this code for 25% off your next purchase!</p>
+      `;
+      rewardElement.className = 'reward-popup';
+      document.body.appendChild(rewardElement);
+
+      document.getElementById('copyDiscountCode').addEventListener('click', () => {
+        navigator.clipboard.writeText(discountCode).then(() => {
+          alert('Discount code copied to clipboard!');
         });
-      } else if (!isBossLevel) {
-        items.push(createItem());
-      }
-    }
-
-    requestAnimationFrame(updateGame);
-  }
-
-  function updateLives() {
-    livesElement.textContent = `LIVES: ${lives}`;
-  }
-
-  function gameOver() {
-    gameActive = false;
-    const endTime = new Date();
-    const timeTaken = (endTime - startTime) / 1000;
-
-    gameOverElement.style.display = 'block';
-    finalScoreElement.textContent = score;
-
-    const statsElement = document.createElement('div');
-    statsElement.innerHTML = `
-      <h3>Game Statistics:</h3>
-      <p>Time taken: ${timeTaken.toFixed(2)} seconds</p>
-      <p>Poops fired: ${poopsFired}</p>
-      <p>Fruits collected:</p>
-      <ul>
-        ${Object.entries(fruitCollected).map(([fruit, count]) => `<li>${fruit}: ${count}</li>`).join('')}
-      </ul>
-      <p>Extra lives collected: ${extraLivesCollected}</p>
-    `;
-    gameOverElement.appendChild(statsElement);
-
-    const highScore = localStorage.getItem('fruitGameHighScore') || 0;
-    if (score > highScore) {
-      localStorage.setItem('fruitGameHighScore', score);
-      showReward();
-    }
-
-    showRandomProduct();
-  }
-
-  function showReward() {
-    const discountCode = '25PercentOFF';
-    const rewardElement = document.createElement('div');
-    rewardElement.innerHTML = `
-      <h3>New High Score!</h3>
-      <p>You've earned a discount:</p>
-      <p class="discount-code" id="discountCodeText">${discountCode}</p>
-      <button id="copyDiscountCode">Copy Code</button>
-      <button id="applyDiscountCode">Apply to Cart</button>
-      <p>Use this code for 25% off your next purchase!</p>
-    `;
-    rewardElement.className = 'reward-popup';
-    document.body.appendChild(rewardElement);
-
-    document.getElementById('copyDiscountCode').addEventListener('click', () => {
-      navigator.clipboard.writeText(discountCode).then(() => {
-        alert('Discount code copied to clipboard!');
       });
-    });
 
-    document.getElementById('applyDiscountCode').addEventListener('click', () => {
-      applyDiscountToCart(discountCode);
-    });
+      document.getElementById('applyDiscountCode').addEventListener('click', () => {
+        applyDiscountToCart(discountCode);
+      });
 
-    setTimeout(() => {
-      document.body.removeChild(rewardElement);
-    }, 10000);
-  }
+      setTimeout(() => {
+        document.body.removeChild(rewardElement);
+      }, 10000);
+    }
 
-  function applyDiscountToCart(discountCode) {
-    fetch('/discount/' + discountCode, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        alert('Discount applied to your cart!');
-      } else {
-        alert('Failed to apply discount. Please try again.');
-      }
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-      alert('An error occurred. Please try again.');
-    });
-  }
-
-  function showRandomProduct() {
-    console.log('Showing random product');
-    fetch('/products.json')
+    function applyDiscountToCart(discountCode) {
+      fetch('/discount/' + discountCode, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then(response => response.json())
       .then(data => {
-        if (!data.products || data.products.length === 0) {
-          console.error('No products found in the data');
-          return;
+        if (data.success) {
+          alert('Discount applied to your cart!');
+        } else {
+          alert('Failed to apply discount. Please try again.');
         }
-
-        const randomProduct = data.products[Math.floor(Math.random() * data.products.length)];
-        const productHTML = generateProductHTML(randomProduct);
-        productDetailsElement.innerHTML = productHTML;
-        productRecommendationElement.style.display = 'block';
-        showDiscountCode();
       })
-      .catch(error => {
-        console.error('Error fetching products:', error);
+      .catch((error) => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
       });
-  }
+    }
 
-  function generateProductHTML(product) {
-    return `
-      <div class="grid__item small--one-half medium-up--one-quarter">
-        <div class="grid-view-item product-card">
-          <a class="grid-view-item__link" href="/products/${product.handle}">
-            <img class="grid-view-item__image" src="${product.images[0].src}" alt="${product.title}" style="max-width: 200px; max-height: 200px; object-fit: contain;">
-            <div class="h4 grid-view-item__title">${product.title}</div>
-            <div class="grid-view-item__meta">
-              <span class="product-price__price">
-                <span class="money">${formatMoney(product.variants[0].price)}</span>
-              </span>
-            </div>
-          </a>
-          <div class="grid-view-item__vendor">${product.vendor}</div>
+    function showRandomProduct() {
+      console.log('Showing random product');
+      fetch('/products.json')
+        .then(response => response.json())
+        .then(data => {
+          if (!data.products || data.products.length === 0) {
+            console.error('No products found in the data');
+            return;
+          }
+
+          const randomProduct = data.products[Math.floor(Math.random() * data.products.length)];
+          const productHTML = generateProductHTML(randomProduct);
+          productDetailsElement.innerHTML = productHTML;
+          productRecommendationElement.style.display = 'block';
+          showDiscountCode();
+        })
+        .catch(error => {
+          console.error('Error fetching products:', error);
+        });
+    }
+
+    function generateProductHTML(product) {
+      return `
+        <div class="grid__item small--one-half medium-up--one-quarter">
+          <div class="grid-view-item product-card">
+            <a class="grid-view-item__link" href="/products/${product.handle}">
+              <img class="grid-view-item__image" src="${product.images[0].src}" alt="${product.title}" style="max-width: 200px; max-height: 200px; object-fit: contain;">
+              <div class="h4 grid-view-item__title">${product.title}</div>
+              <div class="grid-view-item__meta">
+                <span class="product-price__price">
+                  <span class="money">${formatMoney(product.variants[0].price)}</span>
+                </span>
+              </div>
+            </a>
+            <div class="grid-view-item__vendor">${product.vendor}</div>
+          </div>
         </div>
-      </div>
-    `;
-  }
-
-  function formatMoney(cents) {
-    return '$' + (cents / 100).toFixed(2);
-  }
-
-  function showDiscountCode() {
-    const discountCode = 'FRUITGAME10';
-    const gameCanvas = document.getElementById('gameCanvas');
-    const existingDiscountSection = document.getElementById('discountSection');
-
-    if (existingDiscountSection) {
-      existingDiscountSection.remove();
+      `;
     }
 
-    const discountHTML = `
-      <div id="discountSection" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-        <h3 style="color: #18533A; margin-bottom: 10px;">THANKS FOR PLAYING!</h3>
-        <p style="margin-bottom: 15px;">Here's a discount code for 10% off your next purchase:</p>
-        <div style="font-size: 24px; font-weight: bold; color: #4CAF50; margin-bottom: 15px;">${discountCode}</div>
-        <button id="copyDiscountCode" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Copy Code</button>
-      </div>
-    `;
-    
-    gameCanvas.insertAdjacentHTML('afterend', discountHTML);
-    
-    document.getElementById('copyDiscountCode').addEventListener('click', function() {
-      navigator.clipboard.writeText(discountCode).then(function() {
-        alert('Discount code copied to clipboard!');
-      }, function(err) {
-        console.error('Could not copy text: ', err);
+    function formatMoney(cents) {
+      return '$' + (cents / 100).toFixed(2);
+    }
+
+    function showDiscountCode() {
+      const discountCode = 'FRUITGAME10';
+      const gameCanvas = document.getElementById('gameCanvas');
+      const existingDiscountSection = document.getElementById('discountSection');
+
+      if (existingDiscountSection) {
+        existingDiscountSection.remove();
+      }
+
+      const discountHTML = `
+        <div id="discountSection" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+          <h3 style="color: #18533A; margin-bottom: 10px;">THANKS FOR PLAYING!</h3>
+          <p style="margin-bottom: 15px;">Here's a discount code for 10% off your next purchase:</p>
+          <div style="font-size: 24px; font-weight: bold; color: #4CAF50; margin-bottom: 15px;">${discountCode}</div>
+          <button id="copyDiscountCode" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Copy Code</button>
+        </div>
+      `;
+      
+      gameCanvas.insertAdjacentHTML('afterend', discountHTML);
+      
+      document.getElementById('copyDiscountCode').addEventListener('click', function() {
+        navigator.clipboard.writeText(discountCode).then(function() {
+          alert('Discount code copied to clipboard!');
+        }, function(err) {
+          console.error('Could not copy text: ', err);
+        });
       });
-    });
-  }
-
-  function resizeCanvas() {
-    const container = canvas.parentElement;
-    const containerWidth = container.clientWidth;
-    const scale = Math.min(1, containerWidth / 800);
-    canvas.style.width = `${800 * scale}px`;
-    canvas.style.height = `${600 * scale}px`;
-  }
-
-  canvas.addEventListener('mousemove', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    bunnyX = (e.clientX - rect.left) * (canvas.width / rect.width);
-  });
-
-  canvas.addEventListener('click', (e) => {
-    if (!gameActive) {
-      startGame();
-      gameInstructions.style.display = 'none';
-    } else {
-      shootPoo();
     }
-  });
 
-  canvas.addEventListener('touchmove', (e) => {
-    e.preventDefault();
-    const rect = canvas.getBoundingClientRect();
-    const touch = e.touches[0];
-    bunnyX = (touch.clientX - rect.left) * (canvas.width / rect.width);
-  }, { passive: false });
+    function resizeCanvas() {
+      const container = canvas.parentElement;
+      const containerWidth = container.clientWidth;
+      const scale = Math.min(1, containerWidth / 800);
+      canvas.style.width = `${800 * scale}px`;
+      canvas.style.height = `${600 * scale}px`;
+    }
 
-  canvas.addEventListener('touchend', (e) => {
-    shootPoo();
-  });
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      bunnyX = (e.clientX - rect.left) * (canvas.width / rect.width);
+    });
 
-  document.getElementById('leaderboardForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const playerName = document.getElementById('playerName').value;
-    submitScore(playerName, score);
-  });
+    canvas.addEventListener('click', (e) => {
+      if (!gameActive) {
+        startGame();
+        gameInstructions.style.display = 'none';
+      } else {
+        shootPoo();
+      }
+    });
 
-  function submitScore(name, score) {
-    const leaderboard = JSON.parse(localStorage.getItem('fruitGameLeaderboard') || '[]');
-    leaderboard.push({ name, score });
-    leaderboard.sort((a, b) => b.score - a.score);
-    localStorage.setItem('fruitGameLeaderboard', JSON.stringify(leaderboard.slice(0, 10)));
-    
-    const gameOverElement = document.getElementById('gameOver');
-    const leaderboardForm = document.getElementById('leaderboardForm');
-    const congratsMessage = document.createElement('p');
-    congratsMessage.textContent = 'Congratulations, you made the list!';
-    
-    leaderboardForm.replaceWith(congratsMessage);
-    
-    showLeaderboard();
-  }
+    canvas.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches[0];
+      bunnyX = (touch.clientX - rect.left) * (canvas.width / rect.width);
+    }, { passive: false });
 
-  function showLeaderboard() {
-    const leaderboard = JSON.parse(localStorage.getItem('fruitGameLeaderboard') || '[]');
-    leaderboardListElement.innerHTML = leaderboard.map(entry => 
-      `<li>${entry.name}: ${entry.score}</li>`
-    ).join('');
-    leaderboardElement.style.display = 'block';
-  }
+    canvas.addEventListener('touchend', (e) => {
+      shootPoo();
+    });
 
-  function submitHighScore(score, playerName) {
-    fetch('/api/highscores', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ score, playerName }),
-    })
-    .then(response => response.json())
-    .then(data => console.log('High score submitted:', data))
-    .catch((error) => console.error('Error:', error));
-  }
+    document.getElementById('leaderboardForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const playerName = document.getElementById('playerName').value;
+      submitScore(playerName, score);
+    });
 
-  submitHighScore(score, playerName);
+    function submitScore(name, score) {
+      const leaderboard = JSON.parse(localStorage.getItem('fruitGameLeaderboard') || '[]');
+      leaderboard.push({ name, score });
+      leaderboard.sort((a, b) => b.score - a.score);
+      localStorage.setItem('fruitGameLeaderboard', JSON.stringify(leaderboard.slice(0, 10)));
+      
+      const gameOverElement = document.getElementById('gameOver');
+      const leaderboardForm = document.getElementById('leaderboardForm');
+      const congratsMessage = document.createElement('p');
+      congratsMessage.textContent = 'Congratulations, you made the list!';
+      
+      leaderboardForm.replaceWith(congratsMessage);
+      
+      showLeaderboard();
+    }
 
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
+    function showLeaderboard() {
+      const leaderboard = JSON.parse(localStorage.getItem('fruitGameLeaderboard') || '[]');
+      leaderboardListElement.innerHTML = leaderboard.map(entry => 
+        `<li>${entry.name}: ${entry.score}</li>`
+      ).join('');
+      leaderboardElement.style.display = 'block';
+    }
 
-  console.log('Starting game loop');
-  startTime = new Date();
-  updateGame();
+    function submitHighScore(score, playerName) {
+      fetch('/api/highscores', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ score, playerName }),
+      })
+      .then(response => response.json())
+      .then(data => console.log('High score submitted:', data))
+      .catch((error) => console.error('Error:', error));
+    }
 
-  gameInstructions.style.display = 'block';
+    submitHighScore(score, playerName);
 
-  drawArcadeBunny(bunnyX, bunnyY, cursorSize);
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
-  console.log('Game script loaded');
+    console.log('Starting game loop');
+    startTime = new Date();
+    updateGame();
+
+    gameInstructions.style.display = 'block';
+
+    drawArcadeBunny(bunnyX, bunnyY, cursorSize);
+
+    console.log('Game script loaded');
+  })();
 </script>
 
 <style>
