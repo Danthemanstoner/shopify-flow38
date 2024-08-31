@@ -19,9 +19,9 @@
     <ol id="leaderboardList"></ol>
   </div>
   <div id="reward" style="display: none;">
-    <h3>New High Score!</h3>
-    <p>You've earned a discount:</p>
-    <p class="discount-code" id="discountCodeText"></p>
+    <h3>Congratulations!</h3>
+    <p>You've earned a 25% discount on your next purchase.</p>
+    <p>Your discount code: <span class="discount-code" id="discountCodeText"></span></p>
     <button onclick="FruitGame.applyDiscountToCart()">Apply to Cart</button>
     <p>Use this code for 25% off your next purchase!</p>
   </div>
@@ -408,6 +408,11 @@
 
           this.updateLeaderboard(this.score, playerName);
 
+          // Display message after submitting score
+          alert("Thanks for playing! Your score has been submitted.");
+          
+          // Hide the game over screen and show the leaderboard
+          this.gameOverElement.style.display = 'none';
           this.leaderboardElement.style.display = 'block';
       },
 
@@ -429,32 +434,61 @@
           this.rewardElement.style.display = 'block';
           const discountCode = 'FRUIT25OFF'; // This should be generated or retrieved from your backend
           this.discountCodeElement.textContent = discountCode;
+          
+          // Add text to explain the voucher
+          const voucherExplanation = document.createElement('p');
+          voucherExplanation.textContent = "Congratulations! You've earned a 25% discount on your next purchase.";
+          this.rewardElement.insertBefore(voucherExplanation, this.discountCodeElement);
       },
 
       showRandomProduct: function() {
           console.log('Showing random product');
-          // This is a placeholder. In a real implementation, you'd fetch product data from your store.
-          const products = [
-              { name: "Fruit Basket", price: "$19.99", image: "https://cdn.shopify.com/s/files/1/0012/3456/7890/products/fruit-basket.jpg" },
-              { name: "Organic Apples", price: "$4.99", image: "https://cdn.shopify.com/s/files/1/0012/3456/7890/products/apples.jpg" },
-              { name: "Fresh Bananas", price: "$3.99", image: "https://cdn.shopify.com/s/files/1/0012/3456/7890/products/bananas.jpg" }
-          ];
-          const randomProduct = products[Math.floor(Math.random() * products.length)];
-
-          this.productDetailsElement.innerHTML = `
-              <h4>${randomProduct.name}</h4>
-              <p>Price: ${randomProduct.price}</p>
-              <img src="${randomProduct.image}" alt="${randomProduct.name}" style="width:100px;height:100px;">
-              <button onclick="FruitGame.addToCart('${randomProduct.name}')">Add to Cart</button>
-          `;
-          this.productRecommendationElement.style.display = 'block';
+          
+          // Fetch random product from the shop
+          fetch('/products.json')
+              .then(response => response.json())
+              .then(data => {
+                  const products = data.products;
+                  const randomProduct = products[Math.floor(Math.random() * products.length)];
+                  
+                  this.productDetailsElement.innerHTML = `
+                      <h4>${randomProduct.title}</h4>
+                      <p>Price: $${randomProduct.variants[0].price}</p>
+                      <img src="${randomProduct.images[0].src}" alt="${randomProduct.title}" style="width:100px;height:100px;">
+                      <button onclick="FruitGame.addToCart(${randomProduct.variants[0].id})">Add to Cart</button>
+                  `;
+                  this.productRecommendationElement.style.display = 'block';
+              })
+              .catch(error => {
+                  console.error('Error fetching random product:', error);
+                  this.productRecommendationElement.style.display = 'none';
+              });
       },
 
-      addToCart: function(productName) {
-          console.log(`Adding ${productName} to cart`);
-          // Here you would typically integrate with your shopping cart system
-          // For Shopify, you might use their AJAX API to add to cart
-          alert(`${productName} added to cart!`);
+      addToCart: function(variantId) {
+          console.log(`Adding product with variant ID ${variantId} to cart`);
+          
+          fetch('/cart/add.js', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  items: [{
+                      id: variantId,
+                      quantity: 1
+                  }]
+              })
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log('Product added to cart:', data);
+              alert('Product added to cart!');
+          })
+          .catch((error) => {
+              console.error('Error:', error);
+              alert('Error adding product to cart');
+          });
       },
 
       startGame: function() {
