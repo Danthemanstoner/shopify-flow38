@@ -650,15 +650,101 @@
   // Show instructions at the start
   gameInstructions.style.display = 'block';
 
+  // Global variable to track game state
+  let gameActive = false;
+
+  // Function to start the game
   function startGame() {
-    gameActive = true;
-    score = 0;
-    level = 1;
-    lives = 3;
-    items = [];
-    startTime = new Date();
-    updateGame();
+      if (!gameActive) {
+          gameActive = true;
+          console.log('Game started');
+          // Hide any existing discount code
+          const existingDiscountSection = document.getElementById('discountSection');
+          if (existingDiscountSection) {
+              existingDiscountSection.style.display = 'none';
+          }
+          // Add your game initialization code here
+          // For example: initializeGameObjects(), startGameLoop(), etc.
+      }
   }
+
+  // Function to end the game and show results
+  function gameOver() {
+      gameActive = false;
+      console.log('Game over');
+      // Add your game over logic here
+      // For example: stopGameLoop(), calculateFinalScore(), etc.
+      
+      // Show the random product and discount code
+      showRandomProduct();
+  }
+
+  function showRandomProduct() {
+      try {
+          console.log('Starting showRandomProduct function');
+          
+          // Fetch and display product (keep this part as is)
+          // ...
+
+          // Show discount code in the game area
+          showDiscountCode();
+
+          console.log('showRandomProduct function completed');
+      } catch (error) {
+          console.error('Error in showRandomProduct:', error);
+      }
+  }
+
+  function showDiscountCode() {
+      const discountCode = 'FRUITGAME10';
+      const gameCanvas = document.getElementById('gameCanvas');
+      const existingDiscountSection = document.getElementById('discountSection');
+
+      if (existingDiscountSection) {
+          existingDiscountSection.style.display = 'block';
+      } else {
+          const discountHTML = `
+              <div id="discountSection" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.1); z-index: 1000;">
+                  <h3 style="color: #18533A; margin-bottom: 10px;">THANKS FOR PLAYING!</h3>
+                  <p style="margin-bottom: 15px;">Here's a discount code for 10% off your next purchase:</p>
+                  <div style="font-size: 24px; font-weight: bold; color: #4CAF50; margin-bottom: 15px;">${discountCode}</div>
+                  <button id="copyDiscountCode" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Copy Code</button>
+                  <button id="playAgain" style="padding: 10px 20px; background-color: #18533A; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-left: 10px;">Play Again</button>
+              </div>
+          `;
+          
+          gameCanvas.insertAdjacentHTML('afterend', discountHTML);
+          
+          document.getElementById('copyDiscountCode').addEventListener('click', function() {
+              navigator.clipboard.writeText(discountCode).then(function() {
+                  alert('Discount code copied to clipboard!');
+              }, function(err) {
+                  console.error('Could not copy text: ', err);
+              });
+          });
+
+          document.getElementById('playAgain').addEventListener('click', function() {
+              document.getElementById('discountSection').style.display = 'none';
+              startGame();
+          });
+      }
+  }
+
+  // Event listener for game start
+  document.getElementById('gameCanvas').addEventListener('click', function(event) {
+      if (!gameActive) {
+          startGame();
+      }
+  });
+
+  // Initial game setup
+  function initializeGame() {
+      // Add any initial setup code here
+      console.log('Game initialized, click to start');
+  }
+
+  // Call this when the page loads
+  initializeGame();
 
   document.addEventListener('DOMContentLoaded', function() {
     if (window.Shopify && Shopify.QuickView) {
