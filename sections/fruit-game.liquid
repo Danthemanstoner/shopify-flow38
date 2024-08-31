@@ -448,7 +448,7 @@
     });
   }
 
-  async function showRandomProduct() {
+  function showRandomProduct() {
     try {
       console.log('Starting showRandomProduct function');
       
@@ -479,7 +479,7 @@
       console.log('Setting product recommendation element to visible');
       productRecommendationElement.style.display = 'block';
 
-      // Step 6: Show discount code
+      // Show discount code in the game area
       showDiscountCode();
 
       console.log('showRandomProduct function completed');
@@ -512,17 +512,26 @@
   }
 
   function showDiscountCode() {
-    const discountCode = 'FRUITGAME10'; // You can change this to any code you want
+    const discountCode = 'FRUITGAME10';
+    const gameCanvas = document.getElementById('gameCanvas');
+    const existingDiscountSection = document.getElementById('discountSection');
+
+    // Remove existing discount section if it exists
+    if (existingDiscountSection) {
+      existingDiscountSection.remove();
+    }
+
     const discountHTML = `
-      <div id="discountSection" style="margin-top: 20px; padding: 10px; background-color: #f0f0f0; border-radius: 5px;">
-        <h3>Thanks for playing!</h3>
-        <p>Here's a discount code for 10% off your next purchase:</p>
-        <div style="font-size: 24px; font-weight: bold; color: #4CAF50;">${discountCode}</div>
-        <button id="copyDiscountCode" style="margin-top: 10px; padding: 5px 10px; background-color: #4CAF50; color: white; border: none; border-radius: 3px; cursor: pointer;">Copy Code</button>
+      <div id="discountSection" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+        <h3 style="color: #18533A; margin-bottom: 10px;">THANKS FOR PLAYING!</h3>
+        <p style="margin-bottom: 15px;">Here's a discount code for 10% off your next purchase:</p>
+        <div style="font-size: 24px; font-weight: bold; color: #4CAF50; margin-bottom: 15px;">${discountCode}</div>
+        <button id="copyDiscountCode" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Copy Code</button>
       </div>
     `;
     
-    productRecommendationElement.insertAdjacentHTML('beforeend', discountHTML);
+    // Insert the discount section as a sibling to the game canvas
+    gameCanvas.insertAdjacentHTML('afterend', discountHTML);
     
     document.getElementById('copyDiscountCode').addEventListener('click', function() {
       navigator.clipboard.writeText(discountCode).then(function() {
