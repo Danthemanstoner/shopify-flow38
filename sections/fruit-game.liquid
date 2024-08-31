@@ -450,34 +450,48 @@
 
   async function showRandomProduct() {
     try {
+      console.log('Fetching random product...');
       const response = await fetch('/products.json');
       const data = await response.json();
-      const randomProduct = data.products[Math.floor(Math.random() * data.products.length)];
+      console.log('Products data:', data);
       
-      productDetailsElement.innerHTML = `
-        <div class="grid__item small--one-half medium-up--one-quarter">
-          <div class="grid-view-item product-card">
-            <a class="grid-view-item__link" href="/products/${randomProduct.handle}">
-              <img class="grid-view-item__image" src="${randomProduct.images[0].src}" alt="${randomProduct.title}">
-              <div class="h4 grid-view-item__title">${randomProduct.title}</div>
-              <div class="grid-view-item__meta">
-                <span class="product-price__price">
-                  <span class="money">${formatMoney(randomProduct.variants[0].price)}</span>
-                </span>
+      if (data.products && data.products.length > 0) {
+        const randomProduct = data.products[Math.floor(Math.random() * data.products.length)];
+        console.log('Selected random product:', randomProduct);
+        
+        productDetailsElement.innerHTML = `
+          <div class="grid__item small--one-half medium-up--one-quarter">
+            <div class="grid-view-item product-card">
+              <a class="grid-view-item__link" href="/products/${randomProduct.handle}">
+                <img class="grid-view-item__image" src="${randomProduct.images[0].src}" alt="${randomProduct.title}">
+                <div class="h4 grid-view-item__title">${randomProduct.title}</div>
+                <div class="grid-view-item__meta">
+                  <span class="product-price__price">
+                    <span class="money">${formatMoney(randomProduct.variants[0].price)}</span>
+                  </span>
+                </div>
+              </a>
+              <div class="grid-view-item__vendor">${randomProduct.vendor}</div>
+              <div class="quick-product__btn quick-product__btn--not-ready js-modal-open-quick-modal-${randomProduct.id} small--hide">
+                <span class="quick-product__label">+ Quick View</span>
               </div>
-            </a>
-            <div class="grid-view-item__vendor">${randomProduct.vendor}</div>
-            <div class="quick-product__btn quick-product__btn--not-ready js-modal-open-quick-modal-${randomProduct.id} small--hide">
-              <span class="quick-product__label">+ Quick View</span>
             </div>
           </div>
-        </div>
-      `;
-      productRecommendationElement.style.display = 'block';
+        `;
+        console.log('Product HTML generated:', productDetailsElement.innerHTML);
+        
+        productRecommendationElement.style.display = 'block';
+        console.log('Product recommendation element display set to block');
 
-      // Initialize quick view functionality
-      if (window.Shopify && Shopify.QuickView) {
-        Shopify.QuickView.init();
+        // Initialize quick view functionality
+        if (window.Shopify && Shopify.QuickView) {
+          console.log('Initializing Shopify QuickView');
+          Shopify.QuickView.init();
+        } else {
+          console.log('Shopify QuickView not available');
+        }
+      } else {
+        console.error('No products found in the data');
       }
     } catch (error) {
       console.error('Error fetching random product:', error);
