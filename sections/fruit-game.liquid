@@ -38,725 +38,708 @@
 <script>
   console.log('Game script starting');
 
-  (function() {
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
-    const scoreElement = document.getElementById('score');
-    const levelElement = document.getElementById('level');
-    const livesElement = document.getElementById('lives');
-    const gameOverElement = document.getElementById('gameOver');
-    const finalScoreElement = document.getElementById('finalScore');
-    const leaderboardElement = document.getElementById('leaderboard');
-    const leaderboardListElement = document.getElementById('leaderboardList');
-    const rewardElement = document.getElementById('reward');
-    const discountCodeElement = document.getElementById('discountCodeText');
-    const productRecommendationElement = document.getElementById('productRecommendation');
-    const productDetailsElement = document.getElementById('productDetails');
-    const gameInstructions = document.getElementById('gameInstructions');
+  // Create a global object to hold our game
+  window.FruitGame = {};
 
-    console.log('DOM elements initialized');
+  // Wait for the window to load before initializing the game
+  window.onload = function() {
+      console.log('Window loaded, initializing game');
+      FruitGame.init();
+  };
 
-    let score = 0;
-    let level = 1;
-    let lives = 3;
-    let items = [];
-    let bunnyX = 400;
-    let bunnyY = 550;
-    let gameActive = false;
-    let cursorSize = 40;
-    let backgroundColor = '#FFFFFF';
-    const borderColor = '#494949';
-    let poos = [];
-    let spareLives = [];
+  // Game initialization and functions
+  FruitGame.init = function() {
+      console.log('Game init started');
 
-    let startTime;
-    let poopsFired = 0;
-    let fruitCollected = {
-      '🍎': 0, '🍌': 0, '🍇': 0, '🍊': 0, '🍓': 0
-    };
-    let extraLivesCollected = 0;
+      this.canvas = document.getElementById('gameCanvas');
+      this.ctx = this.canvas.getContext('2d');
+      this.scoreElement = document.getElementById('score');
+      this.levelElement = document.getElementById('level');
+      this.livesElement = document.getElementById('lives');
+      this.gameOverElement = document.getElementById('gameOver');
+      this.finalScoreElement = document.getElementById('finalScore');
+      this.leaderboardElement = document.getElementById('leaderboard');
+      this.leaderboardListElement = document.getElementById('leaderboardList');
+      this.rewardElement = document.getElementById('reward');
+      this.discountCodeElement = document.getElementById('discountCodeText');
+      this.productRecommendationElement = document.getElementById('productRecommendation');
+      this.productDetailsElement = document.getElementById('productDetails');
+      this.gameInstructions = document.getElementById('gameInstructions');
 
-    const itemTypes = ['🍎', '🍌', '🍇', '🍊', '🍓'];
+      console.log('DOM elements initialized');
 
-    let isBossLevel = false;
+      this.score = 0;
+      this.level = 1;
+      this.lives = 3;
+      this.items = [];
+      this.bunnyX = 400;
+      this.bunnyY = 550;
+      this.gameActive = false;
+      this.cursorSize = 40;
+      this.backgroundColor = '#FFFFFF';
+      this.borderColor = '#494949';
+      this.poos = [];
+      this.spareLives = [];
 
-    console.log('Game variables initialized');
+      this.startTime = null;
+      this.poopsFired = 0;
+      this.fruitCollected = { '🍎': 0, '🍌': 0, '🍇': 0, '🍊': 0, '🍓': 0 };
+      this.extraLivesCollected = 0;
 
-    function drawArcadeBunny(x, y, size) {
-      ctx.fillStyle = '#A0A0A0'; // Grey color for the bunny
-      ctx.beginPath();
-      ctx.ellipse(x, y, size/2, size/1.5, 0, 0, Math.PI * 2);
-      ctx.fill();
+      this.itemTypes = ['🍎', '🍌', '🍇', '🍊', '🍓'];
+
+      this.isBossLevel = false;
+
+      console.log('Game variables initialized');
+
+      // Add event listeners
+      this.canvas.addEventListener('click', function(event) {
+          console.log('Canvas clicked');
+          if (!FruitGame.gameActive) {
+              FruitGame.startGame();
+          } else {
+              FruitGame.shootPoo();
+          }
+      });
+
+      this.canvas.addEventListener('mousemove', function(event) {
+          if (FruitGame.gameActive) {
+              FruitGame.bunnyX = event.clientX - FruitGame.canvas.getBoundingClientRect().left;
+          }
+      });
+
+      // Initial setup
+      this.drawArcadeBunny(this.bunnyX, this.bunnyY, this.cursorSize);
+
+      console.log('Game initialized');
+  };
+
+  FruitGame.drawArcadeBunny = function(x, y, size) {
+      this.ctx.fillStyle = '#A0A0A0'; // Grey color for the bunny
+      this.ctx.beginPath();
+      this.ctx.ellipse(x, y, size/2, size/1.5, 0, 0, Math.PI * 2);
+      this.ctx.fill();
 
       // Ears
-      ctx.beginPath();
-      ctx.ellipse(x - size/3, y - size/2, size/6, size/3, -Math.PI/6, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.beginPath();
-      ctx.ellipse(x + size/3, y - size/2, size/6, size/3, Math.PI/6, 0, Math.PI * 2);
-      ctx.fill();
+      this.ctx.beginPath();
+      this.ctx.ellipse(x - size/3, y - size/2, size/6, size/3, -Math.PI/6, 0, Math.PI * 2);
+      this.ctx.fill();
+      this.ctx.beginPath();
+      this.ctx.ellipse(x + size/3, y - size/2, size/6, size/3, Math.PI/6, 0, Math.PI * 2);
+      this.ctx.fill();
 
       // Eyes
-      ctx.fillStyle = '#000000';
-      ctx.beginPath();
-      ctx.arc(x - size/6, y - size/10, size/10, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.beginPath();
-      ctx.arc(x + size/6, y - size/10, size/10, 0, Math.PI * 2);
-      ctx.fill();
+      this.ctx.fillStyle = '#000000';
+      this.ctx.beginPath();
+      this.ctx.arc(x - size/6, y - size/10, size/10, 0, Math.PI * 2);
+      this.ctx.fill();
+      this.ctx.beginPath();
+      this.ctx.arc(x + size/6, y - size/10, size/10, 0, Math.PI * 2);
+      this.ctx.fill();
 
       // Nose
-      ctx.fillStyle = '#FF9999';
-      ctx.beginPath();
-      ctx.ellipse(x, y + size/10, size/10, size/15, 0, 0, Math.PI * 2);
-      ctx.fill();
-    }
+      this.ctx.fillStyle = '#FF9999';
+      this.ctx.beginPath();
+      this.ctx.ellipse(x, y + size/10, size/10, size/15, 0, 0, Math.PI * 2);
+      this.ctx.fill();
+  };
 
-    function drawArcadeFruit(x, y, size, type) {
+  FruitGame.drawArcadeFruit = function(x, y, size, type) {
       switch(type) {
-        case '🍎':
-          // Apple
-          ctx.fillStyle = '#FF0000';
-          ctx.beginPath();
-          ctx.arc(x, y, size/2, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.fillStyle = '#00AA00';
-          ctx.fillRect(x - size/20, y - size/2, size/10, size/4);
-          break;
-        case '🍌':
-          // Banana
-          ctx.fillStyle = '#FFE135';
-          ctx.beginPath();
-          ctx.moveTo(x - size/2, y);
-          ctx.quadraticCurveTo(x, y - size/2, x + size/2, y);
-          ctx.quadraticCurveTo(x, y + size/2, x - size/2, y);
-          ctx.fill();
-          break;
-        case '🍇':
-          // Grapes
-          ctx.fillStyle = '#6B2C91';
-          for(let i = 0; i < 3; i++) {
-            for(let j = 0; j < 3; j++) {
-              ctx.beginPath();
-              ctx.arc(x + (i-1)*size/4, y + (j-1)*size/4, size/6, 0, Math.PI * 2);
-              ctx.fill();
-            }
-          }
-          break;
-        case '🍊':
-          // Orange
-          ctx.fillStyle = '#FFA500';
-          ctx.beginPath();
-          ctx.arc(x, y, size/2, 0, Math.PI * 2);
-          ctx.fill();
-          ctx.strokeStyle = '#FF8C00';
-          ctx.lineWidth = size/20;
-          ctx.beginPath();
-          ctx.arc(x, y, size/2.5, 0, Math.PI * 2);
-          ctx.stroke();
-          break;
-        case '🍓':
-          // Strawberry
-          ctx.fillStyle = '#FF0000';
-          ctx.beginPath();
-          ctx.moveTo(x, y - size/2);
-          ctx.bezierCurveTo(x + size/2, y - size/2, x + size/2, y + size/2, x, y + size/2);
-          ctx.bezierCurveTo(x - size/2, y + size/2, x - size/2, y - size/2, x, y - size/2);
-          ctx.fill();
-          ctx.fillStyle = '#00AA00';
-          ctx.beginPath();
-          ctx.moveTo(x - size/4, y - size/2);
-          ctx.lineTo(x, y - size/3);
-          ctx.lineTo(x + size/4, y - size/2);
-          ctx.fill();
-          break;
+          case '🍎':
+              // Apple
+              this.ctx.fillStyle = '#FF0000';
+              this.ctx.beginPath();
+              this.ctx.arc(x, y, size/2, 0, Math.PI * 2);
+              this.ctx.fill();
+              this.ctx.fillStyle = '#00AA00';
+              this.ctx.fillRect(x - size/20, y - size/2, size/10, size/4);
+              break;
+          case '🍌':
+              // Banana
+              this.ctx.fillStyle = '#FFE135';
+              this.ctx.beginPath();
+              this.ctx.moveTo(x - size/2, y);
+              this.ctx.quadraticCurveTo(x, y - size/2, x + size/2, y);
+              this.ctx.quadraticCurveTo(x, y + size/2, x - size/2, y);
+              this.ctx.fill();
+              break;
+          case '🍇':
+              // Grapes
+              this.ctx.fillStyle = '#6B2C91';
+              for(let i = 0; i < 3; i++) {
+                  for(let j = 0; j < 3; j++) {
+                      this.ctx.beginPath();
+                      this.ctx.arc(x + (i-1)*size/4, y + (j-1)*size/4, size/6, 0, Math.PI * 2);
+                      this.ctx.fill();
+                  }
+              }
+              break;
+          case '🍊':
+              // Orange
+              this.ctx.fillStyle = '#FFA500';
+              this.ctx.beginPath();
+              this.ctx.arc(x, y, size/2, 0, Math.PI * 2);
+              this.ctx.fill();
+              this.ctx.strokeStyle = '#FF8C00';
+              this.ctx.lineWidth = size/20;
+              this.ctx.beginPath();
+              this.ctx.arc(x, y, size/2.5, 0, Math.PI * 2);
+              this.ctx.stroke();
+              break;
+          case '🍓':
+              // Strawberry
+              this.ctx.fillStyle = '#FF0000';
+              this.ctx.beginPath();
+              this.ctx.moveTo(x, y - size/2);
+              this.ctx.bezierCurveTo(x + size/2, y - size/2, x + size/2, y + size/2, x, y + size/2);
+              this.ctx.bezierCurveTo(x - size/2, y + size/2, x - size/2, y - size/2, x, y - size/2);
+              this.ctx.fill();
+              this.ctx.fillStyle = '#00AA00';
+              this.ctx.beginPath();
+              this.ctx.moveTo(x - size/4, y - size/2);
+              this.ctx.lineTo(x, y - size/3);
+              this.ctx.lineTo(x + size/4, y - size/2);
+              this.ctx.fill();
+              break;
       }
-    }
+  };
 
-    function createParticles(x, y, color, count = 20, speed = 5) {
+  FruitGame.createParticles = function(x, y, color, count = 20, speed = 5) {
       const particles = [];
       for (let i = 0; i < count; i++) {
-        particles.push({
-          x: x,
-          y: y,
-          size: Math.random() * 5 + 2,
-          speedX: (Math.random() - 0.5) * speed,
-          speedY: (Math.random() - 0.5) * speed,
-          color: color
-        });
+          particles.push({
+              x: x,
+              y: y,
+              size: Math.random() * 5 + 2,
+              speedX: (Math.random() - 0.5) * speed,
+              speedY: (Math.random() - 0.5) * speed,
+              color: color
+          });
       }
       return particles;
-    }
+  };
 
-    function createItem() {
+  FruitGame.createItem = function() {
       return {
-        x: Math.random() * (canvas.width - 80) + 40,
-        y: -80,
-        type: itemTypes[(level - 1) % itemTypes.length],
-        speed: 1 + Math.random() * 2 + (level - 1) * 0.5
+          x: Math.random() * (this.canvas.width - 80) + 40,
+          y: -80,
+          type: this.itemTypes[(this.level - 1) % this.itemTypes.length],
+          speed: 1 + Math.random() * 2 + (this.level - 1) * 0.5
       };
-    }
+  };
 
-    function drawPoo(x, y) {
-      ctx.fillStyle = '#8B4513';
-      ctx.beginPath();
-      ctx.arc(x, y, 15, 0, 2 * Math.PI);
-      ctx.fill();
-    }
+  FruitGame.drawPoo = function(x, y) {
+      this.ctx.fillStyle = '#8B4513';
+      this.ctx.beginPath();
+      this.ctx.arc(x, y, 15, 0, Math.PI * 2);
+      this.ctx.fill();
+  };
 
-    function getFruitColor(type) {
+  FruitGame.getFruitColor = function(type) {
       switch(type) {
-        case '🍎': return '#FF0000';
-        case '🍌': return '#FFD700';
-        case '🍇': return '#800080';
-        case '🍊': return '#FFA500';
-        case '🍓': return '#FF69B4';
-        default: return '#000000';
+          case '🍎': return '#FF0000';
+          case '🍌': return '#FFD700';
+          case '🍇': return '#800080';
+          case '🍊': return '#FFA500';
+          case '🍓': return '#FF69B4';
+          default: return '#000000';
       }
-    }
+  };
 
-    function updateGame() {
-      if (!gameActive) return;
+  FruitGame.updateGame = function() {
+      if (!this.gameActive) return;
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
       // Draw background
-      ctx.fillStyle = backgroundColor;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      this.ctx.fillStyle = this.backgroundColor;
+      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
       
       // Draw border
-      ctx.strokeStyle = borderColor;
-      ctx.lineWidth = 10;
-      ctx.strokeRect(5, 5, canvas.width - 10, canvas.height - 10);
+      this.ctx.strokeStyle = this.borderColor;
+      this.ctx.lineWidth = 10;
+      this.ctx.strokeRect(5, 5, this.canvas.width - 10, this.canvas.height - 10);
 
       // Draw bunny
-      drawArcadeBunny(bunnyX, bunnyY, cursorSize);
+      this.drawArcadeBunny(this.bunnyX, this.bunnyY, this.cursorSize);
 
       // Update and draw poos
-      for (let i = poos.length - 1; i >= 0; i--) {
-        const poo = poos[i];
-        poo.y -= 8;
-        drawPoo(poo.x, poo.y);
+      for (let i = this.poos.length - 1; i >= 0; i--) {
+          const poo = this.poos[i];
+          poo.y -= 8;
+          this.drawPoo(poo.x, poo.y);
 
-        if (poo.y < 0) {
-          poos.splice(i, 1);
-        }
+          if (poo.y < 0) {
+              this.poos.splice(i, 1);
+          }
       }
 
       // Update and draw items
-      for (let i = items.length - 1; i >= 0; i--) {
-        const item = items[i];
-        item.y += item.speed;
+      for (let i = this.items.length - 1; i >= 0; i--) {
+          const item = this.items[i];
+          item.y += item.speed;
 
-        if (item.type === 'spareLife') {
-          drawArcadeBunny(item.x, item.y, 30);
-        } else {
-          drawArcadeFruit(item.x, item.y, 40, item.type);
-        }
-
-        // Check collision with bunny
-        if (Math.abs(item.x - bunnyX) < 40 && Math.abs(item.y - bunnyY) < 40) {
           if (item.type === 'spareLife') {
-            lives++;
-            extraLivesCollected++;
-            updateLives();
-          } else if (item.type === '🥕') {
-            score += 10;
-            isBossLevel = false;
+              this.drawArcadeBunny(item.x, item.y, 30);
           } else {
-            score++;
-            fruitCollected[item.type]++;
+              this.drawArcadeFruit(item.x, item.y, 40, item.type);
           }
-          scoreElement.textContent = `SCORE: ${score}`;
-          item.particles = createParticles(item.x, item.y, getFruitColor(item.type), 40, 8);
-          items.splice(i, 1);
-          if (score % 10 === 0) {
-            level++;
-            levelElement.textContent = `LEVEL ${level}`;
-            cursorSize += 5;
-            backgroundColor = backgroundColor === '#FFFFFF' ? '#18533A' : '#FFFFFF';
+
+          // Check collision with bunny
+          if (Math.abs(item.x - this.bunnyX) < 40 && Math.abs(item.y - this.bunnyY) < 40) {
+              if (item.type === 'spareLife') {
+                  this.lives++;
+                  this.extraLivesCollected++;
+                  this.updateLives();
+              } else if (item.type === '🥕') {
+                  this.score += 10;
+                  this.isBossLevel = false;
+              } else {
+                  this.score++;
+                  this.fruitCollected[item.type]++;
+              }
+              this.scoreElement.textContent = `SCORE: ${this.score}`;
+              item.particles = this.createParticles(item.x, item.y, this.getFruitColor(item.type), 40, 8);
+              this.items.splice(i, 1);
+              if (this.score % 10 === 0) {
+                  this.level++;
+                  this.levelElement.textContent = `LEVEL ${this.level}`;
+                  this.cursorSize += 5;
+                  this.backgroundColor = this.backgroundColor === '#FFFFFF' ? '#18533A' : '#FFFFFF';
+              }
+              continue;
           }
-          continue;
-        }
 
-        // Check collision with poos
-        for (let j = poos.length - 1; j >= 0; j--) {
-          const poo = poos[j];
-          if (Math.abs(item.x - poo.x) < 30 && Math.abs(item.y - poo.y) < 30) {
-            if (item.type !== 'spareLife') {
-              score++;
-              fruitCollected[item.type]++;
-              scoreElement.textContent = `SCORE: ${score}`;
-              item.particles = createParticles(item.x, item.y, getFruitColor(item.type), 60, 10);
-            }
-            items.splice(i, 1);
-            poos.splice(j, 1);
-            if (score % 10 === 0) {
-              level++;
-              levelElement.textContent = `LEVEL ${level}`;
-              cursorSize += 5;
-              backgroundColor = backgroundColor === '#FFFFFF' ? '#18533A' : '#FFFFFF';
-            }
-            break;
+          // Check collision with poos
+          for (let j = this.poos.length - 1; j >= 0; j--) {
+              const poo = this.poos[j];
+              if (Math.abs(item.x - poo.x) < 30 && Math.abs(item.y - poo.y) < 30) {
+                  if (item.type !== 'spareLife') {
+                      this.score++;
+                      this.fruitCollected[item.type]++;
+                      this.scoreElement.textContent = `SCORE: ${this.score}`;
+                      item.particles = this.createParticles(item.x, item.y, this.getFruitColor(item.type), 60, 10);
+                  }
+                  this.items.splice(i, 1);
+                  this.poos.splice(j, 1);
+                  if (this.score % 10 === 0) {
+                      this.level++;
+                      this.levelElement.textContent = `LEVEL ${this.level}`;
+                      this.cursorSize += 5;
+                      this.backgroundColor = this.backgroundColor === '#FFFFFF' ? '#18533A' : '#FFFFFF';
+                  }
+                  break;
+              }
           }
-        }
 
-        // Draw particles
-        if (item.particles) {
-          item.particles.forEach((particle, index) => {
-            particle.x += particle.speedX;
-            particle.y += particle.speedY;
-            particle.size *= 0.95;
+          // Draw particles
+          if (item.particles) {
+              item.particles.forEach((particle, index) => {
+                  particle.x += particle.speedX;
+                  particle.y += particle.speedY;
+                  particle.size *= 0.95;
 
-            ctx.fillStyle = particle.color;
-            ctx.fillRect(particle.x, particle.y, particle.size, particle.size);
+                  this.ctx.fillStyle = particle.color;
+                  this.ctx.fillRect(particle.x, particle.y, particle.size, particle.size);
 
-            if (particle.size <= 0.5) {
-              item.particles.splice(index, 1);
-            }
-          });
-        }
-
-        // Remove items that fall off screen
-        if (item.y > canvas.height) {
-          items.splice(i, 1);
-          if (item.type !== 'spareLife') {
-            lives--;
-            updateLives();
-            if (lives <= 0) {
-              gameOver();
-              return;
-            }
+                  if (particle.size <= 0.5) {
+                      item.particles.splice(index, 1);
+                  }
+              });
           }
-        }
+
+          // Remove items that fall off screen
+          if (item.y > this.canvas.height) {
+              this.items.splice(i, 1);
+              if (item.type !== 'spareLife') {
+                  this.lives--;
+                  this.updateLives();
+                  if (this.lives <= 0) {
+                      this.gameOver();
+                      return;
+                  }
+              }
+          }
       }
 
       // Add new items
-      if (Math.random() < 0.01 + (level * 0.002)) {
-        if (level % 20 === 0 && !isBossLevel) {
-          isBossLevel = true;
-          for (let i = 0; i < 10; i++) {
-            items.push({
-              x: Math.random() * (canvas.width - 80) + 40,
-              y: -80 - i * 100,
-              type: '🥕',
-              speed: 2 + Math.random() * 3
-            });
+      if (Math.random() < 0.01 + (this.level * 0.002)) {
+          if (this.level % 20 === 0 && !this.isBossLevel) {
+              this.isBossLevel = true;
+              for (let i = 0; i < 10; i++) {
+                  this.items.push({
+                      x: Math.random() * (this.canvas.width - 80) + 40,
+                      y: -80 - i * 100,
+                      type: '🥕',
+                      speed: 2 + Math.random() * 3
+                  });
+              }
+          } else if (this.level % 10 === 0 && Math.random() < 0.1) {
+              this.items.push({
+                  x: Math.random() * (this.canvas.width - 80) + 40,
+                  y: -80,
+                  type: 'spareLife',
+                  speed: 1 + Math.random() * 2
+              });
+          } else if (!this.isBossLevel) {
+              this.items.push(this.createItem());
           }
-        } else if (level % 10 === 0 && Math.random() < 0.1) {
-          items.push({
-            x: Math.random() * (canvas.width - 80) + 40,
-            y: -80,
-            type: 'spareLife',
-            speed: 1 + Math.random() * 2
-          });
-        } else if (!isBossLevel) {
-          items.push(createItem());
-        }
       }
 
-      requestAnimationFrame(updateGame);
-    }
+      requestAnimationFrame(() => this.updateGame());
+  };
 
-    function updateLives() {
-      livesElement.textContent = `LIVES: ${lives}`;
-    }
+  FruitGame.updateLives = function() {
+      this.livesElement.textContent = `LIVES: ${this.lives}`;
+  };
 
-    function gameOver() {
-      gameActive = false;
+  FruitGame.gameOver = function() {
+      this.gameActive = false;
       const endTime = new Date();
-      const timeTaken = (endTime - startTime) / 1000;
+      const timeTaken = (endTime - this.startTime) / 1000;
 
-      gameOverElement.style.display = 'block';
-      finalScoreElement.textContent = score;
+      this.gameOverElement.style.display = 'block';
+      this.finalScoreElement.textContent = this.score;
 
       const statsElement = document.createElement('div');
       statsElement.innerHTML = `
-        <h3>Game Statistics:</h3>
-        <p>Time taken: ${timeTaken.toFixed(2)} seconds</p>
-        <p>Poops fired: ${poopsFired}</p>
-        <p>Fruits collected:</p>
-        <ul>
-          ${Object.entries(fruitCollected).map(([fruit, count]) => `<li>${fruit}: ${count}</li>`).join('')}
-        </ul>
-        <p>Extra lives collected: ${extraLivesCollected}</p>
+          <h3>Game Statistics:</h3>
+          <p>Time taken: ${timeTaken.toFixed(2)} seconds</p>
+          <p>Poops fired: ${this.poopsFired}</p>
+          <p>Fruits collected:</p>
+          <ul>
+              ${Object.entries(this.fruitCollected).map(([fruit, count]) => `<li>${fruit}: ${count}</li>`).join('')}
+          </ul>
+          <p>Extra lives collected: ${this.extraLivesCollected}</p>
       `;
-      gameOverElement.appendChild(statsElement);
+      this.gameOverElement.appendChild(statsElement);
 
       const highScore = localStorage.getItem('fruitGameHighScore') || 0;
-      if (score > highScore) {
-        localStorage.setItem('fruitGameHighScore', score);
-        showReward();
+      if (this.score > highScore) {
+          localStorage.setItem('fruitGameHighScore', this.score);
+          this.showReward();
       }
 
-      showRandomProduct();
-    }
+      this.showRandomProduct();
+  };
 
-    function showReward() {
+  FruitGame.showReward = function() {
       const discountCode = '25PercentOFF';
       const rewardElement = document.createElement('div');
       rewardElement.innerHTML = `
-        <h3>New High Score!</h3>
-        <p>You've earned a discount:</p>
-        <p class="discount-code" id="discountCodeText">${discountCode}</p>
-        <button id="copyDiscountCode">Copy Code</button>
-        <button id="applyDiscountCode">Apply to Cart</button>
-        <p>Use this code for 25% off your next purchase!</p>
+          <h3>New High Score!</h3>
+          <p>You've earned a discount:</p>
+          <p class="discount-code" id="discountCodeText">${discountCode}</p>
+          <button id="copyDiscountCode">Copy Code</button>
+          <button id="applyDiscountCode">Apply to Cart</button>
+          <p>Use this code for 25% off your next purchase!</p>
       `;
       rewardElement.className = 'reward-popup';
       document.body.appendChild(rewardElement);
 
       document.getElementById('copyDiscountCode').addEventListener('click', () => {
-        navigator.clipboard.writeText(discountCode).then(() => {
-          alert('Discount code copied to clipboard!');
-        });
+          navigator.clipboard.writeText(discountCode).then(() => {
+              alert('Discount code copied to clipboard!');
+          });
       });
 
       document.getElementById('applyDiscountCode').addEventListener('click', () => {
-        applyDiscountToCart(discountCode);
+          this.applyDiscountToCart(discountCode);
       });
 
       setTimeout(() => {
-        document.body.removeChild(rewardElement);
+          document.body.removeChild(rewardElement);
       }, 10000);
-    }
+  };
 
-    function applyDiscountToCart(discountCode) {
+  FruitGame.applyDiscountToCart = function(discountCode) {
       fetch('/discount/' + discountCode, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
       })
       .then(response => response.json())
       .then(data => {
-        if (data.success) {
-          alert('Discount applied to your cart!');
-        } else {
-          alert('Failed to apply discount. Please try again.');
-        }
+          if (data.success) {
+              alert('Discount applied to your cart!');
+          } else {
+              alert('Failed to apply discount. Please try again.');
+          }
       })
       .catch((error) => {
-        console.error('Error:', error);
-        alert('An error occurred. Please try again.');
+          console.error('Error:', error);
+          alert('An error occurred. Please try again.');
       });
-    }
+  };
 
-    function showRandomProduct() {
+  FruitGame.showRandomProduct = function() {
       console.log('Showing random product');
       fetch('/products.json')
-        .then(response => response.json())
-        .then(data => {
-          if (!data.products || data.products.length === 0) {
-            console.error('No products found in the data');
-            return;
-          }
+          .then(response => response.json())
+          .then(data => {
+              if (!data.products || data.products.length === 0) {
+                  console.error('No products found in the data');
+                  return;
+              }
 
-          const randomProduct = data.products[Math.floor(Math.random() * data.products.length)];
-          const productHTML = generateProductHTML(randomProduct);
-          productDetailsElement.innerHTML = productHTML;
-          productRecommendationElement.style.display = 'block';
-          showDiscountCode();
-        })
-        .catch(error => {
-          console.error('Error fetching products:', error);
-        });
-    }
+              const randomProduct = data.products[Math.floor(Math.random() * data.products.length)];
+              const productHTML = this.generateProductHTML(randomProduct);
+              this.productDetailsElement.innerHTML = productHTML;
+              this.productRecommendationElement.style.display = 'block';
+              this.showDiscountCode();
+          })
+          .catch(error => {
+              console.error('Error fetching products:', error);
+          });
+  };
 
-    function generateProductHTML(product) {
+  FruitGame.generateProductHTML = function(product) {
       return `
-        <div class="grid__item small--one-half medium-up--one-quarter">
-          <div class="grid-view-item product-card">
-            <a class="grid-view-item__link" href="/products/${product.handle}">
-              <img class="grid-view-item__image" src="${product.images[0].src}" alt="${product.title}" style="max-width: 200px; max-height: 200px; object-fit: contain;">
-              <div class="h4 grid-view-item__title">${product.title}</div>
-              <div class="grid-view-item__meta">
-                <span class="product-price__price">
-                  <span class="money">${formatMoney(product.variants[0].price)}</span>
-                </span>
+          <div class="grid__item small--one-half medium-up--one-quarter">
+              <div class="grid-view-item product-card">
+                  <a class="grid-view-item__link" href="/products/${product.handle}">
+                      <img class="grid-view-item__image" src="${product.images[0].src}" alt="${product.title}" style="max-width: 200px; max-height: 200px; object-fit: contain;">
+                      <div class="h4 grid-view-item__title">${product.title}</div>
+                      <div class="grid-view-item__meta">
+                          <span class="product-price__price">
+                              <span class="money">${this.formatMoney(product.variants[0].price)}</span>
+                          </span>
+                      </div>
+                  </a>
+                  <div class="grid-view-item__vendor">${product.vendor}</div>
               </div>
-            </a>
-            <div class="grid-view-item__vendor">${product.vendor}</div>
           </div>
-        </div>
       `;
-    }
+  };
 
-    function formatMoney(cents) {
+  FruitGame.formatMoney = function(cents) {
       return '$' + (cents / 100).toFixed(2);
-    }
+  };
 
-    function showDiscountCode() {
+  FruitGame.showDiscountCode = function() {
       const discountCode = 'FRUITGAME10';
       const gameCanvas = document.getElementById('gameCanvas');
       const existingDiscountSection = document.getElementById('discountSection');
 
       if (existingDiscountSection) {
-        existingDiscountSection.remove();
+          existingDiscountSection.remove();
       }
 
       const discountHTML = `
-        <div id="discountSection" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-          <h3 style="color: #18533A; margin-bottom: 10px;">THANKS FOR PLAYING!</h3>
-          <p style="margin-bottom: 15px;">Here's a discount code for 10% off your next purchase:</p>
-          <div style="font-size: 24px; font-weight: bold; color: #4CAF50; margin-bottom: 15px;">${discountCode}</div>
-          <button id="copyDiscountCode" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Copy Code</button>
-        </div>
+          <div id="discountSection" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+              <h3 style="color: #18533A; margin-bottom: 10px;">THANKS FOR PLAYING!</h3>
+              <p style="margin-bottom: 15px;">Here's a discount code for 10% off your next purchase:</p>
+              <div style="font-size: 24px; font-weight: bold; color: #4CAF50; margin-bottom: 15px;">${discountCode}</div>
+              <button id="copyDiscountCode" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Copy Code</button>
+          </div>
       `;
       
       gameCanvas.insertAdjacentHTML('afterend', discountHTML);
       
       document.getElementById('copyDiscountCode').addEventListener('click', function() {
-        navigator.clipboard.writeText(discountCode).then(function() {
-          alert('Discount code copied to clipboard!');
-        }, function(err) {
-          console.error('Could not copy text: ', err);
-        });
+          navigator.clipboard.writeText(discountCode).then(function() {
+              alert('Discount code copied to clipboard!');
+          }, function(err) {
+              console.error('Could not copy text: ', err);
+          });
       });
-    }
+  };
 
-    function resizeCanvas() {
-      const container = canvas.parentElement;
+  FruitGame.resizeCanvas = function() {
+      const container = this.canvas.parentElement;
       const containerWidth = container.clientWidth;
       const scale = Math.min(1, containerWidth / 800);
-      canvas.style.width = `${800 * scale}px`;
-      canvas.style.height = `${600 * scale}px`;
-    }
+      this.canvas.style.width = `${800 * scale}px`;
+      this.canvas.style.height = `${600 * scale}px`;
+  };
 
-    canvas.addEventListener('mousemove', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      bunnyX = (e.clientX - rect.left) * (canvas.width / rect.width);
-    });
-
-    canvas.addEventListener('click', (e) => {
-      if (!gameActive) {
-        startGame();
-        gameInstructions.style.display = 'none';
-      } else {
-        shootPoo();
-      }
-    });
-
-    canvas.addEventListener('touchmove', (e) => {
-      e.preventDefault();
-      const rect = canvas.getBoundingClientRect();
-      const touch = e.touches[0];
-      bunnyX = (touch.clientX - rect.left) * (canvas.width / rect.width);
-    }, { passive: false });
-
-    canvas.addEventListener('touchend', (e) => {
-      shootPoo();
-    });
-
-    document.getElementById('leaderboardForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const playerName = document.getElementById('playerName').value;
-      submitScore(playerName, score);
-    });
-
-    function submitScore(name, score) {
-      const leaderboard = JSON.parse(localStorage.getItem('fruitGameLeaderboard') || '[]');
-      leaderboard.push({ name, score });
-      leaderboard.sort((a, b) => b.score - a.score);
-      localStorage.setItem('fruitGameLeaderboard', JSON.stringify(leaderboard.slice(0, 10)));
+  FruitGame.startGame = function() {
+      console.log('Starting game loop');
+      this.gameActive = true;
+      this.score = 0;
+      this.level = 1;
+      this.lives = 3;
+      this.items = [];
+      this.poos = [];
+      this.cursorSize = 40;
+      this.backgroundColor = '#FFFFFF';
+      this.startTime = new Date();
+      this.poopsFired = 0;
+      this.fruitCollected = { '🍎': 0, '🍌': 0, '🍇': 0, '🍊': 0, '🍓': 0 };
+      this.extraLivesCollected = 0;
       
-      const gameOverElement = document.getElementById('gameOver');
-      const leaderboardForm = document.getElementById('leaderboardForm');
-      const congratsMessage = document.createElement('p');
-      congratsMessage.textContent = 'Congratulations, you made the list!';
+      this.scoreElement.textContent = `SCORE: ${this.score}`;
+      this.levelElement.textContent = `LEVEL ${this.level}`;
+      this.updateLives();
       
-      leaderboardForm.replaceWith(congratsMessage);
+      this.gameOverElement.style.display = 'none';
+      this.leaderboardElement.style.display = 'none';
+      this.rewardElement.style.display = 'none';
+      this.productRecommendationElement.style.display = 'none';
+      this.gameInstructions.style.display = 'none';
       
-      showLeaderboard();
-    }
+      this.updateGame();
+  };
 
-    function showLeaderboard() {
-      const leaderboard = JSON.parse(localStorage.getItem('fruitGameLeaderboard') || '[]');
-      leaderboardListElement.innerHTML = leaderboard.map(entry => 
-        `<li>${entry.name}: ${entry.score}</li>`
-      ).join('');
-      leaderboardElement.style.display = 'block';
-    }
+  FruitGame.shootPoo = function() {
+      this.poos.push({ x: this.bunnyX, y: this.bunnyY });
+      this.poopsFired++;
+  };
 
-    function submitHighScore(score, playerName) {
-      fetch('/api/highscores', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ score, playerName }),
-      })
-      .then(response => response.json())
-      .then(data => console.log('High score submitted:', data))
-      .catch((error) => console.error('Error:', error));
-    }
-
-    submitHighScore(score, playerName);
-
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    console.log('Starting game loop');
-    startTime = new Date();
-    updateGame();
-
-    gameInstructions.style.display = 'block';
-
-    drawArcadeBunny(bunnyX, bunnyY, cursorSize);
-
-    console.log('Game script loaded');
-  })();
+  console.log('Game script loaded');
 </script>
 
 <style>
   .fruit-game-container * {
-    font-family: Arial, sans-serif !important;
-    box-sizing: border-box;
+      font-family: Arial, sans-serif !important;
+      box-sizing: border-box;
   }
 
   .fruit-game-container {
-    text-align: center;
-    max-width: 800px;
-    width: 100%;
-    margin: 0 auto;
-    background-color: #FFFFFF !important;
-    padding: 20px;
-    border: 4px solid #494949 !important;
-    border-radius: 10px;
-    overflow: hidden;
+      text-align: center;
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      background-color: #FFFFFF !important;
+      padding: 20px;
+      border: 4px solid #494949 !important;
+      border-radius: 10px;
+      overflow: hidden;
   }
 
   .fruit-game-container #gameCanvas {
-    border: 4px solid #494949 !important;
-    margin: 20px auto;
-    display: block;
-    max-width: 100%;
-    height: auto;
+      border: 4px solid #494949 !important;
+      margin: 20px auto;
+      display: block;
+      max-width: 100%;
+      height: auto;
   }
 
   .fruit-game-container #gameInfo {
-    display: flex;
-    justify-content: space-between;
-    font-size: 16px;
-    margin: 10px 0;
-    color: #18533A !important;
+      display: flex;
+      justify-content: space-between;
+      font-size: 16px;
+      margin: 10px 0;
+      color: #18533A !important;
   }
 
   .fruit-game-container #gameOver,
   .fruit-game-container #leaderboard,
   .fruit-game-container #reward,
   .fruit-game-container #productRecommendation {
-    margin-top: 20px;
-    background-color: #F0F0F0 !important;
-    color: #18533A !important;
-    padding: 10px;
-    border-radius: 5px;
+      margin-top: 20px;
+      background-color: #F0F0F0 !important;
+      color: #18533A !important;
+      padding: 10px;
+      border-radius: 5px;
   }
 
   .fruit-game-container #leaderboardForm input,
   .fruit-game-container #leaderboardForm button {
-    margin: 10px 0;
-    padding: 5px;
-    font-size: 16px;
+      margin: 10px 0;
+      padding: 5px;
+      font-size: 16px;
   }
 
   .fruit-game-container #leaderboardList {
-    list-style-position: inside;
-    padding: 0;
-    text-align: left;
+      list-style-position: inside;
+      padding: 0;
+      text-align: left;
   }
 
   .fruit-game-container #reward {
-    font-size: 18px;
-    background-color: #E0FFE0 !important;
+      font-size: 18px;
+      background-color: #E0FFE0 !important;
   }
 
   .fruit-game-container .btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #18533A;
-    color: #FFFFFF;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-top: 10px;
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #18533A;
+      color: #FFFFFF;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 10px;
   }
 
   .reward-popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #FFFFFF;
-    color: #18533A;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
-    z-index: 1000;
-    font-family: Arial, sans-serif;
-    text-align: center;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #FFFFFF;
+      color: #18533A;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+      z-index: 1000;
+      font-family: Arial, sans-serif;
+      text-align: center;
   }
 
   .reward-popup .discount-code {
-    font-size: 24px;
-    font-weight: bold;
-    color: #FF0000;
+      font-size: 24px;
+      font-weight: bold;
+      color: #FF0000;
   }
 
   @media (max-width: 820px) {
-    .fruit-game-container {
-      padding: 10px;
-    }
+      .fruit-game-container {
+          padding: 10px;
+      }
 
-    .fruit-game-container #gameInfo {
-      font-size: 14px;
-    }
+      .fruit-game-container #gameInfo {
+          font-size: 14px;
+      }
   }
 
   .product-card {
-    border: 1px solid #e8e8e8;
-    padding: 15px;
-    text-align: center;
-    margin-bottom: 20px;
+      border: 1px solid #e8e8e8;
+      padding: 15px;
+      text-align: center;
+      margin-bottom: 20px;
   }
 
   .product-card img {
-    max-width: 100%;
-    height: auto;
+      max-width: 100%;
+      height: auto;
   }
 
   .product-price {
-    font-weight: bold;
-    margin: 10px 0;
+      font-weight: bold;
+      margin: 10px 0;
   }
 
   .product-actions {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 10px;
+      display: flex;
+      justify-content: space-around;
+      margin-top: 10px;
   }
 
   .product-actions button {
-    background-color: #18533A;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+      background-color: #18533A;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
   }
 
   .product-actions button:hover {
-    background-color: #123c2a;
+      background-color: #123c2a;
   }
 
   #productRecommendation {
-    margin-top: 20px;
-    padding: 15px;
-    border: 1px solid #e8e8e8;
-    background-color: #f8f8f8;
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #e8e8e8;
+      background-color: #f8f8f8;
   }
 
   #productDetails {
-    margin-top: 10px;
+      margin-top: 10px;
   }
 </style>
 
