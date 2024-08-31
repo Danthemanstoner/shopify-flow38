@@ -457,8 +457,8 @@
                           <div class="product-info">
                               <h4>${randomProduct.title}</h4>
                               <p>Price: $${randomProduct.variants[0].price}</p>
-                              <button class="add-to-cart-button" onclick="FruitGame.addToCart(${randomProduct.variants[0].id})">Add to Cart</button>
                           </div>
+                          <button class="add-to-cart-button" onclick="FruitGame.addToCart(${randomProduct.variants[0].id})">Add to Cart</button>
                       </div>
                   `;
                   this.productRecommendationElement.style.display = 'block';
@@ -643,17 +643,18 @@
 
   .product-recommendation {
       display: flex;
+      flex-direction: column;
       align-items: center;
       margin-top: 20px;
+      text-align: center;
   }
 
   .product-recommendation img {
-      margin-right: 20px;
+      margin-bottom: 15px;
   }
 
   .product-info {
-      display: flex;
-      flex-direction: column;
+      margin-bottom: 15px;
   }
 
   .add-to-cart-button {
