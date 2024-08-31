@@ -8,6 +8,7 @@
   <div id="gameOver" style="display: none;">
     <h2>GAME OVER</h2>
     <p>YOUR SCORE: <span id="finalScore"></span></p>
+    <div id="gameStats"></div>
     <form id="leaderboardForm">
       <input type="text" id="playerName" placeholder="Enter your name" required>
       <button type="submit">Submit Score</button>
@@ -38,16 +39,13 @@
 <script>
   console.log('Game script starting');
 
-  // Create a global object to hold our game
   window.FruitGame = {};
 
-  // Wait for the window to load before initializing the game
   window.onload = function() {
       console.log('Window loaded, initializing game');
       FruitGame.init();
   };
 
-  // Game initialization and functions
   FruitGame.init = function() {
       console.log('Game init started');
 
@@ -65,6 +63,7 @@
       this.productRecommendationElement = document.getElementById('productRecommendation');
       this.productDetailsElement = document.getElementById('productDetails');
       this.gameInstructions = document.getElementById('gameInstructions');
+      this.leaderboardForm = document.getElementById('leaderboardForm');
 
       console.log('DOM elements initialized');
 
@@ -92,7 +91,6 @@
 
       console.log('Game variables initialized');
 
-      // Add event listeners
       this.canvas.addEventListener('click', function(event) {
           console.log('Canvas clicked');
           if (!FruitGame.gameActive) {
@@ -108,19 +106,22 @@
           }
       });
 
-      // Initial setup
+      this.leaderboardForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+          FruitGame.submitHighScore();
+      });
+
       this.drawArcadeBunny(this.bunnyX, this.bunnyY, this.cursorSize);
 
       console.log('Game initialized');
   };
 
   FruitGame.drawArcadeBunny = function(x, y, size) {
-      this.ctx.fillStyle = '#A0A0A0'; // Grey color for the bunny
+      this.ctx.fillStyle = '#A0A0A0';
       this.ctx.beginPath();
       this.ctx.ellipse(x, y, size/2, size/1.5, 0, 0, Math.PI * 2);
       this.ctx.fill();
 
-      // Ears
       this.ctx.beginPath();
       this.ctx.ellipse(x - size/3, y - size/2, size/6, size/3, -Math.PI/6, 0, Math.PI * 2);
       this.ctx.fill();
@@ -128,7 +129,6 @@
       this.ctx.ellipse(x + size/3, y - size/2, size/6, size/3, Math.PI/6, 0, Math.PI * 2);
       this.ctx.fill();
 
-      // Eyes
       this.ctx.fillStyle = '#000000';
       this.ctx.beginPath();
       this.ctx.arc(x - size/6, y - size/10, size/10, 0, Math.PI * 2);
@@ -137,7 +137,6 @@
       this.ctx.arc(x + size/6, y - size/10, size/10, 0, Math.PI * 2);
       this.ctx.fill();
 
-      // Nose
       this.ctx.fillStyle = '#FF9999';
       this.ctx.beginPath();
       this.ctx.ellipse(x, y + size/10, size/10, size/15, 0, 0, Math.PI * 2);
@@ -147,7 +146,6 @@
   FruitGame.drawArcadeFruit = function(x, y, size, type) {
       switch(type) {
           case '🍎':
-              // Apple
               this.ctx.fillStyle = '#FF0000';
               this.ctx.beginPath();
               this.ctx.arc(x, y, size/2, 0, Math.PI * 2);
@@ -156,7 +154,6 @@
               this.ctx.fillRect(x - size/20, y - size/2, size/10, size/4);
               break;
           case '🍌':
-              // Banana
               this.ctx.fillStyle = '#FFE135';
               this.ctx.beginPath();
               this.ctx.moveTo(x - size/2, y);
@@ -165,7 +162,6 @@
               this.ctx.fill();
               break;
           case '🍇':
-              // Grapes
               this.ctx.fillStyle = '#6B2C91';
               for(let i = 0; i < 3; i++) {
                   for(let j = 0; j < 3; j++) {
@@ -176,7 +172,6 @@
               }
               break;
           case '🍊':
-              // Orange
               this.ctx.fillStyle = '#FFA500';
               this.ctx.beginPath();
               this.ctx.arc(x, y, size/2, 0, Math.PI * 2);
@@ -188,7 +183,6 @@
               this.ctx.stroke();
               break;
           case '🍓':
-              // Strawberry
               this.ctx.fillStyle = '#FF0000';
               this.ctx.beginPath();
               this.ctx.moveTo(x, y - size/2);
@@ -252,19 +246,15 @@
 
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-      // Draw background
       this.ctx.fillStyle = this.backgroundColor;
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
       
-      // Draw border
       this.ctx.strokeStyle = this.borderColor;
       this.ctx.lineWidth = 10;
       this.ctx.strokeRect(5, 5, this.canvas.width - 10, this.canvas.height - 10);
 
-      // Draw bunny
       this.drawArcadeBunny(this.bunnyX, this.bunnyY, this.cursorSize);
 
-      // Update and draw poos
       for (let i = this.poos.length - 1; i >= 0; i--) {
           const poo = this.poos[i];
           poo.y -= 8;
@@ -275,7 +265,6 @@
           }
       }
 
-      // Update and draw items
       for (let i = this.items.length - 1; i >= 0; i--) {
           const item = this.items[i];
           item.y += item.speed;
@@ -286,7 +275,6 @@
               this.drawArcadeFruit(item.x, item.y, 40, item.type);
           }
 
-          // Check collision with bunny
           if (Math.abs(item.x - this.bunnyX) < 40 && Math.abs(item.y - this.bunnyY) < 40) {
               if (item.type === 'spareLife') {
                   this.lives++;
@@ -311,7 +299,6 @@
               continue;
           }
 
-          // Check collision with poos
           for (let j = this.poos.length - 1; j >= 0; j--) {
               const poo = this.poos[j];
               if (Math.abs(item.x - poo.x) < 30 && Math.abs(item.y - poo.y) < 30) {
@@ -333,7 +320,6 @@
               }
           }
 
-          // Draw particles
           if (item.particles) {
               item.particles.forEach((particle, index) => {
                   particle.x += particle.speedX;
@@ -349,7 +335,6 @@
               });
           }
 
-          // Remove items that fall off screen
           if (item.y > this.canvas.height) {
               this.items.splice(i, 1);
               if (item.type !== 'spareLife') {
@@ -363,7 +348,6 @@
           }
       }
 
-      // Add new items
       if (Math.random() < 0.01 + (this.level * 0.002)) {
           if (this.level % 20 === 0 && !this.isBossLevel) {
               this.isBossLevel = true;
@@ -402,18 +386,13 @@
       this.gameOverElement.style.display = 'block';
       this.finalScoreElement.textContent = this.score;
 
-      const statsElement = document.createElement('div');
-      statsElement.innerHTML = `
-          <h3>Game Statistics:</h3>
-          <p>Time taken: ${timeTaken.toFixed(2)} seconds</p>
-          <p>Poops fired: ${this.poopsFired}</p>
-          <p>Fruits collected:</p>
-          <ul>
-              ${Object.entries(this.fruitCollected).map(([fruit, count]) => `<li>${fruit}: ${count}</li>`).join('')}
-          </ul>
-          <p>Extra lives collected: ${this.extraLivesCollected}</p>
+      const statsHtml = `
+          <p>Time: ${timeTaken.toFixed(2)} seconds</p>
+          <p>Poops Fired: ${this.poopsFired}</p>
+          <p>Fruit Collected: ${Object.values(this.fruitCollected).reduce((a, b) => a + b, 0)}</p>
+          <p>Extra Lives Collected: ${this.extraLivesCollected}</p>
       `;
-      this.gameOverElement.appendChild(statsElement);
+      document.getElementById('gameStats').innerHTML = statsHtml;
 
       const highScore = localStorage.getItem('fruitGameHighScore') || 0;
       if (this.score > highScore) {
@@ -476,83 +455,25 @@
 
   FruitGame.showRandomProduct = function() {
       console.log('Showing random product');
-      fetch('/products.json')
-          .then(response => response.json())
-          .then(data => {
-              if (!data.products || data.products.length === 0) {
-                  console.error('No products found in the data');
-                  return;
-              }
+      const products = [
+          { name: "Fruit Basket", price: "$19.99", image: "path/to/fruit-basket.jpg" },
+          { name: "Organic Apples", price: "$4.99", image: "path/to/apples.jpg" },
+          { name: "Fresh Bananas", price: "$3.99", image: "path/to/bananas.jpg" }
+      ];
+      const randomProduct = products[Math.floor(Math.random() * products.length)];
 
-              const randomProduct = data.products[Math.floor(Math.random() * data.products.length)];
-              const productHTML = this.generateProductHTML(randomProduct);
-              this.productDetailsElement.innerHTML = productHTML;
-              this.productRecommendationElement.style.display = 'block';
-              this.showDiscountCode();
-          })
-          .catch(error => {
-              console.error('Error fetching products:', error);
-          });
-  };
-
-  FruitGame.generateProductHTML = function(product) {
-      return `
-          <div class="grid__item small--one-half medium-up--one-quarter">
-              <div class="grid-view-item product-card">
-                  <a class="grid-view-item__link" href="/products/${product.handle}">
-                      <img class="grid-view-item__image" src="${product.images[0].src}" alt="${product.title}" style="max-width: 200px; max-height: 200px; object-fit: contain;">
-                      <div class="h4 grid-view-item__title">${product.title}</div>
-                      <div class="grid-view-item__meta">
-                          <span class="product-price__price">
-                              <span class="money">${this.formatMoney(product.variants[0].price)}</span>
-                          </span>
-                      </div>
-                  </a>
-                  <div class="grid-view-item__vendor">${product.vendor}</div>
-              </div>
-          </div>
+      this.productDetailsElement.innerHTML = `
+          <h4>${randomProduct.name}</h4>
+          <p>Price: ${randomProduct.price}</p>
+          <img src="${randomProduct.image}" alt="${randomProduct.name}" style="width:100px;height:100px;">
+          <button onclick="FruitGame.addToCart('${randomProduct.name}')">Add to Cart</button>
       `;
+      this.productRecommendationElement.style.display = 'block';
   };
 
-  FruitGame.formatMoney = function(cents) {
-      return '$' + (cents / 100).toFixed(2);
-  };
-
-  FruitGame.showDiscountCode = function() {
-      const discountCode = 'FRUITGAME10';
-      const gameCanvas = document.getElementById('gameCanvas');
-      const existingDiscountSection = document.getElementById('discountSection');
-
-      if (existingDiscountSection) {
-          existingDiscountSection.remove();
-      }
-
-      const discountHTML = `
-          <div id="discountSection" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-              <h3 style="color: #18533A; margin-bottom: 10px;">THANKS FOR PLAYING!</h3>
-              <p style="margin-bottom: 15px;">Here's a discount code for 10% off your next purchase:</p>
-              <div style="font-size: 24px; font-weight: bold; color: #4CAF50; margin-bottom: 15px;">${discountCode}</div>
-              <button id="copyDiscountCode" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Copy Code</button>
-          </div>
-      `;
-      
-      gameCanvas.insertAdjacentHTML('afterend', discountHTML);
-      
-      document.getElementById('copyDiscountCode').addEventListener('click', function() {
-          navigator.clipboard.writeText(discountCode).then(function() {
-              alert('Discount code copied to clipboard!');
-          }, function(err) {
-              console.error('Could not copy text: ', err);
-          });
-      });
-  };
-
-  FruitGame.resizeCanvas = function() {
-      const container = this.canvas.parentElement;
-      const containerWidth = container.clientWidth;
-      const scale = Math.min(1, containerWidth / 800);
-      this.canvas.style.width = `${800 * scale}px`;
-      this.canvas.style.height = `${600 * scale}px`;
+  FruitGame.addToCart = function(productName) {
+      console.log(`Adding ${productName} to cart`);
+      alert(`${productName} added to cart!`);
   };
 
   FruitGame.startGame = function() {
