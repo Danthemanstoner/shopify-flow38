@@ -21,9 +21,8 @@
   <div id="reward" style="display: none;">
     <h3>New High Score!</h3>
     <p>You've earned a discount:</p>
-    <p class="discount-code" id="discountCodeText">25PercentOFF</p>
-    <button id="copyDiscountCode">Copy Code</button>
-    <button id="applyDiscountCode">Apply to Cart</button>
+    <p class="discount-code" id="discountCodeText"></p>
+    <button onclick="FruitGame.applyDiscountToCart()">Apply to Cart</button>
     <p>Use this code for 25% off your next purchase!</p>
   </div>
   <div id="productRecommendation" style="display: none;">
@@ -39,474 +38,462 @@
 <script>
   console.log('Game script starting');
 
-  window.FruitGame = {};
+  window.FruitGame = {
+      init: function() {
+          console.log('Game init started');
 
-  window.onload = function() {
-      console.log('Window loaded, initializing game');
-      FruitGame.init();
-  };
+          this.canvas = document.getElementById('gameCanvas');
+          this.ctx = this.canvas.getContext('2d');
+          this.scoreElement = document.getElementById('score');
+          this.levelElement = document.getElementById('level');
+          this.livesElement = document.getElementById('lives');
+          this.gameOverElement = document.getElementById('gameOver');
+          this.finalScoreElement = document.getElementById('finalScore');
+          this.leaderboardElement = document.getElementById('leaderboard');
+          this.leaderboardListElement = document.getElementById('leaderboardList');
+          this.rewardElement = document.getElementById('reward');
+          this.discountCodeElement = document.getElementById('discountCodeText');
+          this.productRecommendationElement = document.getElementById('productRecommendation');
+          this.productDetailsElement = document.getElementById('productDetails');
+          this.gameInstructions = document.getElementById('gameInstructions');
+          this.leaderboardForm = document.getElementById('leaderboardForm');
+          this.gameStatsElement = document.getElementById('gameStats');
 
-  FruitGame.init = function() {
-      console.log('Game init started');
+          console.log('DOM elements initialized');
 
-      this.canvas = document.getElementById('gameCanvas');
-      this.ctx = this.canvas.getContext('2d');
-      this.scoreElement = document.getElementById('score');
-      this.levelElement = document.getElementById('level');
-      this.livesElement = document.getElementById('lives');
-      this.gameOverElement = document.getElementById('gameOver');
-      this.finalScoreElement = document.getElementById('finalScore');
-      this.leaderboardElement = document.getElementById('leaderboard');
-      this.leaderboardListElement = document.getElementById('leaderboardList');
-      this.rewardElement = document.getElementById('reward');
-      this.discountCodeElement = document.getElementById('discountCodeText');
-      this.productRecommendationElement = document.getElementById('productRecommendation');
-      this.productDetailsElement = document.getElementById('productDetails');
-      this.gameInstructions = document.getElementById('gameInstructions');
-      this.leaderboardForm = document.getElementById('leaderboardForm');
+          this.score = 0;
+          this.level = 1;
+          this.lives = 3;
+          this.items = [];
+          this.bunnyX = 400;
+          this.bunnyY = 550;
+          this.gameActive = false;
+          this.cursorSize = 40;
+          this.backgroundColor = '#FFFFFF';
+          this.borderColor = '#494949';
+          this.poos = [];
+          this.spareLives = [];
 
-      console.log('DOM elements initialized');
+          this.startTime = null;
+          this.poopsFired = 0;
+          this.fruitCollected = { '🍎': 0, '🍌': 0, '🍇': 0, '🍊': 0, '🍓': 0 };
+          this.extraLivesCollected = 0;
 
-      this.score = 0;
-      this.level = 1;
-      this.lives = 3;
-      this.items = [];
-      this.bunnyX = 400;
-      this.bunnyY = 550;
-      this.gameActive = false;
-      this.cursorSize = 40;
-      this.backgroundColor = '#FFFFFF';
-      this.borderColor = '#494949';
-      this.poos = [];
-      this.spareLives = [];
+          this.itemTypes = ['🍎', '🍌', '🍇', '🍊', '🍓'];
 
-      this.startTime = null;
-      this.poopsFired = 0;
-      this.fruitCollected = { '🍎': 0, '🍌': 0, '🍇': 0, '🍊': 0, '🍓': 0 };
-      this.extraLivesCollected = 0;
+          this.isBossLevel = false;
 
-      this.itemTypes = ['🍎', '🍌', '🍇', '🍊', '🍓'];
+          console.log('Game variables initialized');
 
-      this.isBossLevel = false;
-
-      console.log('Game variables initialized');
-
-      this.canvas.addEventListener('click', function(event) {
-          console.log('Canvas clicked');
-          if (!FruitGame.gameActive) {
-              FruitGame.startGame();
-          } else {
-              FruitGame.shootPoo();
-          }
-      });
-
-      this.canvas.addEventListener('mousemove', function(event) {
-          if (FruitGame.gameActive) {
-              FruitGame.bunnyX = event.clientX - FruitGame.canvas.getBoundingClientRect().left;
-          }
-      });
-
-      this.leaderboardForm.addEventListener('submit', function(event) {
-          event.preventDefault();
-          FruitGame.submitHighScore();
-      });
-
-      this.drawArcadeBunny(this.bunnyX, this.bunnyY, this.cursorSize);
-
-      console.log('Game initialized');
-  };
-
-  FruitGame.drawArcadeBunny = function(x, y, size) {
-      this.ctx.fillStyle = '#A0A0A0';
-      this.ctx.beginPath();
-      this.ctx.ellipse(x, y, size/2, size/1.5, 0, 0, Math.PI * 2);
-      this.ctx.fill();
-
-      this.ctx.beginPath();
-      this.ctx.ellipse(x - size/3, y - size/2, size/6, size/3, -Math.PI/6, 0, Math.PI * 2);
-      this.ctx.fill();
-      this.ctx.beginPath();
-      this.ctx.ellipse(x + size/3, y - size/2, size/6, size/3, Math.PI/6, 0, Math.PI * 2);
-      this.ctx.fill();
-
-      this.ctx.fillStyle = '#000000';
-      this.ctx.beginPath();
-      this.ctx.arc(x - size/6, y - size/10, size/10, 0, Math.PI * 2);
-      this.ctx.fill();
-      this.ctx.beginPath();
-      this.ctx.arc(x + size/6, y - size/10, size/10, 0, Math.PI * 2);
-      this.ctx.fill();
-
-      this.ctx.fillStyle = '#FF9999';
-      this.ctx.beginPath();
-      this.ctx.ellipse(x, y + size/10, size/10, size/15, 0, 0, Math.PI * 2);
-      this.ctx.fill();
-  };
-
-  FruitGame.drawArcadeFruit = function(x, y, size, type) {
-      switch(type) {
-          case '🍎':
-              this.ctx.fillStyle = '#FF0000';
-              this.ctx.beginPath();
-              this.ctx.arc(x, y, size/2, 0, Math.PI * 2);
-              this.ctx.fill();
-              this.ctx.fillStyle = '#00AA00';
-              this.ctx.fillRect(x - size/20, y - size/2, size/10, size/4);
-              break;
-          case '🍌':
-              this.ctx.fillStyle = '#FFE135';
-              this.ctx.beginPath();
-              this.ctx.moveTo(x - size/2, y);
-              this.ctx.quadraticCurveTo(x, y - size/2, x + size/2, y);
-              this.ctx.quadraticCurveTo(x, y + size/2, x - size/2, y);
-              this.ctx.fill();
-              break;
-          case '🍇':
-              this.ctx.fillStyle = '#6B2C91';
-              for(let i = 0; i < 3; i++) {
-                  for(let j = 0; j < 3; j++) {
-                      this.ctx.beginPath();
-                      this.ctx.arc(x + (i-1)*size/4, y + (j-1)*size/4, size/6, 0, Math.PI * 2);
-                      this.ctx.fill();
-                  }
-              }
-              break;
-          case '🍊':
-              this.ctx.fillStyle = '#FFA500';
-              this.ctx.beginPath();
-              this.ctx.arc(x, y, size/2, 0, Math.PI * 2);
-              this.ctx.fill();
-              this.ctx.strokeStyle = '#FF8C00';
-              this.ctx.lineWidth = size/20;
-              this.ctx.beginPath();
-              this.ctx.arc(x, y, size/2.5, 0, Math.PI * 2);
-              this.ctx.stroke();
-              break;
-          case '🍓':
-              this.ctx.fillStyle = '#FF0000';
-              this.ctx.beginPath();
-              this.ctx.moveTo(x, y - size/2);
-              this.ctx.bezierCurveTo(x + size/2, y - size/2, x + size/2, y + size/2, x, y + size/2);
-              this.ctx.bezierCurveTo(x - size/2, y + size/2, x - size/2, y - size/2, x, y - size/2);
-              this.ctx.fill();
-              this.ctx.fillStyle = '#00AA00';
-              this.ctx.beginPath();
-              this.ctx.moveTo(x - size/4, y - size/2);
-              this.ctx.lineTo(x, y - size/3);
-              this.ctx.lineTo(x + size/4, y - size/2);
-              this.ctx.fill();
-              break;
-      }
-  };
-
-  FruitGame.createParticles = function(x, y, color, count = 20, speed = 5) {
-      const particles = [];
-      for (let i = 0; i < count; i++) {
-          particles.push({
-              x: x,
-              y: y,
-              size: Math.random() * 5 + 2,
-              speedX: (Math.random() - 0.5) * speed,
-              speedY: (Math.random() - 0.5) * speed,
-              color: color
-          });
-      }
-      return particles;
-  };
-
-  FruitGame.createItem = function() {
-      return {
-          x: Math.random() * (this.canvas.width - 80) + 40,
-          y: -80,
-          type: this.itemTypes[(this.level - 1) % this.itemTypes.length],
-          speed: 1 + Math.random() * 2 + (this.level - 1) * 0.5
-      };
-  };
-
-  FruitGame.drawPoo = function(x, y) {
-      this.ctx.fillStyle = '#8B4513';
-      this.ctx.beginPath();
-      this.ctx.arc(x, y, 15, 0, Math.PI * 2);
-      this.ctx.fill();
-  };
-
-  FruitGame.getFruitColor = function(type) {
-      switch(type) {
-          case '🍎': return '#FF0000';
-          case '🍌': return '#FFD700';
-          case '🍇': return '#800080';
-          case '🍊': return '#FFA500';
-          case '🍓': return '#FF69B4';
-          default: return '#000000';
-      }
-  };
-
-  FruitGame.updateGame = function() {
-      if (!this.gameActive) return;
-
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-      this.ctx.fillStyle = this.backgroundColor;
-      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-      
-      this.ctx.strokeStyle = this.borderColor;
-      this.ctx.lineWidth = 10;
-      this.ctx.strokeRect(5, 5, this.canvas.width - 10, this.canvas.height - 10);
-
-      this.drawArcadeBunny(this.bunnyX, this.bunnyY, this.cursorSize);
-
-      for (let i = this.poos.length - 1; i >= 0; i--) {
-          const poo = this.poos[i];
-          poo.y -= 8;
-          this.drawPoo(poo.x, poo.y);
-
-          if (poo.y < 0) {
-              this.poos.splice(i, 1);
-          }
-      }
-
-      for (let i = this.items.length - 1; i >= 0; i--) {
-          const item = this.items[i];
-          item.y += item.speed;
-
-          if (item.type === 'spareLife') {
-              this.drawArcadeBunny(item.x, item.y, 30);
-          } else {
-              this.drawArcadeFruit(item.x, item.y, 40, item.type);
-          }
-
-          if (Math.abs(item.x - this.bunnyX) < 40 && Math.abs(item.y - this.bunnyY) < 40) {
-              if (item.type === 'spareLife') {
-                  this.lives++;
-                  this.extraLivesCollected++;
-                  this.updateLives();
-              } else if (item.type === '🥕') {
-                  this.score += 10;
-                  this.isBossLevel = false;
+          this.canvas.addEventListener('click', function(event) {
+              console.log('Canvas clicked');
+              if (!FruitGame.gameActive) {
+                  FruitGame.startGame();
               } else {
-                  this.score++;
-                  this.fruitCollected[item.type]++;
+                  FruitGame.shootPoo();
               }
-              this.scoreElement.textContent = `SCORE: ${this.score}`;
-              item.particles = this.createParticles(item.x, item.y, this.getFruitColor(item.type), 40, 8);
-              this.items.splice(i, 1);
-              if (this.score % 10 === 0) {
-                  this.level++;
-                  this.levelElement.textContent = `LEVEL ${this.level}`;
-                  this.cursorSize += 5;
-                  this.backgroundColor = this.backgroundColor === '#FFFFFF' ? '#18533A' : '#FFFFFF';
+          });
+
+          this.canvas.addEventListener('mousemove', function(event) {
+              if (FruitGame.gameActive) {
+                  FruitGame.bunnyX = event.clientX - FruitGame.canvas.getBoundingClientRect().left;
               }
-              continue;
+          });
+
+          this.leaderboardForm.addEventListener('submit', function(event) {
+              event.preventDefault();
+              FruitGame.submitHighScore();
+          });
+
+          this.drawArcadeBunny(this.bunnyX, this.bunnyY, this.cursorSize);
+
+          console.log('Game initialized');
+      },
+
+      drawArcadeBunny: function(x, y, size) {
+          this.ctx.fillStyle = '#A0A0A0';
+          this.ctx.beginPath();
+          this.ctx.ellipse(x, y, size/2, size/1.5, 0, 0, Math.PI * 2);
+          this.ctx.fill();
+
+          this.ctx.beginPath();
+          this.ctx.ellipse(x - size/3, y - size/2, size/6, size/3, -Math.PI/6, 0, Math.PI * 2);
+          this.ctx.fill();
+          this.ctx.beginPath();
+          this.ctx.ellipse(x + size/3, y - size/2, size/6, size/3, Math.PI/6, 0, Math.PI * 2);
+          this.ctx.fill();
+
+          this.ctx.fillStyle = '#000000';
+          this.ctx.beginPath();
+          this.ctx.arc(x - size/6, y - size/10, size/10, 0, Math.PI * 2);
+          this.ctx.fill();
+          this.ctx.beginPath();
+          this.ctx.arc(x + size/6, y - size/10, size/10, 0, Math.PI * 2);
+          this.ctx.fill();
+
+          this.ctx.fillStyle = '#FF9999';
+          this.ctx.beginPath();
+          this.ctx.ellipse(x, y + size/10, size/10, size/15, 0, 0, Math.PI * 2);
+          this.ctx.fill();
+      },
+
+      drawArcadeFruit: function(x, y, size, type) {
+          switch(type) {
+              case '🍎':
+                  this.ctx.fillStyle = '#FF0000';
+                  this.ctx.beginPath();
+                  this.ctx.arc(x, y, size/2, 0, Math.PI * 2);
+                  this.ctx.fill();
+                  this.ctx.fillStyle = '#00AA00';
+                  this.ctx.fillRect(x - size/20, y - size/2, size/10, size/4);
+                  break;
+              case '🍌':
+                  this.ctx.fillStyle = '#FFE135';
+                  this.ctx.beginPath();
+                  this.ctx.moveTo(x - size/2, y);
+                  this.ctx.quadraticCurveTo(x, y - size/2, x + size/2, y);
+                  this.ctx.quadraticCurveTo(x, y + size/2, x - size/2, y);
+                  this.ctx.fill();
+                  break;
+              case '🍇':
+                  this.ctx.fillStyle = '#6B2C91';
+                  for(let i = 0; i < 3; i++) {
+                      for(let j = 0; j < 3; j++) {
+                          this.ctx.beginPath();
+                          this.ctx.arc(x + (i-1)*size/4, y + (j-1)*size/4, size/6, 0, Math.PI * 2);
+                          this.ctx.fill();
+                      }
+                  }
+                  break;
+              case '🍊':
+                  this.ctx.fillStyle = '#FFA500';
+                  this.ctx.beginPath();
+                  this.ctx.arc(x, y, size/2, 0, Math.PI * 2);
+                  this.ctx.fill();
+                  this.ctx.strokeStyle = '#FF8C00';
+                  this.ctx.lineWidth = size/20;
+                  this.ctx.beginPath();
+                  this.ctx.arc(x, y, size/2.5, 0, Math.PI * 2);
+                  this.ctx.stroke();
+                  break;
+              case '🍓':
+                  this.ctx.fillStyle = '#FF0000';
+                  this.ctx.beginPath();
+                  this.ctx.moveTo(x, y - size/2);
+                  this.ctx.bezierCurveTo(x + size/2, y - size/2, x + size/2, y + size/2, x, y + size/2);
+                  this.ctx.bezierCurveTo(x - size/2, y + size/2, x - size/2, y - size/2, x, y - size/2);
+                  this.ctx.fill();
+                  this.ctx.fillStyle = '#00AA00';
+                  this.ctx.beginPath();
+                  this.ctx.moveTo(x - size/4, y - size/2);
+                  this.ctx.lineTo(x, y - size/3);
+                  this.ctx.lineTo(x + size/4, y - size/2);
+                  this.ctx.fill();
+                  break;
+          }
+      },
+
+      createParticles: function(x, y, color, count = 20, speed = 5) {
+          const particles = [];
+          for (let i = 0; i < count; i++) {
+              particles.push({
+                  x: x,
+                  y: y,
+                  size: Math.random() * 5 + 2,
+                  speedX: (Math.random() - 0.5) * speed,
+                  speedY: (Math.random() - 0.5) * speed,
+                  color: color
+              });
+          }
+          return particles;
+      },
+
+      createItem: function() {
+          return {
+              x: Math.random() * (this.canvas.width - 80) + 40,
+              y: -80,
+              type: this.itemTypes[(this.level - 1) % this.itemTypes.length],
+              speed: 1 + Math.random() * 2 + (this.level - 1) * 0.5
+          };
+      },
+
+      drawPoo: function(x, y) {
+          this.ctx.fillStyle = '#8B4513';
+          this.ctx.beginPath();
+          this.ctx.arc(x, y, 15, 0, Math.PI * 2);
+          this.ctx.fill();
+      },
+
+      getFruitColor: function(type) {
+          switch(type) {
+              case '🍎': return '#FF0000';
+              case '🍌': return '#FFD700';
+              case '🍇': return '#800080';
+              case '🍊': return '#FFA500';
+              case '🍓': return '#FF69B4';
+              default: return '#000000';
+          }
+      },
+
+      updateGame: function() {
+          if (!this.gameActive) return;
+
+          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+          this.ctx.fillStyle = this.backgroundColor;
+          this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+          
+          this.ctx.strokeStyle = this.borderColor;
+          this.ctx.lineWidth = 10;
+          this.ctx.strokeRect(5, 5, this.canvas.width - 10, this.canvas.height - 10);
+
+          this.drawArcadeBunny(this.bunnyX, this.bunnyY, this.cursorSize);
+
+          for (let i = this.poos.length - 1; i >= 0; i--) {
+              const poo = this.poos[i];
+              poo.y -= 8;
+              this.drawPoo(poo.x, poo.y);
+
+              if (poo.y < 0) {
+                  this.poos.splice(i, 1);
+              }
           }
 
-          for (let j = this.poos.length - 1; j >= 0; j--) {
-              const poo = this.poos[j];
-              if (Math.abs(item.x - poo.x) < 30 && Math.abs(item.y - poo.y) < 30) {
-                  if (item.type !== 'spareLife') {
+          for (let i = this.items.length - 1; i >= 0; i--) {
+              const item = this.items[i];
+              item.y += item.speed;
+
+              if (item.type === 'spareLife') {
+                  this.drawArcadeBunny(item.x, item.y, 30);
+              } else {
+                  this.drawArcadeFruit(item.x, item.y, 40, item.type);
+              }
+
+              if (Math.abs(item.x - this.bunnyX) < 40 && Math.abs(item.y - this.bunnyY) < 40) {
+                  if (item.type === 'spareLife') {
+                      this.lives++;
+                      this.extraLivesCollected++;
+                      this.updateLives();
+                  } else if (item.type === '🥕') {
+                      this.score += 10;
+                      this.isBossLevel = false;
+                  } else {
                       this.score++;
                       this.fruitCollected[item.type]++;
-                      this.scoreElement.textContent = `SCORE: ${this.score}`;
-                      item.particles = this.createParticles(item.x, item.y, this.getFruitColor(item.type), 60, 10);
                   }
+                  this.scoreElement.textContent = `SCORE: ${this.score}`;
+                  item.particles = this.createParticles(item.x, item.y, this.getFruitColor(item.type), 40, 8);
                   this.items.splice(i, 1);
-                  this.poos.splice(j, 1);
                   if (this.score % 10 === 0) {
                       this.level++;
                       this.levelElement.textContent = `LEVEL ${this.level}`;
                       this.cursorSize += 5;
                       this.backgroundColor = this.backgroundColor === '#FFFFFF' ? '#18533A' : '#FFFFFF';
                   }
-                  break;
+                  continue;
               }
-          }
 
-          if (item.particles) {
-              item.particles.forEach((particle, index) => {
-                  particle.x += particle.speedX;
-                  particle.y += particle.speedY;
-                  particle.size *= 0.95;
-
-                  this.ctx.fillStyle = particle.color;
-                  this.ctx.fillRect(particle.x, particle.y, particle.size, particle.size);
-
-                  if (particle.size <= 0.5) {
-                      item.particles.splice(index, 1);
-                  }
-              });
-          }
-
-          if (item.y > this.canvas.height) {
-              this.items.splice(i, 1);
-              if (item.type !== 'spareLife') {
-                  this.lives--;
-                  this.updateLives();
-                  if (this.lives <= 0) {
-                      this.gameOver();
-                      return;
+              for (let j = this.poos.length - 1; j >= 0; j--) {
+                  const poo = this.poos[j];
+                  if (Math.abs(item.x - poo.x) < 30 && Math.abs(item.y - poo.y) < 30) {
+                      if (item.type !== 'spareLife') {
+                          this.score++;
+                          this.fruitCollected[item.type]++;
+                          this.scoreElement.textContent = `SCORE: ${this.score}`;
+                          item.particles = this.createParticles(item.x, item.y, this.getFruitColor(item.type), 60, 10);
+                      }
+                      this.items.splice(i, 1);
+                      this.poos.splice(j, 1);
+                      if (this.score % 10 === 0) {
+                          this.level++;
+                          this.levelElement.textContent = `LEVEL ${this.level}`;
+                          this.cursorSize += 5;
+                          this.backgroundColor = this.backgroundColor === '#FFFFFF' ? '#18533A' : '#FFFFFF';
+                      }
+                      break;
                   }
               }
-          }
-      }
 
-      if (Math.random() < 0.01 + (this.level * 0.002)) {
-          if (this.level % 20 === 0 && !this.isBossLevel) {
-              this.isBossLevel = true;
-              for (let i = 0; i < 10; i++) {
-                  this.items.push({
-                      x: Math.random() * (this.canvas.width - 80) + 40,
-                      y: -80 - i * 100,
-                      type: '🥕',
-                      speed: 2 + Math.random() * 3
+              if (item.particles) {
+                  item.particles.forEach((particle, index) => {
+                      particle.x += particle.speedX;
+                      particle.y += particle.speedY;
+                      particle.size *= 0.95;
+
+                      this.ctx.fillStyle = particle.color;
+                      this.ctx.fillRect(particle.x, particle.y, particle.size, particle.size);
+
+                      if (particle.size <= 0.5) {
+                          item.particles.splice(index, 1);
+                      }
                   });
               }
-          } else if (this.level % 10 === 0 && Math.random() < 0.1) {
-              this.items.push({
-                  x: Math.random() * (this.canvas.width - 80) + 40,
-                  y: -80,
-                  type: 'spareLife',
-                  speed: 1 + Math.random() * 2
-              });
-          } else if (!this.isBossLevel) {
-              this.items.push(this.createItem());
+
+              if (item.y > this.canvas.height) {
+                  this.items.splice(i, 1);
+                  if (item.type !== 'spareLife') {
+                      this.lives--;
+                      this.updateLives();
+                      if (this.lives <= 0) {
+                          this.gameOver();
+                          return;
+                      }
+                  }
+              }
           }
-      }
 
-      requestAnimationFrame(() => this.updateGame());
-  };
-
-  FruitGame.updateLives = function() {
-      this.livesElement.textContent = `LIVES: ${this.lives}`;
-  };
-
-  FruitGame.gameOver = function() {
-      this.gameActive = false;
-      const endTime = new Date();
-      const timeTaken = (endTime - this.startTime) / 1000;
-
-      this.gameOverElement.style.display = 'block';
-      this.finalScoreElement.textContent = this.score;
-
-      const statsHtml = `
-          <p>Time: ${timeTaken.toFixed(2)} seconds</p>
-          <p>Poops Fired: ${this.poopsFired}</p>
-          <p>Fruit Collected: ${Object.values(this.fruitCollected).reduce((a, b) => a + b, 0)}</p>
-          <p>Extra Lives Collected: ${this.extraLivesCollected}</p>
-      `;
-      document.getElementById('gameStats').innerHTML = statsHtml;
-
-      const highScore = localStorage.getItem('fruitGameHighScore') || 0;
-      if (this.score > highScore) {
-          localStorage.setItem('fruitGameHighScore', this.score);
-          this.showReward();
-      }
-
-      this.showRandomProduct();
-  };
-
-  FruitGame.showReward = function() {
-      const discountCode = '25PercentOFF';
-      const rewardElement = document.createElement('div');
-      rewardElement.innerHTML = `
-          <h3>New High Score!</h3>
-          <p>You've earned a discount:</p>
-          <p class="discount-code" id="discountCodeText">${discountCode}</p>
-          <button id="copyDiscountCode">Copy Code</button>
-          <button id="applyDiscountCode">Apply to Cart</button>
-          <p>Use this code for 25% off your next purchase!</p>
-      `;
-      rewardElement.className = 'reward-popup';
-      document.body.appendChild(rewardElement);
-
-      document.getElementById('copyDiscountCode').addEventListener('click', () => {
-          navigator.clipboard.writeText(discountCode).then(() => {
-              alert('Discount code copied to clipboard!');
-          });
-      });
-
-      document.getElementById('applyDiscountCode').addEventListener('click', () => {
-          this.applyDiscountToCart(discountCode);
-      });
-
-      setTimeout(() => {
-          document.body.removeChild(rewardElement);
-      }, 10000);
-  };
-
-  FruitGame.applyDiscountToCart = function(discountCode) {
-      fetch('/discount/' + discountCode, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-      })
-      .then(response => response.json())
-      .then(data => {
-          if (data.success) {
-              alert('Discount applied to your cart!');
-          } else {
-              alert('Failed to apply discount. Please try again.');
+          if (Math.random() < 0.01 + (this.level * 0.002)) {
+              if (this.level % 20 === 0 && !this.isBossLevel) {
+                  this.isBossLevel = true;
+                  for (let i = 0; i < 10; i++) {
+                      this.items.push({
+                          x: Math.random() * (this.canvas.width - 80) + 40,
+                          y: -80 - i * 100,
+                          type: '🥕',
+                          speed: 2 + Math.random() * 3
+                      });
+                  }
+              } else if (this.level % 10 === 0 && Math.random() < 0.1) {
+                  this.items.push({
+                      x: Math.random() * (this.canvas.width - 80) + 40,
+                      y: -80,
+                      type: 'spareLife',
+                      speed: 1 + Math.random() * 2
+                  });
+              } else if (!this.isBossLevel) {
+                  this.items.push(this.createItem());
+              }
           }
-      })
-      .catch((error) => {
-          console.error('Error:', error);
-          alert('An error occurred. Please try again.');
-      });
+
+          requestAnimationFrame(() => this.updateGame());
+      },
+
+      updateLives: function() {
+          this.livesElement.textContent = `LIVES: ${this.lives}`;
+      },
+
+      gameOver: function() {
+          this.gameActive = false;
+          const endTime = new Date();
+          const timeTaken = (endTime - this.startTime) / 1000;
+
+          this.gameOverElement.style.display = 'block';
+          this.finalScoreElement.textContent = this.score;
+
+          // Display game statistics
+          const statsHtml = `
+              <p>Time: ${timeTaken.toFixed(2)} seconds</p>
+              <p>Poops Fired: ${this.poopsFired}</p>
+              <p>Fruit Collected:</p>
+              <ul>
+                  ${Object.entries(this.fruitCollected).map(([fruit, count]) => `<li>${fruit}: ${count}</li>`).join('')}
+              </ul>
+              <p>Extra Lives Collected: ${this.extraLivesCollected}</p>
+          `;
+          this.gameStatsElement.innerHTML = statsHtml;
+
+          const highScore = localStorage.getItem('fruitGameHighScore') || 0;
+          if (this.score > highScore) {
+              localStorage.setItem('fruitGameHighScore', this.score);
+              this.showReward();
+          }
+
+          this.showRandomProduct();
+          this.updateLeaderboard(this.score);
+      },
+
+      submitHighScore: function() {
+          const playerName = document.getElementById('playerName').value;
+          console.log(`Submitting score: ${this.score} for player: ${playerName}`);
+
+          this.updateLeaderboard(this.score, playerName);
+
+          this.leaderboardElement.style.display = 'block';
+      },
+
+      updateLeaderboard: function(score, playerName = 'Anonymous') {
+          let leaderboard = JSON.parse(localStorage.getItem('fruitGameLeaderboard') || '[]');
+          leaderboard.push({name: playerName, score: score});
+          leaderboard.sort((a, b) => b.score - a.score);
+          leaderboard = leaderboard.slice(0, 10); // Keep only top 10
+          localStorage.setItem('fruitGameLeaderboard', JSON.stringify(leaderboard));
+
+          this.leaderboardListElement.innerHTML = leaderboard.map((entry, index) => 
+              `<li>${index + 1}. ${entry.name}: ${entry.score}</li>`
+          ).join('');
+
+          this.leaderboardElement.style.display = 'block';
+      },
+
+      showReward: function() {
+          this.rewardElement.style.display = 'block';
+          const discountCode = 'FRUIT25OFF'; // This should be generated or retrieved from your backend
+          this.discountCodeElement.textContent = discountCode;
+      },
+
+      showRandomProduct: function() {
+          console.log('Showing random product');
+          // This is a placeholder. In a real implementation, you'd fetch product data from your store.
+          const products = [
+              { name: "Fruit Basket", price: "$19.99", image: "https://cdn.shopify.com/s/files/1/0012/3456/7890/products/fruit-basket.jpg" },
+              { name: "Organic Apples", price: "$4.99", image: "https://cdn.shopify.com/s/files/1/0012/3456/7890/products/apples.jpg" },
+              { name: "Fresh Bananas", price: "$3.99", image: "https://cdn.shopify.com/s/files/1/0012/3456/7890/products/bananas.jpg" }
+          ];
+          const randomProduct = products[Math.floor(Math.random() * products.length)];
+
+          this.productDetailsElement.innerHTML = `
+              <h4>${randomProduct.name}</h4>
+              <p>Price: ${randomProduct.price}</p>
+              <img src="${randomProduct.image}" alt="${randomProduct.name}" style="width:100px;height:100px;">
+              <button onclick="FruitGame.addToCart('${randomProduct.name}')">Add to Cart</button>
+          `;
+          this.productRecommendationElement.style.display = 'block';
+      },
+
+      addToCart: function(productName) {
+          console.log(`Adding ${productName} to cart`);
+          // Here you would typically integrate with your shopping cart system
+          // For Shopify, you might use their AJAX API to add to cart
+          alert(`${productName} added to cart!`);
+      },
+
+      startGame: function() {
+          console.log('Starting game loop');
+          this.gameActive = true;
+          this.score = 0;
+          this.level = 1;
+          this.lives = 3;
+          this.items = [];
+          this.poos = [];
+          this.cursorSize = 40;
+          this.backgroundColor = '#FFFFFF';
+          this.startTime = new Date();
+          this.poopsFired = 0;
+          this.fruitCollected = { '🍎': 0, '🍌': 0, '🍇': 0, '🍊': 0, '🍓': 0 };
+          this.extraLivesCollected = 0;
+          
+          this.scoreElement.textContent = `SCORE: ${this.score}`;
+          this.levelElement.textContent = `LEVEL ${this.level}`;
+          this.updateLives();
+          
+          this.gameOverElement.style.display = 'none';
+          this.leaderboardElement.style.display = 'none';
+          this.rewardElement.style.display = 'none';
+          this.productRecommendationElement.style.display = 'none';
+          this.gameInstructions.style.display = 'none';
+          
+          this.updateGame();
+      },
+
+      shootPoo: function() {
+          this.poos.push({ x: this.bunnyX, y: this.bunnyY });
+          this.poopsFired++;
+      }
   };
 
-  FruitGame.showRandomProduct = function() {
-      console.log('Showing random product');
-      const products = [
-          { name: "Fruit Basket", price: "$19.99", image: "path/to/fruit-basket.jpg" },
-          { name: "Organic Apples", price: "$4.99", image: "path/to/apples.jpg" },
-          { name: "Fresh Bananas", price: "$3.99", image: "path/to/bananas.jpg" }
-      ];
-      const randomProduct = products[Math.floor(Math.random() * products.length)];
-
-      this.productDetailsElement.innerHTML = `
-          <h4>${randomProduct.name}</h4>
-          <p>Price: ${randomProduct.price}</p>
-          <img src="${randomProduct.image}" alt="${randomProduct.name}" style="width:100px;height:100px;">
-          <button onclick="FruitGame.addToCart('${randomProduct.name}')">Add to Cart</button>
-      `;
-      this.productRecommendationElement.style.display = 'block';
-  };
-
-  FruitGame.addToCart = function(productName) {
-      console.log(`Adding ${productName} to cart`);
-      alert(`${productName} added to cart!`);
-  };
-
-  FruitGame.startGame = function() {
-      console.log('Starting game loop');
-      this.gameActive = true;
-      this.score = 0;
-      this.level = 1;
-      this.lives = 3;
-      this.items = [];
-      this.poos = [];
-      this.cursorSize = 40;
-      this.backgroundColor = '#FFFFFF';
-      this.startTime = new Date();
-      this.poopsFired = 0;
-      this.fruitCollected = { '🍎': 0, '🍌': 0, '🍇': 0, '🍊': 0, '🍓': 0 };
-      this.extraLivesCollected = 0;
-      
-      this.scoreElement.textContent = `SCORE: ${this.score}`;
-      this.levelElement.textContent = `LEVEL ${this.level}`;
-      this.updateLives();
-      
-      this.gameOverElement.style.display = 'none';
-      this.leaderboardElement.style.display = 'none';
-      this.rewardElement.style.display = 'none';
-      this.productRecommendationElement.style.display = 'none';
-      this.gameInstructions.style.display = 'none';
-      
-      this.updateGame();
-  };
-
-  FruitGame.shootPoo = function() {
-      this.poos.push({ x: this.bunnyX, y: this.bunnyY });
-      this.poopsFired++;
+  window.onload = function() {
+      console.log('Window loaded, initializing game');
+      FruitGame.init();
   };
 
   console.log('Game script loaded');
