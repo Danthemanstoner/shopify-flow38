@@ -29,9 +29,6 @@
     <h3>We think you might like this:</h3>
     <div id="productDetails"></div>
   </div>
-  <audio id="collectSound" src="{{ 'collect.mp3' | asset_url }}" preload="auto"></audio>
-  <audio id="shootSound" src="{{ 'shoot.mp3' | asset_url }}" preload="auto"></audio>
-  <audio id="explosionSound" src="{{ 'explosion.mp3' | asset_url }}" preload="auto"></audio>
 </div>
 
 <div id="gameInstructions" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; font-size: 24px; color: #18533A;">
@@ -56,6 +53,8 @@
   const productDetailsElement = document.getElementById('productDetails');
   const gameInstructions = document.getElementById('gameInstructions');
 
+  console.log('DOM elements initialized');
+
   let score = 0;
   let level = 1;
   let lives = 3;
@@ -78,12 +77,9 @@
 
   const itemTypes = ['🍎', '🍌', '🍇', '🍊', '🍓'];
 
-  // Comment out audio elements for now
-  // const collectSound = document.getElementById('collectSound');
-  // const shootSound = document.getElementById('shootSound');
-  // const explosionSound = document.getElementById('explosionSound');
-
   let isBossLevel = false;
+
+  console.log('Game variables initialized');
 
   function drawArcadeBunny(x, y, size) {
     ctx.fillStyle = '#A0A0A0'; // Grey color for the bunny
@@ -146,7 +142,7 @@
           }
         }
         break;
-      case '��':
+      case '🍊':
         // Orange
         ctx.fillStyle = '#FFA500';
         ctx.beginPath();
@@ -203,7 +199,7 @@
   function drawPoo(x, y) {
     ctx.fillStyle = '#8B4513';
     ctx.beginPath();
-    ctx.arc(x, y, 15, 0, 2 * Math.PI); // Increased size for better visibility
+    ctx.arc(x, y, 15, 0, 2 * Math.PI);
     ctx.fill();
   }
 
@@ -272,13 +268,11 @@
         }
         scoreElement.textContent = `SCORE: ${score}`;
         item.particles = createParticles(item.x, item.y, getFruitColor(item.type), 40, 8);
-        // Comment out audio play for now
-        // collectSound.play();
         items.splice(i, 1);
         if (score % 10 === 0) {
           level++;
           levelElement.textContent = `LEVEL ${level}`;
-          cursorSize += 5; // Slower growth
+          cursorSize += 5;
           backgroundColor = backgroundColor === '#FFFFFF' ? '#18533A' : '#FFFFFF';
         }
         continue;
@@ -294,14 +288,12 @@
             scoreElement.textContent = `SCORE: ${score}`;
             item.particles = createParticles(item.x, item.y, getFruitColor(item.type), 60, 10);
           }
-          // Comment out audio play for now
-          // explosionSound.play();
           items.splice(i, 1);
           poos.splice(j, 1);
           if (score % 10 === 0) {
             level++;
             levelElement.textContent = `LEVEL ${level}`;
-            cursorSize += 5; // Slower growth
+            cursorSize += 5;
             backgroundColor = backgroundColor === '#FFFFFF' ? '#18533A' : '#FFFFFF';
           }
           break;
@@ -372,7 +364,7 @@
   function gameOver() {
     gameActive = false;
     const endTime = new Date();
-    const timeTaken = (endTime - startTime) / 1000; // in seconds
+    const timeTaken = (endTime - startTime) / 1000;
 
     gameOverElement.style.display = 'block';
     finalScoreElement.textContent = score;
@@ -429,8 +421,6 @@
   }
 
   function applyDiscountToCart(discountCode) {
-    // This function will depend on your Shopify setup
-    // Here's a basic example using the Shopify AJAX API
     fetch('/discount/' + discountCode, {
       method: 'POST',
       headers: {
@@ -452,43 +442,24 @@
   }
 
   function showRandomProduct() {
-    try {
-      console.log('Starting showRandomProduct function');
-      
-      // Step 1: Fetch products
-      console.log('Fetching products...');
-      const response = await fetch('/products.json');
-      const data = await response.json();
-      console.log('Products data received:', data);
+    console.log('Showing random product');
+    fetch('/products.json')
+      .then(response => response.json())
+      .then(data => {
+        if (!data.products || data.products.length === 0) {
+          console.error('No products found in the data');
+          return;
+        }
 
-      if (!data.products || data.products.length === 0) {
-        console.error('No products found in the data');
-        return;
-      }
-
-      // Step 2: Select a random product
-      const randomProduct = data.products[Math.floor(Math.random() * data.products.length)];
-      console.log('Selected random product:', randomProduct);
-
-      // Step 3: Generate HTML
-      const productHTML = generateProductHTML(randomProduct);
-      console.log('Generated product HTML:', productHTML);
-
-      // Step 4: Insert HTML into the DOM
-      console.log('Inserting product HTML into DOM');
-      productDetailsElement.innerHTML = productHTML;
-
-      // Step 5: Make the product recommendation visible
-      console.log('Setting product recommendation element to visible');
-      productRecommendationElement.style.display = 'block';
-
-      // Show discount code in the game area
-      showDiscountCode();
-
-      console.log('showRandomProduct function completed');
-    } catch (error) {
-      console.error('Error in showRandomProduct:', error);
-    }
+        const randomProduct = data.products[Math.floor(Math.random() * data.products.length)];
+        const productHTML = generateProductHTML(randomProduct);
+        productDetailsElement.innerHTML = productHTML;
+        productRecommendationElement.style.display = 'block';
+        showDiscountCode();
+      })
+      .catch(error => {
+        console.error('Error fetching products:', error);
+      });
   }
 
   function generateProductHTML(product) {
@@ -519,7 +490,6 @@
     const gameCanvas = document.getElementById('gameCanvas');
     const existingDiscountSection = document.getElementById('discountSection');
 
-    // Remove existing discount section if it exists
     if (existingDiscountSection) {
       existingDiscountSection.remove();
     }
@@ -533,7 +503,6 @@
       </div>
     `;
     
-    // Insert the discount section as a sibling to the game canvas
     gameCanvas.insertAdjacentHTML('afterend', discountHTML);
     
     document.getElementById('copyDiscountCode').addEventListener('click', function() {
@@ -563,16 +532,7 @@
       startGame();
       gameInstructions.style.display = 'none';
     } else {
-      const poopsToFire = Math.floor(level / 5) + 1;
-      for (let i = 0; i < poopsToFire; i++) {
-        poos.push({ 
-          x: bunnyX + (i - (poopsToFire-1)/2) * 20, 
-          y: bunnyY 
-        });
-      }
-      poopsFired += poopsToFire;
-      // Comment out audio play for now
-      // shootSound.play();
+      shootPoo();
     }
   });
 
@@ -584,16 +544,7 @@
   }, { passive: false });
 
   canvas.addEventListener('touchend', (e) => {
-    const poopsToFire = Math.floor(level / 5) + 1;
-    for (let i = 0; i < poopsToFire; i++) {
-      poos.push({ 
-        x: bunnyX + (i - (poopsToFire-1)/2) * 20, 
-        y: bunnyY 
-      });
-    }
-    poopsFired += poopsToFire;
-    // Comment out audio play for now
-    // shootSound.play();
+    shootPoo();
   });
 
   document.getElementById('leaderboardForm').addEventListener('submit', (e) => {
@@ -608,16 +559,13 @@
     leaderboard.sort((a, b) => b.score - a.score);
     localStorage.setItem('fruitGameLeaderboard', JSON.stringify(leaderboard.slice(0, 10)));
     
-    // Update the game over element
     const gameOverElement = document.getElementById('gameOver');
     const leaderboardForm = document.getElementById('leaderboardForm');
     const congratsMessage = document.createElement('p');
     congratsMessage.textContent = 'Congratulations, you made the list!';
     
-    // Replace the form with the congrats message
     leaderboardForm.replaceWith(congratsMessage);
     
-    // Show the updated leaderboard
     showLeaderboard();
   }
 
@@ -642,7 +590,6 @@
     .catch((error) => console.error('Error:', error));
   }
 
-  // Call this function when the game ends
   submitHighScore(score, playerName);
 
   window.addEventListener('resize', resizeCanvas);
@@ -652,110 +599,9 @@
   startTime = new Date();
   updateGame();
 
-  // Show instructions at the start
   gameInstructions.style.display = 'block';
 
-  // Global variable to track game state
-  let gameActive = false;
-
-  // Function to start the game
-  function startGame() {
-      if (!gameActive) {
-          gameActive = true;
-          console.log('Game started');
-          // Hide any existing discount code
-          const existingDiscountSection = document.getElementById('discountSection');
-          if (existingDiscountSection) {
-              existingDiscountSection.style.display = 'none';
-          }
-          // Add your game initialization code here
-          // For example: initializeGameObjects(), startGameLoop(), etc.
-      }
-  }
-
-  // Function to end the game and show results
-  function gameOver() {
-      gameActive = false;
-      console.log('Game over');
-      // Add your game over logic here
-      // For example: stopGameLoop(), calculateFinalScore(), etc.
-      
-      // Show the random product and discount code
-      showRandomProduct();
-  }
-
-  function showRandomProduct() {
-      try {
-          console.log('Starting showRandomProduct function');
-          
-          // Fetch and display product (keep this part as is)
-          // ...
-
-          // Show discount code in the game area
-          showDiscountCode();
-
-          console.log('showRandomProduct function completed');
-      } catch (error) {
-          console.error('Error in showRandomProduct:', error);
-      }
-  }
-
-  function showDiscountCode() {
-      const discountCode = 'FRUITGAME10';
-      const gameCanvas = document.getElementById('gameCanvas');
-      const existingDiscountSection = document.getElementById('discountSection');
-
-      if (existingDiscountSection) {
-          existingDiscountSection.style.display = 'block';
-      } else {
-          const discountHTML = `
-              <div id="discountSection" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0 0 10px rgba(0,0,0,0.1); z-index: 1000;">
-                  <h3 style="color: #18533A; margin-bottom: 10px;">THANKS FOR PLAYING!</h3>
-                  <p style="margin-bottom: 15px;">Here's a discount code for 10% off your next purchase:</p>
-                  <div style="font-size: 24px; font-weight: bold; color: #4CAF50; margin-bottom: 15px;">${discountCode}</div>
-                  <button id="copyDiscountCode" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Copy Code</button>
-                  <button id="playAgain" style="padding: 10px 20px; background-color: #18533A; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-left: 10px;">Play Again</button>
-              </div>
-          `;
-          
-          gameCanvas.insertAdjacentHTML('afterend', discountHTML);
-          
-          document.getElementById('copyDiscountCode').addEventListener('click', function() {
-              navigator.clipboard.writeText(discountCode).then(function() {
-                  alert('Discount code copied to clipboard!');
-              }, function(err) {
-                  console.error('Could not copy text: ', err);
-              });
-          });
-
-          document.getElementById('playAgain').addEventListener('click', function() {
-              document.getElementById('discountSection').style.display = 'none';
-              startGame();
-          });
-      }
-  }
-
-  // Event listener for game start
-  document.getElementById('gameCanvas').addEventListener('click', function(event) {
-      if (!gameActive) {
-          startGame();
-      }
-  });
-
-  // Initial game setup
-  function initializeGame() {
-      // Add any initial setup code here
-      console.log('Game initialized, click to start');
-  }
-
-  // Call this when the page loads
-  initializeGame();
-
-  document.addEventListener('DOMContentLoaded', function() {
-    if (window.Shopify && Shopify.QuickView) {
-      Shopify.QuickView.init();
-    }
-  });
+  drawArcadeBunny(bunnyX, bunnyY, cursorSize);
 
   console.log('Game script loaded');
 </script>
