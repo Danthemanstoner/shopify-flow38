@@ -85,18 +85,19 @@
 
           console.log('Game variables initialized');
 
+          this.canvas.addEventListener('mousemove', function(event) {
+              if (FruitGame.gameActive) {
+                  const rect = FruitGame.canvas.getBoundingClientRect();
+                  FruitGame.bunny.x = event.clientX - rect.left - FruitGame.bunny.width / 2;
+              }
+          });
+
           this.canvas.addEventListener('click', function(event) {
               console.log('Canvas clicked');
               if (!FruitGame.gameActive) {
                   FruitGame.startGame();
               } else {
                   FruitGame.shootPoo();
-              }
-          });
-
-          this.canvas.addEventListener('mousemove', function(event) {
-              if (FruitGame.gameActive) {
-                  FruitGame.bunnyX = event.clientX - FruitGame.canvas.getBoundingClientRect().left;
               }
           });
 
@@ -137,8 +138,6 @@
               this.y = y;
               this.width = 50;  // Adjust as needed
               this.height = 50; // Adjust as needed
-              this.speed = 2;
-              this.direction = Math.random() < 0.5 ? -1 : 1;
               this.currentImageIndex = 0;
               this.frameCount = 0;
           }
@@ -150,13 +149,6 @@
               const img = FruitGame.bunnyImages[this.currentImageIndex];
               ctx.drawImage(img, this.x, this.y, this.width, this.height);
               this.frameCount++;
-          }
-
-          move() {
-              this.x += this.speed * this.direction;
-              if (this.x <= 0 || this.x + this.width >= FruitGame.canvas.width) {
-                  this.direction *= -1;
-              }
           }
       },
 
@@ -250,7 +242,7 @@
       getFruitColor: function(type) {
           switch(type) {
               case '🍎': return '#FF0000';
-              case '���': return '#FFD700';
+              case '🍌': return '#FFD700';
               case '🍇': return '#800080';
               case '🍊': return '#FFA500';
               case '🍓': return '#FF69B4';
@@ -270,7 +262,6 @@
           this.ctx.lineWidth = 10;
           this.ctx.strokeRect(5, 5, this.canvas.width - 10, this.canvas.height - 10);
 
-          this.bunny.move();
           this.bunny.draw(this.ctx);
 
           for (let i = this.poos.length - 1; i >= 0; i--) {
@@ -293,7 +284,7 @@
                   this.drawArcadeFruit(item.x, item.y, 40, item.type);
               }
 
-              if (Math.abs(item.x - this.bunnyX) < 40 && Math.abs(item.y - this.bunnyY) < 40) {
+              if (Math.abs(item.x - this.bunny.x) < 40 && Math.abs(item.y - this.bunny.y) < 40) {
                   if (item.type === 'spareLife') {
                       this.lives++;
                       this.extraLivesCollected++;
@@ -548,7 +539,7 @@
       },
 
       shootPoo: function() {
-          this.poos.push({ x: this.bunnyX, y: this.bunnyY });
+          this.poos.push({ x: this.bunny.x + this.bunny.width / 2, y: this.bunny.y });
           this.poopsFired++;
       }
   };
