@@ -76,10 +76,14 @@
 
           this.startTime = null;
           this.poopsFired = 0;
-          this.fruitCollected = { '🍎': 0, '🍌': 0, '🍇': 0, '🍊': 0, '🍓': 0 };
+          this.fruitCollected = {
+              'tomato': 0, 'pineapple': 0, 'watermelon': 0, 'durian': 0, 'raspberry': 0, 
+              'orange': 0, 'apple': 0, 'pear': 0, 'banana': 0, 'carrot': 0, 'grapes': 0, 'strawberry': 0
+          };
           this.extraLivesCollected = 0;
 
-          this.itemTypes = ['🍎', '🍌', '🍇', '🍊', '🍓'];
+          this.fruitImages = {};
+          this.fruitTypes = ['tomato', 'pineapple', 'watermelon', 'durian', 'raspberry', 'orange', 'apple', 'pear', 'banana', 'carrot', 'grapes', 'strawberry'];
 
           this.isBossLevel = false;
 
@@ -129,6 +133,13 @@
 
           this.bunny = new this.Bunny(this.canvas.width / 2, this.canvas.height - 60);
 
+          // Load fruit images
+          this.fruitTypes.forEach(fruit => {
+              const img = new Image();
+              img.src = `https://cdn.shopify.com/s/files/1/0860/2877/9835/files/${fruit}.png?v=1725172565`;
+              this.fruitImages[fruit] = img;
+          });
+
           console.log('Game initialized');
       },
 
@@ -152,86 +163,6 @@
           }
       },
 
-      drawArcadeFruit: function(x, y, size, type) {
-          switch(type) {
-              case '🍎':
-                  this.ctx.fillStyle = '#FF0000';
-                  this.ctx.beginPath();
-                  this.ctx.arc(x, y, size/2, 0, Math.PI * 2);
-                  this.ctx.fill();
-                  this.ctx.fillStyle = '#00AA00';
-                  this.ctx.fillRect(x - size/20, y - size/2, size/10, size/4);
-                  break;
-              case '🍌':
-                  this.ctx.fillStyle = '#FFE135';
-                  this.ctx.beginPath();
-                  this.ctx.moveTo(x - size/2, y);
-                  this.ctx.quadraticCurveTo(x, y - size/2, x + size/2, y);
-                  this.ctx.quadraticCurveTo(x, y + size/2, x - size/2, y);
-                  this.ctx.fill();
-                  break;
-              case '🍇':
-                  this.ctx.fillStyle = '#6B2C91';
-                  for(let i = 0; i < 3; i++) {
-                      for(let j = 0; j < 3; j++) {
-                          this.ctx.beginPath();
-                          this.ctx.arc(x + (i-1)*size/4, y + (j-1)*size/4, size/6, 0, Math.PI * 2);
-                          this.ctx.fill();
-                      }
-                  }
-                  break;
-              case '🍊':
-                  this.ctx.fillStyle = '#FFA500';
-                  this.ctx.beginPath();
-                  this.ctx.arc(x, y, size/2, 0, Math.PI * 2);
-                  this.ctx.fill();
-                  this.ctx.strokeStyle = '#FF8C00';
-                  this.ctx.lineWidth = size/20;
-                  this.ctx.beginPath();
-                  this.ctx.arc(x, y, size/2.5, 0, Math.PI * 2);
-                  this.ctx.stroke();
-                  break;
-              case '🍓':
-                  this.ctx.fillStyle = '#FF0000';
-                  this.ctx.beginPath();
-                  this.ctx.moveTo(x, y - size/2);
-                  this.ctx.bezierCurveTo(x + size/2, y - size/2, x + size/2, y + size/2, x, y + size/2);
-                  this.ctx.bezierCurveTo(x - size/2, y + size/2, x - size/2, y - size/2, x, y - size/2);
-                  this.ctx.fill();
-                  this.ctx.fillStyle = '#00AA00';
-                  this.ctx.beginPath();
-                  this.ctx.moveTo(x - size/4, y - size/2);
-                  this.ctx.lineTo(x, y - size/3);
-                  this.ctx.lineTo(x + size/4, y - size/2);
-                  this.ctx.fill();
-                  break;
-          }
-      },
-
-      createParticles: function(x, y, color, count = 20, speed = 5) {
-          const particles = [];
-          for (let i = 0; i < count; i++) {
-              particles.push({
-                  x: x,
-                  y: y,
-                  size: Math.random() * 5 + 2,
-                  speedX: (Math.random() - 0.5) * speed,
-                  speedY: (Math.random() - 0.5) * speed,
-                  color: color
-              });
-          }
-          return particles;
-      },
-
-      createItem: function() {
-          return {
-              x: Math.random() * (this.canvas.width - 80) + 40,
-              y: -80,
-              type: this.itemTypes[(this.level - 1) % this.itemTypes.length],
-              speed: 1 + Math.random() * 2 + (this.level - 1) * 0.5
-          };
-      },
-
       drawPoo: function(x, y) {
           this.ctx.fillStyle = '#8B4513';
           this.ctx.beginPath();
@@ -239,14 +170,26 @@
           this.ctx.fill();
       },
 
-      getFruitColor: function(type) {
-          switch(type) {
-              case '🍎': return '#FF0000';
-              case '🍌': return '#FFD700';
-              case '🍇': return '#800080';
-              case '🍊': return '#FFA500';
-              case '🍓': return '#FF69B4';
-              default: return '#000000';
+      createItem: function() {
+          const randomFruit = this.fruitTypes[Math.floor(Math.random() * this.fruitTypes.length)];
+          return {
+              x: Math.random() * (this.canvas.width - 80) + 40,
+              y: -80,
+              type: randomFruit,
+              speed: 1 + Math.random() * 2 + (this.level - 1) * 0.5
+          };
+      },
+
+      drawFruit: function(x, y, type) {
+          const img = this.fruitImages[type];
+          if (img.complete) {
+              this.ctx.drawImage(img, x - 20, y - 20, 40, 40);
+          } else {
+              // If image is not loaded, draw a placeholder circle
+              this.ctx.fillStyle = '#FF0000';
+              this.ctx.beginPath();
+              this.ctx.arc(x, y, 20, 0, Math.PI * 2);
+              this.ctx.fill();
           }
       },
 
@@ -278,81 +221,37 @@
               const item = this.items[i];
               item.y += item.speed;
 
-              if (item.type === 'spareLife') {
-                  this.drawArcadeBunny(item.x, item.y, 30);
-              } else {
-                  this.drawArcadeFruit(item.x, item.y, 40, item.type);
-              }
+              this.drawFruit(item.x, item.y, item.type);
 
-              if (Math.abs(item.x - this.bunny.x) < 40 && Math.abs(item.y - this.bunny.y) < 40) {
-                  if (item.type === 'spareLife') {
-                      this.lives++;
-                      this.extraLivesCollected++;
-                      this.updateLives();
-                  } else if (item.type === '🥕') {
-                      this.score += 10;
-                      this.isBossLevel = false;
-                  } else {
-                      this.score++;
-                      this.fruitCollected[item.type]++;
-                  }
+              // Collision detection with bunny
+              if (Math.abs(item.x - this.bunny.x - this.bunny.width/2) < 30 && 
+                  Math.abs(item.y - this.bunny.y - this.bunny.height/2) < 30) {
+                  this.score += (item.type === 'durian') ? 5 : 1; // Durian worth more points
                   this.scoreElement.textContent = `SCORE: ${this.score}`;
-                  item.particles = this.createParticles(item.x, item.y, this.getFruitColor(item.type), 40, 8);
                   this.items.splice(i, 1);
-                  if (this.score % 10 === 0) {
-                      this.level++;
-                      this.levelElement.textContent = `LEVEL ${this.level}`;
-                      this.cursorSize += 5;
-                      this.backgroundColor = this.backgroundColor === '#FFFFFF' ? '#18533A' : '#FFFFFF';
-                  }
                   continue;
               }
 
+              // Collision detection with poos
               for (let j = this.poos.length - 1; j >= 0; j--) {
                   const poo = this.poos[j];
                   if (Math.abs(item.x - poo.x) < 30 && Math.abs(item.y - poo.y) < 30) {
-                      if (item.type !== 'spareLife') {
-                          this.score++;
-                          this.fruitCollected[item.type]++;
-                          this.scoreElement.textContent = `SCORE: ${this.score}`;
-                          item.particles = this.createParticles(item.x, item.y, this.getFruitColor(item.type), 60, 10);
-                      }
+                      this.score += (item.type === 'durian') ? 5 : 1;
+                      this.scoreElement.textContent = `SCORE: ${this.score}`;
                       this.items.splice(i, 1);
                       this.poos.splice(j, 1);
-                      if (this.score % 10 === 0) {
-                          this.level++;
-                          this.levelElement.textContent = `LEVEL ${this.level}`;
-                          this.cursorSize += 5;
-                          this.backgroundColor = this.backgroundColor === '#FFFFFF' ? '#18533A' : '#FFFFFF';
-                      }
                       break;
                   }
               }
 
-              if (item.particles) {
-                  item.particles.forEach((particle, index) => {
-                      particle.x += particle.speedX;
-                      particle.y += particle.speedY;
-                      particle.size *= 0.95;
-
-                      this.ctx.fillStyle = particle.color;
-                      this.ctx.fillRect(particle.x, particle.y, particle.size, particle.size);
-
-                      if (particle.size <= 0.5) {
-                          item.particles.splice(index, 1);
-                      }
-                  });
-              }
-
+              // Remove item if it goes off screen
               if (item.y > this.canvas.height) {
                   this.items.splice(i, 1);
-                  if (item.type !== 'spareLife') {
-                      this.lives--;
-                      this.updateLives();
-                      if (this.lives <= 0) {
-                          this.gameOver();
-                          return;
-                      }
+                  this.lives--;
+                  this.updateLives();
+                  if (this.lives <= 0) {
+                      this.gameOver();
+                      return;
                   }
               }
           }
@@ -364,7 +263,7 @@
                       this.items.push({
                           x: Math.random() * (this.canvas.width - 80) + 40,
                           y: -80 - i * 100,
-                          type: '🥕',
+                          type: 'carrot',
                           speed: 2 + Math.random() * 3
                       });
                   }
@@ -522,7 +421,10 @@
           this.backgroundColor = '#FFFFFF';
           this.startTime = new Date();
           this.poopsFired = 0;
-          this.fruitCollected = { '🍎': 0, '🍌': 0, '🍇': 0, '🍊': 0, '🍓': 0 };
+          this.fruitCollected = {
+              'tomato': 0, 'pineapple': 0, 'watermelon': 0, 'durian': 0, 'raspberry': 0, 
+              'orange': 0, 'apple': 0, 'pear': 0, 'banana': 0, 'carrot': 0, 'grapes': 0, 'strawberry': 0
+          };
           this.extraLivesCollected = 0;
           
           this.scoreElement.textContent = `SCORE: ${this.score}`;
