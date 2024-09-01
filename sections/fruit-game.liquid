@@ -106,7 +106,7 @@
           });
 
           // Preload and resize bunny images
-          const bunnyImages = [
+          this.bunnyImages = [
               'https://cdn.shopify.com/s/files/1/0860/2877/9835/files/PTR_Chubby_Pink_Bunny-4.png?v=1725113126',
               'https://cdn.shopify.com/s/files/1/0860/2877/9835/files/PTR_Chubby_Pink_Bunny-1.png?v=1725113126',
               'https://cdn.shopify.com/s/files/1/0860/2877/9835/files/PTR_Chubby_Pink_Bunny-3.png?v=1725113126',
@@ -126,36 +126,38 @@
               return img;
           });
 
-          this.drawArcadeBunny(this.bunnyX, this.bunnyY, this.cursorSize);
+          this.bunny = new this.Bunny(this.canvas.width / 2, this.canvas.height - 60);
 
           console.log('Game initialized');
       },
 
-      drawArcadeBunny: function(x, y, size) {
-          this.ctx.fillStyle = '#A0A0A0';
-          this.ctx.beginPath();
-          this.ctx.ellipse(x, y, size/2, size/1.5, 0, 0, Math.PI * 2);
-          this.ctx.fill();
+      Bunny: class {
+          constructor(x, y) {
+              this.x = x;
+              this.y = y;
+              this.width = 50;  // Adjust as needed
+              this.height = 50; // Adjust as needed
+              this.speed = 2;
+              this.direction = Math.random() < 0.5 ? -1 : 1;
+              this.currentImageIndex = 0;
+              this.frameCount = 0;
+          }
 
-          this.ctx.beginPath();
-          this.ctx.ellipse(x - size/3, y - size/2, size/6, size/3, -Math.PI/6, 0, Math.PI * 2);
-          this.ctx.fill();
-          this.ctx.beginPath();
-          this.ctx.ellipse(x + size/3, y - size/2, size/6, size/3, Math.PI/6, 0, Math.PI * 2);
-          this.ctx.fill();
+          draw(ctx) {
+              if (this.frameCount % 10 === 0) {  // Change image every 10 frames
+                  this.currentImageIndex = (this.currentImageIndex + 1) % FruitGame.bunnyImages.length;
+              }
+              const img = FruitGame.bunnyImages[this.currentImageIndex];
+              ctx.drawImage(img, this.x, this.y, this.width, this.height);
+              this.frameCount++;
+          }
 
-          this.ctx.fillStyle = '#000000';
-          this.ctx.beginPath();
-          this.ctx.arc(x - size/6, y - size/10, size/10, 0, Math.PI * 2);
-          this.ctx.fill();
-          this.ctx.beginPath();
-          this.ctx.arc(x + size/6, y - size/10, size/10, 0, Math.PI * 2);
-          this.ctx.fill();
-
-          this.ctx.fillStyle = '#FF9999';
-          this.ctx.beginPath();
-          this.ctx.ellipse(x, y + size/10, size/10, size/15, 0, 0, Math.PI * 2);
-          this.ctx.fill();
+          move() {
+              this.x += this.speed * this.direction;
+              if (this.x <= 0 || this.x + this.width >= FruitGame.canvas.width) {
+                  this.direction *= -1;
+              }
+          }
       },
 
       drawArcadeFruit: function(x, y, size, type) {
@@ -248,7 +250,7 @@
       getFruitColor: function(type) {
           switch(type) {
               case '🍎': return '#FF0000';
-              case '🍌': return '#FFD700';
+              case '���': return '#FFD700';
               case '🍇': return '#800080';
               case '🍊': return '#FFA500';
               case '🍓': return '#FF69B4';
@@ -268,7 +270,8 @@
           this.ctx.lineWidth = 10;
           this.ctx.strokeRect(5, 5, this.canvas.width - 10, this.canvas.height - 10);
 
-          this.drawArcadeBunny(this.bunnyX, this.bunnyY, this.cursorSize);
+          this.bunny.move();
+          this.bunny.draw(this.ctx);
 
           for (let i = this.poos.length - 1; i >= 0; i--) {
               const poo = this.poos[i];
@@ -619,16 +622,6 @@
   .fruit-game-container #reward {
       font-size: 18px;
       background-color: #E0FFE0 !important;
-  }
-
-  .fruit-game-container .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #18533A;
-      color: #FFFFFF;
-      text-decoration: none;
-      border-radius: 5px;
-      margin-top: 10px;
   }
 
   .reward-popup {
