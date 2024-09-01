@@ -279,6 +279,13 @@
               }
           }
 
+          // Check for level up
+          if (this.score >= this.level * 100) {  // Level up every 100 points
+              this.level++;
+              this.levelElement.textContent = `LEVEL ${this.level}`;
+              // Optionally, increase difficulty here
+          }
+
           requestAnimationFrame(() => this.updateGame());
       },
 
@@ -294,13 +301,18 @@
           this.gameOverElement.style.display = 'block';
           this.finalScoreElement.textContent = this.score;
 
-          // Display game statistics
+          // Display game statistics with fruit images
           const statsHtml = `
               <p>Time: ${timeTaken.toFixed(2)} seconds</p>
               <p>Poops Fired: ${this.poopsFired}</p>
               <p>Fruit Collected:</p>
-              <ul>
-                  ${Object.entries(this.fruitCollected).map(([fruit, count]) => `<li>${fruit}: ${count}</li>`).join('')}
+              <ul style="list-style-type: none; padding: 0;">
+                  ${Object.entries(this.fruitCollected).map(([fruit, count]) => `
+                      <li style="display: flex; align-items: center; margin-bottom: 5px;">
+                          <img src="${this.fruitImages[fruit].src}" alt="${fruit}" style="width: 20px; height: 20px; margin-right: 5px;">
+                          ${fruit}: ${count}
+                      </li>
+                  `).join('')}
               </ul>
               <p>Extra Lives Collected: ${this.extraLivesCollected}</p>
           `;
@@ -316,20 +328,6 @@
           this.updateLeaderboard(this.score);
       },
 
-      submitHighScore: function() {
-          const playerName = document.getElementById('playerName').value;
-          console.log(`Submitting score: ${this.score} for player: ${playerName}`);
-
-          this.updateLeaderboard(this.score, playerName);
-
-          // Display message after submitting score
-          alert("Thanks for playing! Your score has been submitted.");
-          
-          // Hide the game over screen and show the leaderboard
-          this.gameOverElement.style.display = 'none';
-          this.leaderboardElement.style.display = 'block';
-      },
-
       updateLeaderboard: function(score, playerName = 'Anonymous') {
           let leaderboard = JSON.parse(localStorage.getItem('fruitGameLeaderboard') || '[]');
           leaderboard.push({name: playerName, score: score});
@@ -342,6 +340,17 @@
           ).join('');
 
           this.leaderboardElement.style.display = 'block';
+          this.gameOverElement.style.display = 'none'; // Hide game over screen
+      },
+
+      submitHighScore: function() {
+          const playerName = document.getElementById('playerName').value;
+          console.log(`Submitting score: ${this.score} for player: ${playerName}`);
+
+          this.updateLeaderboard(this.score, playerName);
+
+          // Display message after submitting score
+          alert("Thanks for playing! Your score has been submitted.");
       },
 
       showReward: function() {
