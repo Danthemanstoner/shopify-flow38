@@ -6,7 +6,7 @@
           "type": "text",
           "id": "section_title",
           "label": "Section Title",
-          "default": "Choose Your Delivery Date and Time"
+          "default": "Choose Your Delivery Date & Time"
         }
       ],
       "presets": [
@@ -19,101 +19,100 @@
     
     <div class="delivery-date-time-picker">
       <h2>{{ section.settings.section_title }}</h2>
-    
+      
       <!-- Delivery Date Picker -->
-      <label for="delivery-date-picker-input">Select Delivery Date:</label>
-      <input type="text" id="delivery-date-picker-input" placeholder="Select a date">
+      <div class="picker-group">
+        <label for="delivery-date-picker-input">Select Delivery Date:</label>
+        <input type="text" id="delivery-date-picker-input" placeholder="Select a date">
+      </div>
     
-      <!-- Time Slot Selector -->
-      <label for="delivery-time-slot">Select Delivery Time:</label>
-      <select id="delivery-time-slot">
-        <option value="" disabled selected>Select a time</option>
-        <option value="08:00-10:00">08:00 AM - 10:00 AM</option>
-        <option value="10:00-12:00">10:00 AM - 12:00 PM</option>
-        <option value="12:00-14:00">12:00 PM - 02:00 PM</option>
-        <option value="14:00-16:00">02:00 PM - 04:00 PM</option>
-        <option value="16:00-18:00">04:00 PM - 06:00 PM</option>
-      </select>
+      <!-- Delivery Time Picker -->
+      <div class="picker-group">
+        <label for="delivery-time-picker">Select Delivery Time:</label>
+        <select id="delivery-time-picker">
+          <option value="" disabled selected>Select a time</option>
+          <option value="08:00 AM">08:00 AM - 09:00 AM</option>
+          <option value="09:00 AM">09:00 AM - 10:00 AM</option>
+          <option value="10:00 AM">10:00 AM - 11:00 AM</option>
+          <option value="11:00 AM">11:00 AM - 12:00 PM</option>
+          <option value="12:00 PM">12:00 PM - 01:00 PM</option>
+          <option value="01:00 PM">01:00 PM - 02:00 PM</option>
+          <option value="02:00 PM">02:00 PM - 03:00 PM</option>
+          <option value="03:00 PM">03:00 PM - 04:00 PM</option>
+          <option value="04:00 PM">04:00 PM - 05:00 PM</option>
+        </select>
+      </div>
     </div>
     
     <style>
+    /* Custom Styling */
     .delivery-date-time-picker {
       margin-top: 20px;
+      text-align: center;
+      background-color: #f9f9f9;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
     
     .delivery-date-time-picker h2 {
-      font-size: 1.5em;
-      margin-bottom: 10px;
+      font-size: 1.8em;
+      margin-bottom: 20px;
     }
     
-    #delivery-date-picker-input,
-    #delivery-time-slot {
+    .picker-group {
+      margin-bottom: 15px;
+      text-align: left;
+    }
+    
+    .picker-group label {
+      font-size: 1.2em;
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    #delivery-date-picker-input, #delivery-time-picker {
       width: 100%;
       padding: 10px;
-      font-size: 1em;
-      margin-top: 10px;
-      margin-bottom: 15px;
+      font-size: 1.1em;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 5px;
+    }
+    
+    #delivery-time-picker {
+      appearance: none;
+      background-color: white;
+      cursor: pointer;
     }
     </style>
     
-    <!-- Flatpickr Date Picker -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.shopify.com/s/files/1/0860/2877/9835/files/pikaday.js?v=1725772108" defer></script>
+    <link rel="stylesheet" href="https://cdn.shopify.com/s/files/1/0860/2877/9835/files/pikaday.css?v=1725772108">
     
     <script>
     document.addEventListener('DOMContentLoaded', function() {
       const datePickerInput = document.getElementById('delivery-date-picker-input');
-      const timeSlotInput = document.getElementById('delivery-time-slot');
-    
-      let selectedDate = '';
-      let selectedTimeSlot = '';
-    
-      // Initialize Flatpickr for the date picker
+      const timePickerInput = document.getElementById('delivery-time-picker');
+      
       if (datePickerInput) {
-        flatpickr(datePickerInput, {
-          dateFormat: 'Y-m-d',
-          minDate: 'today', // Prevent selecting past dates
-          onChange: function(selectedDates, dateStr, instance) {
-            selectedDate = dateStr;
-            console.log('Selected date:', selectedDate);
-            if (selectedDate && selectedTimeSlot) {
-              addCartAttributes(selectedDate, selectedTimeSlot);
-            }
+        // Initialize Pikaday date picker
+        new Pikaday({
+          field: datePickerInput,
+          format: 'YYYY-MM-DD',
+          minDate: new Date(), // Disable past dates
+          onSelect: function(date) {
+            console.log('Selected date: ' + date.toISOString());
+            // You can add code here to handle the selected date
           }
         });
       }
     
-      // Listen for time slot changes
-      timeSlotInput.addEventListener('change', function() {
-        selectedTimeSlot = this.value;
-        console.log('Selected time slot:', selectedTimeSlot);
-        if (selectedDate && selectedTimeSlot) {
-          addCartAttributes(selectedDate, selectedTimeSlot);
-        }
-      });
-    
-      // Function to add selected date and time to the cart
-      function addCartAttributes(date, timeSlot) {
-        fetch('/cart/update.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            attributes: {
-              'Delivery Date': date,
-              'Delivery Time Slot': timeSlot,
-            },
-          }),
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Cart updated with delivery details:', data);
-        })
-        .catch(error => {
-          console.error('Error updating cart:', error);
+      if (timePickerInput) {
+        timePickerInput.addEventListener('change', function() {
+          console.log('Selected time: ' + this.value);
+          // You can add code here to handle the selected time
         });
       }
     });
