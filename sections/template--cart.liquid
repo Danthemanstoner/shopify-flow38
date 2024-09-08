@@ -1,4 +1,3 @@
-<!-- /templates/cart.liquid -->
 <div class="wrapper-padded main-page-container">
   {% assign subtotal_compare_at_price = 0 %}
 
@@ -7,6 +6,7 @@
       <h1 class="page--title">{{ 'cart.general.title' | t }}</h1>
     </div>
 
+    <!-- Start of the form -->
     <form action="{{ routes.cart_url }}" method="post" novalidate class="cart table-wrap" data-wetheme-section-type="template--cart" data-wetheme-section-id="template--cart">
       <table class="cart-table full table--responsive">
         <thead class="cart__row cart__header-labels">
@@ -52,15 +52,13 @@
           {% endfor %}
         </tbody>
       </table>
+      <!-- Delivery Date and Time Picker Section -->
       <div class="delivery-date-time-picker">
         <h2>Schedule Your Delivery</h2>
-        <!-- Date Picker -->
         <div class="picker-group">
           <label for="delivery-date-picker-input">Select Delivery Date:</label>
           <input type="text" id="delivery-date-picker-input" placeholder="Select a date">
         </div>
-
-        <!-- Time Picker -->
         <div class="picker-group">
           <label for="delivery-time-picker">Select Delivery Time:</label>
           <select id="delivery-time-picker">
@@ -71,56 +69,80 @@
             <!-- Add other time slots here -->
           </select>
         </div>
-
         <button id="confirm-delivery" class="btn">Confirm Delivery Details</button>
       </div>
-      <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          const confirmButton = document.getElementById('confirm-delivery');
-          const datePickerInput = document.getElementById('delivery-date-picker-input');
-          const timePickerInput = document.getElementById('delivery-time-picker');
-      
-          // Event listener for Confirm button click
-          confirmButton.addEventListener('click', function(event) {
-            event.preventDefault();
-            const selectedDate = datePickerInput.value;
-            const selectedTime = timePickerInput.value;
-      
-            if (!selectedDate || !selectedTime) {
-              alert('Please select both a delivery date and time.');
-              return;
-            }
-      
-            // Display selected date and time in cart
-            const deliveryDetailsDisplay = document.getElementById('selected-delivery-details');
-            deliveryDetailsDisplay.innerText = `Delivery on ${selectedDate} at ${selectedTime}`;
-      
-            // Update Shopify cart attributes with selected date and time
-            fetch('/cart.js', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                attributes: {
-                  delivery_date: selectedDate,
-                  delivery_time: selectedTime,
-                }
-              }),
-            })
-            .then(response => response.json())
-            .then(data => {
-              console.log('Cart updated with delivery details:', data);
-              alert('Delivery date and time confirmed.');
-            })
-            .catch(error => {
-              console.error('Error updating cart:', error);
-              alert('Failed to update delivery details. Please try again.');
-            });
+
+      <!-- Order Note Section -->
+      {% if settings.cart_notes_enable %}
+        <div class="grid__item two-thirds medium--one-whole small--one-whole">
+          <label for="CartSpecialInstructions" class="label-font">{{ 'cart.general.note' | t }}</label>
+          <textarea name="note" class="input-full" id="CartSpecialInstructions">{{ cart.note }}</textarea>
+        </div>
+      {% endif %}
+      <!-- Submit and Checkout Buttons -->
+      <div class="grid__item text-right one-third medium--one-whole small--one-whole">
+        <div class="btn-wrapper-default">
+          <input type="submit" name="update" class="btn btn--secondary update-cart cart--button-update" aria-label="{{ 'cart.general.update' | t }}" value="{{ 'cart.general.update' | t }}">
+          <button type="submit" name="checkout" aria-label="{{ 'cart.general.checkout' | t }}" class="btn cart--button-checkout">{{ 'cart.general.checkout' | t }}</button>
+        </div>
+      </div>
+    </form>
+
+    <!-- JavaScript to handle delivery date and time -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const confirmButton = document.getElementById('confirm-delivery');
+        const datePickerInput = document.getElementById('delivery-date-picker-input');
+        const timePickerInput = document.getElementById('delivery-time-picker');
+
+        // Event listener for Confirm button click
+        confirmButton.addEventListener('click', function(event) {
+          event.preventDefault();
+          const selectedDate = datePickerInput.value;
+          const selectedTime = timePickerInput.value;
+
+          if (!selectedDate || !selectedTime) {
+            alert('Please select both a delivery date and time.');
+            return;
+          }
+
+          // Display selected date and time in cart
+          const deliveryDetailsDisplay = document.getElementById('selected-delivery-details');
+          deliveryDetailsDisplay.innerText = `Delivery on ${selectedDate} at ${selectedTime}`;
+
+          // Update Shopify cart attributes with selected date and time
+          fetch('/cart.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              attributes: {
+                delivery_date: selectedDate,
+                delivery_time: selectedTime,
+              }
+            }),
+          })
+          .then(response => response.json())
+          .then(data => {
+            alert('Delivery date and time confirmed.');
+          })
+          .catch(error => {
+            alert('Failed to update delivery details. Please try again.');
           });
         });
-      </script>
-      
-      <!-- Display the selected delivery date and time -->
-      <div id="selected-delivery-details" style="margin-top: 15px; font-weight: bold; color: green;"></div>
-      
+      });
+    </script>
+
+    <div id="selected-delivery-details" style="margin-top: 15px; font-weight: bold; color: green;"></div>
+
+  {% else %}
+    <div class="sitewide--title-wrapper">
+      <h1 class="page--title">{{ 'cart.general.title' | t }}</h1>
+    </div>
+    <div class="cart--empty-cart">
+      <p>{{ 'cart.general.empty' | t }}</p>
+      <a href="{{ routes.all_products_collection_url }}" class="btn">{{ 'general.continue_shopping' | t }}</a>
+    </div>
+  {% endif %}
+</div>
