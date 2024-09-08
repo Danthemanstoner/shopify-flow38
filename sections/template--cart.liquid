@@ -7,18 +7,14 @@
       <h1 class="page--title">{{ 'cart.general.title' | t }}</h1>
     </div>
 
-    <!-- Delivery Date and Time Picker -->
-    <div class="delivery-date-time-picker">
+    <!-- Delivery Date and Time Picker Section -->
+    <div class="delivery-date-time-picker" style="margin-bottom: 20px;">
       <h2>Schedule Your Delivery</h2>
-
-      <!-- Delivery Date Picker -->
       <div class="picker-group">
         <label for="delivery-date-picker-input">Select Delivery Date:</label>
         <input type="text" id="delivery-date-picker-input" placeholder="Select a date">
       </div>
-
-      <!-- Delivery Time Picker -->
-      <div class="picker-group">
+      <div class="picker-group" style="margin-top: 10px;">
         <label for="delivery-time-picker">Select Delivery Time:</label>
         <select id="delivery-time-picker">
           <option value="" disabled selected>Select a time</option>
@@ -26,20 +22,15 @@
           <option value="09:00 AM">09:00 AM - 10:00 AM</option>
           <option value="10:00 AM">10:00 AM - 11:00 AM</option>
           <option value="11:00 AM">11:00 AM - 12:00 PM</option>
-          <option value="12:00 PM">12:00 PM - 01:00 PM</option>
-          <option value="01:00 PM">01:00 PM - 02:00 PM</option>
-          <option value="02:00 PM">02:00 PM - 03:00 PM</option>
-          <option value="03:00 PM">03:00 PM - 04:00 PM</option>
-          <option value="04:00 PM">04:00 PM - 05:00 PM</option>
+          <!-- Add more time slots as needed -->
         </select>
       </div>
-
-      <!-- Confirm Button -->
-      <div class="picker-group">
-        <button id="confirm-delivery" class="confirm-button">Confirm Delivery Date & Time</button>
-      </div>
+      <button id="confirm-delivery" class="btn" style="margin-top: 15px;">Confirm Delivery Details</button>
     </div>
 
+    <!-- Selected Date and Time Display -->
+    <div id="selected-delivery-details" style="margin-top: 15px; font-weight: bold; color: green;"></div>
+    <!-- Cart Products -->
     <form action="{{ routes.cart_url }}" method="post" novalidate class="cart table-wrap" data-wetheme-section-type="template--cart" data-wetheme-section-id="template--cart">
       <table class="cart-table full table--responsive">
         <thead class="cart__row cart__header-labels">
@@ -59,12 +50,24 @@
               </td>
               <td class="cart__row--product-details">
                 <a class="cart__row--title" href="{{ item.url }}">{{ item.product.title }}</a>
+                {% unless item.variant.title contains 'Default' %}
+                  <div class="cart__meta-text">
+                    {% for option in item.product.options %}
+                      {{ option }}: {{ item.variant.options[forloop.index0] }}<br/>
+                    {% endfor %}
+                  </div>
+                {% endunless %}
               </td>
               <td class="text-center" data-label="{{ 'cart.label.price' | t }}">
-                <span class="money">{{ item.price | money }}</span>
+                {% if item.product.compare_at_price > item.price %}
+                  <span class="price-line-through sale-price">{{- item.product.compare_at_price | money -}}</span>
+                  <span class="money item-price">{{ item.price | money }}</span>
+                {% else %}
+                  <span class="money">{{ item.price | money }}</span>
+                {% endif %}
               </td>
               <td class="text-center" data-label="{{ 'cart.label.quantity' | t }}">
-                <input type="text" class="js-qty__num" value="{{ item.quantity }}" min="1" data-id="" aria-label="quantity" pattern="[0-9]*" name="updates[]" id="updates_{{ item.id }}">
+                <input type="text" class="js-qty__num" value="{{ item.quantity }}" name="updates[]" id="updates_{{ item.id }}">
               </td>
               <td class="text-center cart-total-label" data-label="{{ 'cart.label.total' | t }}">
                 <span class="money">{{ item.final_line_price | money }}</span>
@@ -73,134 +76,68 @@
           {% endfor %}
         </tbody>
       </table>
-
-      <div class="grid cart__row">
-        <div class="grid__item text-right">
-          <p>
-            <span class="cart__subtotal-title">{{ 'cart.general.subtotal' | t }}</span>
-            <span class="h3 cart__subtotal"><span class="money">{{ cart.total_price | money }}</span></span>
-          </p>
-
-          <div class="btn-wrapper-default">
-            <input type="submit" name="update" class="btn btn--secondary update-cart cart--button-update btn--secondary" aria-label="{{ 'cart.general.update' | t }}" value="{{ 'cart.general.update' | t }}">
-            <button type="submit" name="checkout" aria-label="{{ 'cart.general.checkout' | t }}" class="btn cart--button-checkout">{{ 'cart.general.checkout' | t }}</button>
-          </div>
+      <!-- Submit and Checkout Buttons -->
+      <div class="grid__item text-right one-third medium--one-whole small--one-whole">
+        <div class="btn-wrapper-default">
+          <input type="submit" name="update" class="btn btn--secondary update-cart cart--button-update" aria-label="{{ 'cart.general.update' | t }}" value="{{ 'cart.general.update' | t }}">
+          <button type="submit" name="checkout" aria-label="{{ 'cart.general.checkout' | t }}" class="btn cart--button-checkout">{{ 'cart.general.checkout' | t }}</button>
         </div>
       </div>
     </form>
 
+    <!-- JavaScript to handle delivery date and time -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const confirmButton = document.getElementById('confirm-delivery');
+        const datePickerInput = document.getElementById('delivery-date-picker-input');
+        const timePickerInput = document.getElementById('delivery-time-picker');
+
+        // Event listener for Confirm button click
+        confirmButton.addEventListener('click', function(event) {
+          event.preventDefault();
+          const selectedDate = datePickerInput.value;
+          const selectedTime = timePickerInput.value;
+
+          if (!selectedDate || !selectedTime) {
+            alert('Please select both a delivery date and time.');
+            return;
+          }
+
+          // Display selected date and time in cart
+          const deliveryDetailsDisplay = document.getElementById('selected-delivery-details');
+          deliveryDetailsDisplay.innerText = `Delivery on ${selectedDate} at ${selectedTime}`;
+
+          // Update Shopify cart attributes with selected date and time
+          fetch('/cart.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              attributes: {
+                delivery_date: selectedDate,
+                delivery_time: selectedTime,
+              }
+            }),
+          })
+          .then(response => response.json())
+          .then(data => {
+            alert('Delivery date and time confirmed.');
+          })
+          .catch(error => {
+            alert('Failed to update delivery details. Please try again.');
+          });
+        });
+      });
+    </script>
+
   {% else %}
+    <div class="sitewide--title-wrapper">
+      <h1 class="page--title">{{ 'cart.general.title' | t }}</h1>
+    </div>
     <div class="cart--empty-cart">
       <p>{{ 'cart.general.empty' | t }}</p>
       <a href="{{ routes.all_products_collection_url }}" class="btn">{{ 'general.continue_shopping' | t }}</a>
     </div>
   {% endif %}
-
 </div>
-
-<!-- Styles -->
-<style>
-.delivery-date-time-picker {
-  margin-top: 20px;
-  text-align: center;
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.delivery-date-time-picker h2 {
-  font-size: 1.8em;
-  margin-bottom: 20px;
-}
-
-.picker-group {
-  margin-bottom: 15px;
-  text-align: left;
-}
-
-.picker-group label {
-  font-size: 1.2em;
-  display: block;
-  margin-bottom: 5px;
-}
-
-#delivery-date-picker-input, #delivery-time-picker {
-  width: 100%;
-  padding: 10px;
-  font-size: 1.1em;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-#delivery-time-picker {
-  appearance: none;
-  background-color: white;
-  cursor: pointer;
-}
-
-.confirm-button {
-  background-color: #f8bb2a;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 1.2em;
-}
-
-.confirm-button:hover {
-  background-color: #e5a518;
-}
-
-.ajaxcart__product {
-  width: 90%;
-  margin: 0 auto;
-}
-
-.cart-table td, .cart-table th {
-  padding: 5px;
-}
-
-@media (min-width: 1025px) {
-  form.cart.table-wrap {
-    max-width: 70%;
-  }
-}
-</style>
-
-<!-- Scripts -->
-<script src="https://cdn.shopify.com/s/files/1/0860/2877/9835/files/pikaday.js?v=1725772108" defer></script>
-<link rel="stylesheet" href="https://cdn.shopify.com/s/files/1/0860/2877/9835/files/pikaday.css?v=1725772108">
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const datePickerInput = document.getElementById('delivery-date-picker-input');
-  const timePickerInput = document.getElementById('delivery-time-picker');
-  const confirmButton = document.getElementById('confirm-delivery');
-  
-  if (datePickerInput) {
-    new Pikaday({
-      field: datePickerInput,
-      format: 'YYYY-MM-DD',
-      minDate: new Date(),
-      onSelect: function(date) {
-        console.log('Selected date: ' + date.toISOString());
-      }
-    });
-  }
-
-  confirmButton.addEventListener('click', function() {
-    const selectedDate = datePickerInput.value;
-    const selectedTime = timePickerInput.value;
-
-    if (selectedDate && selectedTime) {
-      alert('Delivery Date: ' + selectedDate + '\nDelivery Time: ' + selectedTime);
-    } else {
-      alert('Please select both a delivery date and time.');
-    }
-  });
-});
-</script>
