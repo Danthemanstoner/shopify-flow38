@@ -241,41 +241,6 @@
 
 </div>
 
-<!-- Add the date picker directly in the cart template -->
-<div class="delivery-date-picker">
-  <h2>Choose Your Delivery Date</h2>
-  <div id="delivery-date-picker-app"></div>
-</div>
-
-<style>
-/* Your custom CSS for the delivery date picker section */
-.delivery-date-picker {
-  margin-top: 20px;
-}
-
-.delivery-date-picker h2 {
-  font-size: 1.5em;
-  margin-bottom: 10px;
-}
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const appContainer = document.getElementById('delivery-date-picker-app');
-  if (appContainer) {
-    // Example of initializing a date picker
-    const datePicker = new Pikaday({
-      field: appContainer,
-      format: 'YYYY-MM-DD',
-      onSelect: function(date) {
-        console.log('Selected date: ' + date.toISOString());
-        // You can add code here to handle the selected date
-      }
-    });
-  }
-});
-</script>
-
 {% schema %}
 {
   "name": "t:sections.template--cart.name"

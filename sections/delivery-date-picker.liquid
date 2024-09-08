@@ -19,7 +19,7 @@
 
 <div class="delivery-date-picker">
   <h2>{{ section.settings.section_title }}</h2>
-  <div id="delivery-date-picker-app"></div>
+  <input type="text" id="delivery-date-picker-input" placeholder="Select a date">
 </div>
 
 <style>
@@ -32,15 +32,26 @@
   font-size: 1.5em;
   margin-bottom: 10px;
 }
+
+#delivery-date-picker-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
 </style>
+
+<script src="https://cdn.shopify.com/s/files/1/0860/2877/9835/files/pikaday.js?v=1725772108" defer></script>
+<link rel="stylesheet" href="https://cdn.shopify.com/s/files/1/0860/2877/9835/files/pikaday.css?v=1725772108">
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  const appContainer = document.getElementById('delivery-date-picker-app');
-  if (appContainer) {
-    // Example of initializing a date picker
-    const datePicker = new Pikaday({
-      field: appContainer,
+  const datePickerInput = document.getElementById('delivery-date-picker-input');
+  if (datePickerInput) {
+    // Initialize Pikaday date picker
+    new Pikaday({
+      field: datePickerInput,
       format: 'YYYY-MM-DD',
       onSelect: function(date) {
         console.log('Selected date: ' + date.toISOString());
