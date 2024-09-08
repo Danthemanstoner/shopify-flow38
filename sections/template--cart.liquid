@@ -40,17 +40,38 @@
       </div>
     </div>
 
-    <!-- Display Selected Delivery Date and Time in Cart -->
-    {% if cart.attributes.delivery_date %}
-    <div class="delivery-info">
-      <p><strong>Delivery Date:</strong> {{ cart.attributes.delivery_date }}</p>
-      <p><strong>Delivery Time:</strong> {{ cart.attributes.delivery_time }}</p>
-    </div>
-    {% endif %}
-
     <form action="{{ routes.cart_url }}" method="post" novalidate class="cart table-wrap" data-wetheme-section-type="template--cart" data-wetheme-section-id="template--cart">
       <table class="cart-table full table--responsive">
-        <!-- Your existing cart table content -->
+        <thead class="cart__row cart__header-labels">
+          <th scope="row" colspan="2" class="text-center"></th>
+          <th scope="row" class="text-center">{{ 'cart.label.price' | t }}</th>
+          <th scope="row" class="text-center">{{ 'cart.label.quantity' | t }}</th>
+          <th scope="row" class="text-center">{{ 'cart.label.total' | t }}</th>
+        </thead>
+        <tbody>
+          {% for item in cart.items %}
+            <tr class="cart__row table__section">
+              <td data-label="{{ 'customer.order.product' | t }}">
+                <a href="{{ item.url | within: collections.all }}" class="cart__image">
+                  {% capture cart_page_product_image_alt %}{{ item.image.alt | default: item.title | escape }}{% endcapture %}
+                  {% render 'responsive-image' with item.image, alt: cart_page_product_image_alt, blur: false %}
+                </a>
+              </td>
+              <td class="cart__row--product-details">
+                <a class="cart__row--title" href="{{ item.url }}">{{ item.product.title }}</a>
+              </td>
+              <td class="text-center" data-label="{{ 'cart.label.price' | t }}">
+                <span class="money">{{ item.price | money }}</span>
+              </td>
+              <td class="text-center" data-label="{{ 'cart.label.quantity' | t }}">
+                <input type="text" class="js-qty__num" value="{{ item.quantity }}" min="1" data-id="" aria-label="quantity" pattern="[0-9]*" name="updates[]" id="updates_{{ item.id }}">
+              </td>
+              <td class="text-center cart-total-label" data-label="{{ 'cart.label.total' | t }}">
+                <span class="money">{{ item.final_line_price | money }}</span>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
       </table>
 
       <div class="grid cart__row">
@@ -90,11 +111,34 @@
   margin-right: auto;
 }
 
-.delivery-info {
-  margin-top: 20px;
-  background-color: #eef9f9;
+.delivery-date-time-picker h2 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+}
+
+.picker-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.picker-group label {
+  font-size: 1.2em;
+  display: block;
+  margin-bottom: 5px;
+}
+
+#delivery-date-picker-input, #delivery-time-picker {
+  width: 100%;
   padding: 10px;
+  font-size: 1.1em;
+  border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+#delivery-time-picker {
+  appearance: none;
+  background-color: white;
+  cursor: pointer;
 }
 
 .confirm-button {
@@ -105,6 +149,25 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: 1.2em;
+}
+
+.confirm-button:hover {
+  background-color: #e5a518;
+}
+
+.ajaxcart__product {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.cart-table td, .cart-table th {
+  padding: 5px;
+}
+
+@media (min-width: 1025px) {
+  form.cart.table-wrap {
+    max-width: 70%;
+  }
 }
 </style>
 
@@ -134,24 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const selectedTime = timePickerInput.value;
 
     if (selectedDate && selectedTime) {
-      fetch('/cart/update.js', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          attributes: {
-            'delivery_date': selectedDate,
-            'delivery_time': selectedTime
-          }
-        })
-      }).then(response => response.json())
-      .then(data => {
-        console.log('Cart updated with delivery info:', data);
-        window.location.reload(); // Reload to display updated delivery info
-      }).catch(error => {
-        console.error('Error updating cart:', error);
-      });
+      alert('Delivery Date: ' + selectedDate + '\nDelivery Time: ' + selectedTime);
     } else {
       alert('Please select both a delivery date and time.');
     }
