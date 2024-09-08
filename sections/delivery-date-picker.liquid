@@ -19,7 +19,7 @@
     
     <div class="delivery-date-time-picker">
       <h2>{{ section.settings.section_title }}</h2>
-    
+      
       <!-- Delivery Date Picker -->
       <div class="picker-group">
         <label for="delivery-date-picker-input">Select Delivery Date:</label>
@@ -45,7 +45,7 @@
     
       <!-- Confirm Button -->
       <div class="picker-group">
-        <button id="confirm-delivery" class="delivery-confirm-btn">Confirm Delivery</button>
+        <button id="confirm-delivery" class="confirm-button">Confirm Delivery Date & Time</button>
       </div>
     </div>
     
@@ -92,21 +92,18 @@
       cursor: pointer;
     }
     
-    .delivery-confirm-btn {
-      background-color: #28a745;
-      color: white;
+    .confirm-button {
+      background-color: #f8bb2a;
+      color: #fff;
       border: none;
-      padding: 10px 15px;
-      font-size: 1.1em;
+      padding: 10px 20px;
       border-radius: 5px;
       cursor: pointer;
-      width: 100%;
-      max-width: 200px;
-      margin-top: 10px;
+      font-size: 1.2em;
     }
     
-    .delivery-confirm-btn:hover {
-      background-color: #218838;
+    .confirm-button:hover {
+      background-color: #e5a518;
     }
     </style>
     
@@ -118,7 +115,7 @@
       const datePickerInput = document.getElementById('delivery-date-picker-input');
       const timePickerInput = document.getElementById('delivery-time-picker');
       const confirmButton = document.getElementById('confirm-delivery');
-    
+      
       if (datePickerInput) {
         // Initialize Pikaday date picker
         new Pikaday({
@@ -137,20 +134,16 @@
         });
       }
     
-      // Handle confirm button click
       confirmButton.addEventListener('click', function() {
         const selectedDate = datePickerInput.value;
         const selectedTime = timePickerInput.value;
     
-        if (!selectedDate || !selectedTime) {
+        if (selectedDate && selectedTime) {
+          console.log('Confirmed Delivery Date & Time:', selectedDate, selectedTime);
+          // Here you can add code to send the selected date and time to the cart or Shopify backend
+        } else {
           alert('Please select both a delivery date and time.');
-          return;
         }
-    
-        // Add the selected date and time to the cart or process as needed
-        console.log('Delivery Date:', selectedDate);
-        console.log('Delivery Time:', selectedTime);
-        // Add code to save this information to the cart or Shopify's line items meta
       });
     });
     </script>
