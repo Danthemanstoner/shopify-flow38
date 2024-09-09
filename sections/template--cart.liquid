@@ -61,9 +61,7 @@
                 </a>
               </td>
               <td class="cart__row--product-details">
-                <a class="cart__row--title" href="{{ item.url }}">
-                  {{ item.product.title }}
-                </a>
+                <a class="cart__row--title" href="{{ item.url }}">{{ item.product.title }}</a>
                 {% unless item.variant.title contains 'Default' %}
                   <div class="cart__meta-text">
                     {% for option in item.product.options %}
@@ -71,17 +69,14 @@
                     {% endfor %}
                   </div>
                 {% endunless %}
-
                 {% if item.selling_plan_allocation %}
                   <div class="cart__meta-text">
                     <span>{{ item.selling_plan_allocation.selling_plan.name }}</span>
                   </div>
                 {% endif %}
-
                 {% if settings.cart_vendor_enable %}
                   <p>{{ item.vendor }}</p>
                 {% endif %}
-
                 {% assign property_size = item.properties | size %}
                 {% if property_size > 0 %}
                   {% for p in item.properties %}
@@ -97,7 +92,6 @@
                     {% endif %}
                   {% endfor %}
                 {% endif %}
-
                 <span class="text-link-animated">
                   <a href="{{ routes.cart_url }}/change?line={{ forloop.index }}&amp;quantity=0" class="cart__remove">
                     <small>{{ 'cart.general.remove' | t }}</small>
@@ -153,7 +147,6 @@
           {% endfor %}
         </tbody>
       </table>
-
       <div class="grid cart__row">
         {% if settings.cart_notes_enable %}
           <div class="grid__item two-thirds medium--one-whole small--one-whole">
@@ -359,3 +352,4 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
+
