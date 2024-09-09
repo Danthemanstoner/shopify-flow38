@@ -1,12 +1,4 @@
-<!-- /templates/cart.liquid -->
-{% comment %}
-  For info on test orders:
-    - General http://docs.shopify.com/manual/your-store/orders/test-orders
-    - Shopify Payments - http://docs.shopify.com/manual/more/shopify-payments/testing-shopify-payments
-{% endcomment %}
-
 <div class="wrapper-padded main-page-container">
-
   {% assign subtotal_compare_at_price = 0 %}
 
   {% if cart.item_count > 0 %}
@@ -38,11 +30,8 @@
       </div>
 
       <button id="confirm-delivery-details" class="btn btn-primary">Confirm Delivery Details</button>
-
-      <!-- Display Selected Date and Time -->
       <p id="delivery-info" class="delivery-info"></p>
     </div>
-
     <form action="{{ routes.cart_url }}" method="post" novalidate class="cart table-wrap" data-wetheme-section-type="template--cart" data-wetheme-section-id="template--cart">
       <table class="cart-table full table--responsive">
         <thead class="cart__row cart__header-labels">
@@ -181,7 +170,6 @@
             <span class="cart__subtotal-title">{{ 'cart.general.subtotal' | t }}</span>
             <span class="h3 cart__subtotal"><span class="money">{{ cart.total_price | money }}</span></span>
           </p>
-
           {%- capture taxes_shipping_checkout -%}
             {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
               {{ 'cart.general.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
@@ -218,138 +206,5 @@
       <p>{{ 'cart.general.empty' | t }}</p>
       <a href="{{ routes.all_products_collection_url }}" class="btn">{{ 'general.continue_shopping' | t }}</a>
     </div>
-
   {% endif %}
-
 </div>
-
-{% schema %}
-{
-  "name": "t:sections.template--cart.name"
-}
-{% endschema %}
-
-<!-- Styles for the Delivery Date and Time Picker -->
-<style>
-  .delivery-date-time-picker {
-    margin-top: 20px;
-    text-align: center;
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .delivery-date-time-picker h2 {
-    font-size: 1.8em;
-    margin-bottom: 20px;
-  }
-
-  .picker-group {
-    margin-bottom: 15px;
-    text-align: left;
-  }
-
-  .picker-group label {
-    font-size: 1.2em;
-    display: block;
-    margin-bottom: 5px;
-  }
-
-  #delivery-date-picker-input, #delivery-time-picker {
-    width: 100%;
-    padding: 10px;
-    font-size: 1.1em;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-
-  #delivery-time-picker {
-    appearance: none;
-    background-color: white;
-    cursor: pointer;
-  }
-
-  .delivery-info {
-    margin-top: 10px;
-    color: #28a745;
-    font-weight: bold;
-  }
-</style>
-
-<!-- JavaScript for the Date and Time Picker Functionality -->
-<script src="https://cdn.shopify.com/s/files/1/0860/2877/9835/files/pikaday.js?v=1725772108" defer></script>
-<link rel="stylesheet" href="https://cdn.shopify.com/s/files/1/0860/2877/9835/files/pikaday.css?v=1725772108">
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const datePickerInput = document.getElementById('delivery-date-picker-input');
-  const timePickerInput = document.getElementById('delivery-time-picker');
-  const confirmButton = document.getElementById('confirm-delivery-details');
-  const deliveryInfo = document.getElementById('delivery-info');
-
-  let selectedDate = null;
-  let selectedTime = null;
-
-  // Initialize Pikaday date picker
-  if (datePickerInput) {
-    new Pikaday({
-      field: datePickerInput,
-      format: 'YYYY-MM-DD',
-      minDate: new Date(), // Disable past dates
-      onSelect: function(date) {
-        selectedDate = date;
-        updateDeliveryInfo();
-      }
-    });
-  }
-
-  // Time Picker selection
-  if (timePickerInput) {
-    timePickerInput.addEventListener('change', function() {
-      selectedTime = this.value;
-      updateDeliveryInfo();
-    });
-  }
-
-  // Update delivery info in the cart
-  function updateDeliveryInfo() {
-    if (selectedDate && selectedTime) {
-      const formattedDate = selectedDate.toDateString();
-      deliveryInfo.textContent = `Delivery on ${formattedDate} at ${selectedTime}`;
-
-      // Handle the cart attribute updates
-      confirmButton.addEventListener('click', function() {
-        fetch('/cart.js')
-          .then(response => response.json())
-          .then(cart => {
-            return fetch('/cart/update.js', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                attributes: {
-                  'Delivery Date': formattedDate,
-                  'Delivery Time': selectedTime
-                }
-              })
-            });
-          })
-          .then(response => {
-            if (response.ok) {
-              alert('Delivery details successfully updated!');
-            } else {
-              alert('Failed to update delivery details. Please try again.');
-            }
-          })
-          .catch(error => {
-            console.error('Error updating delivery details:', error);
-            alert('Failed to update delivery details. Please try again.');
-          });
-      });
-    }
-  }
-});
-</script>
-
