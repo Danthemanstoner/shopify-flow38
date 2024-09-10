@@ -14,35 +14,6 @@
       <h1 class="page--title">{{ 'cart.general.title' | t }}</h1>
     </div>
 
-    <!-- Delivery Date and Time Picker -->
-    <div class="delivery-date-time-picker">
-      <h2>Schedule Your Delivery</h2>
-
-      <!-- Delivery Date Picker -->
-      <div class="picker-group">
-        <label for="delivery-date-picker-input">Select Delivery Date:</label>
-        <input type="text" id="delivery-date-picker-input" placeholder="Select a date" readonly>
-      </div>
-
-      <!-- Delivery Time Picker -->
-      <div class="picker-group">
-        <label for="delivery-time-picker">Select Delivery Time:</label>
-        <select id="delivery-time-picker">
-          <option value="" disabled selected>Select a time</option>
-          <option value="08:00 AM - 10:00 AM">08:00 AM - 10:00 AM</option>
-          <option value="10:00 AM - 12:00 PM">10:00 AM - 12:00 PM</option>
-          <option value="12:00 PM - 02:00 PM">12:00 PM - 02:00 PM</option>
-          <option value="02:00 PM - 04:00 PM">02:00 PM - 04:00 PM</option>
-          <option value="04:00 PM - 06:00 PM">04:00 PM - 06:00 PM</option>
-        </select>
-      </div>
-
-      <button id="confirm-delivery-details" class="btn btn-primary">Confirm Delivery Details</button>
-
-      <!-- Display Selected Date and Time -->
-      <p id="delivery-info" class="delivery-info"></p>
-    </div>
-
     <form action="{{ routes.cart_url }}" method="post" novalidate class="cart table-wrap" data-wetheme-section-type="template--cart" data-wetheme-section-id="template--cart">
       <table class="cart-table full table--responsive">
         <thead class="cart__row cart__header-labels">
@@ -56,12 +27,18 @@
             <tr class="cart__row table__section">
               <td data-label="{{ 'customer.order.product' | t }}">
                 <a href="{{ item.url | within: collections.all }}" class="cart__image">
+                  {% comment %}
+                    More image size options at:
+                      - http://docs.shopify.com/themes/filters/product-img-url
+                  {% endcomment %}
                   {% capture cart_page_product_image_alt %}{{ item.image.alt | default: item.title | escape }}{% endcapture %}
                   {% render 'responsive-image' with item.image, alt: cart_page_product_image_alt, blur: false %}
                 </a>
               </td>
               <td class="cart__row--product-details">
-                <a class="cart__row--title" href="{{ item.url }}">{{ item.product.title }}</a>
+                <a class="cart__row--title" href="{{ item.url }}">
+                  {{ item.product.title }}
+                </a>
                 {% unless item.variant.title contains 'Default' %}
                   <div class="cart__meta-text">
                     {% for option in item.product.options %}
@@ -69,20 +46,33 @@
                     {% endfor %}
                   </div>
                 {% endunless %}
+
                 {% if item.selling_plan_allocation %}
                   <div class="cart__meta-text">
                     <span>{{ item.selling_plan_allocation.selling_plan.name }}</span>
                   </div>
                 {% endif %}
+
                 {% if settings.cart_vendor_enable %}
                   <p>{{ item.vendor }}</p>
                 {% endif %}
+
+                {% comment %}
+                  Optional, loop through custom product line items if available
+
+                  For more info on line item properties, visit:
+                    - http://docs.shopify.com/support/your-store/products/how-do-I-collect-additional-information-on-the-product-page-Like-for-a-monogram-engraving-or-customization
+                {% endcomment %}
                 {% assign property_size = item.properties | size %}
                 {% if property_size > 0 %}
                   {% for p in item.properties %}
                     {% if p.last != blank and p.first.first != '_' %}
                       <div class="cart__row--property">
                         {{ p.first }}:
+
+                        {% comment %}
+                          Check if there was an uploaded file associated
+                        {% endcomment %}
                         {% if p.last contains '/uploads/' %}
                           <a href="{{ p.last }}">{{ p.last | split: '/' | last }}</a>
                         {% else %}
@@ -92,6 +82,7 @@
                     {% endif %}
                   {% endfor %}
                 {% endif %}
+
                 <span class="text-link-animated">
                   <a href="{{ routes.cart_url }}/change?line={{ forloop.index }}&amp;quantity=0" class="cart__remove">
                     <small>{{ 'cart.general.remove' | t }}</small>
@@ -100,14 +91,21 @@
               </td>
               <td class="text-center" data-label="{{ 'cart.label.price' | t }}">
                 {%- if item.product.compare_at_price > item.price -%}
+              
                   <span class="price-line-through sale-price">
                     <span class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
                     {{- item.product.compare_at_price | money -}}
                   </span>
+
                   <span class="money item-price">{{ item.price | money }}</span>
+              
                 {% else %}
+              
                   <span class="money">{{ item.price | money }}</span>
+              
                 {% endif %}
+
+                {% render 'unit-price-measurement-variant', variant: item %}
               </td>
               <td class="text-center" data-label="{{ 'cart.label.quantity' | t }}">
                 <div class="js-qty-wrapper">
@@ -139,12 +137,32 @@
                   <span class="cart-total-label__discount">
                     <span class="money">{{ item.final_line_price | money }}</span>
                   </span>
-                {% else %}
+                {% elsif original_line_price != item.final_line_price and item.line_level_discount_allocations == blank %}
+                  <span class="hidden">{{ 'products.general.regular_price' | t }}</span>
+                  <span class="cart-total-label__discount">
+                    <span class="discount--sale-color discount--line-through">{{ item.variant.compare_at_price | times: item.quantity | money }}</span>
+                  </span>
+                  <span class="hidden">{{ 'products.general.sale_price' | t }}</span>
+                  <span class="cart-total-label__discount">
+                    <span class="money">{{ item.final_line_price | money }}</span>
+                  </span>
+                {%- else -%}
                   <span class="money">{{ item.final_line_price | money }}</span>
-                {% endif %}
+                {%- endif -%}
+
+                {%- if item.line_level_discount_allocations != blank -%}
+                  <ul class="order-discount--cart-list discount--sale-color" aria-label="{{ 'customer.order.discount' | t }}">
+                    {%- for discount_allocation in item.line_level_discount_allocations -%}
+                      <li class="order-discount--item">
+                        <strong>{{ discount_allocation.discount_application.title }} (-<span class="money">{{ discount_allocation.amount | money }}</span>)</strong>
+                      </li>
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
               </td>
             </tr>
           {% endfor %}
+                      
         </tbody>
       </table>
       <div class="grid cart__row">
@@ -228,128 +246,3 @@
   "name": "t:sections.template--cart.name"
 }
 {% endschema %}
-
-<!-- Styles for the Delivery Date and Time Picker -->
-<style>
-  .delivery-date-time-picker {
-    margin-top: 20px;
-    text-align: center;
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .delivery-date-time-picker h2 {
-    font-size: 1.8em;
-    margin-bottom: 20px;
-  }
-
-  .picker-group {
-    margin-bottom: 15px;
-    text-align: left;
-  }
-
-  .picker-group label {
-    font-size: 1.2em;
-    display: block;
-    margin-bottom: 5px;
-  }
-
-  #delivery-date-picker-input, #delivery-time-picker {
-    width: 100%;
-    padding: 10px;
-    font-size: 1.1em;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-
-  #delivery-time-picker {
-    appearance: none;
-    background-color: white;
-    cursor: pointer;
-  }
-
-  .delivery-info {
-    margin-top: 10px;
-    color: #28a745;
-    font-weight: bold;
-  }
-</style>
-
-<!-- JavaScript for the Date and Time Picker Functionality -->
-<script src="https://cdn.shopify.com/s/files/1/0860/2877/9835/files/pikaday.js?v=1725772108" defer></script>
-<link rel="stylesheet" href="https://cdn.shopify.com/s/files/1/0860/2877/9835/files/pikaday.css?v=1725772108">
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const datePickerInput = document.getElementById('delivery-date-picker-input');
-  const timePickerInput = document.getElementById('delivery-time-picker');
-  const confirmButton = document.getElementById('confirm-delivery-details');
-  const deliveryInfo = document.getElementById('delivery-info');
-
-  let selectedDate = null;
-  let selectedTime = null;
-
-  // Initialize Pikaday date picker
-  if (datePickerInput) {
-    new Pikaday({
-      field: datePickerInput,
-      format: 'YYYY-MM-DD',
-      minDate: new Date(), // Disable past dates
-      onSelect: function(date) {
-        selectedDate = date;
-        updateDeliveryInfo();
-      }
-    });
-  }
-
-  // Time Picker selection
-  if (timePickerInput) {
-    timePickerInput.addEventListener('change', function() {
-      selectedTime = this.value;
-      updateDeliveryInfo();
-    });
-  }
-
-  // Update delivery info in the cart
-  function updateDeliveryInfo() {
-    if (selectedDate && selectedTime) {
-      const formattedDate = selectedDate.toDateString();
-      deliveryInfo.textContent = `Delivery on ${formattedDate} at ${selectedTime}`;
-
-      // Handle the cart attribute updates
-      confirmButton.addEventListener('click', function() {
-        fetch('/cart.js')
-          .then(response => response.json())
-          .then(cart => {
-            return fetch('/cart/update.js', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                attributes: {
-                  'Delivery Date': formattedDate,
-                  'Delivery Time': selectedTime
-                }
-              })
-            });
-          })
-          .then(response => {
-            if (response.ok) {
-              alert('Delivery details successfully updated!');
-            } else {
-              alert('Failed to update delivery details. Please try again.');
-            }
-          })
-          .catch(error => {
-            console.error('Error updating delivery details:', error);
-            alert('Failed to update delivery details. Please try again.');
-          });
-      });
-    }
-  }
-});
-</script>
-
