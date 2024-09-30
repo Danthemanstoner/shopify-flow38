@@ -178,9 +178,10 @@
       },
 
       drawPoo: function(x, y) {
+          const pooSize = Math.max(10, this.bunny.width / 5); // Start smaller and grow with the bunny
           this.ctx.fillStyle = '#8B4513';
           this.ctx.beginPath();
-          this.ctx.arc(x, y, 15, 0, Math.PI * 2);
+          this.ctx.arc(x, y, pooSize, 0, Math.PI * 2);
           this.ctx.fill();
       },
 
@@ -190,7 +191,7 @@
               x: Math.random() * (this.canvas.width - 80) + 40,
               y: -80,
               type: randomFruit,
-              speed: 1 + Math.random() * 2 + (this.level - 1) * 0.5
+              speed: 1 + Math.random() * (1 + this.level * 0.2) // Gradually increase speed
           };
       },
 
@@ -300,7 +301,7 @@
               // Increase difficulty here (e.g., increase speed or spawn rate)
           }
 
-          // Adjust the growth of the bunny to be more gradual and limit its maximum size
+          // Adjust the growth of the bunny and poos
           if (this.level % 3 === 0) {
               if (this.bunny.width < 100) { // Set a maximum width
                   this.bunny.width += 2; // Smaller growth increment
