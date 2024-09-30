@@ -97,7 +97,7 @@
           this.canvas.addEventListener('mousemove', function(event) {
               if (FruitGame.gameActive) {
                   const rect = FruitGame.canvas.getBoundingClientRect();
-                  FruitGame.bunny.x = event.clientX - rect.left - FruitGame.bunny.width / 2;
+                  FruitGame.bunny.x = Math.min(Math.max(event.clientX - rect.left - FruitGame.bunny.width / 2, 0), FruitGame.canvas.width - FruitGame.bunny.width);
               }
           });
 
@@ -106,7 +106,7 @@
               if (FruitGame.gameActive) {
                   const rect = FruitGame.canvas.getBoundingClientRect();
                   const touch = event.touches[0]; // Get the first touch point
-                  FruitGame.bunny.x = touch.clientX - rect.left - FruitGame.bunny.width / 2;
+                  FruitGame.bunny.x = Math.min(Math.max(touch.clientX - rect.left - FruitGame.bunny.width / 2, 0), FruitGame.canvas.width - FruitGame.bunny.width);
               }
           });
 
@@ -300,10 +300,12 @@
               // Increase difficulty here (e.g., increase speed or spawn rate)
           }
 
-          // Adjust the growth of the bunny to be more gradual
+          // Adjust the growth of the bunny to be more gradual and limit its maximum size
           if (this.level % 3 === 0) {
-              this.bunny.width += 5; // Smaller growth increment
-              this.bunny.height += 5; // Smaller growth increment
+              if (this.bunny.width < 100) { // Set a maximum width
+                  this.bunny.width += 2; // Smaller growth increment
+                  this.bunny.height += 2; // Smaller growth increment
+              }
               this.cursorSize++; // Add an extra poop
           }
 
