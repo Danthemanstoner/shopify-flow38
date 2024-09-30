@@ -29,6 +29,9 @@
     <h3>We think you might like this:</h3>
     <div id="productDetails"></div>
   </div>
+  <div class="fruit-game-voucher" style="display: none;">
+    <p>Your voucher for free shipping!</p>
+  </div>
 </div>
 
 <div id="gameInstructions" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; font-size: 24px; color: #18533A;">
@@ -58,6 +61,7 @@
           this.gameInstructions = document.getElementById('gameInstructions');
           this.leaderboardForm = document.getElementById('leaderboardForm');
           this.gameStatsElement = document.getElementById('gameStats');
+          this.voucherElement = document.querySelector('.fruit-game-voucher');
 
           console.log('DOM elements initialized');
 
@@ -279,11 +283,18 @@
               }
           }
 
-          // Check for level up
-          if (this.score >= this.level * 100) {  // Level up every 100 points
+          // Check for fruit collection
+          if (this.score >= this.level * 10) { // Change level every 10 fruits
               this.level++;
               this.levelElement.textContent = `LEVEL ${this.level}`;
-              // Optionally, increase difficulty here
+              // Increase difficulty here (e.g., increase speed or spawn rate)
+          }
+
+          // Every 3 levels, grow the bunny and add an extra poop
+          if (this.level % 3 === 0) {
+              this.bunny.width += 10; // Grow bunny
+              this.bunny.height += 10; // Grow bunny
+              this.cursorSize++; // Add an extra poop
           }
 
           requestAnimationFrame(() => this.updateGame());
@@ -326,6 +337,8 @@
 
           this.showRandomProduct();
           this.updateLeaderboard(this.score);
+          this.fruitCollected = 0; // Reset fruit collected
+          this.showVoucher(); // Show voucher at the end of the game
       },
 
       updateLeaderboard: function(score, playerName = 'Anonymous') {
@@ -452,6 +465,10 @@
       shootPoo: function() {
           this.poos.push({ x: this.bunny.x + this.bunny.width / 2, y: this.bunny.y });
           this.poopsFired++;
+      },
+
+      showVoucher: function() {
+          this.voucherElement.style.display = 'block'; // Show the voucher
       }
   };
 
@@ -590,6 +607,12 @@
   .add-to-cart-button:hover {
       background-color: #45a049;
   }
+
+  @media (max-width: 768px) {
+      .fruit-game-container {
+          padding: 15px; // Adjust padding for mobile
+      }
+  }
 </style>
 
 {% schema %}
@@ -604,6 +627,3 @@
   ]
 }
 {% endschema %}
-
-
-
