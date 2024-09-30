@@ -93,10 +93,20 @@
 
           console.log('Game variables initialized');
 
+          // Update the mousemove event to handle touch events for mobile
           this.canvas.addEventListener('mousemove', function(event) {
               if (FruitGame.gameActive) {
                   const rect = FruitGame.canvas.getBoundingClientRect();
                   FruitGame.bunny.x = event.clientX - rect.left - FruitGame.bunny.width / 2;
+              }
+          });
+
+          // Add touch event for mobile
+          this.canvas.addEventListener('touchmove', function(event) {
+              if (FruitGame.gameActive) {
+                  const rect = FruitGame.canvas.getBoundingClientRect();
+                  const touch = event.touches[0]; // Get the first touch point
+                  FruitGame.bunny.x = touch.clientX - rect.left - FruitGame.bunny.width / 2;
               }
           });
 
@@ -290,10 +300,10 @@
               // Increase difficulty here (e.g., increase speed or spawn rate)
           }
 
-          // Every 3 levels, grow the bunny and add an extra poop
+          // Adjust the growth of the bunny to be more gradual
           if (this.level % 3 === 0) {
-              this.bunny.width += 10; // Grow bunny
-              this.bunny.height += 10; // Grow bunny
+              this.bunny.width += 5; // Smaller growth increment
+              this.bunny.height += 5; // Smaller growth increment
               this.cursorSize++; // Add an extra poop
           }
 
