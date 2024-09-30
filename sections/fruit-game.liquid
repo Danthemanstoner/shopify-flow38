@@ -302,12 +302,14 @@
           }
 
           // Adjust the growth of the bunny to be more gradual
-          if (this.level % 3 === 0) {
-              if (this.bunny.width < 60) { // Set a maximum width
-                  this.bunny.width += 1; // Smaller growth increment
-                  this.bunny.height += 1; // Smaller growth increment
+          if (this.score > 0 && this.score % 10 === 0) { // Check if score is a multiple of 10
+              if (this.level % 3 === 0) {
+                  if (this.bunny.width < 60) { // Set a maximum width
+                      this.bunny.width += 1; // Smaller growth increment
+                      this.bunny.height += 1; // Smaller growth increment
+                  }
+                  this.cursorSize++; // Add an extra poop
               }
-              this.cursorSize++; // Add an extra poop
           }
 
           requestAnimationFrame(() => this.updateGame());
