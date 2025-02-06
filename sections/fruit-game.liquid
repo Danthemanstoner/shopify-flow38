@@ -41,27 +41,32 @@
 <script>
   console.log('Game script starting');
 
-  window.FruitGame = {
+  // Game object to encapsulate all functionalities
+  const FruitGame = {
       init: function() {
           console.log('Game init started');
+          this.setupElements();
+          this.registerEventHandlers();
+          this.resetGame();
+          requestAnimationFrame(this.gameLoop.bind(this));
+      },
 
-          this.canvas = document.getElementById('gameCanvas');
-          this.ctx = this.canvas.getContext('2d');
+      setupElements: function() {
+          this.gameCanvas = document.getElementById('gameCanvas');
           this.scoreElement = document.getElementById('score');
           this.levelElement = document.getElementById('level');
           this.livesElement = document.getElementById('lives');
-          this.gameOverElement = document.getElementById('gameOver');
-          this.finalScoreElement = document.getElementById('finalScore');
           this.leaderboardElement = document.getElementById('leaderboard');
-          this.leaderboardListElement = document.getElementById('leaderboardList');
+          this.gameOverElement = document.getElementById('gameOver');
           this.rewardElement = document.getElementById('reward');
-          this.discountCodeElement = document.getElementById('discountCodeText');
           this.productRecommendationElement = document.getElementById('productRecommendation');
-          this.productDetailsElement = document.getElementById('productDetails');
-          this.gameInstructions = document.getElementById('gameInstructions');
-          this.leaderboardForm = document.getElementById('leaderboardForm');
+          this.discountCodeElement = document.getElementById('discountCodeText');
+          this.finalScoreElement = document.getElementById('finalScore');
+          this.leaderboardListElement = document.getElementById('leaderboardList');
           this.gameStatsElement = document.getElementById('gameStats');
           this.voucherElement = document.querySelector('.fruit-game-voucher');
+          this.gameInstructions = document.getElementById('gameInstructions');
+          this.leaderboardForm = document.getElementById('leaderboardForm');
 
           console.log('DOM elements initialized');
 
@@ -94,23 +99,23 @@
           console.log('Game variables initialized');
 
           // Update the bunny's position to ensure it stays within the canvas
-          this.canvas.addEventListener('mousemove', function(event) {
+          this.gameCanvas.addEventListener('mousemove', function(event) {
               if (FruitGame.gameActive) {
-                  const rect = FruitGame.canvas.getBoundingClientRect();
-                  FruitGame.bunny.x = Math.min(Math.max(event.clientX - rect.left - FruitGame.bunny.width / 2, 0), FruitGame.canvas.width - FruitGame.bunny.width);
+                  const rect = FruitGame.gameCanvas.getBoundingClientRect();
+                  FruitGame.bunny.x = Math.min(Math.max(event.clientX - rect.left - FruitGame.bunny.width / 2, 0), FruitGame.gameCanvas.width - FruitGame.bunny.width);
               }
           });
 
           // Add touch event for mobile
-          this.canvas.addEventListener('touchmove', function(event) {
+          this.gameCanvas.addEventListener('touchmove', function(event) {
               if (FruitGame.gameActive) {
-                  const rect = FruitGame.canvas.getBoundingClientRect();
+                  const rect = FruitGame.gameCanvas.getBoundingClientRect();
                   const touch = event.touches[0]; // Get the first touch point
-                  FruitGame.bunny.x = Math.min(Math.max(touch.clientX - rect.left - FruitGame.bunny.width / 2, 0), FruitGame.canvas.width - FruitGame.bunny.width);
+                  FruitGame.bunny.x = Math.min(Math.max(touch.clientX - rect.left - FruitGame.bunny.width / 2, 0), FruitGame.gameCanvas.width - FruitGame.bunny.width);
               }
           });
 
-          this.canvas.addEventListener('click', function(event) {
+          this.gameCanvas.addEventListener('click', function(event) {
               console.log('Canvas clicked');
               if (!FruitGame.gameActive) {
                   FruitGame.startGame();
@@ -145,7 +150,7 @@
               return img;
           });
 
-          this.bunny = new this.Bunny(this.canvas.width / 2, this.canvas.height - 60);
+          this.bunny = new this.Bunny(this.gameCanvas.width / 2, this.gameCanvas.height - 60);
 
           // Load fruit images
           this.fruitTypes.forEach(fruit => {
@@ -188,7 +193,7 @@
       createItem: function() {
           const randomFruit = this.fruitTypes[Math.floor(Math.random() * this.fruitTypes.length)];
           return {
-              x: Math.random() * (this.canvas.width - 80) + 40,
+              x: Math.random() * (this.gameCanvas.width - 80) + 40,
               y: -80,
               type: randomFruit,
               speed: 1 + Math.random() * (1 + this.level * 0.2) // Gradually increase speed
@@ -211,14 +216,14 @@
       updateGame: function() {
           if (!this.gameActive) return;
 
-          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+          this.ctx.clearRect(0, 0, this.gameCanvas.width, this.gameCanvas.height);
 
           this.ctx.fillStyle = this.backgroundColor;
-          this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+          this.ctx.fillRect(0, 0, this.gameCanvas.width, this.gameCanvas.height);
           
           this.ctx.strokeStyle = this.borderColor;
           this.ctx.lineWidth = 10;
-          this.ctx.strokeRect(5, 5, this.canvas.width - 10, this.canvas.height - 10);
+          this.ctx.strokeRect(5, 5, this.gameCanvas.width - 10, this.gameCanvas.height - 10);
 
           this.bunny.draw(this.ctx);
 
@@ -260,7 +265,7 @@
               }
 
               // Remove item if it goes off screen
-              if (item.y > this.canvas.height) {
+              if (item.y > this.gameCanvas.height) {
                   this.items.splice(i, 1);
                   this.lives--;
                   this.updateLives();
@@ -276,7 +281,7 @@
                   this.isBossLevel = true;
                   for (let i = 0; i < 10; i++) {
                       this.items.push({
-                          x: Math.random() * (this.canvas.width - 80) + 40,
+                          x: Math.random() * (this.gameCanvas.width - 80) + 40,
                           y: -80 - i * 100,
                           type: 'carrot',
                           speed: 2 + Math.random() * 3
@@ -284,7 +289,7 @@
                   }
               } else if (this.level % 10 === 0 && Math.random() < 0.1) {
                   this.items.push({
-                      x: Math.random() * (this.canvas.width - 80) + 40,
+                      x: Math.random() * (this.gameCanvas.width - 80) + 40,
                       y: -80,
                       type: 'spareLife',
                       speed: 1 + Math.random() * 2
@@ -395,7 +400,6 @@
       showRandomProduct: function() {
           console.log('Showing random product');
           
-          // Fetch random product from the shop
           fetch('/products.json')
               .then(response => response.json())
               .then(data => {
@@ -484,6 +488,42 @@
 
       showVoucher: function() {
           this.voucherElement.style.display = 'block'; // Show the voucher
+      },
+
+      registerEventHandlers: function() {
+          window.addEventListener('keydown', this.handleKeyDown.bind(this));
+          window.addEventListener('keyup', this.handleKeyUp.bind(this));
+      },
+
+      resetGame: function() {
+          this.score = 0;
+          this.level = 1;
+          this.lives = 3;
+          this.updateUI();
+      },
+
+      updateUI: function() {
+          this.scoreElement.textContent = `SCORE: ${this.score}`;
+          this.levelElement.textContent = `LEVEL ${this.level}`;
+          this.livesElement.textContent = `LIVES: ${this.lives}`;
+      },
+
+      gameLoop: function() {
+          this.updateGame();
+          this.render();
+          requestAnimationFrame(this.gameLoop.bind(this));
+      },
+
+      render: function() {
+          // Game rendering logic
+      },
+
+      handleKeyDown: function(event) {
+          // Handle key down events
+      },
+
+      handleKeyUp: function(event) {
+          // Handle key up events
       }
   };
 
@@ -494,35 +534,31 @@
 
   console.log('Game script loaded');
 
-  // Check for localStorage availability and handle gracefully if not available
-  function checkStorage() {
+  // Enhanced error handling for storage access
+  function safelyAccessStorage() {
       try {
-          const storageTestKey = 'testStorage';
-          localStorage.setItem(storageTestKey, 'test');
-          localStorage.removeItem(storageTestKey);
-          return true;
-      } catch (e) {
-          console.error('Local Storage not accessible:', e);
-          return false;
+          const testKey = 'test';
+          localStorage.setItem(testKey, 'value');
+          localStorage.removeItem(testKey);
+      } catch (error) {
+          console.error('Failed to access localStorage:', error);
+          // Implement fallback storage mechanism here
       }
   }
 
-  if (!checkStorage()) {
-      console.log('Using fallback storage mechanisms.');
-      // Implement fallback storage or disable features that require localStorage
-  }
-
-  // Example of sending a message with dynamic origin checking
-  function sendMessage(message, targetWindow, targetOrigin) {
-      if (targetOrigin === window.location.origin) {
+  // Enhanced logging for cross-origin messaging
+  function safePostMessage(targetWindow, message, targetOrigin) {
+      try {
           targetWindow.postMessage(message, targetOrigin);
-      } else {
-          console.error('Mismatched origins, message not sent');
+      } catch (error) {
+          console.error('Failed to send message:', error);
+          // Handle messaging errors or retry with adjusted parameters
       }
   }
 
-  // Usage
-  sendMessage('Hello', window.parent, 'https://thefruitbox.co');
+  // Call these functions as needed in your script
+  safelyAccessStorage();
+  safePostMessage(window.parent, 'Hello from iframe!', 'https://thefruitbox.co');
 </script>
 
 <style>
