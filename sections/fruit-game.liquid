@@ -24,6 +24,27 @@
 
 <script>
   window.FruitGame = {
+    setCookie: function(name, value, days) {
+      let expires = "";
+      if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + value + "; path=/" + expires;
+    },
+
+    getCookie: function(name) {
+      const nameEQ = name + "=";
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        let c = cookies[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+      }
+      return null;
+    },
+
     init: function() {
       this.canvas = document.getElementById('gameCanvas');
       this.ctx = this.canvas.getContext('2d');
@@ -35,7 +56,7 @@
       this.rewardElement = document.getElementById('reward');
       this.discountCodeElement = document.getElementById('discountCodeText');
 
-      this.score = 0;
+      this.score = parseInt(this.getCookie('highScore')) || 0;
       this.level = 1;
       this.lives = 3;
       this.fruit = { x: Math.random() * 750, y: 0, speed: 2 };
@@ -83,6 +104,7 @@
 
       if (this.fruit.y + 20 >= this.basket.y && this.fruit.x >= this.basket.x && this.fruit.x <= this.basket.x + this.basket.width) {
         this.score++;
+        this.setCookie('highScore', this.score, 7);
         this.fruit.y = 0;
         this.fruit.x = Math.random() * 750;
         if (this.score % 10 === 0) this.level++;
@@ -108,36 +130,3 @@
 
   window.onload = () => FruitGame.init();
 </script>
-
-<style>
-  .fruit-game-container {
-    text-align: center;
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-    border: 2px solid #ccc;
-  }
-  canvas {
-    border: 2px solid black;
-    display: block;
-    margin: auto;
-  }
-  #gameInfo {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-  }
-  #reward, #gameOver {
-    background: #f9f9f9;
-    padding: 15px;
-    margin-top: 20px;
-  }
-</style>
-
-{% schema %}
-{
-  "name": "Fruit Catch Game",
-  "settings": [],
-  "presets": [{ "name": "Fruit Catch Game", "category": "Interactive" }]
-}
-{% endschema %}
