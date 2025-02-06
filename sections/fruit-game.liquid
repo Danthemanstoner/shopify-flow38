@@ -493,6 +493,21 @@
   };
 
   console.log('Game script loaded');
+
+  function isLocalStorageAvailable() {
+      const test = 'test';
+      try {
+          localStorage.setItem(test, test);
+          localStorage.removeItem(test);
+          return true;
+      } catch (e) {
+          return false;
+      }
+  }
+
+  if (!isLocalStorageAvailable()) {
+      console.log('Local Storage is not available. Some features may not work.');
+  }
 </script>
 
 <style>
