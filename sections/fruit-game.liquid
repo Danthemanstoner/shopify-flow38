@@ -494,19 +494,22 @@
 
   console.log('Game script loaded');
 
-  function isLocalStorageAvailable() {
-      const test = 'test';
+  // Check for localStorage availability and handle gracefully if not available
+  function checkStorage() {
       try {
-          localStorage.setItem(test, test);
-          localStorage.removeItem(test);
+          const storageTestKey = 'testStorage';
+          localStorage.setItem(storageTestKey, 'test');
+          localStorage.removeItem(storageTestKey);
           return true;
       } catch (e) {
+          console.error('Local Storage not accessible:', e);
           return false;
       }
   }
 
-  if (!isLocalStorageAvailable()) {
-      console.log('Local Storage is not available. Some features may not work.');
+  if (!checkStorage()) {
+      console.log('Using fallback storage mechanisms.');
+      // Implement fallback storage or disable features that require localStorage
   }
 </script>
 
