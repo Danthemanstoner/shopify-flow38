@@ -511,6 +511,18 @@
       console.log('Using fallback storage mechanisms.');
       // Implement fallback storage or disable features that require localStorage
   }
+
+  // Example of sending a message with dynamic origin checking
+  function sendMessage(message, targetWindow, targetOrigin) {
+      if (targetOrigin === window.location.origin) {
+          targetWindow.postMessage(message, targetOrigin);
+      } else {
+          console.error('Mismatched origins, message not sent');
+      }
+  }
+
+  // Usage
+  sendMessage('Hello', window.parent, 'https://thefruitbox.co');
 </script>
 
 <style>
