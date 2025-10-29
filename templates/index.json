@@ -1,12 +1,12 @@
 /*
-* ------------------------------------------------------------
-* IMPORTANT: The contents of this file are auto-generated.
-*
-* This file may be updated by the Shopify admin theme editor
-* or related systems. Please exercise caution as any changes
-* made to this file may be overwritten.
-* ------------------------------------------------------------
-*/
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "af3e824e-6ca9-4ac4-9510-a07cb14e4a66": {
@@ -15,7 +15,7 @@
         "template--15051013783622__af3e824e-6ca9-4ac4-9510-a07cb14e4a66-text_static-1": {
           "type": "text_static",
           "settings": {
-            "text_static": "<p>Plus+ | fruit Press<\/p>",
+            "text_static": "<p>Fruit delivered fresh</p>",
             "max_width_desktop": 100,
             "max_width_mobile": 100,
             "text_color": "#ffffff"
@@ -24,8 +24,8 @@
         "template--15051013783622__af3e824e-6ca9-4ac4-9510-a07cb14e4a66-text_dynamic-1": {
           "type": "text_dynamic",
           "settings": {
-            "text_dynamic": "fresh,fruit,premium,bangkok,imported,local,juice,plus+,healthy",
-            "animation_timing": 500,
+            "text_dynamic": "fresh,fruit,premium,bangkok,imported,local,oranges,apples,grapes,pears,plums,melons,berries,healthy",
+            "animation_timing": 300,
             "rotation_interval": 3000,
             "text_color": "#d4c159"
           }
@@ -34,7 +34,7 @@
           "type": "text_static",
           "disabled": true,
           "settings": {
-            "text_static": "<p>your product is<\/p>",
+            "text_static": "<p>your product is</p>",
             "max_width_desktop": 100,
             "max_width_mobile": 100,
             "text_color": "rgba(0,0,0,0)"
@@ -43,7 +43,7 @@
         "template--15051013783622__af3e824e-6ca9-4ac4-9510-a07cb14e4a66-button-1": {
           "type": "button",
           "settings": {
-            "button_url": "shopify:\/\/collections\/all",
+            "button_url": "shopify://collections/all",
             "button_text": "Shop now",
             "color_button_text": "#242424",
             "color_button_background": "#ffffff"
@@ -57,16 +57,16 @@
         "template--15051013783622__af3e824e-6ca9-4ac4-9510-a07cb14e4a66-button-1"
       ],
       "custom_css": [
-        ".content-wrapper--button {margin-bottom: 50px; \/* Pulls the button up by 20px *\/}"
+        ".content-wrapper--button {margin-bottom: 50px; /* Pulls the button up by 20px */}"
       ],
       "settings": {
         "colors": "accent",
-        "image_desktop": "shopify:\/\/shop_images\/green_machine_test.jpg",
+        "image_desktop": "shopify://shop_images/fulltfb_banner_new.jpg",
         "height_desktop": "original",
         "text_size_desktop": 50,
         "text_position_desktop": "bottom_center",
-        "image_mobile": "shopify:\/\/shop_images\/green_machine_test.jpg",
-        "height_mobile": "l",
+        "image_mobile": "shopify://shop_images/tfb_banner_new_912725a8-847d-44fb-b143-15fef25fae88.jpg",
+        "height_mobile": "xl",
         "text_size_mobile": 28,
         "text_position_mobile": "bottom_center"
       }
@@ -79,7 +79,7 @@
           "settings": {
             "heading": "GET FREE SHIPPING",
             "subheading": "When You Spend 1000THB",
-            "link": "https:\/\/thefruitbox.co\/pages\/discount-confirmation"
+            "link": "https://thefruitbox.co/pages/discount-confirmation"
           }
         },
         "text_xwxPCP": {
@@ -87,7 +87,7 @@
           "settings": {
             "heading": "GET 10% DISCOUNT",
             "subheading": "Sign Up For A New Account Now",
-            "link": "https:\/\/thefruitbox.co\/account\/register"
+            "link": "https://thefruitbox.co/account/register"
           }
         },
         "text_hTKPm9": {
@@ -95,7 +95,7 @@
           "settings": {
             "heading": "VIEW SPECIAL OFFERS",
             "subheading": "Check Out Our Offers Now",
-            "link": "shopify:\/\/pages\/promotions"
+            "link": "shopify://pages/promotions"
           }
         }
       },
@@ -118,7 +118,7 @@
           "type": "featured_collection",
           "settings": {
             "collection": "classic-fruit-boxes",
-            "collection_img": "shopify:\/\/shop_images\/dantheman.stoner_plain_light_green_background_single_pack_shot__1ab38af0-aa43-459a-8be3-4ecb58d9f13b.png",
+            "collection_img": "shopify://shop_images/dantheman.stoner_plain_light_green_background_single_pack_shot__1ab38af0-aa43-459a-8be3-4ecb58d9f13b.png",
             "subheading": "Forever A Classic",
             "overlay-btn-text": "Shop now",
             "show-gradient-overlay": false,
@@ -130,7 +130,7 @@
           "type": "featured_collection",
           "settings": {
             "collection": "the-fruit-blossoms",
-            "collection_img": "shopify:\/\/shop_images\/dantheman.stoner_plain_light_green_background_single_pack_shot__b32649ea-01c2-4008-bad9-b7f4ba12ae1e.png",
+            "collection_img": "shopify://shop_images/dantheman.stoner_plain_light_green_background_single_pack_shot__b32649ea-01c2-4008-bad9-b7f4ba12ae1e.png",
             "subheading": "Fruit & Flowers",
             "overlay-btn-text": "Shop now",
             "show-gradient-overlay": false,
@@ -142,7 +142,7 @@
           "type": "featured_collection",
           "settings": {
             "collection": "mixed-thai-collection",
-            "collection_img": "shopify:\/\/shop_images\/dantheman.stoner_plain_light_green_background_single_pack_shot__4877ff4b-44a4-4522-af74-399dd8be3c09.png",
+            "collection_img": "shopify://shop_images/dantheman.stoner_plain_light_green_background_single_pack_shot__4877ff4b-44a4-4522-af74-399dd8be3c09.png",
             "subheading": "Traditional Thai Fruits",
             "overlay-btn-text": "Shop now",
             "show-gradient-overlay": false,
@@ -177,7 +177,7 @@
         "text_static_Ukkkwi": {
           "type": "text_static",
           "settings": {
-            "text_static": "<p>PLUS+ FRUIT PRESS COLLECTION<\/p>",
+            "text_static": "<p>PLUS+ FRUIT PRESS COLLECTION</p>",
             "max_width_desktop": 100,
             "max_width_mobile": 100,
             "text_color": "#18533a"
@@ -233,8 +233,8 @@
         "{margin-top: 30px;}"
       ],
       "settings": {
-        "video": "shopify:\/\/files\/videos\/juice fall-Small.mov",
-        "url": "https:\/\/www.youtube.com\/watch?v=_9VUPq3SxOc",
+        "video": "shopify://files/videos/juice fall-Small.mov",
+        "url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
         "desktopHeight": "550",
         "mobileHeight": "fit",
         "title": "plus+ Cold Press",
@@ -243,7 +243,7 @@
         "textShadow": true,
         "heading--text-size": 40,
         "subheading--text-size": 24,
-        "link": "https:\/\/thefruitbox.co\/collections\/plus-cold-press",
+        "link": "https://thefruitbox.co/collections/plus-cold-press",
         "button_label": "Check It Out",
         "textColor": "#ffffff",
         "button-text": "#ffffff",
@@ -255,7 +255,6 @@
       "settings": {
         "title": "Play Our Fruit Game!",
         "subtitle": "Have fun and win discounts on your favorite fruit boxes!",
-        "button_link": "",
         "button_text": "Play Now"
       }
     },
@@ -279,7 +278,7 @@
     "35b28867-77fd-4573-8212-101b3b8e2245": {
       "type": "image--image-with-text-overlay",
       "settings": {
-        "image": "shopify:\/\/shop_images\/dantheman.stoner_create_a_pattern_with_luxury_fruits_flowers_an_0e30253a-87a6-440b-a9ec-02b9ec72fbeb.png",
+        "image": "shopify://shop_images/dantheman.stoner_create_a_pattern_with_luxury_fruits_flowers_an_0e30253a-87a6-440b-a9ec-02b9ec72fbeb.png",
         "image_height": "30vw",
         "bg_image_overlay_opacity": 20,
         "parallax": true,
@@ -290,7 +289,7 @@
         "textAlignment": "center",
         "heading--text-size": 38,
         "text--text-size": 18,
-        "link": "shopify:\/\/pages\/who-are-we",
+        "link": "shopify://pages/who-are-we",
         "button_label": "Find Out More",
         "button-text": "#242424",
         "button-background": "#ffffff"
@@ -351,11 +350,11 @@
         "83447c73-f480-4c7d-8508-249f594f3aa3": {
           "type": "image",
           "settings": {
-            "desktop_image": "shopify:\/\/shop_images\/dantheman.stoner_top_down_shot_of_a_luxury_green_emarold_box_wi_0596a57e-11c2-46b1-a9dc-0bacd188097b.png",
+            "desktop_image": "shopify://shop_images/dantheman.stoner_top_down_shot_of_a_luxury_green_emarold_box_wi_0596a57e-11c2-46b1-a9dc-0bacd188097b.png",
             "heading": "HANDMADE BOXES",
             "heading_size": 28,
             "button_label": "Shop Now",
-            "url": "shopify:\/\/collections\/all",
+            "url": "shopify://collections/all",
             "desktop_position": "md-min-align-center md-min-justify-center",
             "mobile_position": "md-max-align-center md-max-justify-center",
             "text_color": "#ffffff",
@@ -367,11 +366,11 @@
         "0d4c44b0-cb7c-43dc-829a-743dfa47a878": {
           "type": "image",
           "settings": {
-            "desktop_image": "shopify:\/\/shop_images\/dantheman.stoner_hyper_realistic_product_packaging_for_a_fruitb_48d7f7f4-36f0-4cc2-b745-f3cd9bd005ae.png",
+            "desktop_image": "shopify://shop_images/dantheman.stoner_hyper_realistic_product_packaging_for_a_fruitb_48d7f7f4-36f0-4cc2-b745-f3cd9bd005ae.png",
             "heading": "LUXURY BOXES",
             "heading_size": 28,
             "button_label": "EXPLORE",
-            "url": "shopify:\/\/collections\/all",
+            "url": "shopify://collections/all",
             "desktop_position": "md-min-align-center md-min-justify-center",
             "mobile_position": "md-max-align-center md-max-justify-center",
             "text_color": "#ffffff",
@@ -416,7 +415,7 @@
         "look_KamfHW": {
           "type": "look",
           "settings": {
-            "image": "shopify:\/\/shop_images\/product_feature_test.jpg",
+            "image": "shopify://shop_images/product_feature_test.jpg",
             "hotspot_color": "#ffffff",
             "product_1": "plus-red",
             "hotspot_horizontal_position_1": 31,
@@ -446,15 +445,15 @@
     "cf965c26-6ea8-499a-8a05-a4e350ede58a": {
       "type": "image--image-with-text",
       "settings": {
-        "image": "shopify:\/\/shop_images\/Front_New_1a4d0550-9e38-40b8-bdcb-bb712fadab5d.jpg",
+        "image": "shopify://shop_images/Front_New_1a4d0550-9e38-40b8-bdcb-bb712fadab5d.jpg",
         "text_overlapping_image": true,
         "section-width": "full",
         "layout": "right",
         "text_alignment": "left",
         "title": "Find out about plus+ cold press juices",
-        "text": "<p>Juice up your day with our quirky 'PLUS+' fruit blends!<\/p>",
+        "text": "<p>Juice up your day with our quirky 'PLUS+' fruit blends!</p>",
         "button_label": "READ MORE",
-        "button_link": "shopify:\/\/collections\/all",
+        "button_link": "shopify://collections/all",
         "colors": "white"
       }
     },
@@ -469,7 +468,7 @@
             "text": "Check out our summer sale.",
             "text_alignment": "center",
             "button_label": "SHOP SALE NOW",
-            "url": "shopify:\/\/collections\/plus-cold-press",
+            "url": "shopify://collections/plus-cold-press",
             "desktop_position": "md-min-align-center md-min-justify-center",
             "background_color": "rgba(0,0,0,0)",
             "text_color": "#262428",
@@ -480,8 +479,8 @@
         "template--14831909208134__8e9e36da-191e-4c8c-ba3a-8a307b84bae9-image-1": {
           "type": "image",
           "settings": {
-            "desktop_image": "shopify:\/\/shop_images\/back_new.jpg",
-            "mobile_image": "shopify:\/\/shop_images\/back_new.jpg",
+            "desktop_image": "shopify://shop_images/back_new.jpg",
+            "mobile_image": "shopify://shop_images/back_new.jpg",
             "heading": "",
             "heading_size": 30,
             "button_label": "",
@@ -498,11 +497,11 @@
           "type": "image",
           "disabled": true,
           "settings": {
-            "desktop_image": "shopify:\/\/shop_images\/Screenshot_2024-02-25_at_13.44.06.png",
+            "desktop_image": "shopify://shop_images/Screenshot_2024-02-25_at_13.44.06.png",
             "heading": "",
             "heading_size": 16,
             "button_label": "Shop now",
-            "url": "shopify:\/\/collections\/all",
+            "url": "shopify://collections/all",
             "desktop_position": "md-min-align-bottom md-min-justify-center",
             "mobile_position": "md-max-align-bottom md-max-justify-center",
             "text_color": "#262428",
@@ -515,11 +514,11 @@
           "type": "image",
           "disabled": true,
           "settings": {
-            "desktop_image": "shopify:\/\/shop_images\/Screenshot_2024-02-25_at_13.44.06.png",
+            "desktop_image": "shopify://shop_images/Screenshot_2024-02-25_at_13.44.06.png",
             "heading": "",
             "heading_size": 16,
             "button_label": "Shop now",
-            "url": "shopify:\/\/collections\/all",
+            "url": "shopify://collections/all",
             "desktop_position": "md-min-align-bottom md-min-justify-center",
             "mobile_position": "md-max-align-bottom md-max-justify-center",
             "text_color": "#262428",
@@ -565,8 +564,8 @@
           "settings": {
             "menu_item_text": "ALL PRODUCTS",
             "menu_item_color": "#ffffff",
-            "menu_item_link": "shopify:\/\/collections\/all",
-            "menu_item_image": "shopify:\/\/shop_images\/dantheman.stoner_top_down_shot_of_a_luxury_green_emarold_box_wi_0596a57e-11c2-46b1-a9dc-0bacd188097b.png"
+            "menu_item_link": "shopify://collections/all",
+            "menu_item_image": "shopify://shop_images/dantheman.stoner_top_down_shot_of_a_luxury_green_emarold_box_wi_0596a57e-11c2-46b1-a9dc-0bacd188097b.png"
           }
         },
         "menu_item_mf7H9U": {
@@ -583,7 +582,7 @@
             "menu_item_text": "ANOTHER MENU",
             "menu_item_color": "#262428",
             "menu_item_link": "",
-            "menu_item_image": "shopify:\/\/shop_images\/dantheman.stoner__based_on_this_image_change_the_brand_packagin_60cd8e4c-83dc-4104-81ac-19db9d9cb321.png"
+            "menu_item_image": "shopify://shop_images/dantheman.stoner__based_on_this_image_change_the_brand_packagin_60cd8e4c-83dc-4104-81ac-19db9d9cb321.png"
           }
         },
         "template--14831909208134__12a25ae5-a869-4fec-9751-deb411052883-menu_item-3": {
@@ -592,7 +591,7 @@
             "menu_item_text": "CONTact us",
             "menu_item_color": "#ffffff",
             "menu_item_link": "",
-            "menu_item_image": "shopify:\/\/shop_images\/dantheman.stoner_front_on_wide_shot_of_a_luxury_looking_green_e_7396187e-42b9-44e6-bec7-347f373ccf16.png"
+            "menu_item_image": "shopify://shop_images/dantheman.stoner_front_on_wide_shot_of_a_luxury_looking_green_e_7396187e-42b9-44e6-bec7-347f373ccf16.png"
           }
         }
       },
@@ -619,10 +618,10 @@
         "46fa8d12-7387-4c7c-8145-c62ba65f45c5": {
           "type": "article",
           "settings": {
-            "blog_post_1": "news\/thoughtful-gifting-fruit-boxes-that-delight",
-            "blog_post_2": "news\/the-power-of-fruit-unlocking-nature-s-health-secrets",
-            "blog_post_3": "news\/freshness-delivered-the-convenience-of-fruit-at-your-doorstep",
-            "blog_post_4": "news\/the-refreshing-truth-unveiling-the-benefits-of-cold-press-juice-with-plus"
+            "blog_post_1": "news/thoughtful-gifting-fruit-boxes-that-delight",
+            "blog_post_2": "news/the-power-of-fruit-unlocking-nature-s-health-secrets",
+            "blog_post_3": "news/freshness-delivered-the-convenience-of-fruit-at-your-doorstep",
+            "blog_post_4": "news/the-refreshing-truth-unveiling-the-benefits-of-cold-press-juice-with-plus"
           }
         }
       },
@@ -641,12 +640,12 @@
       "type": "store-information--map",
       "settings": {
         "heading": "Our store",
-        "address": "<p>893 Phatthanakan 11 Alley, Suan Luang, Bangkok 10250<\/p><p>Mon - Fri, 8am - 9pm<br>Saturday, 8am - 9pm<br>Sunday, 8am - 6pm<\/p>",
+        "address": "<p>893 Phatthanakan 11 Alley, Suan Luang, Bangkok 10250</p><p>Mon - Fri, 8am - 9pm<br>Saturday, 8am - 9pm<br>Sunday, 8am - 6pm</p>",
         "map_address": "893 Phatthanakan 11 Alley, Suan Luang, Bangkok 10250",
         "api_key": "",
         "button_text": "Get directions",
         "layout": "right",
-        "background_image": "shopify:\/\/shop_images\/Screenshot_2024-03-03_at_17.15.23.png",
+        "background_image": "shopify://shop_images/Screenshot_2024-03-03_at_17.15.23.png",
         "colors": "white"
       }
     }
