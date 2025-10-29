@@ -198,6 +198,7 @@
         "text_static_Ukkkwi",
         "text_dynamic_BRT9Ta"
       ],
+      "disabled": true,
       "custom_css": [
         "{margin-top: -40px; margin-bottom: -50px;}"
       ],
@@ -213,6 +214,7 @@
     },
     "3643d38b-24f2-4040-ab67-4b4b44a63aab": {
       "type": "collection--featured-collection",
+      "disabled": true,
       "custom_css": [
         "{margin-top: 20px; margin-bottom: -60px;}"
       ],
@@ -230,6 +232,7 @@
     },
     "video_video_hero_xCr7Qc": {
       "type": "video--video-hero",
+      "disabled": true,
       "custom_css": [
         "{margin-top: 30px;}"
       ],
@@ -274,7 +277,7 @@
         "image": "shopify://shop_images/dantheman.stoner_create_a_pattern_with_luxury_fruits_flowers_an_0e30253a-87a6-440b-a9ec-02b9ec72fbeb.png",
         "image_height": "30vw",
         "bg_image_overlay_opacity": 20,
-        "parallax": true,
+        "parallax": false,
         "title": "Welcome to thefruitbox.co",
         "text": "Find Out More About Who We Are",
         "colors": "light",
