@@ -104,6 +104,7 @@
         "text_xwxPCP",
         "text_hTKPm9"
       ],
+      "disabled": true,
       "custom_css": [
         "{margin-top: 0px; margin-bottom: -60px;}"
       ],
@@ -248,14 +249,6 @@
         "textColor": "#ffffff",
         "button-text": "#ffffff",
         "button-background": "#242424"
-      }
-    },
-    "fruit_game_invitation_CRnEkD": {
-      "type": "fruit-game-invitation",
-      "settings": {
-        "title": "Play Our Fruit Game!",
-        "subtitle": "Have fun and win discounts on your favorite fruit boxes!",
-        "button_text": "Play Now"
       }
     },
     "3c4d9433-fe83-4e4a-afa6-63c348fea245": {
@@ -444,6 +437,7 @@
     },
     "cf965c26-6ea8-499a-8a05-a4e350ede58a": {
       "type": "image--image-with-text",
+      "disabled": true,
       "settings": {
         "image": "shopify://shop_images/Front_New_1a4d0550-9e38-40b8-bdcb-bb712fadab5d.jpg",
         "text_overlapping_image": true,
@@ -657,7 +651,6 @@
     "animated_text_LNiTw8",
     "3643d38b-24f2-4040-ab67-4b4b44a63aab",
     "video_video_hero_xCr7Qc",
-    "fruit_game_invitation_CRnEkD",
     "3c4d9433-fe83-4e4a-afa6-63c348fea245",
     "35b28867-77fd-4573-8212-101b3b8e2245",
     "collection_featured_collection_QVGEU9",
