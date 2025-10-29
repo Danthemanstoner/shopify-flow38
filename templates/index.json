@@ -310,6 +310,7 @@
     },
     "collection_featured_collection_deM6yg": {
       "type": "collection--featured-collection",
+      "disabled": true,
       "custom_css": [
         "{margin-top: -40px; margin-bottom: -20px;}"
       ],
@@ -411,20 +412,20 @@
         "look_KamfHW": {
           "type": "look",
           "settings": {
-            "image": "shopify://shop_images/product_feature_test.jpg",
+            "image": "shopify://shop_images/25-10-27_Fruitbox3562test.jpg",
             "hotspot_color": "#ffffff",
             "product_1": "plus-red",
-            "hotspot_horizontal_position_1": 31,
-            "hotspot_vertical_position_1": 31,
+            "hotspot_horizontal_position_1": 38,
+            "hotspot_vertical_position_1": 63,
             "product_2": "copy-of-copy-of-copy-of-copy-of-plus-green-eight",
-            "hotspot_horizontal_position_2": 50,
-            "hotspot_vertical_position_2": 41,
+            "hotspot_horizontal_position_2": 45,
+            "hotspot_vertical_position_2": 51,
             "product_3": "plus-orange",
-            "hotspot_horizontal_position_3": 70,
-            "hotspot_vertical_position_3": 34,
-            "product_4": "",
-            "hotspot_horizontal_position_4": 75,
-            "hotspot_vertical_position_4": 75
+            "hotspot_horizontal_position_3": 56,
+            "hotspot_vertical_position_3": 58,
+            "product_4": "copy-of-copy-of-copy-of-copy-of-plus-green-eight",
+            "hotspot_horizontal_position_4": 67,
+            "hotspot_vertical_position_4": 58
           }
         }
       },
@@ -432,7 +433,7 @@
         "look_KamfHW"
       ],
       "settings": {
-        "title": "Explore Our Juices",
+        "title": "Explore Our Boxes",
         "description": "",
         "image_aspect_ratio": "auto",
         "colors": "white"
