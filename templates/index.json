@@ -95,22 +95,6 @@
         "button-background": "#242424"
       }
     },
-    "video_video_BY6jfj": {
-      "type": "video--video",
-      "name": "t:all.Video",
-      "settings": {
-        "colors": "white",
-        "title": "our new boxes just dropped",
-        "richtext": "",
-        "width_classes": 75,
-        "video": "shopify://files/videos/weavy-Veo 3.1 Image to Video-2025-10-29 at 14.50.30.mp4",
-        "url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "autoplay": true,
-        "loop": true,
-        "mute": false,
-        "video_overlay_opacity": 25
-      }
-    },
     "text_text_adverts_XTaGgp": {
       "type": "text--text-adverts",
       "blocks": {
@@ -270,10 +254,29 @@
         "colors": "white"
       }
     },
+    "video_video_BY6jfj": {
+      "type": "video--video",
+      "custom_css": [
+        "{margin-top: -50px; margin-bottom: -20px;}"
+      ],
+      "name": "t:all.Video",
+      "settings": {
+        "colors": "white",
+        "title": "our new boxes just dropped",
+        "richtext": "",
+        "width_classes": 50,
+        "video": "shopify://files/videos/weavy-Veo 3.1 Image to Video-2025-10-29 at 14.50.30.mp4",
+        "url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "autoplay": true,
+        "loop": true,
+        "mute": false,
+        "video_overlay_opacity": 25
+      }
+    },
     "3c4d9433-fe83-4e4a-afa6-63c348fea245": {
       "type": "collection--featured-collection",
       "custom_css": [
-        "{margin-top: -40px; margin-bottom: -20px;}"
+        "{margin-top: -30px; margin-bottom: -20px;}"
       ],
       "settings": {
         "title": "Classic Fruit Boxes",
@@ -667,11 +670,11 @@
   "order": [
     "af3e824e-6ca9-4ac4-9510-a07cb14e4a66",
     "video_video_hero_xCr7Qc",
-    "video_video_BY6jfj",
     "text_text_adverts_XTaGgp",
     "06b36118-35e6-4312-b5b2-099a0ddc5aa6",
     "animated_text_LNiTw8",
     "3643d38b-24f2-4040-ab67-4b4b44a63aab",
+    "video_video_BY6jfj",
     "3c4d9433-fe83-4e4a-afa6-63c348fea245",
     "35b28867-77fd-4573-8212-101b3b8e2245",
     "collection_featured_collection_QVGEU9",
